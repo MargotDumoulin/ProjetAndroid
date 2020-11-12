@@ -19,7 +19,7 @@
         app:layout_constraintVertical_bias="0.114" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/prev_btn"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:text="&lt;"
@@ -29,7 +29,7 @@
         app:layout_constraintRight_toLeftOf="@id/imageView" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/next_btn"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:text="&gt;"
@@ -52,7 +52,7 @@
     <Spinner
         android:id="@+id/spinner_taille"
         android:entries="@array/taille"
-        android:layout_width="154dp"
+        android:layout_width="190dp"
         android:layout_height="43dp"
         android:layout_margin="20dp"
         app:layout_constraintTop_toBottomOf="@id/textViewRennes"
@@ -61,7 +61,7 @@
 
     <Spinner
         android:id="@+id/spinner_coloris"
-        android:layout_width="153dp"
+        android:layout_width="190dp"
         android:layout_height="43dp"
         android:layout_margin="20dp"
         android:entries="@array/coloris"
@@ -70,23 +70,45 @@
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/blue_200"
         app:srcCompat="@drawable/ic_baseline_add_shopping_cart_24" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="150dp"
-        android:layout_height="200dp"
+        android:layout_width="120sp"
+        android:layout_height="200sp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:maxLines="10"
+        android:maxLines="11"
         android:text="Un pull qui ravira les petits et les grands. Tricoté par d'authentiques grand-mères Australiennes, en laine 100% coton naturel issue d'une filière agriculture durable certifiée ISO-2560."
         app:layout_constraintTop_toBottomOf="@+id/textViewRennes"
         android:background="@color/red_200"
         app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="  Réalisé en 2018"
+        android:background="@color/red_500"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="Prix"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
