@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Boutique MonPullMoche</string>
+    <string name="ajout_panier">Pull n°%d ajouté au panier</string>
 </resources>

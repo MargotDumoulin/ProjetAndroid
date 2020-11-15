@@ -3,11 +3,14 @@ package com.example.td1.modele;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 
 import com.example.td1.R;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Pull  {
+public class Pull implements Serializable {
     int price;
     String imgSrc;
     String description;
