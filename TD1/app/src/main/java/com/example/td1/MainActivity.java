@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,14 +24,39 @@ public class MainActivity extends AppCompatActivity {
     private TextView titleTextView;
     private ImageView pullImageView;
     private ImageView pullImageViewZoomed;
+    private Boolean isImageZoomed;
     private View whiteBackgroundView;
     private int index;
     private ArrayList<Pull> listPull;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.listPull = new ArrayList<Pull>();
+
+        Log.i("Test", "on est juste avant la condition");
+        if (savedInstanceState != null) {
+            Log.i("Test", "on est dans la condition");
+            this.listPull = (ArrayList<Pull>) savedInstanceState.getSerializable("listPull");
+            this.index = savedInstanceState.getInt("index");
+            this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
+        } else {
+            // -- INITIALIZE ARRAYLIST --
+            this.listPull.add(new Pull(45, "jigglypuff", "Waw ça c'est du pull tu peux me croire.", "title1"));
+            this.listPull.add(new Pull(22, "sweatshirt", "description", "title2"));
+            this.listPull.add(new Pull(33, "bunny_hoodie", "description", "title3"));
+            this.listPull.add(new Pull(26, "bear_hoodie", "description", "title4"));
+            this.listPull.add(new Pull(12, "christmas_pullover", "description", "title5"));
+            this.isImageZoomed = false;
+            this.index = 0;
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
 
         // -- BUTTONS --
         this.prevBtn = this.findViewById(R.id.prev_btn);
@@ -48,27 +74,13 @@ public class MainActivity extends AppCompatActivity {
         // -- VIEWS --
         this.whiteBackgroundView = this.findViewById(R.id.view);
 
-        if (savedInstanceState != null) {
-            this.listPull = (ArrayList<Pull>) savedInstanceState.getSerializable("listPull");
-            this.index = savedInstanceState.getInt("index");
-            boolean imageZoomed = savedInstanceState.getBoolean("isImageZoomed");
+        // -- SET VIEWS ON PULL --
+        showPullInfo(this.index);
+        enableButtons(this.index);
 
-            if (imageZoomed) {
-                zoomImage();
-            }
+        if (this.isImageZoomed) {
+            zoomImage();
         }
-
-        // -- INITIALIZE ARRAYLIST --
-        this.listPull = new ArrayList<Pull>();
-        this.listPull.add(new Pull(45, "jigglypuff", "Waw ça c'est du pull tu peux me croire.", "title1"));
-        this.listPull.add(new Pull(22, "sweatshirt", "description", "title2"));
-        this.listPull.add(new Pull(33, "bunny_hoodie", "description", "title3"));
-        this.listPull.add(new Pull(26, "bear_hoodie", "description", "title4"));
-        this.listPull.add(new Pull(12, "christmas_pullover", "description", "title5"));
-
-        // -- SET VIEWS ON FIRST PULL --
-        showPullInfo(0);
-        enableButtons(0);
     }
 
     protected void onSaveInstanceState(Bundle outState) {
