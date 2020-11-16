@@ -3,6 +3,7 @@ package com.example.td1;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,8 +27,12 @@ public class MainActivity extends AppCompatActivity {
     private ImageView pullImageViewZoomed;
     private Boolean isImageZoomed;
     private View whiteBackgroundView;
+
     private int index;
     private ArrayList<Pull> listPull;
+    private ArrayList basket;
+
+    public static final int RETOUR = 0;
 
 
     @Override
@@ -36,21 +41,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         this.listPull = new ArrayList<Pull>();
 
-        Log.i("Test", "on est juste avant la condition");
         if (savedInstanceState != null) {
-            Log.i("Test", "on est dans la condition");
             this.listPull = (ArrayList<Pull>) savedInstanceState.getSerializable("listPull");
             this.index = savedInstanceState.getInt("index");
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
         } else {
             // -- INITIALIZE ARRAYLIST --
-            this.listPull.add(new Pull(45, "jigglypuff", "Waw ça c'est du pull tu peux me croire.", "title1"));
-            this.listPull.add(new Pull(22, "sweatshirt", "description", "title2"));
-            this.listPull.add(new Pull(33, "bunny_hoodie", "description", "title3"));
-            this.listPull.add(new Pull(26, "bear_hoodie", "description", "title4"));
-            this.listPull.add(new Pull(12, "christmas_pullover", "description", "title5"));
+            this.listPull.add(new Pull(0,45, "jigglypuff", "Waw ça c'est du pull tu peux me croire.", "title1"));
+            this.listPull.add(new Pull(1,22, "sweatshirt", "description", "title2"));
+            this.listPull.add(new Pull(2,33, "bunny_hoodie", "description", "title3"));
+            this.listPull.add(new Pull(3,26, "bear_hoodie", "description", "title4"));
+            this.listPull.add(new Pull(4,12, "christmas_pullover", "description", "title5"));
             this.isImageZoomed = false;
             this.index = 0;
+
+            if (this.getIntent().getIntExtra("id_categ", -1) != -1) {
+                // rechercher les produits de la bonne catégorie
+            } else {
+                // ???
+            }
         }
     }
 
@@ -156,5 +165,18 @@ public class MainActivity extends AppCompatActivity {
     public void unzoomImage() {
         this.whiteBackgroundView.setVisibility(View.INVISIBLE);
         this.pullImageViewZoomed.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.onClickGoBack(null);
+    }
+
+    public void onClickGoBack (View v) {
+        Intent intent = new Intent();
+        intent.putExtra("basket", this.basket);
+
+        this.setResult(RETOUR, intent);
+        this.finish();
     }
 }

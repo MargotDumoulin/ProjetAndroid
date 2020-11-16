@@ -11,16 +11,27 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Pull implements Serializable {
+
+    private int id;
     int price;
     String imgSrc;
     String description;
     String title;
 
-    public Pull(int price, String imgSrc, String description, String title) {
+    public Pull(int id, int price, String imgSrc, String description, String title) {
+        this.id = id;
         this.price = price;
         this.imgSrc = imgSrc;
         this.description = description;
         this.title = title;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return this.id;
     }
 
     public void setPrice(int price) {
