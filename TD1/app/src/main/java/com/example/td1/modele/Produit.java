@@ -10,16 +10,18 @@ import com.example.td1.R;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Pull implements Serializable {
+public class Produit implements Serializable {
 
     private int id;
+    private int idCategorie;
     int price;
     String imgSrc;
     String description;
     String title;
 
-    public Pull(int id, int price, String imgSrc, String description, String title) {
+    public Produit(int id, int idCategorie, int price, String imgSrc, String description, String title) {
         this.id = id;
+        this.idCategorie = idCategorie;
         this.price = price;
         this.imgSrc = imgSrc;
         this.description = description;
@@ -32,6 +34,14 @@ public class Pull implements Serializable {
 
     public int getId() {
         return this.id;
+    }
+
+    public void setIdCategorie(int idCategorie) {
+        this.idCategorie = idCategorie;
+    }
+
+    public int getIdCategorie() {
+        return this.idCategorie;
     }
 
     public void setPrice(int price) {

@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.td1.modele.Categorie;
+import com.example.td1.modele.Produit;
 
 import java.util.ArrayList;
 
@@ -32,6 +34,10 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
         super.onStart();
         this.lvCategories = this.findViewById(R.id.ca_liste);
         this.lvCategories.setOnItemClickListener(this);
+
+        this.listCategories = new ArrayList<Categorie>();
+        this.listCategories.add(new Categorie(0,"Pull","bear_hoodie"));
+        this.listCategories.add(new Categorie(1,"Bonnet","bear_hoodie"));
 
         CategoriesAdapter adapter = new CategoriesAdapter(this, this.listCategories);
 

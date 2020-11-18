@@ -1,20 +1,22 @@
 package com.example.td1;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.td1.modele.Pull;
+import com.example.td1.modele.Categorie;
+import com.example.td1.modele.Produit;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,34 +31,36 @@ public class MainActivity extends AppCompatActivity {
     private View whiteBackgroundView;
 
     private int index;
-    private ArrayList<Pull> listPull;
+    private ArrayList<Produit> listProduitToShow;
     private ArrayList basket;
 
     public static final int RETOUR = 0;
 
-
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        this.listPull = new ArrayList<Pull>();
+        this.listProduitToShow = new ArrayList<Produit>();
 
         if (savedInstanceState != null) {
-            this.listPull = (ArrayList<Pull>) savedInstanceState.getSerializable("listPull");
+            this.listProduitToShow = (ArrayList<Produit>) savedInstanceState.getSerializable("listProduitToShow");
             this.index = savedInstanceState.getInt("index");
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
         } else {
             // -- INITIALIZE ARRAYLIST --
-            this.listPull.add(new Pull(0,45, "jigglypuff", "Waw ça c'est du pull tu peux me croire.", "title1"));
-            this.listPull.add(new Pull(1,22, "sweatshirt", "description", "title2"));
-            this.listPull.add(new Pull(2,33, "bunny_hoodie", "description", "title3"));
-            this.listPull.add(new Pull(3,26, "bear_hoodie", "description", "title4"));
-            this.listPull.add(new Pull(4,12, "christmas_pullover", "description", "title5"));
+            this.listProduitToShow.add(new Produit(0, 0,45, "jigglypuff", "Waw ça c'est du pull tu peux me croire.", "title1"));
+            this.listProduitToShow.add(new Produit(1,0,22, "sweatshirt", "description", "title2"));
+            this.listProduitToShow.add(new Produit(2,0,33, "bunny_hoodie", "description", "title3"));
+            this.listProduitToShow.add(new Produit(3,0,26, "bear_hoodie", "description", "title4"));
+            this.listProduitToShow.add(new Produit(4,0,12, "christmas_pullover", "description", "title5"));
+            this.listProduitToShow.add(new Produit(5,1,112, "christmas_pullover", "description", "UN BONNET"));
             this.isImageZoomed = false;
             this.index = 0;
 
             if (this.getIntent().getIntExtra("id_categ", -1) != -1) {
-                // rechercher les produits de la bonne catégorie
+                // filter items that corresponds to id_categ
+                this.listProduitToShow = new ArrayList<Produit>(this.listProduitToShow.stream().filter(element -> element.getIdCategorie() == this.getIntent().getIntExtra("id_categ", -1)).collect(Collectors.toList()));
             } else {
                 // ???
             }
@@ -96,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
 
         outState.putInt("index", this.index);
-        outState.putSerializable("listPull", this.listPull);
+        outState.putSerializable("listProduitToShow", this.listProduitToShow);
 
         if (this.pullImageViewZoomed.getVisibility() == View.VISIBLE) {
             outState.putBoolean("isImageZoomed", true);
@@ -116,23 +120,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showPullInfo(int index) {
-        this.priceTextView.setText(String.valueOf(this.listPull.get(index).getPrice()) + '€');
-        this.descriptionTextView.setText(this.listPull.get(index).getDescription());
-        this.titleTextView.setText(this.listPull.get(index).getTitle());
+        this.priceTextView.setText(String.valueOf(this.listProduitToShow.get(index).getPrice()) + '€');
+        this.descriptionTextView.setText(this.listProduitToShow.get(index).getDescription());
+        this.titleTextView.setText(this.listProduitToShow.get(index).getTitle());
         changeImageView(index);
 
         enableButtons(index);
     }
 
     public void changeImageView(int index) {
-        int id = getResources().getIdentifier(this.listPull.get(index).getImgSrc(), "drawable", getPackageName());
+        int id = getResources().getIdentifier(this.listProduitToShow.get(index).getImgSrc(), "drawable", getPackageName());
         this.pullImageView.setImageResource(id);
     }
 
     public void enableButtons(int index) {
-        if (index == 0) {
+        if (index == 0 && index == (this.listProduitToShow.size() - 1)) {
             this.prevBtn.setEnabled(false);
-        } else if (index == (this.listPull.size() - 1)) {
+            this.nextBtn.setEnabled(false);
+        } else if (index == 0) {
+            this.prevBtn.setEnabled(false);
+        } else if (index == (this.listProduitToShow.size() - 1)) {
             this.nextBtn.setEnabled(false);
         } else {
             this.prevBtn.setEnabled(true);
@@ -156,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
         this.whiteBackgroundView.setVisibility(View.VISIBLE);
         this.whiteBackgroundView.bringToFront();
 
-        int id = getResources().getIdentifier(this.listPull.get(this.index).getImgSrc(), "drawable", getPackageName());
+        int id = getResources().getIdentifier(this.listProduitToShow.get(this.index).getImgSrc(), "drawable", getPackageName());
         this.pullImageViewZoomed.setImageResource(id);
         this.pullImageViewZoomed.setVisibility(View.VISIBLE);
         this.pullImageViewZoomed.bringToFront();
