@@ -1,3 +1,3 @@
 TDs d'Android de DUMOULIN Margot. 
 
-Pas de problèmes particuliers.
+Lundi 16 Novembre : gros problèmes de connexion.
