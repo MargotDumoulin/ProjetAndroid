@@ -25,7 +25,7 @@ public class CategoriesAdapter extends ArrayAdapter<Categorie> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_list_categories, parent, false);
 
-            TextView tv = convertView.findViewById(R.id.ilc_title);
+            TextView tv = convertView.findViewById(R.id.titleIlcTextView);
             tv.setText(this.listCategories.get(index).getTitle());
 
             ImageView img = convertView.findViewById(R.id.ilc_visual);

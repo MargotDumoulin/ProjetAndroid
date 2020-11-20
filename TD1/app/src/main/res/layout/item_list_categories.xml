@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/ilc_visual"
+        android:id="@+id/visualIlcImageView"
         android:src="@drawable/bear_hoodie"
         android:layout_width="50dp"
         android:layout_height="80dp"
@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/ilc_title"
+        android:id="@+id/titleIlcTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

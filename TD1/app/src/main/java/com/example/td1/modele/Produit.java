@@ -14,10 +14,10 @@ public class Produit implements Serializable {
 
     private int id;
     private int idCategorie;
-    int price;
-    String imgSrc;
-    String description;
-    String title;
+    private double price;
+    private String imgSrc;
+    private String description;
+    private String title;
 
     public Produit(int id, int idCategorie, int price, String imgSrc, String description, String title) {
         this.id = id;
@@ -48,7 +48,7 @@ public class Produit implements Serializable {
         this.price = price;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return this.price;
     }
 

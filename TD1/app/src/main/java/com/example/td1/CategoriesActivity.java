@@ -22,7 +22,7 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
 
     private ArrayList<Categorie> listCategories;
     private ListView lvCategories;
-    private Double basket;
+    private double basket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
 
     public void onStart() {
         super.onStart();
-        this.lvCategories = this.findViewById(R.id.ca_liste);
+        this.lvCategories = this.findViewById(R.id.categoriesListView);
         this.lvCategories.setOnItemClickListener(this);
 
         this.listCategories = new ArrayList<Categorie>();

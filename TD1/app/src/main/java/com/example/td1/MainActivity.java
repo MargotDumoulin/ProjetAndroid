@@ -27,13 +27,14 @@ public class MainActivity extends AppCompatActivity {
     private TextView titleTextView;
     private ImageView pullImageView;
     private ImageView pullImageViewZoomed;
-    private Boolean isImageZoomed;
+    private boolean isImageZoomed;
     private View whiteBackgroundView;
 
     private int index;
     private ArrayList<Produit> listProduitToShow;
     private ArrayList basket;
 
+    // TODO: vérifier cette variable (public ou private ?)
     public static final int RETOUR = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -72,20 +73,20 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         // -- BUTTONS --
-        this.prevBtn = this.findViewById(R.id.prev_btn);
-        this.nextBtn = this.findViewById(R.id.next_btn);
+        this.prevBtn = this.findViewById(R.id.prevButton);
+        this.nextBtn = this.findViewById(R.id.nextButton);
 
         // -- TEXTVIEWS --
-        this.priceTextView = this.findViewById(R.id.textView3);
-        this.descriptionTextView = this.findViewById(R.id.textView);
-        this.titleTextView = this.findViewById(R.id.textViewRennes);
+        this.priceTextView = this.findViewById(R.id.priceTextView);
+        this.descriptionTextView = this.findViewById(R.id.descriptionTextView);
+        this.titleTextView = this.findViewById(R.id.titleTextView);
 
         // -- IMAGEVIEWS --
-        this.pullImageView = this.findViewById(R.id.imageView);
-        this.pullImageViewZoomed = this.findViewById(R.id.expanded_image);
+        this.pullImageView = this.findViewById(R.id.productImageView);
+        this.pullImageViewZoomed = this.findViewById(R.id.expandedImageView);
 
         // -- VIEWS --
-        this.whiteBackgroundView = this.findViewById(R.id.view);
+        this.whiteBackgroundView = this.findViewById(R.id.blankView);
 
         // -- SET VIEWS ON PULL --
         showPullInfo(this.index);
