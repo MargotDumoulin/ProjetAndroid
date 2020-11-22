@@ -6,8 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,10 +32,15 @@ public class MainActivity extends AppCompatActivity {
     private ImageView pullImageViewZoomed;
     private boolean isImageZoomed;
     private View whiteBackgroundView;
+    private ImageButton basketImageButton;
+    private ImageButton cancelImageButton;
+
+    private static final int MAIN_VENTE = 0;
+    private static final int MAIN_CATALOGUE = 1;
 
     private int index;
     private ArrayList<Produit> listProduitToShow;
-    private ArrayList basket;
+    private ArrayList<Produit> basket;
 
     // TODO: vérifier cette variable (public ou private ?)
     public static final int RETOUR = 0;
@@ -42,7 +50,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         this.listProduitToShow = new ArrayList<Produit>();
+        this.basket = new ArrayList<Produit>();
 
         if (savedInstanceState != null) {
             this.listProduitToShow = (ArrayList<Produit>) savedInstanceState.getSerializable("listProduitToShow");
@@ -61,7 +72,9 @@ public class MainActivity extends AppCompatActivity {
 
             if (this.getIntent().getIntExtra("id_categ", -1) != -1) {
                 // filter items that corresponds to id_categ
-                this.listProduitToShow = new ArrayList<Produit>(this.listProduitToShow.stream().filter(element -> element.getIdCategorie() == this.getIntent().getIntExtra("id_categ", -1)).collect(Collectors.toList()));
+                this.listProduitToShow = new ArrayList<Produit>(this.listProduitToShow
+                        .stream()
+                        .filter(element -> element.getIdCategorie() == this.getIntent().getIntExtra("id_categ", -1)).collect(Collectors.toList()));
             } else {
                 // ???
             }
@@ -75,6 +88,10 @@ public class MainActivity extends AppCompatActivity {
         // -- BUTTONS --
         this.prevBtn = this.findViewById(R.id.prevButton);
         this.nextBtn = this.findViewById(R.id.nextButton);
+
+        // -- IMAGEBUTTONS --
+        this.basketImageButton = this.findViewById(R.id.cartImageButton);
+        this.cancelImageButton = this.findViewById(R.id.cancelImageButton);
 
         // -- TEXTVIEWS --
         this.priceTextView = this.findViewById(R.id.priceTextView);
@@ -94,6 +111,14 @@ public class MainActivity extends AppCompatActivity {
 
         if (this.isImageZoomed) {
             zoomImage();
+        }
+
+        if (this.getIntent().getIntExtra("requestCode", 0) == MAIN_VENTE) {
+            this.basketImageButton.setVisibility(View.VISIBLE);
+            this.cancelImageButton.setVisibility(View.VISIBLE);
+        } else {
+            this.basketImageButton.setVisibility(View.INVISIBLE);
+            this.cancelImageButton.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -149,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickBtnBasket(View v) {
+        this.basket.add(this.listProduitToShow.get(this.index));
         Toast.makeText(this, String.format(getString(R.string.ajout_panier), this.index), Toast.LENGTH_SHORT).show();
     }
 
@@ -176,14 +202,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    @Override
     public void onBackPressed() {
+        Log.d("MainActivity", "test");
         this.onClickGoBack(null);
     }
 
     public void onClickGoBack (View v) {
         Intent intent = new Intent();
         intent.putExtra("basket", this.basket);
-
         this.setResult(RETOUR, intent);
         this.finish();
     }

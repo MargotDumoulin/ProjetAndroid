@@ -28,7 +28,7 @@ public class CategoriesAdapter extends ArrayAdapter<Categorie> {
             TextView tv = convertView.findViewById(R.id.titleIlcTextView);
             tv.setText(this.listCategories.get(index).getTitle());
 
-            ImageView img = convertView.findViewById(R.id.ilc_visual);
+            ImageView img = convertView.findViewById(R.id.visualIlcImageView);
             int id = getContext().getResources().getIdentifier(this.listCategories.get(index).getImgSrc(), "drawable", getContext().getPackageName());
 
             img.setImageResource(id);

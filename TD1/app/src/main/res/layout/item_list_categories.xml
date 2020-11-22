@@ -24,6 +24,6 @@
         android:text="Description"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-        app:layout_constraintLeft_toRightOf="@+id/ilc_visual" />
+        app:layout_constraintLeft_toRightOf="@+id/visualIlcImageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -79,16 +79,28 @@
         android:layout_marginBottom="40dp"
         android:onClick="onClickBtnBasket"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         android:background="@color/blue_200"
         app:srcCompat="@drawable/ic_baseline_add_shopping_cart_24" />
+
+    <ImageButton
+        android:id="@+id/cancelImageButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="40dp"
+        app:srcCompat="@android:drawable/ic_menu_revert"
+        android:background="@color/blue_200"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/descriptionTextView"
         android:layout_width="120sp"
-        android:layout_height="200sp"
+        android:layout_height="0sp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="20dp"
         android:maxLines="11"
         android:text="Un pull qui ravira les petits et les grands. Tricoté par d'authentiques grand-mères Australiennes, en laine 100% coton naturel issue d'une filière agriculture durable certifiée ISO-2560."
         app:layout_constraintTop_toBottomOf="@+id/titleTextView"
