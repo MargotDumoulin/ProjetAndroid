@@ -90,6 +90,7 @@
         android:layout_marginBottom="40dp"
         app:srcCompat="@android:drawable/ic_menu_revert"
         android:background="@color/blue_200"
+        android:onClick="onClickCancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 

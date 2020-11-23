@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Boutique MonPullMoche</string>
     <string name="ajout_panier">Pull n°%d ajouté au panier</string>
+    <string name="confirm_phrase">Attention, vous allez annuler tous les achats effectués sur cette page. Etes-vous sûr ?</string>
+    <string name="confirm_title">Demande de confirmation</string>
+    <string name="confirm_yes">OUI</string>
+    <string name="confirm_no">NON</string>
 </resources>

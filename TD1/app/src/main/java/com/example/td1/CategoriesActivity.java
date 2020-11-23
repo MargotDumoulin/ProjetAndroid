@@ -9,16 +9,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.td1.modele.Categorie;
 import com.example.td1.modele.Produit;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class CategoriesActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
@@ -54,7 +51,7 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
 
         this.listCategories = new ArrayList<Categorie>();
         this.listCategories.add(new Categorie(0,"Pull","bear_hoodie"));
-        this.listCategories.add(new Categorie(1,"Bonnet","bear_hoodie"));
+        this.listCategories.add(new Categorie(1,"Bonnet","bonnet"));
 
     }
 
@@ -73,7 +70,7 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
     }
 
     public void addProduct(View v) {
-        Intent intent = new Intent(CategoriesActivity.this, NewProduct.class);
+        Intent intent = new Intent(CategoriesActivity.this, NewProductActivity.class);
         startActivity(intent);
     }
 

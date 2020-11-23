@@ -3,6 +3,7 @@ package com.example.td1;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,13 +16,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.td1.modele.Bonnet;
 import com.example.td1.modele.Categorie;
 import com.example.td1.modele.Produit;
+import com.example.td1.modele.Pull;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DialogInterface.OnClickListener {
 
     private Button prevBtn;
     private Button nextBtn;
@@ -55,18 +58,23 @@ public class MainActivity extends AppCompatActivity {
         this.listProduitToShow = new ArrayList<Produit>();
         this.basket = new ArrayList<Produit>();
 
+        if (this.getIntent().getSerializableExtra("newProduct") != null) {
+            Produit productToAdd = (Produit) this.getIntent().getSerializableExtra("newProduct");
+            this.listProduitToShow.add(productToAdd);
+        }
+
         if (savedInstanceState != null) {
             this.listProduitToShow = (ArrayList<Produit>) savedInstanceState.getSerializable("listProduitToShow");
             this.index = savedInstanceState.getInt("index");
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
         } else {
             // -- INITIALIZE ARRAYLIST --
-            this.listProduitToShow.add(new Produit(0, 0,45, "jigglypuff", "Waw ça c'est du pull tu peux me croire.", "title1"));
-            this.listProduitToShow.add(new Produit(1,0,22, "sweatshirt", "description", "title2"));
-            this.listProduitToShow.add(new Produit(2,0,33, "bunny_hoodie", "description", "title3"));
-            this.listProduitToShow.add(new Produit(3,0,26, "bear_hoodie", "description", "title4"));
-            this.listProduitToShow.add(new Produit(4,0,12, "christmas_pullover", "description", "title5"));
-            this.listProduitToShow.add(new Produit(5,1,112, "christmas_pullover", "description", "UN BONNET"));
+            this.listProduitToShow.add(new Pull(0, 0,45, "jigglypuff", "Waw ça c'est du pull tu peux me croire.", "title1"));
+            this.listProduitToShow.add(new Pull(1,0,22, "sweatshirt", "description", "title2"));
+            this.listProduitToShow.add(new Pull(2,0,33, "bunny_hoodie", "description", "title3"));
+            this.listProduitToShow.add(new Pull(3,0,26, "bear_hoodie", "description", "title4"));
+            this.listProduitToShow.add(new Pull(4,0,12, "christmas_pullover", "description", "title5"));
+            this.listProduitToShow.add(new Bonnet(5,1,112, "bonnet", "description", "UN BONNET"));
             this.isImageZoomed = false;
             this.index = 0;
 
@@ -75,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 this.listProduitToShow = new ArrayList<Produit>(this.listProduitToShow
                         .stream()
                         .filter(element -> element.getIdCategorie() == this.getIntent().getIntExtra("id_categ", -1)).collect(Collectors.toList()));
+
             } else {
                 // ???
             }
@@ -175,7 +184,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickBtnBasket(View v) {
         this.basket.add(this.listProduitToShow.get(this.index));
+        Log.d("contenu", this.basket.get(this.basket.size() - 1).getTitle());
         Toast.makeText(this, String.format(getString(R.string.ajout_panier), this.index), Toast.LENGTH_SHORT).show();
+    }
+
+    public void onClickCancel (View v) {
+        if (this.basket.size() > 0) {
+            CancelAlert alert = new CancelAlert();
+            alert.show(getSupportFragmentManager(), "Suppression");
+        }
+        //TODO : disable le bouton annuler
     }
 
     public void onClickImage(View v) {
@@ -204,9 +222,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
@@ -219,7 +234,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Log.d("MainActivity", "test");
         this.onClickGoBack(null);
     }
 
@@ -228,5 +242,16 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("basket", this.basket);
         this.setResult(RETOUR, intent);
         this.finish();
+    }
+
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        if (which == -1) {
+            this.basket.remove(this.basket.size() - 1);
+            Toast.makeText(this, "Vous avez retiré le dernier article du panier", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Vous n'avez rien retiré du panier.", Toast.LENGTH_LONG).show();
+        }
+
     }
 }

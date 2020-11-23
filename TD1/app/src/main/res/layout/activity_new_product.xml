@@ -4,10 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NewProduct">
+    tools:context=".NewProductActivity">
+
+    <TextView
+        android:id="@+id/titletextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Créer un nouveau pull"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/productNameEditText"
+        android:id="@+id/productTitleEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -15,7 +26,7 @@
         android:inputType="textPersonName"
         android:hint="Titre"
         android:ems="10"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titletextView"
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <EditText
@@ -29,7 +40,7 @@
         android:ems="10"
         android:inputType="textMultiLine"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/productNameEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/productTitleEditText" />
 
     <EditText
         android:id="@+id/productPriceEditText"
