@@ -53,23 +53,23 @@
 
 
     <Spinner
-        android:id="@+id/tailleSpinner"
+        android:id="@+id/sizeSpinner"
         android:entries="@array/taille"
         android:layout_width="190dp"
         android:layout_height="43dp"
         android:layout_margin="20dp"
         app:layout_constraintTop_toBottomOf="@id/titleTextView"
         app:layout_constraintLeft_toRightOf="@+id/descriptionTextView"
-        app:layout_constraintBottom_toTopOf="@+id/colorisSpinner" />
+        app:layout_constraintBottom_toTopOf="@+id/colorSpinner" />
 
     <Spinner
-        android:id="@+id/colorisSpinner"
+        android:id="@+id/colorSpinner"
         android:layout_width="190dp"
         android:layout_height="43dp"
         android:layout_margin="20dp"
         android:entries="@array/coloris"
         app:layout_constraintLeft_toRightOf="@+id/descriptionTextView"
-        app:layout_constraintTop_toBottomOf="@+id/tailleSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/sizeSpinner" />
 
     <ImageButton
         android:id="@+id/cartImageButton"

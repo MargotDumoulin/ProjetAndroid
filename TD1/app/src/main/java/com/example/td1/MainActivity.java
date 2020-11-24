@@ -10,21 +10,25 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.td1.modele.Bonnet;
 import com.example.td1.modele.Categorie;
+import com.example.td1.modele.Panier;
 import com.example.td1.modele.Produit;
 import com.example.td1.modele.Pull;
+import com.example.td1.utils.Triplet;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class MainActivity extends AppCompatActivity implements DialogInterface.OnClickListener {
+public class MainActivity extends AppCompatActivity implements DialogInterface.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private Button prevBtn;
     private Button nextBtn;
@@ -37,13 +41,17 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     private View whiteBackgroundView;
     private ImageButton basketImageButton;
     private ImageButton cancelImageButton;
+    private Spinner colorSpinner;
+    private Spinner sizeSpinner;
 
     private static final int MAIN_VENTE = 0;
     private static final int MAIN_CATALOGUE = 1;
 
     private int index;
     private ArrayList<Produit> listProduitToShow;
-    private ArrayList<Produit> basket;
+    private Panier basket;
+    private double basketAmount;
+    private int idCateg;
 
     // TODO: vérifier cette variable (public ou private ?)
     public static final int RETOUR = 0;
@@ -56,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         this.listProduitToShow = new ArrayList<Produit>();
-        this.basket = new ArrayList<Produit>();
+        this.basket = new Panier(new ArrayList<Triplet<Integer, String, String>>());
 
         if (this.getIntent().getSerializableExtra("newProduct") != null) {
             Produit productToAdd = (Produit) this.getIntent().getSerializableExtra("newProduct");
@@ -69,8 +77,8 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
         } else {
             // -- INITIALIZE ARRAYLIST --
-            this.listProduitToShow.add(new Pull(0, 0,45, "jigglypuff", "Waw ça c'est du pull tu peux me croire.", "title1"));
-            this.listProduitToShow.add(new Pull(1,0,22, "sweatshirt", "description", "title2"));
+            this.listProduitToShow.add(new Pull(0, 0,45.15, "jigglypuff", "Waw ça c'est du pull tu peux me croire.", "title1"));
+            this.listProduitToShow.add(new Pull(1,0,22.35, "sweatshirt", "description", "title2"));
             this.listProduitToShow.add(new Pull(2,0,33, "bunny_hoodie", "description", "title3"));
             this.listProduitToShow.add(new Pull(3,0,26, "bear_hoodie", "description", "title4"));
             this.listProduitToShow.add(new Pull(4,0,12, "christmas_pullover", "description", "title5"));
@@ -78,11 +86,12 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             this.isImageZoomed = false;
             this.index = 0;
 
-            if (this.getIntent().getIntExtra("id_categ", -1) != -1) {
+            this.idCateg = this.getIntent().getIntExtra("id_categ", -1);
+            if (this.idCateg != -1) {
                 // filter items that corresponds to id_categ
                 this.listProduitToShow = new ArrayList<Produit>(this.listProduitToShow
                         .stream()
-                        .filter(element -> element.getIdCategorie() == this.getIntent().getIntExtra("id_categ", -1)).collect(Collectors.toList()));
+                        .filter(element -> element.getIdCategorie() == this.idCateg).collect(Collectors.toList()));
 
             } else {
                 // ???
@@ -111,12 +120,20 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         this.pullImageView = this.findViewById(R.id.productImageView);
         this.pullImageViewZoomed = this.findViewById(R.id.expandedImageView);
 
+        // -- SPINNERS --
+        this.sizeSpinner = this.findViewById(R.id.sizeSpinner);
+        this.colorSpinner = this.findViewById(R.id.colorSpinner);
+
+        this.sizeSpinner.setOnItemSelectedListener(this);
+        this.colorSpinner.setOnItemSelectedListener(this);
+
         // -- VIEWS --
         this.whiteBackgroundView = this.findViewById(R.id.blankView);
 
         // -- SET VIEWS ON PULL --
         showPullInfo(this.index);
         enableButtons(this.index);
+        disableButtons();
 
         if (this.isImageZoomed) {
             zoomImage();
@@ -144,23 +161,27 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         }
     }
 
-    public void onClickBtnNext(View v) {
-        this.index++;
-        showPullInfo(this.index);
-    }
-
-    public void onClickBtnPrev(View v) {
-        this.index--;
-        showPullInfo(this.index);
-    }
-
     public void showPullInfo(int index) {
         this.priceTextView.setText(String.valueOf(this.listProduitToShow.get(index).getPrice()) + '€');
         this.descriptionTextView.setText(this.listProduitToShow.get(index).getDescription());
         this.titleTextView.setText(this.listProduitToShow.get(index).getTitle());
-        changeImageView(index);
 
+        changeImageView(index);
         enableButtons(index);
+    }
+
+    public void showToastAddProductToBasket() {
+        switch (this.idCateg) {
+            case 0:
+                Toast.makeText(this, String.format(getString(R.string.add_pull_basket), this.index), Toast.LENGTH_SHORT).show();
+                break;
+            case 1:
+                Toast.makeText(this, String.format(getString(R.string.add_bonnet_basket), this.index), Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                Toast.makeText(this, String.format(getString(R.string.add_article_basket), this.index), Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 
     public void changeImageView(int index) {
@@ -182,28 +203,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         }
     }
 
-    public void onClickBtnBasket(View v) {
-        this.basket.add(this.listProduitToShow.get(this.index));
-        Log.d("contenu", this.basket.get(this.basket.size() - 1).getTitle());
-        Toast.makeText(this, String.format(getString(R.string.ajout_panier), this.index), Toast.LENGTH_SHORT).show();
-    }
-
-    public void onClickCancel (View v) {
-        if (this.basket.size() > 0) {
-            CancelAlert alert = new CancelAlert();
-            alert.show(getSupportFragmentManager(), "Suppression");
-        }
-        //TODO : disable le bouton annuler
-    }
-
-    public void onClickImage(View v) {
-        zoomImage();
-    }
-
-    public void onClickImageZoomed(View v) {
-        unzoomImage();
-    }
-
     public void zoomImage() {
         this.whiteBackgroundView.setVisibility(View.VISIBLE);
         this.whiteBackgroundView.bringToFront();
@@ -219,6 +218,12 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         this.pullImageViewZoomed.setVisibility(View.INVISIBLE);
     }
 
+    public void disableButtons() {
+        this.cancelImageButton.setEnabled(false);
+        this.basketImageButton.setEnabled(false);
+    }
+
+    // ---- TOOLBAR EVENTS ----
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -231,27 +236,86 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         }
     }
 
-
     @Override
     public void onBackPressed() {
         this.onClickGoBack(null);
     }
 
+
+    // ---- ON CLICK EVENTS ----
     public void onClickGoBack (View v) {
         Intent intent = new Intent();
+        intent.putExtra("basketAmount", this.basketAmount);
         intent.putExtra("basket", this.basket);
         this.setResult(RETOUR, intent);
         this.finish();
     }
 
+    public void onClickBtnNext(View v) {
+        this.index++;
+        showPullInfo(this.index);
+        disableButtons();
+    }
+
+    public void onClickBtnPrev(View v) {
+        this.index--;
+        showPullInfo(this.index);
+        disableButtons();
+    }
+
+    public void onClickBtnBasket(View v) {
+        this.cancelImageButton.setEnabled(true);
+        this.basket.addArticle(this.listProduitToShow.get(this.index).getId(), sizeSpinner.getSelectedItem().toString(), colorSpinner.getSelectedItem().toString());
+        this.basketAmount += this.listProduitToShow.get(this.index).getPrice();
+        showToastAddProductToBasket();
+    }
+
+    public void onClickCancel (View v) {
+        Log.d("cancel", "on a pu cliquer");
+        if (this.basket.getBasketSize() > 0) {
+            CancelAlert alert = new CancelAlert();
+            alert.show(getSupportFragmentManager(), "Suppression");
+        }
+    }
+
+    public void onClickImage(View v) {
+        zoomImage();
+    }
+
+    public void onClickImageZoomed(View v) {
+        unzoomImage();
+    }
+
+    // ---- DIALOG ONCLICK ----
     @Override
     public void onClick(DialogInterface dialog, int which) {
         if (which == -1) {
-            this.basket.remove(this.basket.size() - 1);
-            Toast.makeText(this, "Vous avez retiré le dernier article du panier", Toast.LENGTH_LONG).show();
+            this.basket.removeAllArticles();
+            Toast.makeText(this, getString(R.string.clear_basket), Toast.LENGTH_LONG).show();
+            this.cancelImageButton.setEnabled(false);
         } else {
-            Toast.makeText(this, "Vous n'avez rien retiré du panier.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.cancel_clear_basket), Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    // ---- SPINNER EVENTS ----
+    public void checkSpinnerValue () {
+        if (!this.colorSpinner.getSelectedItem().toString().equals("Choix du coloris") &&  !this.sizeSpinner.getSelectedItem().toString().equals("Choix de la taille")) {
+            this.basketImageButton.setEnabled(true);
+        } else {
+            this.basketImageButton.setEnabled(false);
+        }
+    }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        this.checkSpinnerValue();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        this.basketImageButton.setEnabled(false);
     }
 }

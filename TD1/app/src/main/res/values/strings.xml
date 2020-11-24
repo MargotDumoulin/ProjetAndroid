@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Boutique MonPullMoche</string>
-    <string name="ajout_panier">Pull n°%d ajouté au panier</string>
+    <string name="add_pull_basket">Pull n°%d ajouté au panier</string>
+    <string name="add_bonnet_basket">Bonnet n°%d ajouté au panier</string>
+    <string name="add_article_basket">Article n°%d ajouté au panier</string>
+    <string name="basket_total">Total du panier: %.2f €</string>
+    <string name="clear_basket">Vous avez effacé votre panier.</string>
+    <string name="cancel_clear_basket">Vous n\'avez pas effacé votre panier.</string>
     <string name="confirm_phrase">Attention, vous allez annuler tous les achats effectués sur cette page. Etes-vous sûr ?</string>
     <string name="confirm_title">Demande de confirmation</string>
     <string name="confirm_yes">OUI</string>
