@@ -10,13 +10,15 @@
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="cursive"
+        android:textColor="@color/black"
         android:text="A Noël c'est moi qui tient les rennes."
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/priceTextView" />
 
     <Button
-        android:theme="@style/monstylebouton"
+        android:theme="@style/button_style"
         android:id="@+id/prevButton"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
@@ -28,7 +30,7 @@
         app:layout_constraintRight_toLeftOf="@id/productImageView" />
 
     <Button
-        android:theme="@style/monstylebouton"
+        android:theme="@style/button_style"
         android:id="@+id/nextButton"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
@@ -80,7 +82,6 @@
         android:onClick="onClickBtnBasket"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:background="@color/blue_200"
         app:srcCompat="@drawable/ic_baseline_add_shopping_cart_24" />
 
     <ImageButton
@@ -89,8 +90,7 @@
         android:layout_height="40dp"
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="40dp"
-        app:srcCompat="@android:drawable/ic_menu_revert"
-        android:background="@color/blue_200"
+        app:srcCompat="@drawable/baseline_undo_white_18dp"
         android:onClick="onClickCancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
@@ -103,9 +103,11 @@
         android:layout_marginTop="30dp"
         android:layout_marginBottom="20dp"
         android:maxLines="11"
+        android:padding="7dp"
+        android:textColor="@color/black"
         android:text="Un pull qui ravira les petits et les grands. Tricoté par d'authentiques grand-mères Australiennes, en laine 100% coton naturel issue d'une filière agriculture durable certifiée ISO-2560."
         app:layout_constraintTop_toBottomOf="@+id/titleTextView"
-        android:background="@color/red_200"
+        android:background="@drawable/cadre"
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
@@ -114,6 +116,7 @@
         android:layout_height="wrap_content"
         android:text="  Réalisé en 2020"
         android:background="@color/red_500"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
@@ -124,6 +127,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:text="Prix"
+        android:textColor="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/productImageView" />

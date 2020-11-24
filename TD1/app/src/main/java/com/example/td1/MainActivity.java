@@ -132,8 +132,8 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
         // -- SET VIEWS ON PULL --
         showPullInfo(this.index);
-        enableButtons(this.index);
-        disableButtons();
+        enablePrevNextButtons(this.index);
+        disableCancelBasketButtons();
 
         if (this.isImageZoomed) {
             zoomImage();
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         this.titleTextView.setText(this.listProduitToShow.get(index).getTitle());
 
         changeImageView(index);
-        enableButtons(index);
+        enablePrevNextButtons(index);
     }
 
     public void showToastAddProductToBasket() {
@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         this.pullImageView.setImageResource(id);
     }
 
-    public void enableButtons(int index) {
+    public void enablePrevNextButtons(int index) {
         if (index == 0 && index == (this.listProduitToShow.size() - 1)) {
             this.prevBtn.setEnabled(false);
             this.nextBtn.setEnabled(false);
@@ -218,7 +218,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         this.pullImageViewZoomed.setVisibility(View.INVISIBLE);
     }
 
-    public void disableButtons() {
+    public void disableCancelBasketButtons() {
         this.cancelImageButton.setEnabled(false);
         this.basketImageButton.setEnabled(false);
     }
@@ -254,13 +254,13 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     public void onClickBtnNext(View v) {
         this.index++;
         showPullInfo(this.index);
-        disableButtons();
+        disableCancelBasketButtons();
     }
 
     public void onClickBtnPrev(View v) {
         this.index--;
         showPullInfo(this.index);
-        disableButtons();
+        disableCancelBasketButtons();
     }
 
     public void onClickBtnBasket(View v) {
@@ -307,7 +307,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             this.basketImageButton.setEnabled(false);
         }
     }
-
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
