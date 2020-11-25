@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         this.listProduitToShow = new ArrayList<Produit>();
-        this.basket = new Panier(new ArrayList<Triplet<Integer, String, String>>());
 
         if (this.getIntent().getSerializableExtra("newProduct") != null) {
             Produit productToAdd = (Produit) this.getIntent().getSerializableExtra("newProduct");
@@ -71,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
         if (savedInstanceState != null) {
             this.listProduitToShow = (ArrayList<Produit>) savedInstanceState.getSerializable("listProduitToShow");
+            this.basket = (Panier) savedInstanceState.getSerializable("basket");
             this.index = savedInstanceState.getInt("index");
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
         } else {
@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             this.listProduitToShow.add(new Bonnet(5,1,112, "bonnet", "description", "UN BONNET"));
             this.isImageZoomed = false;
             this.index = 0;
+
+            this.basket = new Panier(new ArrayList<Triplet<Integer, String, String>>());
 
             this.idCateg = this.getIntent().getIntExtra("id_categ", -1);
             if (this.idCateg != -1) {
@@ -131,7 +133,8 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         // -- SET VIEWS ON PULL --
         showPullInfo(this.index);
         enablePrevNextButtons(this.index);
-        disableCancelBasketButtons();
+
+        if (this.basket.getBasketContent().isEmpty() || this.basket.getBasketContent() == null || this.basket.getBasketSize() < 0) { disableCancelBasketButtons(); }
 
         if (this.isImageZoomed) {
             zoomImage();
@@ -151,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
         outState.putInt("index", this.index);
         outState.putSerializable("listProduitToShow", this.listProduitToShow);
+        outState.putSerializable("basket", this.basket);
 
         if (this.pullImageViewZoomed.getVisibility() == View.VISIBLE) {
             outState.putBoolean("isImageZoomed", true);
@@ -242,6 +246,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
     // ---- ON CLICK EVENTS ----
     public void onClickGoBack (View v) {
+        Log.d("basket", String.valueOf(this.basket.getArticle(0).second));
         Intent intent = new Intent();
         intent.putExtra("basketAmount", this.basketAmount);
         intent.putExtra("basket", this.basket);
@@ -269,8 +274,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     }
 
     public void onClickCancel (View v) {
-        Log.d("cancel", "on a pu cliquer");
-        if (this.basket.getBasketSize() > 0) {
+        if (this.basket.getBasketSize() > 0 && this.basket != null) {
             CancelAlert alert = new CancelAlert();
             alert.show(getSupportFragmentManager(), "Suppression");
         }
@@ -288,13 +292,13 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     @Override
     public void onClick(DialogInterface dialog, int which) {
         if (which == -1) {
+            Log.d("basket", String.valueOf(this.basket.getArticle(0).second));
             this.basket.removeAllArticles();
             Toast.makeText(this, getString(R.string.clear_basket), Toast.LENGTH_LONG).show();
             this.cancelImageButton.setEnabled(false);
         } else {
             Toast.makeText(this, getString(R.string.cancel_clear_basket), Toast.LENGTH_LONG).show();
         }
-
     }
 
     // ---- SPINNER EVENTS ----

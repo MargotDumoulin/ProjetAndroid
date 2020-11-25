@@ -49,7 +49,7 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
         this.listCategories = new ArrayList<Categorie>();
         this.listCategories.add(new Categorie(0,"Pull","bear_hoodie"));
         this.listCategories.add(new Categorie(1,"Bonnet","bonnet"));
-
+        Log.d("null", "hop1");
     }
 
     public void onStart() {
@@ -61,21 +61,24 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
         this.lvCategories.setAdapter(adapter);
 
         this.catalogRadioButton = this.findViewById(R.id.catalogRadioButton);
-
         this.totalTextView = this.findViewById(R.id.totalTextView);
+
+        updateTotal();
+        Log.d("null", "hop2");
     }
 
-    public void addProduct(View v) {
+    public void onClickCreateProduct(View v) {
         Intent intent = new Intent(CategoriesActivity.this, NewProductActivity.class);
         startActivity(intent);
     }
 
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
-        if (this.basket.getBasketSize() > 0) {
-            outState.putDouble("basketAmount", this.basketAmount);
-            outState.putSerializable("basket", this.basket.getBasketContent());
+        if (this.basket != null) {
+            if (this.basket.getBasketSize() > 0 && !this.basket.getBasketContent().isEmpty()) {
+                outState.putDouble("basketAmount", this.basketAmount);
+                outState.putSerializable("basket", this.basket);
+            }
         }
     }
 
@@ -87,7 +90,10 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
             if (requestCode == MAIN_VENTE) {
                 Panier productsToAdd = (Panier) intent.getSerializableExtra("basket");
                 double basketAmountFromMainActivity = intent.getDoubleExtra("basketAmount", -1);
-                if (productsToAdd.getBasketSize() > 0 && basketAmountFromMainActivity != - 1) {
+
+                Log.d("null", String.valueOf(!productsToAdd.getBasketContent().isEmpty()));
+                if (!productsToAdd.getBasketContent().isEmpty()  && basketAmountFromMainActivity != - 1) {
+                    Log.d("null", String.valueOf(productsToAdd.getArticle(0).second));
                     this.updateBasket(productsToAdd, basketAmountFromMainActivity);
                 }
             } else if (requestCode == MAIN_CATALOGUE) {
@@ -109,12 +115,18 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void updateBasket(Panier productsToAdd, double basketAmountFromMainActivity)  {
+        if (this.basket == null) { this.basket = new Panier(new ArrayList<>()); }
+
         productsToAdd.getBasketContent().forEach(product -> {
-            this.basket.addArticle(product.first, product.second, product.third);
+                this.basket.addArticle(product.first, product.second, product.third);
             // As we don't have a database yet, we can't retrieve the product price with the product's id and add it to basketAmount.
             // Currently, we have to pass a variable with basketAmount from MainActivity to CategoriesActivity in order to get the amount to add.
         });
         this.basketAmount += basketAmountFromMainActivity;
+        updateTotal();
+    }
+
+    public void updateTotal() {
         this.totalTextView.setText(String.format(getString(R.string.basket_total), this.basketAmount));
     }
 }
