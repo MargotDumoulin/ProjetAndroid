@@ -2,8 +2,8 @@
 <resources>
     <dimen name="button_width">40dp</dimen>
     <dimen name="button_margin">10dp</dimen>
-    <dimen name="img_button_width">40dp</dimen>
-    <dimen name="img_button_height">40dp</dimen>
+    <dimen name="img_button_width">30dp</dimen>
+    <dimen name="img_button_height">30dp</dimen>
     <dimen name="img_button_margin_side">20dp</dimen>
     <dimen name="img_button_margin_bottom">40dp</dimen>
     <dimen name="img_view_width">150dp</dimen>

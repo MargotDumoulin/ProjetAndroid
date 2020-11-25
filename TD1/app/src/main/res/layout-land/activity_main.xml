@@ -49,12 +49,13 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/descriptionTextView"
         app:layout_constraintTop_toBottomOf="@+id/prevButton"
+        app:layout_constraintBottom_toTopOf="@id/cancelImageButton"
         app:srcCompat="@drawable/img" />
 
     <Spinner
         android:id="@+id/sizeSpinner"
         android:entries="@array/taille"
-        android:layout_width="200dp"
+        android:layout_width="190dp"
         android:layout_height="@dimen/spinner_height"
         android:layout_marginTop="40dp"
         android:layout_marginLeft="@dimen/spinner_margin_left_landscape"
@@ -64,10 +65,12 @@
 
     <Spinner
         android:id="@+id/colorSpinner"
-        android:layout_width="200dp"
+        android:layout_width="190dp"
         android:layout_height="@dimen/spinner_height"
+        android:textSize="sp"
         android:layout_marginLeft="@dimen/spinner_margin_left_landscape"
         android:entries="@array/coloris"
+        android:layout_marginTop="10dp"
         app:layout_constraintLeft_toRightOf="@+id/descriptionTextView"
         app:layout_constraintTop_toBottomOf="@+id/sizeSpinner" />
 
@@ -95,9 +98,9 @@
 
     <TextView
         android:id="@+id/descriptionTextView"
-        android:layout_width="250sp"
-        android:layout_height="100sp"
-        android:maxLines="5"
+        android:layout_width="190sp"
+        android:layout_height="0sp"
+        android:maxLines="4"
         android:background="@drawable/cadre"
         android:layout_marginTop="40dp"
         android:padding="7dp"
@@ -122,12 +125,12 @@
         android:id="@+id/priceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginBottom="35dp"
         android:text="Prix"
         android:textColor="@color/black"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/productImageView" />
+        app:layout_constraintLeft_toRightOf="@id/cancelImageButton"
+        app:layout_constraintRight_toLeftOf="@id/cartImageButton"
+        app:layout_constraintBottom_toTopOf="@id/footerTextView" />
 
     <View
         android:id="@+id/blankView"

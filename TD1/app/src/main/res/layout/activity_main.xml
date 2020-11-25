@@ -1,152 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/titleTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="cursive"
-        android:textColor="@color/black"
-        android:text="A Noël c'est moi qui tient les rennes."
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/priceTextView" />
-
-    <Button
-        android:theme="@style/button_style"
-        android:id="@+id/prevButton"
-        android:layout_width="@dimen/button_width"
-        android:layout_height="wrap_content"
-        android:text="&lt;"
-        android:onClick="onClickBtnPrev"
-        android:layout_margin="@dimen/button_margin"
-        app:layout_constraintTop_toTopOf="@id/productImageView"
-        app:layout_constraintBottom_toBottomOf="@id/productImageView"
-        app:layout_constraintRight_toLeftOf="@id/productImageView" />
-
-    <Button
-        android:theme="@style/button_style"
-        android:id="@+id/nextButton"
-        android:layout_width="@dimen/button_width"
-        android:layout_height="wrap_content"
-        android:text="&gt;"
-        android:onClick="onClickBtnNext"
-        android:layout_margin="@dimen/button_margin"
-        app:layout_constraintLeft_toRightOf="@id/productImageView"
-        app:layout_constraintTop_toTopOf="@id/productImageView"
-        app:layout_constraintBottom_toBottomOf="@id/productImageView" />
-
-    <ImageView
-        android:id="@+id/productImageView"
-        android:onClick="onClickImage"
-        android:scaleType="fitCenter"
-        android:layout_width="@dimen/img_view_width"
-        android:layout_height="@dimen/img_view_height"
-        android:layout_margin="40dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/img" />
-
-
-    <Spinner
-        android:id="@+id/sizeSpinner"
-        android:entries="@array/taille"
-        android:layout_width="@dimen/spinner_width"
-        android:layout_height="@dimen/spinner_height"
-        android:layout_margin="@dimen/spinner_margin"
-        app:layout_constraintTop_toBottomOf="@id/titleTextView"
-        app:layout_constraintLeft_toRightOf="@+id/descriptionTextView"
-        app:layout_constraintBottom_toTopOf="@+id/colorSpinner" />
-
-    <Spinner
-        android:id="@+id/colorSpinner"
-        android:layout_width="@dimen/spinner_width"
-        android:layout_height="@dimen/spinner_height"
-        android:layout_margin="@dimen/spinner_margin"
-        android:entries="@array/coloris"
-        app:layout_constraintLeft_toRightOf="@+id/descriptionTextView"
-        app:layout_constraintTop_toBottomOf="@+id/sizeSpinner" />
-
-    <ImageButton
-        android:id="@+id/cartImageButton"
-        android:layout_width="@dimen/img_button_width"
-        android:layout_height="@dimen/img_button_height"
-        android:layout_marginRight="@dimen/img_button_margin_side"
-        android:layout_marginBottom="@dimen/img_button_margin_bottom"
-        android:onClick="onClickBtnBasket"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/ic_baseline_add_shopping_cart_24" />
-
-    <ImageButton
-        android:id="@+id/cancelImageButton"
-        android:layout_width="@dimen/img_button_width"
-        android:layout_height="@dimen/img_button_height"
-        android:layout_marginLeft="@dimen/img_button_margin_side"
-        android:layout_marginBottom="@dimen/img_button_margin_bottom"
-        app:srcCompat="@drawable/baseline_undo_white_18dp"
-        android:onClick="onClickCancel"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-    <TextView
-        android:id="@+id/descriptionTextView"
-        android:layout_width="120sp"
-        android:layout_height="0sp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="20dp"
-        android:maxLines="11"
-        android:padding="7dp"
-        android:textColor="@color/black"
-        android:text="Un pull qui ravira les petits et les grands. Tricoté par d'authentiques grand-mères Australiennes, en laine 100% coton naturel issue d'une filière agriculture durable certifiée ISO-2560."
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView"
-        android:background="@drawable/cadre"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-    <TextView
-        android:id="@+id/footerTextView"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="  Réalisé en 2020"
-        android:background="@color/red_500"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/priceTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:text="Prix"
-        android:textColor="@color/black"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/productImageView" />
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="cursive"
+            android:textColor="@color/black"
+            android:text="A Noël c'est moi qui tient les rennes."
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/priceTextView" />
 
-    <View
-        android:id="@+id/blankView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:elevation="2dp"
-        android:visibility="invisible"
-        android:background="#000000" />
+        <Button
+            android:theme="@style/button_style"
+            android:id="@+id/prevButton"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="wrap_content"
+            android:text="&lt;"
+            android:onClick="onClickBtnPrev"
+            android:layout_margin="@dimen/button_margin"
+            app:layout_constraintTop_toTopOf="@id/productImageView"
+            app:layout_constraintBottom_toBottomOf="@id/productImageView"
+            app:layout_constraintRight_toLeftOf="@id/productImageView" />
 
-    <ImageView
-        android:id="@+id/expandedImageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:elevation="3dp"
-        android:onClick="onClickImageZoomed"
-        android:visibility="invisible"
-        app:srcCompat="@drawable/img" />
+        <Button
+            android:theme="@style/button_style"
+            android:id="@+id/nextButton"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="wrap_content"
+            android:text="&gt;"
+            android:onClick="onClickBtnNext"
+            android:layout_margin="@dimen/button_margin"
+            app:layout_constraintLeft_toRightOf="@id/productImageView"
+            app:layout_constraintTop_toTopOf="@id/productImageView"
+            app:layout_constraintBottom_toBottomOf="@id/productImageView" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/productImageView"
+            android:onClick="onClickImage"
+            android:scaleType="fitCenter"
+            android:layout_width="@dimen/img_view_width"
+            android:layout_height="@dimen/img_view_height"
+            android:layout_margin="40dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/img" />
+
+
+        <Spinner
+            android:id="@+id/sizeSpinner"
+            android:entries="@array/taille"
+            android:layout_width="@dimen/spinner_width"
+            android:layout_height="@dimen/spinner_height"
+            android:layout_margin="@dimen/spinner_margin"
+            app:layout_constraintTop_toBottomOf="@id/titleTextView"
+            app:layout_constraintLeft_toRightOf="@+id/descriptionTextView"
+            app:layout_constraintBottom_toTopOf="@+id/colorSpinner" />
+
+        <Spinner
+            android:id="@+id/colorSpinner"
+            android:layout_width="@dimen/spinner_width"
+            android:layout_height="@dimen/spinner_height"
+            android:layout_margin="@dimen/spinner_margin"
+            android:entries="@array/coloris"
+            app:layout_constraintLeft_toRightOf="@+id/descriptionTextView"
+            app:layout_constraintTop_toBottomOf="@+id/sizeSpinner" />
+
+        <ImageButton
+            android:id="@+id/cartImageButton"
+            android:layout_width="@dimen/img_button_width"
+            android:layout_height="@dimen/img_button_height"
+            android:layout_marginRight="@dimen/img_button_margin_side"
+            android:layout_marginBottom="@dimen/img_button_margin_bottom"
+            android:onClick="onClickBtnBasket"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:srcCompat="@drawable/ic_baseline_add_shopping_cart_24" />
+
+        <ImageButton
+            android:id="@+id/cancelImageButton"
+            android:layout_width="@dimen/img_button_width"
+            android:layout_height="@dimen/img_button_height"
+            android:layout_marginLeft="@dimen/img_button_margin_side"
+            android:layout_marginBottom="@dimen/img_button_margin_bottom"
+            app:srcCompat="@drawable/baseline_undo_white_18dp"
+            android:onClick="onClickCancel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <TextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="120sp"
+            android:layout_height="0sp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:maxLines="11"
+            android:padding="7dp"
+            android:textColor="@color/black"
+            android:text="Un pull qui ravira les petits et les grands. Tricoté par d'authentiques grand-mères Australiennes, en laine 100% coton naturel issue d'une filière agriculture durable certifiée ISO-2560."
+            app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+            android:background="@drawable/cadre"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <TextView
+            android:id="@+id/footerTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="  Réalisé en 2020"
+            android:background="@color/red_500"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <TextView
+            android:id="@+id/priceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="Prix"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/productImageView" />
+
+        <View
+            android:id="@+id/blankView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="2dp"
+            android:visibility="invisible"
+            android:background="#000000" />
+
+        <ImageView
+            android:id="@+id/expandedImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="3dp"
+            android:onClick="onClickImageZoomed"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/img" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
