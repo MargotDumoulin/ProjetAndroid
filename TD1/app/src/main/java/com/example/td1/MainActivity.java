@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         if (savedInstanceState != null) {
             this.listProduitToShow = (ArrayList<Produit>) savedInstanceState.getSerializable("listProduitToShow");
             this.basket = (Panier) savedInstanceState.getSerializable("basket");
+            this.basketAmount = savedInstanceState.getDouble("basketAmount");
             this.index = savedInstanceState.getInt("index");
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
         } else {
@@ -155,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         outState.putInt("index", this.index);
         outState.putSerializable("listProduitToShow", this.listProduitToShow);
         outState.putSerializable("basket", this.basket);
+        outState.putDouble("basketAmount", this.basketAmount);
 
         if (this.pullImageViewZoomed.getVisibility() == View.VISIBLE) {
             outState.putBoolean("isImageZoomed", true);
@@ -246,7 +248,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
     // ---- ON CLICK EVENTS ----
     public void onClickGoBack (View v) {
-        Log.d("basket", String.valueOf(this.basket.getArticle(0).second));
         Intent intent = new Intent();
         intent.putExtra("basketAmount", this.basketAmount);
         intent.putExtra("basket", this.basket);
@@ -292,7 +293,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     @Override
     public void onClick(DialogInterface dialog, int which) {
         if (which == -1) {
-            Log.d("basket", String.valueOf(this.basket.getArticle(0).second));
             this.basket.removeAllArticles();
             Toast.makeText(this, getString(R.string.clear_basket), Toast.LENGTH_LONG).show();
             this.cancelImageButton.setEnabled(false);

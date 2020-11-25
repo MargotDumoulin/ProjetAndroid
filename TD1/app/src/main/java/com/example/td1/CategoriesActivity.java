@@ -89,6 +89,7 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
         if (resultCode == MainActivity.RETOUR) {
             if (requestCode == MAIN_VENTE) {
                 Panier productsToAdd = (Panier) intent.getSerializableExtra("basket");
+                Log.d("basket_retour", String.valueOf(productsToAdd.getArticle(0).second));
                 double basketAmountFromMainActivity = intent.getDoubleExtra("basketAmount", -1);
 
                 Log.d("null", String.valueOf(!productsToAdd.getBasketContent().isEmpty()));
