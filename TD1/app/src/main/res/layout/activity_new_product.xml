@@ -35,7 +35,8 @@
             android:hint="Titre"
             android:ems="10"
             app:layout_constraintTop_toBottomOf="@id/titletextView"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/productDescriptionEditText" />
 
         <EditText
             android:id="@+id/productDescriptionEditText"
@@ -48,7 +49,8 @@
             android:ems="10"
             android:inputType="textMultiLine"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/productTitleEditText" />
+            app:layout_constraintTop_toBottomOf="@+id/productTitleEditText"
+            app:layout_constraintBottom_toTopOf="@id/productPriceEditText" />
 
         <EditText
             android:id="@+id/productPriceEditText"
@@ -60,18 +62,19 @@
             android:ems="10"
             android:inputType="numberDecimal"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/productDescriptionEditText" />
+            app:layout_constraintTop_toBottomOf="@+id/productDescriptionEditText"
+            app:layout_constraintBottom_toTopOf="@id/createButton" />
 
         <Button
             android:id="@+id/createButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_margin="20dp"
             android:text="Créer"
             android:onClick="onClickAddProduct"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/productPriceEditText" />
+            app:layout_constraintTop_toBottomOf="@+id/productPriceEditText"
+            app:layout_constraintBottom_toTopOf="@id/footerTextView"/>
 
         <TextView
             android:id="@+id/footerTextView"
