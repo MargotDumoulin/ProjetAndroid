@@ -26,15 +26,12 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
     private static final int MAIN_CATALOGUE = 1;
 
     private ListView lvCategories;
-    private RadioButton sellRadioButton;
     private RadioButton catalogRadioButton;
     private TextView totalTextView;
     private int modeSelected;
     private Panier basket;
     private ArrayList<Categorie> listCategories;
     private double basketAmount;
-
-    public static final int RETOUR = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +60,6 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
         CategoriesAdapter adapter = new CategoriesAdapter(this, this.listCategories);
         this.lvCategories.setAdapter(adapter);
 
-        this.sellRadioButton = this.findViewById(R.id.sellRadioButton);
         this.catalogRadioButton = this.findViewById(R.id.catalogRadioButton);
 
         this.totalTextView = this.findViewById(R.id.totalTextView);

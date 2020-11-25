@@ -20,7 +20,6 @@ public class NewProductActivity extends AppCompatActivity {
     private EditText priceEditText;
     private EditText descriptionEditText;
 
-    private static final int MAIN_VENTE = 0;
     private static final int MAIN_CATALOGUE = 1;
 
     @Override

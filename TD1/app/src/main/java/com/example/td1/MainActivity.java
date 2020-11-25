@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     private Spinner sizeSpinner;
 
     private static final int MAIN_VENTE = 0;
-    private static final int MAIN_CATALOGUE = 1;
 
     private int index;
     private ArrayList<Produit> listProduitToShow;
