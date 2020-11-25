@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
         } else {
             // -- INITIALIZE ARRAYLIST --
-            this.listProduitToShow.add(new Pull(0, 0,45.15, "jigglypuff", "Un très beau pull, très doux.", "Un pull pokémon"));
+            this.listProduitToShow.add(new Pull(0, 0,45.15, "jigglypuff", "Un pull qui ravira les petits et les grands. Tricoté par d'authentiques grand-mères Australiennes.", "Un pull pokémon"));
             this.listProduitToShow.add(new Pull(1,0,22.35, "sweatshirt", "Incroyable sweatshirt, vous réchauffera le coeur en hiver et la penderie en été.", "Un joli sweatshirt"));
             this.listProduitToShow.add(new Pull(2,0,33, "bunny_hoodie", "Description incroyable.", "Des petits lapins"));
             this.listProduitToShow.add(new Pull(3,0,26, "bear_hoodie", "Wahou.", "Un petit ours"));

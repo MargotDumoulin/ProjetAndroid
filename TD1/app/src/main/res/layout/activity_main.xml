@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:fillViewport="true">
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".MainActivity"
+        xmlns:tools="http://schemas.android.com/tools">
 
-        <TextView
-            android:id="@+id/titleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="cursive"
-            android:textColor="@color/black"
-            android:text="A Noël c'est moi qui tient les rennes."
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/priceTextView" />
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="cursive"
+        android:text="A Noël c'est moi qui tient les rennes."
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/priceTextView" />
 
         <Button
             android:theme="@style/button_style"
@@ -107,15 +103,15 @@
 
         <TextView
             android:id="@+id/descriptionTextView"
-            android:layout_width="120sp"
+            android:layout_width="133sp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="30dp"
-            android:layout_marginBottom="20dp"
             android:maxLines="11"
             android:padding="7dp"
+            android:textSize="12sp"
             android:textColor="@color/black"
-            android:text="Un pull qui ravira les petits et les grands. Tricoté par d'authentiques grand-mères Australiennes, en laine 100% coton naturel issue d'une filière agriculture durable certifiée ISO-2560."
+            android:text="Un pull qui ravira les petits et les grands. Tricoté par d'authentiques grand-mères Australiennes."
             app:layout_constraintTop_toBottomOf="@+id/titleTextView"
             android:background="@drawable/cadre"
             app:layout_constraintLeft_toLeftOf="parent" />
@@ -131,22 +127,23 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />
 
-        <TextView
-            android:id="@+id/priceTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="Prix"
-            android:textColor="@color/black"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/productImageView" />
+    <TextView
+        android:id="@+id/priceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="Prix"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/productImageView" />
 
         <View
             android:id="@+id/blankView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:elevation="2dp"
+            android:elevation="3dp"
             android:visibility="invisible"
             android:background="#000000" />
 
@@ -154,11 +151,10 @@
             android:id="@+id/expandedImageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:elevation="3dp"
+            android:elevation="4dp"
             android:onClick="onClickImageZoomed"
             android:visibility="invisible"
             app:srcCompat="@drawable/img" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
 
