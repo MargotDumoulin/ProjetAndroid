@@ -53,26 +53,28 @@
         app:srcCompat="@drawable/img" />
 
     <Spinner
+        android:theme="@style/spinner_style"
         android:id="@+id/sizeSpinner"
         android:entries="@array/taille"
-        android:layout_width="190dp"
+        android:layout_width="140dp"
         android:layout_height="@dimen/spinner_height"
-        android:layout_marginTop="40dp"
         android:layout_marginLeft="@dimen/spinner_margin_left_landscape"
-        app:layout_constraintTop_toBottomOf="@id/titleTextView"
+        app:layout_constraintTop_toBottomOf="@id/nextButton"
         app:layout_constraintLeft_toRightOf="@+id/descriptionTextView"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/colorSpinner" />
 
     <Spinner
+        android:theme="@style/spinner_style"
         android:id="@+id/colorSpinner"
-        android:layout_width="190dp"
+        android:layout_width="140dp"
         android:layout_height="@dimen/spinner_height"
-        android:textSize="sp"
         android:layout_marginLeft="@dimen/spinner_margin_left_landscape"
         android:entries="@array/coloris"
-        android:layout_marginTop="10dp"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/descriptionTextView"
-        app:layout_constraintTop_toBottomOf="@+id/sizeSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/sizeSpinner"
+        app:layout_constraintBottom_toTopOf="@id/cartImageButton"/>
 
     <ImageButton
         android:id="@+id/cartImageButton"
@@ -106,7 +108,7 @@
         android:padding="7dp"
         android:textColor="@color/black"
         android:text="Un pull qui ravira les petits et les grands. Tricoté par d'authentiques grand-mères Australiennes, en laine 100% coton naturel issue d'une filière agriculture durable certifiée ISO-2560."
-        app:layout_constraintLeft_toLeftOf="@id/productImageView"
+        app:layout_constraintLeft_toRightOf="@id/productImageView"
         app:layout_constraintRight_toLeftOf="@id/colorSpinner"
         app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 

@@ -61,6 +61,7 @@
 
 
         <Spinner
+            android:theme="@style/spinner_style"
             android:id="@+id/sizeSpinner"
             android:entries="@array/taille"
             android:layout_width="@dimen/spinner_width"
@@ -68,16 +69,19 @@
             android:layout_margin="@dimen/spinner_margin"
             app:layout_constraintTop_toBottomOf="@id/titleTextView"
             app:layout_constraintLeft_toRightOf="@+id/descriptionTextView"
-            app:layout_constraintBottom_toTopOf="@+id/colorSpinner" />
+            app:layout_constraintBottom_toTopOf="@+id/colorSpinner"
+            app:layout_constraintRight_toRightOf="parent" />
 
         <Spinner
+            android:theme="@style/spinner_style"
             android:id="@+id/colorSpinner"
             android:layout_width="@dimen/spinner_width"
             android:layout_height="@dimen/spinner_height"
             android:layout_margin="@dimen/spinner_margin"
             android:entries="@array/coloris"
             app:layout_constraintLeft_toRightOf="@+id/descriptionTextView"
-            app:layout_constraintTop_toBottomOf="@+id/sizeSpinner" />
+            app:layout_constraintTop_toBottomOf="@+id/sizeSpinner"
+            app:layout_constraintRight_toRightOf="parent"/>
 
         <ImageButton
             android:id="@+id/cartImageButton"

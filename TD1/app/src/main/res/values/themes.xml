@@ -15,6 +15,8 @@
         <item name="colorAccent">@color/red_500</item>
         <item name="buttonStyle">@style/button_style</item>
         <item name="imageButtonStyle">@style/img_button_style</item>
+        <item name="android:spinnerItemStyle">@style/spinner_style</item>
+        <item name="android:spinnerDropDownItemStyle">@style/spinner_dropdown_style</item>
     </style>
 
     <style name="button_style" parent="Widget.AppCompat.Button.Colored">
@@ -23,5 +25,16 @@
     <style name="img_button_style" parent="Widget.AppCompat.ImageButton">
         <item name="android:background">@drawable/img_button_states</item>
         <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="spinner_style" parent="ThemeOverlay.AppCompat">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="spinner_dropdown_style" parent="ThemeOverlay.AppCompat">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black</item>
+
     </style>
 </resources>
