@@ -20,11 +20,11 @@
     <Button
         android:theme="@style/button_style"
         android:id="@+id/prevButton"
-        android:layout_width="40dp"
+        android:layout_width="@dimen/button_width"
         android:layout_height="wrap_content"
         android:text="&lt;"
         android:onClick="onClickBtnPrev"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/button_margin"
         app:layout_constraintTop_toTopOf="@id/productImageView"
         app:layout_constraintBottom_toBottomOf="@id/productImageView"
         app:layout_constraintRight_toLeftOf="@id/productImageView" />
@@ -32,11 +32,11 @@
     <Button
         android:theme="@style/button_style"
         android:id="@+id/nextButton"
-        android:layout_width="40dp"
+        android:layout_width="@dimen/button_width"
         android:layout_height="wrap_content"
         android:text="&gt;"
         android:onClick="onClickBtnNext"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/button_margin"
         app:layout_constraintLeft_toRightOf="@id/productImageView"
         app:layout_constraintTop_toTopOf="@id/productImageView"
         app:layout_constraintBottom_toBottomOf="@id/productImageView" />
@@ -45,8 +45,8 @@
         android:id="@+id/productImageView"
         android:onClick="onClickImage"
         android:scaleType="fitCenter"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="@dimen/img_view_width"
+        android:layout_height="@dimen/img_view_height"
         android:layout_margin="40dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -57,28 +57,28 @@
     <Spinner
         android:id="@+id/sizeSpinner"
         android:entries="@array/taille"
-        android:layout_width="190dp"
-        android:layout_height="43dp"
-        android:layout_margin="20dp"
+        android:layout_width="@dimen/spinner_width"
+        android:layout_height="@dimen/spinner_height"
+        android:layout_margin="@dimen/spinner_margin"
         app:layout_constraintTop_toBottomOf="@id/titleTextView"
         app:layout_constraintLeft_toRightOf="@+id/descriptionTextView"
         app:layout_constraintBottom_toTopOf="@+id/colorSpinner" />
 
     <Spinner
         android:id="@+id/colorSpinner"
-        android:layout_width="190dp"
-        android:layout_height="43dp"
-        android:layout_margin="20dp"
+        android:layout_width="@dimen/spinner_width"
+        android:layout_height="@dimen/spinner_height"
+        android:layout_margin="@dimen/spinner_margin"
         android:entries="@array/coloris"
         app:layout_constraintLeft_toRightOf="@+id/descriptionTextView"
         app:layout_constraintTop_toBottomOf="@+id/sizeSpinner" />
 
     <ImageButton
         android:id="@+id/cartImageButton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="40dp"
+        android:layout_width="@dimen/img_button_width"
+        android:layout_height="@dimen/img_button_height"
+        android:layout_marginRight="@dimen/img_button_margin_side"
+        android:layout_marginBottom="@dimen/img_button_margin_bottom"
         android:onClick="onClickBtnBasket"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -86,10 +86,10 @@
 
     <ImageButton
         android:id="@+id/cancelImageButton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="40dp"
+        android:layout_width="@dimen/img_button_width"
+        android:layout_height="@dimen/img_button_height"
+        android:layout_marginLeft="@dimen/img_button_margin_side"
+        android:layout_marginBottom="@dimen/img_button_margin_bottom"
         app:srcCompat="@drawable/baseline_undo_white_18dp"
         android:onClick="onClickCancel"
         app:layout_constraintBottom_toBottomOf="parent"
