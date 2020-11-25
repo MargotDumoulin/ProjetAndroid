@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     private double basketAmount;
     private int idCateg;
 
-    // TODO: vérifier cette variable (public ou private ?)
     public static final int RETOUR = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
