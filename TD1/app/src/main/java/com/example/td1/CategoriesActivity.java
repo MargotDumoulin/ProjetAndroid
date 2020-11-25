@@ -49,7 +49,7 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
         this.listCategories = new ArrayList<Categorie>();
         this.listCategories.add(new Categorie(0,"Pull","bear_hoodie"));
         this.listCategories.add(new Categorie(1,"Bonnet","bonnet"));
-        Log.d("null", "hop1");
+        this.listCategories.add(new Categorie(2,"Pantalon","pantalon"));
     }
 
     public void onStart() {
@@ -64,7 +64,6 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
         this.totalTextView = this.findViewById(R.id.totalTextView);
 
         updateTotal();
-        Log.d("null", "hop2");
     }
 
     public void onClickCreateProduct(View v) {
@@ -89,7 +88,6 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
         if (resultCode == MainActivity.RETOUR) {
             if (requestCode == MAIN_VENTE) {
                 Panier productsToAdd = (Panier) intent.getSerializableExtra("basket");
-                Log.d("basket_retour", String.valueOf(productsToAdd.getArticle(0).second));
                 double basketAmountFromMainActivity = intent.getDoubleExtra("basketAmount", -1);
 
                 Log.d("null", String.valueOf(!productsToAdd.getBasketContent().isEmpty()));

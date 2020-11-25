@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.td1.modele.Bonnet;
 import com.example.td1.modele.Categorie;
 import com.example.td1.modele.Panier;
+import com.example.td1.modele.Pantalon;
 import com.example.td1.modele.Produit;
 import com.example.td1.modele.Pull;
 import com.example.td1.utils.Triplet;
@@ -76,12 +77,14 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
         } else {
             // -- INITIALIZE ARRAYLIST --
-            this.listProduitToShow.add(new Pull(0, 0,45.15, "jigglypuff", "Waw ça c'est du pull tu peux me croire.", "title1"));
-            this.listProduitToShow.add(new Pull(1,0,22.35, "sweatshirt", "description", "title2"));
-            this.listProduitToShow.add(new Pull(2,0,33, "bunny_hoodie", "description", "title3"));
-            this.listProduitToShow.add(new Pull(3,0,26, "bear_hoodie", "description", "title4"));
-            this.listProduitToShow.add(new Pull(4,0,12, "christmas_pullover", "description", "title5"));
-            this.listProduitToShow.add(new Bonnet(5,1,112, "bonnet", "description", "UN BONNET"));
+            this.listProduitToShow.add(new Pull(0, 0,45.15, "jigglypuff", "Un très beau pull, très doux.", "Un pull pokémon"));
+            this.listProduitToShow.add(new Pull(1,0,22.35, "sweatshirt", "Incroyable sweatshirt, vous réchauffera le coeur en hiver et la penderie en été.", "Un joli sweatshirt"));
+            this.listProduitToShow.add(new Pull(2,0,33, "bunny_hoodie", "Description incroyable.", "Des petits lapins"));
+            this.listProduitToShow.add(new Pull(3,0,26, "bear_hoodie", "Wahou.", "Un petit ours"));
+            this.listProduitToShow.add(new Pull(4,0,12, "christmas_pullover", "Enfin! Un pull de Noël! LE Pull de Noël!", "Un pullover de Noël, magique"));
+            this.listProduitToShow.add(new Bonnet(5,1,112, "bonnet", "A quoi pourrait-on s'attendre d'autre ?", "Un bonnet. Rien de plus."));
+            this.listProduitToShow.add(new Pantalon(6,2,10.5, "pantalon", "Un pantalon tout ce qu'il y a de plus normal.", "Un super pantalon"));
+            this.listProduitToShow.add(new Pantalon(8,2,80.5, "green_pants", "Il est pas très beau ce pantalon.", "Un pantalon un peu moins bien"));
             this.isImageZoomed = false;
             this.index = 0;
 
@@ -197,10 +200,15 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         if (index == 0 && index == (this.listProduitToShow.size() - 1)) {
             this.prevBtn.setEnabled(false);
             this.nextBtn.setEnabled(false);
-        } else if (index == 0) {
+        } else if (index == 0 && (this.listProduitToShow.size() - 1) > 1) {
+            this.prevBtn.setEnabled(true);
             this.prevBtn.setEnabled(false);
-        } else if (index == (this.listProduitToShow.size() - 1)) {
+        } else if (index == (this.listProduitToShow.size() - 1) && index != 0) {
+            this.prevBtn.setEnabled(true);
             this.nextBtn.setEnabled(false);
+        } else if (index == 0 && (this.listProduitToShow.size() - 1) != 0) {
+            this.prevBtn.setEnabled(false);
+            this.nextBtn.setEnabled(true);
         } else {
             this.prevBtn.setEnabled(true);
             this.nextBtn.setEnabled(true);
