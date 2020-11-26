@@ -1,23 +1,10 @@
 package com.example.td1.modele;
 
-import androidx.appcompat.app.AppCompatActivity;
+public class Produit extends Base {
 
-import android.os.Bundle;
-import android.os.Parcelable;
-
-import com.example.td1.R;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-
-public class Produit extends Base implements Serializable {
-
-    protected int id;
     protected int idCategorie;
     protected double price;
-    protected String imgSrc;
     protected String description;
-    protected String title;
 
     public Produit(int id, int idCategorie, double price, String imgSrc, String description, String title) {
         super(id, imgSrc, title);
