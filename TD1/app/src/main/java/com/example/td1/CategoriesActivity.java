@@ -52,6 +52,7 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
         this.listCategories.add(new Categorie(2,"Pantalon","pantalon"));
     }
 
+    @Override
     public void onStart() {
         super.onStart();
         this.lvCategories = this.findViewById(R.id.categoriesListView);
@@ -71,6 +72,7 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
         startActivity(intent);
     }
 
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (this.basket != null) {

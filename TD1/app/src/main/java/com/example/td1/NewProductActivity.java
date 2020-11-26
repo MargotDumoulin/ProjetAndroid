@@ -4,15 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.td1.modele.Pull;
+import com.example.td1.modele.Produit;
 
 public class NewProductActivity extends AppCompatActivity {
 
@@ -58,7 +56,7 @@ public class NewProductActivity extends AppCompatActivity {
     public void onClickAddProduct(View v) {
         if (!this.titleEditText.getText().toString().equals("") && !this.descriptionEditText.getText().toString().equals("") && !this.priceEditText.getText().toString().equals("")) {
             Intent intent = new Intent(NewProductActivity.this, MainActivity.class);
-            intent.putExtra("newProduct", new Pull(5, 0, Double.parseDouble(String.valueOf(this.priceEditText.getText())), "img", String.valueOf(this.descriptionEditText.getText()), String.valueOf(this.titleEditText.getText())));
+            intent.putExtra("newProduct", new Produit(5, 0, Double.parseDouble(String.valueOf(this.priceEditText.getText())), "img", String.valueOf(this.descriptionEditText.getText()), String.valueOf(this.titleEditText.getText())));
             intent.putExtra("id_categ", 0);
             intent.putExtra("requestCode", MAIN_CATALOGUE);
             startActivity(intent);

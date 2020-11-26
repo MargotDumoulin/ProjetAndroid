@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,12 +17,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.td1.modele.Bonnet;
-import com.example.td1.modele.Categorie;
 import com.example.td1.modele.Panier;
-import com.example.td1.modele.Pantalon;
 import com.example.td1.modele.Produit;
-import com.example.td1.modele.Pull;
 import com.example.td1.utils.Triplet;
 
 import java.util.ArrayList;
@@ -77,14 +72,14 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
         } else {
             // -- INITIALIZE ARRAYLIST --
-            this.listProduitToShow.add(new Pull(0, 0,45.15, "jigglypuff", "Un pull qui ravira les petits et les grands. Tricoté par d'authentiques grand-mères Australiennes.", "Un pull pokémon"));
-            this.listProduitToShow.add(new Pull(1,0,22.35, "sweatshirt", "Incroyable sweatshirt, vous réchauffera le coeur en hiver et la penderie en été.", "Un joli sweatshirt"));
-            this.listProduitToShow.add(new Pull(2,0,33, "bunny_hoodie", "Description incroyable.", "Des petits lapins"));
-            this.listProduitToShow.add(new Pull(3,0,26, "bear_hoodie", "Wahou.", "Un petit ours"));
-            this.listProduitToShow.add(new Pull(4,0,12, "christmas_pullover", "Enfin! Un pull de Noël! LE Pull de Noël!", "Un pullover de Noël, magique"));
-            this.listProduitToShow.add(new Bonnet(5,1,112, "bonnet", "A quoi pourrait-on s'attendre d'autre ?", "Un bonnet. Rien de plus."));
-            this.listProduitToShow.add(new Pantalon(6,2,10.5, "pantalon", "Un pantalon tout ce qu'il y a de plus normal.", "Un super pantalon"));
-            this.listProduitToShow.add(new Pantalon(8,2,80.5, "green_pants", "Il est pas très beau ce pantalon.", "Un pantalon un peu moins bien"));
+            this.listProduitToShow.add(new Produit(0, 0,45.15, "jigglypuff", "Un pull qui ravira les petits et les grands. Tricoté par d'authentiques grand-mères Australiennes.", "Un pull pokémon"));
+            this.listProduitToShow.add(new Produit(1,0,22.35, "sweatshirt", "Incroyable sweatshirt, vous réchauffera le coeur en hiver et la penderie en été.", "Un joli sweatshirt"));
+            this.listProduitToShow.add(new Produit(2,0,33, "bunny_hoodie", "Description incroyable.", "Des petits lapins"));
+            this.listProduitToShow.add(new Produit(3,0,26, "bear_hoodie", "Wahou.", "Un petit ours"));
+            this.listProduitToShow.add(new Produit(4,0,12, "christmas_pullover", "Enfin! Un pull de Noël! LE Pull de Noël!", "Un pullover de Noël, magique"));
+            this.listProduitToShow.add(new Produit(5,1,112, "bonnet", "A quoi pourrait-on s'attendre d'autre ?", "Un bonnet. Rien de plus."));
+            this.listProduitToShow.add(new Produit(6,2,10.5, "pantalon", "Un pantalon tout ce qu'il y a de plus normal.", "Un super pantalon"));
+            this.listProduitToShow.add(new Produit(8,2,80.5, "green_pants", "Il est pas très beau ce pantalon.", "Un pantalon un peu moins bien"));
             this.isImageZoomed = false;
             this.index = 0;
 
@@ -153,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         }
     }
 
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
@@ -169,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     }
 
     public void showPullInfo(int index) {
-        this.priceTextView.setText(String.valueOf(this.listProduitToShow.get(index).getPrice()) + '€');
+        this.priceTextView.setText(String.format(getString(R.string.price_text_view), this.listProduitToShow.get(index).getPrice()));
         this.descriptionTextView.setText(this.listProduitToShow.get(index).getDescription());
         this.titleTextView.setText(this.listProduitToShow.get(index).getTitle());
 

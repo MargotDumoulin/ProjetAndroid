@@ -4,6 +4,7 @@
     <string name="add_bonnet_basket">Bonnet n°%d ajouté au panier</string>
     <string name="add_article_basket">Article n°%d ajouté au panier</string>
     <string name="basket_total">Total du panier: %.2f €</string>
+    <string name="price_text_view">%.2f €</string>
     <string name="clear_basket">Vous avez effacé votre panier.</string>
     <string name="cancel_clear_basket">Vous n\'avez pas effacé votre panier.</string>
     <string name="confirm_phrase">Attention, vous allez annuler tous les achats effectués sur cette page. Etes-vous sûr ?</string>
@@ -11,4 +12,10 @@
     <string name="fill_all_fields">Vous devez remplir tous les champs.</string>
     <string name="confirm_yes">OUI</string>
     <string name="confirm_no">NON</string>
+    <string name="footer">Réalisé en 2020</string>
+    <string name="description_example">Un pull qui ravira les petits et les grands. Tricoté par d\'authentiques grand-mères Australiennes.</string>
+    <string name="title_example">À Noël c\'est moi qui tient les rennes.</string>
+    <string name="price_example">Prix</string>
+    <string name="prev_symbol">&lt;</string>
+    <string name="next_symbol">&gt;</string>
 </resources>

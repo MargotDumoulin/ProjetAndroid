@@ -10,7 +10,7 @@ import com.example.td1.R;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Produit implements Serializable {
+public class Produit extends Base implements Serializable {
 
     protected int id;
     protected int idCategorie;
@@ -20,20 +20,10 @@ public abstract class Produit implements Serializable {
     protected String title;
 
     public Produit(int id, int idCategorie, double price, String imgSrc, String description, String title) {
-        this.id = id;
+        super(id, imgSrc, title);
         this.idCategorie = idCategorie;
         this.price = price;
-        this.imgSrc = imgSrc;
         this.description = description;
-        this.title = title;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return this.id;
     }
 
     public int getIdCategorie() { return this.idCategorie; }
@@ -50,14 +40,6 @@ public abstract class Produit implements Serializable {
         return this.price;
     }
 
-    public void setImgSrc(String imgSrc) {
-        this.imgSrc = imgSrc;
-    }
-
-    public String getImgSrc() {
-        return this.imgSrc;
-    }
-
     public void setDescription(String description) {
         this.description = description;
     }
@@ -66,11 +48,4 @@ public abstract class Produit implements Serializable {
         return this.description;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getTitle() {
-        return this.title;
-    }
 }
