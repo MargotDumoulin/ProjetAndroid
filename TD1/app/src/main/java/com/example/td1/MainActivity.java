@@ -131,9 +131,11 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
         // -- SET VIEWS ON PULL --
         showPullInfo(this.index);
-        enablePrevNextButtons(this.index);
+        checkSpinnerValue();
 
-        if (this.basket.getBasketContent().isEmpty() || this.basket.getBasketContent() == null || this.basket.getBasketSize() < 0) { disableCancelBasketButtons(); }
+        if (this.basket.getBasketContent().isEmpty() || this.basket.getBasketContent() == null || this.basket.getBasketSize() < 0) {
+            this.cancelImageButton.setEnabled(false);
+        }
 
         if (this.isImageZoomed) {
             zoomImage();
@@ -199,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         } else if (index == 0 && (this.listProduitToShow.size() - 1) > 1) {
             this.prevBtn.setEnabled(true);
             this.prevBtn.setEnabled(false);
-        } else if (index == (this.listProduitToShow.size() - 1) && index != 0) {
+        } else if (index == (this.listProduitToShow.size() - 1) && (index != 0)) {
             this.prevBtn.setEnabled(true);
             this.nextBtn.setEnabled(false);
         } else if (index == 0 && (this.listProduitToShow.size() - 1) != 0) {
@@ -224,11 +226,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     public void unzoomImage() {
         this.whiteBackgroundView.setVisibility(View.INVISIBLE);
         this.pullImageViewZoomed.setVisibility(View.INVISIBLE);
-    }
-
-    public void disableCancelBasketButtons() {
-        this.cancelImageButton.setEnabled(false);
-        this.basketImageButton.setEnabled(false);
     }
 
     // ---- TOOLBAR EVENTS ----
@@ -262,13 +259,13 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     public void onClickBtnNext(View v) {
         this.index++;
         showPullInfo(this.index);
-        disableCancelBasketButtons();
+        checkSpinnerValue();
     }
 
     public void onClickBtnPrev(View v) {
         this.index--;
         showPullInfo(this.index);
-        disableCancelBasketButtons();
+        checkSpinnerValue();
     }
 
     public void onClickBtnBasket(View v) {
@@ -298,6 +295,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     public void onClick(DialogInterface dialog, int which) {
         if (which == -1) {
             this.basket.removeAllArticles();
+            this.basketAmount = 0;
             Toast.makeText(this, getString(R.string.clear_basket), Toast.LENGTH_LONG).show();
             this.cancelImageButton.setEnabled(false);
         } else {
@@ -316,7 +314,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        this.checkSpinnerValue();
+        checkSpinnerValue();
     }
 
     @Override
