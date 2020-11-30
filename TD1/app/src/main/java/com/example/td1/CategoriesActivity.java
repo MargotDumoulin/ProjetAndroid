@@ -4,6 +4,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,12 +17,11 @@ import android.widget.TextView;
 
 import com.example.td1.modele.Categorie;
 import com.example.td1.modele.Panier;
-import com.example.td1.modele.Produit;
 import com.example.td1.utils.Triplet;
 
 import java.util.ArrayList;
 
-public class CategoriesActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class CategoriesActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, ActivityWaitingImage {
 
     private static final int MAIN_VENTE = 0;
     private static final int MAIN_CATALOGUE = 1;
@@ -31,7 +32,9 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
     private int modeSelected;
     private Panier basket;
     private ArrayList<Categorie> listCategories;
+    private ArrayList listImgCategories;
     private double basketAmount;
+    private CategoriesAdapter categoriesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,20 +49,39 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
             this.basketAmount = 0;
         }
 
+        this.listImgCategories = new ArrayList();
         this.listCategories = new ArrayList<Categorie>();
         this.listCategories.add(new Categorie(0,"Pull","bear_hoodie"));
         this.listCategories.add(new Categorie(1,"Bonnet","bonnet"));
         this.listCategories.add(new Categorie(2,"Pantalon","pantalon"));
+
+        this.lvCategories = this.findViewById(R.id.categoriesListView);
+        this.lvCategories.setOnItemClickListener(this);
+
+        this.categoriesAdapter = new CategoriesAdapter(this, this.listCategories, this.listImgCategories);
+        this.lvCategories.setAdapter(this.categoriesAdapter);
+
+        for (int i = 0; i < this.listCategories.size(); i++) {
+            this.listImgCategories.add(null);
+            ImageFromURL loader = new ImageFromURL(this);
+            loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/WS_PM/" + this.listCategories.get(i).getImgSrc() + ".jpg", String.valueOf(i));
+        }
+
+    }
+
+    @Override
+    public void getImage(Object[] results)  {
+        if (results[0] != null) {
+            int idx = Integer.parseInt(results[1].toString());
+            Bitmap img = (Bitmap) results[0];
+            this.listImgCategories.set(idx, img);
+            this.categoriesAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        this.lvCategories = this.findViewById(R.id.categoriesListView);
-        this.lvCategories.setOnItemClickListener(this);
-
-        CategoriesAdapter adapter = new CategoriesAdapter(this, this.listCategories);
-        this.lvCategories.setAdapter(adapter);
 
         this.catalogRadioButton = this.findViewById(R.id.catalogRadioButton);
         this.totalTextView = this.findViewById(R.id.totalTextView);
