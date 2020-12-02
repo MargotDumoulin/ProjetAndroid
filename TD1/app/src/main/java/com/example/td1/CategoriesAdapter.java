@@ -29,22 +29,23 @@ public class CategoriesAdapter extends ArrayAdapter<Categorie> {
     public View getView(int index, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_list_categories, parent, false);
-
-            TextView tv = convertView.findViewById(R.id.titleIlcTextView);
-            tv.setText(this.listCategories.get(index).getTitle());
-
-            ImageView img = convertView.findViewById(R.id.visualIlcImageView);
-
-            boolean imgNotFound = false; //implement this function
-
-            if (imgNotFound) {
-                int id = getContext().getResources().getIdentifier(this.listCategories.get(index).getImgSrc(), "drawable", getContext().getPackageName());
-                img.setImageResource(id);
-            } else {
-                Log.d("image", String.valueOf(this.listImgCategories.size()));
-                img.setImageBitmap(this.listImgCategories.get(index));
-            }
         }
+
+        TextView tv = convertView.findViewById(R.id.titleIlcTextView);
+        tv.setText(this.listCategories.get(index).getTitle());
+
+        ImageView img = convertView.findViewById(R.id.visualIlcImageView);
+
+        boolean imgNotFound = false; //implement this function
+
+        if (imgNotFound) {
+            int id = getContext().getResources().getIdentifier(this.listCategories.get(index).getImgSrc(), "drawable", getContext().getPackageName());
+            img.setImageResource(id);
+        } else {
+            Log.d("image", String.valueOf(this.listImgCategories.size()));
+            img.setImageBitmap(this.listImgCategories.get(index));
+        }
+
         return convertView;
     }
 }
