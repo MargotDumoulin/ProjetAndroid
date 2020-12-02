@@ -27,6 +27,7 @@ public class ImageFromURL extends AsyncTask<String, Void, Object[]> {
             InputStream in = new URL(urlImage).openStream();
             img = BitmapFactory.decodeStream(in);
             in.close();
+            Log.d("oui image", "on a récupéré image");
         } catch (Exception e) {
             Log.e("Pas d'image", "penser à utiliser une image générique");
         }

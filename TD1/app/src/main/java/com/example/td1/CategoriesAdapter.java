@@ -2,6 +2,7 @@ package com.example.td1;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ public class CategoriesAdapter extends ArrayAdapter<Categorie> {
                 int id = getContext().getResources().getIdentifier(this.listCategories.get(index).getImgSrc(), "drawable", getContext().getPackageName());
                 img.setImageResource(id);
             } else {
+                Log.d("image", String.valueOf(this.listImgCategories.size()));
                 img.setImageBitmap(this.listImgCategories.get(index));
             }
         }
