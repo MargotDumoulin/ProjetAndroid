@@ -36,13 +36,12 @@ public class CategoriesAdapter extends ArrayAdapter<Categorie> {
 
         ImageView img = convertView.findViewById(R.id.visualIlcImageView);
 
-        boolean imgNotFound = false; //implement this function
+        boolean imgNotFound = this.listImgCategories.size() < index;
 
         if (imgNotFound) {
-            int id = getContext().getResources().getIdentifier(this.listCategories.get(index).getImgSrc(), "drawable", getContext().getPackageName());
+            int id = getContext().getResources().getIdentifier("img", "drawable", getContext().getPackageName());
             img.setImageResource(id);
         } else {
-            Log.d("image", String.valueOf(this.listImgCategories.size()));
             img.setImageBitmap(this.listImgCategories.get(index));
         }
 

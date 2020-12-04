@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -21,10 +22,11 @@ import com.example.td1.modele.Panier;
 import com.example.td1.modele.Produit;
 import com.example.td1.utils.Triplet;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class MainActivity extends AppCompatActivity implements DialogInterface.OnClickListener, AdapterView.OnItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements DialogInterface.OnClickListener, AdapterView.OnItemSelectedListener, ActivityWaitingImage {
 
     private Button prevBtn;
     private Button nextBtn;
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
     private int index;
     private ArrayList<Produit> listProduitToShow;
+    private ArrayList <Bitmap> listImgProduitToShow;
     private Panier basket;
     private double basketAmount;
     private int idCateg;
@@ -58,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         this.listProduitToShow = new ArrayList<Produit>();
+        this.listImgProduitToShow = new ArrayList<Bitmap>();
 
         if (this.getIntent().getSerializableExtra("newProduct") != null) {
             Produit productToAdd = (Produit) this.getIntent().getSerializableExtra("newProduct");
@@ -190,8 +194,9 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     }
 
     public void changeImageView(int index) {
-        int id = getResources().getIdentifier(this.listProduitToShow.get(index).getImgSrc(), "drawable", getPackageName());
-        this.pullImageView.setImageResource(id);
+        this.listImgProduitToShow.add(null);
+        ImageFromURL loader = new ImageFromURL(this);
+        loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(index).getImgSrc() + ".png", String.valueOf(index));
     }
 
     public void enablePrevNextButtons(int index) {
@@ -320,5 +325,26 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         this.basketImageButton.setEnabled(false);
+    }
+
+    @Override
+    public void getImage(Object[] results)  {
+        if (results[0] != null) {
+            int idx = Integer.parseInt(results[1].toString());
+            Bitmap img = (Bitmap) results[0];
+
+            boolean imgNotFound = this.listImgProduitToShow.size() < index;
+
+            if (imgNotFound) {
+                int id = getResources().getIdentifier("img", "drawable", getPackageName());
+                this.pullImageView.setImageResource(id);
+            } else {
+                this.listImgProduitToShow.set(idx, img);
+                this.pullImageView.setImageBitmap(this.listImgProduitToShow.get(index));
+            }
+
+
+
+        }
     }
 }
