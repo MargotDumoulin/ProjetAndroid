@@ -18,6 +18,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.td1.DAO.CategorieDAO;
+import com.example.td1.modele.Categorie;
 import com.example.td1.modele.Panier;
 import com.example.td1.modele.Produit;
 import com.example.td1.utils.Triplet;

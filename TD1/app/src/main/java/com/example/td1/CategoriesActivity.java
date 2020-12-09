@@ -14,14 +14,21 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.VolleyError;
+import com.example.td1.DAO.CategorieDAO;
 import com.example.td1.modele.Categorie;
 import com.example.td1.modele.Panier;
 import com.example.td1.utils.Triplet;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
-public class CategoriesActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, ActivityWaitingImage {
+public class CategoriesActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, ActivityWaitingImage, com.android.volley.Response.Listener<JSONArray>, com.android.volley.Response.ErrorListener {
 
     private static final int MAIN_VENTE = 0;
     private static final int MAIN_CATALOGUE = 1;
@@ -40,6 +47,9 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
+
+        CategorieDAO.findAll(this);
+
 
         if (savedInstanceState != null) {
             this.basket = (Panier) savedInstanceState.getSerializable("basket");
@@ -151,5 +161,22 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
 
     public void updateTotal() {
         this.totalTextView.setText(String.format(getString(R.string.basket_total), this.basketAmount));
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        Log.e("Erreur JSON", error + "là");
+        Toast.makeText(this, R.string.error_bdd, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onResponse(JSONArray response) {
+        try {
+            for (int i = 0; i < response.length(); i++) {
+                    JSONObject o = response.getJSONObject(i);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
