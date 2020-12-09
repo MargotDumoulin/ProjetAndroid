@@ -50,7 +50,6 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
 
         CategorieDAO.findAll(this);
 
-
         if (savedInstanceState != null) {
             this.basket = (Panier) savedInstanceState.getSerializable("basket");
             this.basketAmount = savedInstanceState.getDouble("basketAmount");
@@ -58,25 +57,6 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
             this.basket = new Panier(new ArrayList<Triplet<Integer, String, String>>());
             this.basketAmount = 0;
         }
-
-        this.listImgCategories = new ArrayList();
-        this.listCategories = new ArrayList<Categorie>();
-        this.listCategories.add(new Categorie(0,"Pull","bear_hoodie"));
-        this.listCategories.add(new Categorie(1,"Bonnet","bonnet"));
-        this.listCategories.add(new Categorie(2,"Pantalon","pantalon"));
-
-        this.lvCategories = this.findViewById(R.id.categoriesListView);
-        this.lvCategories.setOnItemClickListener(this);
-
-        this.categoriesAdapter = new CategoriesAdapter(this, this.listCategories, this.listImgCategories);
-        this.lvCategories.setAdapter(this.categoriesAdapter);
-
-        for (int i = 0; i < this.listCategories.size(); i++) {
-            this.listImgCategories.add(null);
-            ImageFromURL loader = new ImageFromURL(this);
-            loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listCategories.get(i).getImgSrc() + ".png", String.valueOf(i));
-        }
-
     }
 
     @Override
@@ -163,6 +143,24 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
         this.totalTextView.setText(String.format(getString(R.string.basket_total), this.basketAmount));
     }
 
+    public void fillImgCategories() {
+        this.listImgCategories = new ArrayList<>();
+        for (int i = 0; i < this.listCategories.size(); i++) {
+            this.listImgCategories.add(null);
+            ImageFromURL loader = new ImageFromURL(this);
+            Log.e("img", String.valueOf("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listCategories.get(i).getImgSrc()));
+            loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listCategories.get(i).getImgSrc(), String.valueOf(i));
+        }
+    }
+
+    public void setCategoriesAdapter() {
+        this.lvCategories = this.findViewById(R.id.categoriesListView);
+        this.lvCategories.setOnItemClickListener(this);
+
+        this.categoriesAdapter = new CategoriesAdapter(this, this.listCategories, this.listImgCategories);
+        this.lvCategories.setAdapter(this.categoriesAdapter);
+    }
+
     @Override
     public void onErrorResponse(VolleyError error) {
         Log.e("Erreur JSON", error + "là");
@@ -172,9 +170,15 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
     @Override
     public void onResponse(JSONArray response) {
         try {
+            this.listCategories = new ArrayList<Categorie>();
             for (int i = 0; i < response.length(); i++) {
-                    JSONObject o = response.getJSONObject(i);
+                JSONObject o = response.getJSONObject(i);
+                Categorie cat = new Categorie(o.getInt("id_categorie"), o.getString("titre"), o.getString("visuel"));
+                this.listCategories.add(cat);
             }
+            this.fillImgCategories();
+            this.setCategoriesAdapter();
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
