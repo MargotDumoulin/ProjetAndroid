@@ -1,13 +1,11 @@
 package com.example.td1;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,17 +16,24 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.td1.DAO.CategorieDAO;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.VolleyError;
+import com.example.td1.DAO.ProductDAO;
 import com.example.td1.modele.Categorie;
 import com.example.td1.modele.Panier;
 import com.example.td1.modele.Produit;
 import com.example.td1.utils.Triplet;
 
-import java.lang.reflect.Array;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class MainActivity extends AppCompatActivity implements DialogInterface.OnClickListener, AdapterView.OnItemSelectedListener, ActivityWaitingImage {
+public class MainActivity extends AppCompatActivity implements DialogInterface.OnClickListener, AdapterView.OnItemSelectedListener, ActivityWaitingImage, com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener {
 
     private Button prevBtn;
     private Button nextBtn;
@@ -77,15 +82,8 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             this.index = savedInstanceState.getInt("index");
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
         } else {
-            // -- INITIALIZE ARRAYLIST --
-            this.listProduitToShow.add(new Produit(0, 0,45.15, "jigglypuff", "Un pull qui ravira les petits et les grands. Tricoté par d'authentiques grand-mères Australiennes.", "Un pull pokémon"));
-            this.listProduitToShow.add(new Produit(1,0,22.35, "sweatshirt", "Incroyable sweatshirt, vous réchauffera le coeur en hiver et la penderie en été.", "Un joli sweatshirt"));
-            this.listProduitToShow.add(new Produit(2,0,33, "bunny_hoodie", "Description incroyable.", "Des petits lapins"));
-            this.listProduitToShow.add(new Produit(3,0,26, "bear_hoodie", "Wahou.", "Un petit ours"));
-            this.listProduitToShow.add(new Produit(4,0,12, "christmas_pullover", "Enfin! Un pull de Noël! LE Pull de Noël!", "Un pullover de Noël, magique"));
-            this.listProduitToShow.add(new Produit(5,1,112, "bonnet", "A quoi pourrait-on s'attendre d'autre ?", "Un bonnet. Rien de plus."));
-            this.listProduitToShow.add(new Produit(6,2,10.5, "pantalon", "Un pantalon tout ce qu'il y a de plus normal.", "Un super pantalon"));
-            this.listProduitToShow.add(new Produit(8,2,80.5, "green_pants", "Il est pas très beau ce pantalon.", "Un pantalon un peu moins bien"));
+            this.listProduitToShow = new ArrayList<Produit>();
+            ProductDAO.findProduct(this, 0);
             this.isImageZoomed = false;
             this.index = 0;
 
@@ -134,10 +132,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
         // -- VIEWS --
         this.whiteBackgroundView = this.findViewById(R.id.blankView);
-
-        // -- SET VIEWS ON PULL --
-        showPullInfo(this.index);
-        checkSpinnerValue();
 
         if (this.basket.getBasketContent().isEmpty() || this.basket.getBasketContent() == null || this.basket.getBasketSize() < 0) {
             this.cancelImageButton.setEnabled(false);
@@ -265,13 +259,13 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
     public void onClickBtnNext(View v) {
         this.index++;
-        showPullInfo(this.index);
+        ProductDAO.findProduct(this, this.index);
         checkSpinnerValue();
     }
 
     public void onClickBtnPrev(View v) {
         this.index--;
-        showPullInfo(this.index);
+        ProductDAO.findProduct(this, this.index);
         checkSpinnerValue();
     }
 
@@ -344,9 +338,24 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                 this.listImgProduitToShow.set(idx, img);
                 this.pullImageView.setImageBitmap(this.listImgProduitToShow.get(index));
             }
+        }
+    }
 
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        Log.e("Erreur JSON", error + "là");
+        Toast.makeText(this, R.string.error_bdd, Toast.LENGTH_LONG).show();
+    }
 
-
+    @Override
+    public void onResponse(JSONObject response) {
+        try {
+            JSONObject o = response;
+            Produit product = new Produit(o.getInt("id_produit"), o.getInt("id_categorie"), o.getDouble("prix"), o.getString("visuel"), o.getString("description"), o.getString("titre"));
+            this.listProduitToShow.add(product);
+            this.showPullInfo(this.index);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 }

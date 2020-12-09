@@ -148,7 +148,6 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
         for (int i = 0; i < this.listCategories.size(); i++) {
             this.listImgCategories.add(null);
             ImageFromURL loader = new ImageFromURL(this);
-            Log.e("img", String.valueOf("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listCategories.get(i).getImgSrc()));
             loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listCategories.get(i).getImgSrc(), String.valueOf(i));
         }
     }
