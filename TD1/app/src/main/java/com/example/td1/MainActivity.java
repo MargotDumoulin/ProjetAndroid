@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
     private int index;
     private ArrayList<Produit> listProduitToShow;
+    private int productTableLength;
     private ArrayList <Bitmap> listImgProduitToShow;
     private Panier basket;
     private double basketAmount;
@@ -83,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
         } else {
             this.listProduitToShow = new ArrayList<Produit>();
-            ProductDAO.findProduct(this, 0);
             this.isImageZoomed = false;
             this.index = 0;
 
@@ -95,7 +95,8 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                 this.listProduitToShow = new ArrayList<Produit>(this.listProduitToShow
                         .stream()
                         .filter(element -> element.getIdCategorie() == this.idCateg).collect(Collectors.toList()));
-
+                ProductDAO.getProductTableLength(this, this.idCateg);
+                ProductDAO.findProduct(this, this.index, this.idCateg);
             } else {
                 // ???
             }
@@ -170,9 +171,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         this.priceTextView.setText(String.format(getString(R.string.price_text_view), this.listProduitToShow.get(index).getPrice()));
         this.descriptionTextView.setText(this.listProduitToShow.get(index).getDescription());
         this.titleTextView.setText(this.listProduitToShow.get(index).getTitle());
-
-        changeImageView(index);
-        enablePrevNextButtons(index);
     }
 
     public void showToastAddProductToBasket() {
@@ -192,20 +190,20 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     public void changeImageView(int index) {
         this.listImgProduitToShow.add(null);
         ImageFromURL loader = new ImageFromURL(this);
-        loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(index).getImgSrc() + ".png", String.valueOf(index));
+        loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(index).getImgSrc(), String.valueOf(index));
     }
 
     public void enablePrevNextButtons(int index) {
-        if (index == 0 && index == (this.listProduitToShow.size() - 1)) {
+        if (index == 0 && index == (this.productTableLength)) {
             this.prevBtn.setEnabled(false);
             this.nextBtn.setEnabled(false);
-        } else if (index == 0 && (this.listProduitToShow.size() - 1) > 1) {
+        } else if (index == 0 && (this.productTableLength) > 1) {
             this.prevBtn.setEnabled(true);
             this.prevBtn.setEnabled(false);
-        } else if (index == (this.listProduitToShow.size() - 1) && (index != 0)) {
+        } else if (index == (this.productTableLength) && (index != 0)) {
             this.prevBtn.setEnabled(true);
             this.nextBtn.setEnabled(false);
-        } else if (index == 0 && (this.listProduitToShow.size() - 1) != 0) {
+        } else if (index == 0 && (this.productTableLength) != 0) {
             this.prevBtn.setEnabled(false);
             this.nextBtn.setEnabled(true);
         } else {
@@ -259,13 +257,13 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
     public void onClickBtnNext(View v) {
         this.index++;
-        ProductDAO.findProduct(this, this.index);
+        ProductDAO.findProduct(this, this.index, this.idCateg);
         checkSpinnerValue();
     }
 
     public void onClickBtnPrev(View v) {
         this.index--;
-        ProductDAO.findProduct(this, this.index);
+        ProductDAO.findProduct(this, this.index, this.idCateg);
         checkSpinnerValue();
     }
 
@@ -343,7 +341,8 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Log.e("Erreur JSON", error + "là");
+        Log.e("test", error + "là");
+        Log.e("test", String.valueOf(this.index));
         Toast.makeText(this, R.string.error_bdd, Toast.LENGTH_LONG).show();
     }
 
@@ -351,9 +350,18 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     public void onResponse(JSONObject response) {
         try {
             JSONObject o = response;
-            Produit product = new Produit(o.getInt("id_produit"), o.getInt("id_categorie"), o.getDouble("prix"), o.getString("visuel"), o.getString("description"), o.getString("titre"));
-            this.listProduitToShow.add(product);
-            this.showPullInfo(this.index);
+
+            if (response.has("COUNT(*)")) {
+                this.productTableLength = response.getInt("COUNT(*)");
+                this.enablePrevNextButtons(this.index);
+            } else {
+                Produit product = new Produit(o.getInt("id_produit"), o.getInt("id_categorie"), o.getDouble("tarif"), o.getString("visuel"), o.getString("description"), o.getString("titre"));
+                this.listProduitToShow.add(product);
+                this.showPullInfo(this.index);
+                this.changeImageView(this.index);
+                this.enablePrevNextButtons(this.index);
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
