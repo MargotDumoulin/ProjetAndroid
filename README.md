@@ -1,3 +1,2 @@
-TDs d'Android de DUMOULIN Margot. 
+Projet d'Android de Maćków Kamil, Morel Erwin et Dumoulin Margot. 
 
-Lundi 16 Novembre : gros problèmes de connexion.
