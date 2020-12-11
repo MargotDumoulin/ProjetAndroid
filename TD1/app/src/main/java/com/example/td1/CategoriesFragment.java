@@ -2,10 +2,10 @@ package com.example.td1;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,7 +28,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class CategoriesActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, ActivityWaitingImage, com.android.volley.Response.Listener<JSONArray>, com.android.volley.Response.ErrorListener {
+
+public class CategoriesFragment extends Fragment implements AdapterView.OnItemClickListener, ActivityWaitingImage, com.android.volley.Response.Listener<JSONArray>, com.android.volley.Response.ErrorListener {
 
     private static final int MAIN_VENTE = 0;
     private static final int MAIN_CATALOGUE = 1;
@@ -80,7 +81,7 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
     }
 
     public void onClickCreateProduct(View v) {
-        Intent intent = new Intent(CategoriesActivity.this, NewProductActivity.class);
+        Intent intent = new Intent(CategoriesFragment.this, NewProductActivity.class);
         startActivity(intent);
     }
 
@@ -99,7 +100,7 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        if (resultCode == MainActivity.RETOUR) {
+        if (resultCode == CatalogueActivity.RETOUR) {
             if (requestCode == MAIN_VENTE) {
                 Panier productsToAdd = (Panier) intent.getSerializableExtra("basket");
                 double basketAmountFromMainActivity = intent.getDoubleExtra("basketAmount", -1);
@@ -117,7 +118,7 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int index, long id) {
-        Intent intent = new Intent(CategoriesActivity.this, MainActivity.class);
+        Intent intent = new Intent(CategoriesFragment.this, CatalogueActivity.class);
         intent.putExtra("id_categ", this.listCategories.get(index).getId());
 
         this.modeSelected = this.catalogRadioButton.isChecked() ? MAIN_CATALOGUE : MAIN_VENTE;
