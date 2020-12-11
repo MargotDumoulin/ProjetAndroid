@@ -194,16 +194,16 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     }
 
     public void enablePrevNextButtons(int index) {
-        if (index == 0 && index == (this.productTableLength)) {
+        if (index == 0 && index == (this.productTableLength - 1)) {
             this.prevBtn.setEnabled(false);
             this.nextBtn.setEnabled(false);
-        } else if (index == 0 && (this.productTableLength) > 1) {
+        } else if (index == 0 && (this.productTableLength - 1) > 1) {
             this.prevBtn.setEnabled(true);
             this.prevBtn.setEnabled(false);
-        } else if (index == (this.productTableLength) && (index != 0)) {
+        } else if (index == (this.productTableLength - 1) && (index != 0)) {
             this.prevBtn.setEnabled(true);
             this.nextBtn.setEnabled(false);
-        } else if (index == 0 && (this.productTableLength) != 0) {
+        } else if (index == 0 && (this.productTableLength - 1) != 0) {
             this.prevBtn.setEnabled(false);
             this.nextBtn.setEnabled(true);
         } else {
