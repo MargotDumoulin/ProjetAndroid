@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     private Panier basket;
     private double basketAmount;
     private int idCateg;
+    private boolean alreadyHaveInfo;
 
     public static final int RETOUR = 0;
 
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
         this.listProduitToShow = new ArrayList<Produit>();
         this.listImgProduitToShow = new ArrayList<Bitmap>();
+        this.alreadyHaveInfo = false;
 
         if (this.getIntent().getSerializableExtra("newProduct") != null) {
             Produit productToAdd = (Produit) this.getIntent().getSerializableExtra("newProduct");
@@ -82,6 +84,10 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             this.basketAmount = savedInstanceState.getDouble("basketAmount");
             this.index = savedInstanceState.getInt("index");
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
+            this.productTableLength = savedInstanceState.getInt("productTableLength");
+            this.idCateg = savedInstanceState.getInt("idCateg");
+            this.alreadyHaveInfo = true;
+
         } else {
             this.listProduitToShow = new ArrayList<Produit>();
             this.isImageZoomed = false;
@@ -149,6 +155,13 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             this.basketImageButton.setVisibility(View.INVISIBLE);
             this.cancelImageButton.setVisibility(View.INVISIBLE);
         }
+
+        if (this.alreadyHaveInfo) {
+            this.showPullInfo(this.index);
+            this.changeImageView(this.index);
+            this.enablePrevNextButtons(this.index);
+        }
+
     }
 
     @Override
@@ -159,6 +172,8 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         outState.putSerializable("listProduitToShow", this.listProduitToShow);
         outState.putSerializable("basket", this.basket);
         outState.putDouble("basketAmount", this.basketAmount);
+        outState.putInt("productTableLength", this.productTableLength);
+        outState.putInt("idCateg", this.idCateg);
 
         if (this.pullImageViewZoomed.getVisibility() == View.VISIBLE) {
             outState.putBoolean("isImageZoomed", true);
@@ -168,6 +183,8 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     }
 
     public void showPullInfo(int index) {
+        Log.e("index", String.valueOf(index));
+        Log.e("index", "Taille de l'array: " + String.valueOf(this.listImgProduitToShow.size()));
         this.priceTextView.setText(String.format(getString(R.string.price_text_view), this.listProduitToShow.get(index).getPrice()));
         this.descriptionTextView.setText(this.listProduitToShow.get(index).getDescription());
         this.titleTextView.setText(this.listProduitToShow.get(index).getTitle());
@@ -215,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     public void zoomImage() {
         this.whiteBackgroundView.setVisibility(View.VISIBLE);
         this.whiteBackgroundView.bringToFront();
-        
+
         this.pullImageViewZoomed.setVisibility(View.VISIBLE);
         this.pullImageViewZoomed.bringToFront();
     }
