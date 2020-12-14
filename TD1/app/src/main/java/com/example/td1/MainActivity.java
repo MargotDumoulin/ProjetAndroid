@@ -3,6 +3,7 @@ package com.example.td1;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,7 +34,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class MainActivity extends AppCompatActivity implements DialogInterface.OnClickListener, AdapterView.OnItemSelectedListener, ActivityWaitingImage, com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener {
+public class MainActivity extends AppCompatActivity implements DialogInterface.OnClickListener, AdapterView.OnItemSelectedListener, ActivityWaitingImage, com.android.volley.Response.Listener<JSONArray>, com.android.volley.Response.ErrorListener {
 
     private Button prevBtn;
     private Button nextBtn;
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
         if (savedInstanceState != null) {
             this.listProduitToShow = (ArrayList<Produit>) savedInstanceState.getSerializable("listProduitToShow");
+            this.listImgProduitToShow = (ArrayList<Bitmap>) savedInstanceState.getSerializable("listImgProduitToShow");
             this.basket = (Panier) savedInstanceState.getSerializable("basket");
             this.basketAmount = savedInstanceState.getDouble("basketAmount");
             this.index = savedInstanceState.getInt("index");
@@ -97,12 +99,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
             this.idCateg = this.getIntent().getIntExtra("id_categ", -1);
             if (this.idCateg != -1) {
-                // filter items that corresponds to id_categ
-                this.listProduitToShow = new ArrayList<Produit>(this.listProduitToShow
-                        .stream()
-                        .filter(element -> element.getIdCategorie() == this.idCateg).collect(Collectors.toList()));
-                ProductDAO.getProductTableLength(this, this.idCateg);
-                ProductDAO.findProduct(this, this.index, this.idCateg);
+                ProductDAO.findAllByCateg(this, this.idCateg);
             } else {
                 // ???
             }
@@ -170,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
         outState.putInt("index", this.index);
         outState.putSerializable("listProduitToShow", this.listProduitToShow);
+        outState.putSerializable("listImgProduitToShow", this.listImgProduitToShow);
         outState.putSerializable("basket", this.basket);
         outState.putDouble("basketAmount", this.basketAmount);
         outState.putInt("productTableLength", this.productTableLength);
@@ -183,8 +181,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     }
 
     public void showPullInfo(int index) {
-        Log.e("index", String.valueOf(index));
-        Log.e("index", "Taille de l'array: " + String.valueOf(this.listImgProduitToShow.size()));
         this.priceTextView.setText(String.format(getString(R.string.price_text_view), this.listProduitToShow.get(index).getPrice()));
         this.descriptionTextView.setText(this.listProduitToShow.get(index).getDescription());
         this.titleTextView.setText(this.listProduitToShow.get(index).getTitle());
@@ -205,22 +201,21 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     }
 
     public void changeImageView(int index) {
-        this.listImgProduitToShow.add(null);
-        ImageFromURL loader = new ImageFromURL(this);
-        loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(index).getImgSrc(), String.valueOf(index));
+        this.pullImageView.setImageBitmap(this.listImgProduitToShow.get(index));
+        this.pullImageViewZoomed.setImageBitmap(this.listImgProduitToShow.get(index));
     }
 
     public void enablePrevNextButtons(int index) {
-        if (index == 0 && index == (this.productTableLength - 1)) {
+        if (index == 0 && index == (this.listProduitToShow.size() - 1)) {
             this.prevBtn.setEnabled(false);
             this.nextBtn.setEnabled(false);
-        } else if (index == 0 && (this.productTableLength - 1) > 1) {
+        } else if (index == 0 && (this.listProduitToShow.size() - 1) > 1) {
             this.prevBtn.setEnabled(true);
             this.prevBtn.setEnabled(false);
-        } else if (index == (this.productTableLength - 1) && (index != 0)) {
+        } else if (index == (this.listProduitToShow.size() - 1) && (index != 0)) {
             this.prevBtn.setEnabled(true);
             this.nextBtn.setEnabled(false);
-        } else if (index == 0 && (this.productTableLength - 1) != 0) {
+        } else if (index == 0 && (this.listProduitToShow.size() - 1) != 0) {
             this.prevBtn.setEnabled(false);
             this.nextBtn.setEnabled(true);
         } else {
@@ -240,6 +235,24 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     public void unzoomImage() {
         this.whiteBackgroundView.setVisibility(View.INVISIBLE);
         this.pullImageViewZoomed.setVisibility(View.INVISIBLE);
+    }
+
+    public Produit getProductById(int id) {
+        for(Produit product: this.listProduitToShow) {
+            if(product.getId() == id) {
+                return product;
+            }
+        }
+        return null;
+    }
+
+    public int getIndexById(int id) {
+        for (int i = 0; i < this.listProduitToShow.size(); i++) {
+            if (this.listProduitToShow.get(i) !=null && this.listProduitToShow.get(i).getId() == id) {
+                return i;
+            }
+        }
+        return -1;// not there is list
     }
 
     // ---- TOOLBAR EVENTS ----
@@ -272,13 +285,17 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
     public void onClickBtnNext(View v) {
         this.index++;
-        ProductDAO.findProduct(this, this.index, this.idCateg);
+        this.showPullInfo(this.index);
+        this.changeImageView(this.index);
+        this.enablePrevNextButtons(this.index);
         checkSpinnerValue();
     }
 
     public void onClickBtnPrev(View v) {
         this.index--;
-        ProductDAO.findProduct(this, this.index, this.idCateg);
+        this.showPullInfo(this.index);
+        this.changeImageView(this.index);
+        this.enablePrevNextButtons(this.index);
         checkSpinnerValue();
     }
 
@@ -349,9 +366,9 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                 this.pullImageView.setImageResource(id);
             } else {
                 this.listImgProduitToShow.set(idx, img);
-                this.pullImageView.setImageBitmap(this.listImgProduitToShow.get(index));
-
-                this.pullImageViewZoomed.setImageBitmap(img);
+                if (idx == 0) {
+                    this.changeImageView(this.index);
+                }
             }
         }
     }
@@ -364,19 +381,34 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     }
 
     @Override
-    public void onResponse(JSONObject response) {
+    public void onResponse(JSONArray response) {
         try {
-            JSONObject o = response;
+            for (int i = 0; i < response.length(); i++) {
+                JSONObject o = response.getJSONObject(i);
+                // test if it is an array of products or an array of sizes
+                if (o.has("libelle")) { // Array of size
+                    // Adding sizes for each product :)
+                    int indexOfProductToChange = this.getIndexById(o.getInt("id_produit"));
+                    this.listProduitToShow.get(indexOfProductToChange).addSize(o.getString("libelle"));
+                    Log.e("size", o.getString("libelle"));
+                } else {
+                    Produit product = new Produit(o.getInt("id_produit"), o.getInt("id_categorie"), o.getDouble("tarif"), o.getString("visuel"), o.getString("description"), o.getString("titre"), new ArrayList<>());
+                    this.listProduitToShow.add(product);
+                    this.showPullInfo(this.index);
+                    this.enablePrevNextButtons(this.index);
 
-            if (response.has("COUNT(*)")) {
-                this.productTableLength = response.getInt("COUNT(*)");
-                this.enablePrevNextButtons(this.index);
-            } else {
-                Produit product = new Produit(o.getInt("id_produit"), o.getInt("id_categorie"), o.getDouble("tarif"), o.getString("visuel"), o.getString("description"), o.getString("titre"));
-                this.listProduitToShow.add(product);
-                this.showPullInfo(this.index);
-                this.changeImageView(this.index);
-                this.enablePrevNextButtons(this.index);
+                    if (i == response.length() - 1) {
+                        ProductDAO.findAllSizesByCateg(this, this.idCateg);
+                    }
+                }
+
+            }
+
+            for (int i = 0; i < this.listProduitToShow.size(); i++) {
+                this.listImgProduitToShow.add(null);
+                ImageFromURL loader = new ImageFromURL(this);
+                Log.e("getImage", String.valueOf("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(i).getImgSrc()));
+                loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(i).getImgSrc(), String.valueOf(i));
             }
 
         } catch (JSONException e) {

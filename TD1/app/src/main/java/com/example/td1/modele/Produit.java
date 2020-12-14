@@ -1,16 +1,21 @@
 package com.example.td1.modele;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class Produit extends Base {
 
     protected int idCategorie;
     protected double price;
     protected String description;
+    protected ArrayList sizes;
 
-    public Produit(int id, int idCategorie, double price, String imgSrc, String description, String title) {
+    public Produit(int id, int idCategorie, double price, String imgSrc, String description, String title, ArrayList sizes) {
         super(id, imgSrc, title);
         this.idCategorie = idCategorie;
         this.price = price;
         this.description = description;
+        this.sizes = sizes;
     }
 
     public int getIdCategorie() { return this.idCategorie; }
@@ -33,6 +38,18 @@ public class Produit extends Base {
 
     public String getDescription() {
         return this.description;
+    }
+
+    public ArrayList getSizes() {
+        return this.sizes;
+    }
+
+    public void setSizes(ArrayList sizes) {
+        this.sizes = sizes;
+    }
+
+    public void addSize(String size) {
+        this.sizes.add(size);
     }
 
 }
