@@ -1,5 +1,6 @@
 package com.example.td1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -15,6 +16,7 @@ import com.example.td1.modele.Categorie;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SplashScreen extends AppCompatActivity implements Response.Listener<JSONArray>, Response.ErrorListener {
 
@@ -32,12 +34,14 @@ public class SplashScreen extends AppCompatActivity implements Response.Listener
 
     @Override
     public void onResponse(JSONArray response) {
-        Log.e("yes", response + "");
+        Intent intent = new Intent(SplashScreen.this, CategoriesActivity.class);
+        intent.putExtra("categories", response.toString());
+        startActivity(intent);
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Log.e("Erreur JSON", error + "là");
+        Log.e("Erreur JSON", error + "");
         Toast.makeText(this, R.string.error_bdd, Toast.LENGTH_LONG).show();
     }
 }

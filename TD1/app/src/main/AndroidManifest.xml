@@ -14,8 +14,11 @@
         android:theme="@style/Theme.TD1">
         <activity android:name=".NewProductActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".CategoriesActivity"/>
-        <activity android:name=".SplashScreen">
+        <activity android:name=".CategoriesActivity" />
+        <activity
+            android:name=".SplashScreen"
+            android:theme="@style/NoActionBar"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
