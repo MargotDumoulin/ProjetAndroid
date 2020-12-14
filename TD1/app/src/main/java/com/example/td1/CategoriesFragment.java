@@ -1,7 +1,7 @@
 package com.example.td1;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
@@ -9,7 +9,9 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -29,7 +31,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-public class CategoriesFragment extends Fragment implements AdapterView.OnItemClickListener, ActivityWaitingImage, com.android.volley.Response.Listener<JSONArray>, com.android.volley.Response.ErrorListener {
+public class CategoriesFragment extends Fragment implements/** AdapterView.OnItemClickListener,**/ ActivityWaitingImage, com.android.volley.Response.Listener<JSONArray>, com.android.volley.Response.ErrorListener {
 
     private static final int MAIN_VENTE = 0;
     private static final int MAIN_CATALOGUE = 1;
@@ -43,12 +45,12 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
     private ArrayList listImgCategories;
     private double basketAmount;
     private CategoriesAdapter categoriesAdapter;
+    private View root;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_categories);
-
+        this.root=inflater.inflate(R.layout.fragment_categories, container, false);
         CategorieDAO.findAll(this);
 
         if (savedInstanceState != null) {
@@ -58,6 +60,7 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
             this.basket = new Panier(new ArrayList<Triplet<Integer, String, String>>());
             this.basketAmount = 0;
         }
+        return root;
     }
 
     @Override
@@ -74,19 +77,19 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
     public void onStart() {
         super.onStart();
 
-        this.catalogRadioButton = this.findViewById(R.id.catalogRadioButton);
-        this.totalTextView = this.findViewById(R.id.totalTextView);
+        this.catalogRadioButton = this.root.findViewById(R.id.catalogRadioButton);
+        this.totalTextView = this.root.findViewById(R.id.totalTextView);
 
         updateTotal();
     }
 
     public void onClickCreateProduct(View v) {
-        Intent intent = new Intent(CategoriesFragment.this, NewProductActivity.class);
+        Intent intent = new Intent(CategoriesFragment.this.getContext(), NewProductActivity.class);
         startActivity(intent);
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (this.basket != null) {
             if (this.basket.getBasketSize() > 0 && !this.basket.getBasketContent().isEmpty()) {
@@ -95,10 +98,10 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
             }
         }
     }
-
+/**
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         if (resultCode == CatalogueActivity.RETOUR) {
             if (requestCode == MAIN_VENTE) {
@@ -118,7 +121,7 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int index, long id) {
-        Intent intent = new Intent(CategoriesFragment.this, CatalogueActivity.class);
+        Intent intent = new Intent(CategoriesFragment.this.getContext(), CatalogueActivity.class);
         intent.putExtra("id_categ", this.listCategories.get(index).getId());
 
         this.modeSelected = this.catalogRadioButton.isChecked() ? MAIN_CATALOGUE : MAIN_VENTE;
@@ -126,7 +129,7 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
         intent.putExtra("requestCode", this.modeSelected);
         startActivityForResult(intent, this.modeSelected);
     }
-
+**/
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void updateBasket(Panier productsToAdd, double basketAmountFromMainActivity)  {
         if (this.basket == null) { this.basket = new Panier(new ArrayList<>()); }
@@ -154,17 +157,17 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
     }
 
     public void setCategoriesAdapter() {
-        this.lvCategories = this.findViewById(R.id.categoriesListView);
-        this.lvCategories.setOnItemClickListener(this);
+        this.lvCategories = this.root.findViewById(R.id.categoriesListView);
+        //this.lvCategories.setOnItemClickListener(this);
 
-        this.categoriesAdapter = new CategoriesAdapter(this, this.listCategories, this.listImgCategories);
+        this.categoriesAdapter = new CategoriesAdapter(this.getContext(), this.listCategories, this.listImgCategories);
         this.lvCategories.setAdapter(this.categoriesAdapter);
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
         Log.e("Erreur JSON", error + "là");
-        Toast.makeText(this, R.string.error_bdd, Toast.LENGTH_LONG).show();
+        Toast.makeText(this.getContext(), R.string.error_bdd, Toast.LENGTH_LONG).show();
     }
 
     @Override

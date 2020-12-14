@@ -2,6 +2,8 @@ package com.example.td1.DAO;
 
 import android.content.Context;
 
+import androidx.fragment.app.Fragment;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -12,8 +14,8 @@ import org.json.JSONArray;
 
 public class CategorieDAO {
 
-    public static void findAll(Context activity) {
-        RequestQueue queue = Volley.newRequestQueue(activity);
+    public static void findAll(Fragment activity) {
+        RequestQueue queue = Volley.newRequestQueue(activity.getContext());
         String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/categories/findAll.php";
 
         // Request a string response from the provided URL.
