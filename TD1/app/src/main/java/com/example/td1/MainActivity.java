@@ -215,9 +215,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     public void zoomImage() {
         this.whiteBackgroundView.setVisibility(View.VISIBLE);
         this.whiteBackgroundView.bringToFront();
-
-        int id = getResources().getIdentifier(this.listProduitToShow.get(this.index).getImgSrc(), "drawable", getPackageName());
-        this.pullImageViewZoomed.setImageResource(id);
+        
         this.pullImageViewZoomed.setVisibility(View.VISIBLE);
         this.pullImageViewZoomed.bringToFront();
     }
@@ -335,6 +333,8 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             } else {
                 this.listImgProduitToShow.set(idx, img);
                 this.pullImageView.setImageBitmap(this.listImgProduitToShow.get(index));
+
+                this.pullImageViewZoomed.setImageBitmap(img);
             }
         }
     }
