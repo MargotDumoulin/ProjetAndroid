@@ -29,7 +29,7 @@ public class ProductDAO {
         queue.add(jsonRequest);
     }
 
-    public static void findAllByCateg(Context activity, int index, int categ) {
+    public static void findAllByCateg(Context activity, int categ) {
         RequestQueue queue = Volley.newRequestQueue(activity);
         String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/produits/findAllByCateg.php?categ=" + categ;
 
