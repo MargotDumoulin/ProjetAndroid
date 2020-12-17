@@ -64,17 +64,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/colorSpinner" />
 
-    <Spinner
-        android:theme="@style/spinner_style"
-        android:id="@+id/colorSpinner"
-        android:layout_width="140dp"
-        android:layout_height="@dimen/spinner_height"
-        android:layout_marginLeft="@dimen/spinner_margin_left_landscape"
-        android:entries="@array/coloris"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/descriptionTextView"
-        app:layout_constraintTop_toBottomOf="@+id/sizeSpinner"
-        app:layout_constraintBottom_toTopOf="@id/cartImageButton"/>
 
     <ImageButton
         android:id="@+id/cartImageButton"

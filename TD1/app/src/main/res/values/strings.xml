@@ -2,6 +2,7 @@
     <string name="app_name">Boutique MonPullMoche</string>
     <string name="add_pull_basket">Pull n°%d ajouté au panier</string>
     <string name="add_bonnet_basket">Bonnet n°%d ajouté au panier</string>
+    <string name="add_casquette_basket">Casquette n°%d ajoutée au panier</string>
     <string name="add_article_basket">Article n°%d ajouté au panier</string>
     <string name="basket_total">Total du panier: %.2f €</string>
     <string name="price_text_view">%.2f €</string>

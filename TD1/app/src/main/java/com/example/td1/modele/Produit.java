@@ -8,7 +8,7 @@ public class Produit extends Base {
     protected int idCategorie;
     protected double price;
     protected String description;
-    protected ArrayList sizes;
+    protected ArrayList<String> sizes;
 
     public Produit(int id, int idCategorie, double price, String imgSrc, String description, String title, ArrayList sizes) {
         super(id, imgSrc, title);
@@ -40,7 +40,7 @@ public class Produit extends Base {
         return this.description;
     }
 
-    public ArrayList getSizes() {
+    public ArrayList<String> getSizes() {
         return this.sizes;
     }
 

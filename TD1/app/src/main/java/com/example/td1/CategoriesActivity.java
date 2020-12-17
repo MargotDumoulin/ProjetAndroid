@@ -20,7 +20,7 @@ import com.android.volley.VolleyError;
 import com.example.td1.DAO.CategorieDAO;
 import com.example.td1.modele.Categorie;
 import com.example.td1.modele.Panier;
-import com.example.td1.utils.Triplet;
+import com.example.td1.utils.Paired;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,7 +54,7 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
             this.basket = (Panier) savedInstanceState.getSerializable("basket");
             this.basketAmount = savedInstanceState.getDouble("basketAmount");
         } else {
-            this.basket = new Panier(new ArrayList<Triplet<Integer, String, String>>());
+            this.basket = new Panier(new ArrayList<Paired<Integer, String>>());
             this.basketAmount = 0;
         }
     }
@@ -131,7 +131,7 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
         if (this.basket == null) { this.basket = new Panier(new ArrayList<>()); }
 
         productsToAdd.getBasketContent().forEach(product -> {
-                this.basket.addArticle(product.first, product.second, product.third);
+                this.basket.addArticle(product.first, product.second);
             // As we don't have a database yet, we can't retrieve the product price with the product's id and add it to basketAmount.
             // Currently, we have to pass a variable with basketAmount from MainActivity to CategoriesActivity in order to get the amount to add.
         });
