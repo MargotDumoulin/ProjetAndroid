@@ -3,12 +3,14 @@ package com.example.td1;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -18,13 +20,14 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.android.volley.VolleyError;
 import com.example.td1.DAO.ProductDAO;
 import com.example.td1.modele.Categorie;
 import com.example.td1.modele.Panier;
 import com.example.td1.modele.Produit;
-import com.example.td1.utils.Triplet;
+import com.example.td1.utils.Paired;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,29 +36,39 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class MainActivity extends AppCompatActivity implements DialogInterface.OnClickListener, AdapterView.OnItemSelectedListener, ActivityWaitingImage, com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener {
+public class MainActivity extends AppCompatActivity implements DialogInterface.OnClickListener, AdapterView.OnItemSelectedListener, ActivityWaitingImage, com.android.volley.Response.Listener<JSONArray>, com.android.volley.Response.ErrorListener {
 
     private Button prevBtn;
     private Button nextBtn;
+
     private TextView priceTextView;
     private TextView descriptionTextView;
     private TextView titleTextView;
+
     private ImageView pullImageView;
     private ImageView pullImageViewZoomed;
+
     private boolean isImageZoomed;
+    private boolean alreadyHaveInfo;
+
     private View whiteBackgroundView;
+
     private ImageButton basketImageButton;
-    private ImageButton cancelImageButton;
-    private Spinner colorSpinner;
+
     private Spinner sizeSpinner;
+    private ArrayAdapter<String> sizeSpinnerArrayAdapter;
 
     private static final int MAIN_VENTE = 0;
 
-    private int index;
     private ArrayList<Produit> listProduitToShow;
     private ArrayList <Bitmap> listImgProduitToShow;
+
     private Panier basket;
+
     private double basketAmount;
+
+    private int index;
+    private int productTableLength;
     private int idCateg;
 
     public static final int RETOUR = 0;
@@ -69,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
         this.listProduitToShow = new ArrayList<Produit>();
         this.listImgProduitToShow = new ArrayList<Bitmap>();
+        this.alreadyHaveInfo = false;
 
         if (this.getIntent().getSerializableExtra("newProduct") != null) {
             Produit productToAdd = (Produit) this.getIntent().getSerializableExtra("newProduct");
@@ -77,25 +91,25 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
         if (savedInstanceState != null) {
             this.listProduitToShow = (ArrayList<Produit>) savedInstanceState.getSerializable("listProduitToShow");
+            this.listImgProduitToShow = (ArrayList<Bitmap>) savedInstanceState.getSerializable("listImgProduitToShow");
             this.basket = (Panier) savedInstanceState.getSerializable("basket");
             this.basketAmount = savedInstanceState.getDouble("basketAmount");
             this.index = savedInstanceState.getInt("index");
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
+            this.productTableLength = savedInstanceState.getInt("productTableLength");
+            this.idCateg = savedInstanceState.getInt("idCateg");
+            this.alreadyHaveInfo = true;
+
         } else {
             this.listProduitToShow = new ArrayList<Produit>();
-            ProductDAO.findProduct(this, 0);
             this.isImageZoomed = false;
             this.index = 0;
 
-            this.basket = new Panier(new ArrayList<Triplet<Integer, String, String>>());
+            this.basket = new Panier(new ArrayList<Paired<Integer, String>>());
 
             this.idCateg = this.getIntent().getIntExtra("id_categ", -1);
             if (this.idCateg != -1) {
-                // filter items that corresponds to id_categ
-                this.listProduitToShow = new ArrayList<Produit>(this.listProduitToShow
-                        .stream()
-                        .filter(element -> element.getIdCategorie() == this.idCateg).collect(Collectors.toList()));
-
+                ProductDAO.findAllByCateg(this, this.idCateg);
             } else {
                 // ???
             }
@@ -112,7 +126,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
         // -- IMAGEBUTTONS --
         this.basketImageButton = this.findViewById(R.id.cartImageButton);
-        this.cancelImageButton = this.findViewById(R.id.cancelImageButton);
 
         // -- TEXTVIEWS --
         this.priceTextView = this.findViewById(R.id.priceTextView);
@@ -125,17 +138,10 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
         // -- SPINNERS --
         this.sizeSpinner = this.findViewById(R.id.sizeSpinner);
-        this.colorSpinner = this.findViewById(R.id.colorSpinner);
-
         this.sizeSpinner.setOnItemSelectedListener(this);
-        this.colorSpinner.setOnItemSelectedListener(this);
 
         // -- VIEWS --
         this.whiteBackgroundView = this.findViewById(R.id.blankView);
-
-        if (this.basket.getBasketContent().isEmpty() || this.basket.getBasketContent() == null || this.basket.getBasketSize() < 0) {
-            this.cancelImageButton.setEnabled(false);
-        }
 
         if (this.isImageZoomed) {
             zoomImage();
@@ -143,21 +149,30 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
         if (this.getIntent().getIntExtra("requestCode", 0) == MAIN_VENTE) {
             this.basketImageButton.setVisibility(View.VISIBLE);
-            this.cancelImageButton.setVisibility(View.VISIBLE);
         } else {
             this.basketImageButton.setVisibility(View.INVISIBLE);
-            this.cancelImageButton.setVisibility(View.INVISIBLE);
         }
+
+        if (this.alreadyHaveInfo) {
+            this.showPullInfo(this.index);
+            this.changeImageView(this.index);
+            this.enablePrevNextButtons(this.index);
+        }
+
     }
 
+    // ------ ROTATION ---------------------------------
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
         outState.putInt("index", this.index);
         outState.putSerializable("listProduitToShow", this.listProduitToShow);
+        outState.putSerializable("listImgProduitToShow", this.listImgProduitToShow);
         outState.putSerializable("basket", this.basket);
         outState.putDouble("basketAmount", this.basketAmount);
+        outState.putInt("productTableLength", this.productTableLength);
+        outState.putInt("idCateg", this.idCateg);
 
         if (this.pullImageViewZoomed.getVisibility() == View.VISIBLE) {
             outState.putBoolean("isImageZoomed", true);
@@ -166,22 +181,27 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         }
     }
 
+    // ----- VIEW ---------------------
     public void showPullInfo(int index) {
         this.priceTextView.setText(String.format(getString(R.string.price_text_view), this.listProduitToShow.get(index).getPrice()));
         this.descriptionTextView.setText(this.listProduitToShow.get(index).getDescription());
         this.titleTextView.setText(this.listProduitToShow.get(index).getTitle());
 
-        changeImageView(index);
-        enablePrevNextButtons(index);
+        this.sizeSpinnerArrayAdapter= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, this.listProduitToShow.get(this.index).getSizes());
+        this.sizeSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        this.sizeSpinner.setAdapter(this.sizeSpinnerArrayAdapter);
     }
 
     public void showToastAddProductToBasket() {
         switch (this.idCateg) {
-            case 0:
+            case 1:
                 Toast.makeText(this, String.format(getString(R.string.add_pull_basket), this.index), Toast.LENGTH_SHORT).show();
                 break;
-            case 1:
+            case 2:
                 Toast.makeText(this, String.format(getString(R.string.add_bonnet_basket), this.index), Toast.LENGTH_SHORT).show();
+                break;
+            case 3:
+                Toast.makeText(this, String.format(getString(R.string.add_casquette_basket), this.index), Toast.LENGTH_SHORT).show();
                 break;
             default:
                 Toast.makeText(this, String.format(getString(R.string.add_article_basket), this.index), Toast.LENGTH_SHORT).show();
@@ -190,11 +210,11 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     }
 
     public void changeImageView(int index) {
-        this.listImgProduitToShow.add(null);
-        ImageFromURL loader = new ImageFromURL(this);
-        loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(index).getImgSrc() + ".png", String.valueOf(index));
+        this.pullImageView.setImageBitmap(this.listImgProduitToShow.get(index));
+        this.pullImageViewZoomed.setImageBitmap(this.listImgProduitToShow.get(index));
     }
 
+    // ---- BUTTONS -------------------------
     public void enablePrevNextButtons(int index) {
         if (index == 0 && index == (this.listProduitToShow.size() - 1)) {
             this.prevBtn.setEnabled(false);
@@ -214,12 +234,11 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         }
     }
 
+    // --- ZOOM -------------
     public void zoomImage() {
         this.whiteBackgroundView.setVisibility(View.VISIBLE);
         this.whiteBackgroundView.bringToFront();
 
-        int id = getResources().getIdentifier(this.listProduitToShow.get(this.index).getImgSrc(), "drawable", getPackageName());
-        this.pullImageViewZoomed.setImageResource(id);
         this.pullImageViewZoomed.setVisibility(View.VISIBLE);
         this.pullImageViewZoomed.bringToFront();
     }
@@ -227,6 +246,17 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     public void unzoomImage() {
         this.whiteBackgroundView.setVisibility(View.INVISIBLE);
         this.pullImageViewZoomed.setVisibility(View.INVISIBLE);
+    }
+
+
+    // --- FIND INDEX IN PRODUCT LIST
+    public int getIndexById(int id) {
+        for (int i = 0; i < this.listProduitToShow.size(); i++) {
+            if (this.listProduitToShow.get(i) !=null && this.listProduitToShow.get(i).getId() == id) {
+                return i;
+            }
+        }
+        return -1;// not there is list
     }
 
     // ---- TOOLBAR EVENTS ----
@@ -259,19 +289,22 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
     public void onClickBtnNext(View v) {
         this.index++;
-        ProductDAO.findProduct(this, this.index);
+        this.showPullInfo(this.index);
+        this.changeImageView(this.index);
+        this.enablePrevNextButtons(this.index);
         checkSpinnerValue();
     }
 
     public void onClickBtnPrev(View v) {
         this.index--;
-        ProductDAO.findProduct(this, this.index);
+        this.showPullInfo(this.index);
+        this.changeImageView(this.index);
+        this.enablePrevNextButtons(this.index);
         checkSpinnerValue();
     }
 
     public void onClickBtnBasket(View v) {
-        this.cancelImageButton.setEnabled(true);
-        this.basket.addArticle(this.listProduitToShow.get(this.index).getId(), sizeSpinner.getSelectedItem().toString(), colorSpinner.getSelectedItem().toString());
+        this.basket.addArticle(this.listProduitToShow.get(this.index).getId(), sizeSpinner.getSelectedItem().toString());
         this.basketAmount += this.listProduitToShow.get(this.index).getPrice();
         showToastAddProductToBasket();
     }
@@ -298,7 +331,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             this.basket.removeAllArticles();
             this.basketAmount = 0;
             Toast.makeText(this, getString(R.string.clear_basket), Toast.LENGTH_LONG).show();
-            this.cancelImageButton.setEnabled(false);
         } else {
             Toast.makeText(this, getString(R.string.cancel_clear_basket), Toast.LENGTH_LONG).show();
         }
@@ -306,7 +338,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
     // ---- SPINNER EVENTS ----
     public void checkSpinnerValue () {
-        if (!this.colorSpinner.getSelectedItem().toString().equals("Choix du coloris") &&  !this.sizeSpinner.getSelectedItem().toString().equals("Choix de la taille")) {
+        if (!this.sizeSpinner.getSelectedItem().toString().equals("Choix de la taille")) {
             this.basketImageButton.setEnabled(true);
         } else {
             this.basketImageButton.setEnabled(false);
@@ -323,6 +355,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         this.basketImageButton.setEnabled(false);
     }
 
+    // ---- DATABASE EVENTS ------------------------
     @Override
     public void getImage(Object[] results)  {
         if (results[0] != null) {
@@ -336,24 +369,53 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                 this.pullImageView.setImageResource(id);
             } else {
                 this.listImgProduitToShow.set(idx, img);
-                this.pullImageView.setImageBitmap(this.listImgProduitToShow.get(index));
+                if (idx == 0) {
+                    this.changeImageView(this.index);
+                }
             }
         }
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Log.e("Erreur JSON", error + "là");
+        Log.e("test", error + "là");
+        Log.e("test", String.valueOf(this.index));
         Toast.makeText(this, R.string.error_bdd, Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void onResponse(JSONObject response) {
+    public void onResponse(JSONArray response) {
         try {
-            JSONObject o = response;
-            Produit product = new Produit(o.getInt("id_produit"), o.getInt("id_categorie"), o.getDouble("prix"), o.getString("visuel"), o.getString("description"), o.getString("titre"));
-            this.listProduitToShow.add(product);
-            this.showPullInfo(this.index);
+            for (int i = 0; i < response.length(); i++) {
+                JSONObject o = response.getJSONObject(i);
+                // test if it is an array of products or an array of sizes
+                if (o.has("libelle")) { // Array of size
+                    // Adding sizes for each product :)
+                    int indexOfProductToChange = this.getIndexById(o.getInt("id_produit"));
+                    this.listProduitToShow.get(indexOfProductToChange).addSize(o.getString("libelle"));
+                    Log.e("size", o.getString("libelle"));
+
+                    this.sizeSpinnerArrayAdapter.notifyDataSetChanged();
+                } else {
+                    Produit product = new Produit(o.getInt("id_produit"), o.getInt("id_categorie"), o.getDouble("tarif"), o.getString("visuel"), o.getString("description"), o.getString("titre"), new ArrayList<>());
+                    this.listProduitToShow.add(product);
+                    this.showPullInfo(this.index);
+                    this.enablePrevNextButtons(this.index);
+
+                    if (i == response.length() - 1) {
+                        ProductDAO.findAllSizesByCateg(this, this.idCateg);
+                    }
+                }
+
+            }
+
+            for (int i = 0; i < this.listProduitToShow.size(); i++) {
+                this.listImgProduitToShow.add(null);
+                ImageFromURL loader = new ImageFromURL(this);
+                Log.e("getImage", String.valueOf("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(i).getImgSrc()));
+                loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(i).getImgSrc(), String.valueOf(i));
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
