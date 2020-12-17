@@ -24,7 +24,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.android.volley.VolleyError;
 import com.example.td1.DAO.ProductDAO;
-import com.example.td1.modele.Categorie;
 import com.example.td1.modele.Panier;
 import com.example.td1.modele.Produit;
 import com.example.td1.utils.Paired;
