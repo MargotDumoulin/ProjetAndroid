@@ -40,29 +40,36 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
     private Button prevBtn;
     private Button nextBtn;
+
     private TextView priceTextView;
     private TextView descriptionTextView;
     private TextView titleTextView;
+
     private ImageView pullImageView;
     private ImageView pullImageViewZoomed;
+
     private boolean isImageZoomed;
+    private boolean alreadyHaveInfo;
+
     private View whiteBackgroundView;
+
     private ImageButton basketImageButton;
-    private ImageButton cancelImageButton;
 
     private Spinner sizeSpinner;
     private ArrayAdapter<String> sizeSpinnerArrayAdapter;
 
     private static final int MAIN_VENTE = 0;
 
-    private int index;
     private ArrayList<Produit> listProduitToShow;
-    private int productTableLength;
     private ArrayList <Bitmap> listImgProduitToShow;
+
     private Panier basket;
+
     private double basketAmount;
+
+    private int index;
+    private int productTableLength;
     private int idCateg;
-    private boolean alreadyHaveInfo;
 
     public static final int RETOUR = 0;
 
@@ -119,7 +126,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
         // -- IMAGEBUTTONS --
         this.basketImageButton = this.findViewById(R.id.cartImageButton);
-        this.cancelImageButton = this.findViewById(R.id.cancelImageButton);
 
         // -- TEXTVIEWS --
         this.priceTextView = this.findViewById(R.id.priceTextView);
@@ -137,20 +143,14 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         // -- VIEWS --
         this.whiteBackgroundView = this.findViewById(R.id.blankView);
 
-        if (this.basket.getBasketContent().isEmpty() || this.basket.getBasketContent() == null || this.basket.getBasketSize() < 0) {
-            this.cancelImageButton.setEnabled(false);
-        }
-
         if (this.isImageZoomed) {
             zoomImage();
         }
 
         if (this.getIntent().getIntExtra("requestCode", 0) == MAIN_VENTE) {
             this.basketImageButton.setVisibility(View.VISIBLE);
-            this.cancelImageButton.setVisibility(View.VISIBLE);
         } else {
             this.basketImageButton.setVisibility(View.INVISIBLE);
-            this.cancelImageButton.setVisibility(View.INVISIBLE);
         }
 
         if (this.alreadyHaveInfo) {
@@ -304,7 +304,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     }
 
     public void onClickBtnBasket(View v) {
-        this.cancelImageButton.setEnabled(true);
         this.basket.addArticle(this.listProduitToShow.get(this.index).getId(), sizeSpinner.getSelectedItem().toString());
         this.basketAmount += this.listProduitToShow.get(this.index).getPrice();
         showToastAddProductToBasket();
@@ -332,7 +331,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             this.basket.removeAllArticles();
             this.basketAmount = 0;
             Toast.makeText(this, getString(R.string.clear_basket), Toast.LENGTH_LONG).show();
-            this.cancelImageButton.setEnabled(false);
         } else {
             Toast.makeText(this, getString(R.string.cancel_clear_basket), Toast.LENGTH_LONG).show();
         }

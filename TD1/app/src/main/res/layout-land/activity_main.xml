@@ -49,7 +49,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/descriptionTextView"
         app:layout_constraintTop_toBottomOf="@+id/prevButton"
-        app:layout_constraintBottom_toTopOf="@id/cancelImageButton"
+        app:layout_constraintBottom_toTopOf="@+id/footerTextView"
         app:srcCompat="@drawable/img" />
 
     <Spinner
@@ -62,7 +62,7 @@
         app:layout_constraintTop_toBottomOf="@id/nextButton"
         app:layout_constraintLeft_toRightOf="@+id/descriptionTextView"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/colorSpinner" />
+        app:layout_constraintBottom_toTopOf="@+id/footerTextView" />
 
 
     <ImageButton
@@ -76,17 +76,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_add_shopping_cart_24" />
 
-    <ImageButton
-        android:id="@+id/cancelImageButton"
-        android:layout_width="@dimen/img_button_width"
-        android:layout_height="@dimen/img_button_height"
-        android:layout_marginLeft="@dimen/img_button_margin_side"
-        android:layout_marginBottom="@dimen/img_button_margin_bottom"
-        app:srcCompat="@drawable/baseline_undo_white_18dp"
-        android:onClick="onClickCancel"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
     <TextView
         android:id="@+id/descriptionTextView"
         android:layout_width="190sp"
@@ -95,13 +84,13 @@
         android:background="@drawable/cadre"
         android:layout_marginTop="10dp"
         android:textSize="12sp"
-        android:padding="7dp"
+        android:padding="10dp"
+        android:layout_marginLeft="20dp"
         android:textColor="@color/black"
         android:text="@string/description_example"
         app:layout_constraintLeft_toRightOf="@id/productImageView"
-        app:layout_constraintRight_toLeftOf="@id/colorSpinner"
         app:layout_constraintTop_toBottomOf="@+id/titleTextView"
-        app:layout_constraintBottom_toTopOf="@+id/priceTextView" />
+        app:layout_constraintBottom_toTopOf="@+id/footerTextView"/>
 
     <TextView
         android:id="@+id/footerTextView"
@@ -119,12 +108,13 @@
         android:id="@+id/priceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
+        android:layout_marginTop="50dp"
         android:text="@string/price_example"
         android:textColor="@color/black"
-        app:layout_constraintLeft_toRightOf="@id/cancelImageButton"
-        app:layout_constraintRight_toLeftOf="@id/cartImageButton"
-        app:layout_constraintBottom_toTopOf="@id/footerTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/nextButton"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/descriptionTextView"
+        app:layout_constraintBottom_toTopOf="@id/sizeSpinner" />
 
     <View
         android:id="@+id/blankView"
