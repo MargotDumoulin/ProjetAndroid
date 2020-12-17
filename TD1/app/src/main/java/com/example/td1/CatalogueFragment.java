@@ -1,13 +1,13 @@
 package com.example.td1;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -15,23 +15,20 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.fragment.app.Fragment;
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.android.volley.VolleyError;
 import com.example.td1.DAO.ProductDAO;
 import com.example.td1.modele.Panier;
 import com.example.td1.modele.Produit;
 import com.example.td1.utils.Triplet;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class CatalogueActivity extends AppCompatActivity implements DialogInterface.OnClickListener, AdapterView.OnItemSelectedListener, ActivityWaitingImage, com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener {
+public class CatalogueFragment extends Fragment implements /**DialogInterface.OnClickListener,**/ AdapterView.OnItemSelectedListener, ActivityWaitingImage, com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener {
 
     private Button prevBtn;
     private Button nextBtn;
@@ -51,25 +48,26 @@ public class CatalogueActivity extends AppCompatActivity implements DialogInterf
 
     private int index;
     private ArrayList<Produit> listProduitToShow;
-    private ArrayList <Bitmap> listImgProduitToShow;
+    private ArrayList<Bitmap> listImgProduitToShow;
     private Panier basket;
     private double basketAmount;
     private int idCateg;
+    private View root;
 
     public static final int RETOUR = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_catalogue);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        this.root = inflater.inflate(R.layout.fragment_catalogue, container, false);
+        /**getSupportActionBar().setDisplayHomeAsUpEnabled(true);**/
 
         this.listProduitToShow = new ArrayList<Produit>();
         this.listImgProduitToShow = new ArrayList<Bitmap>();
 
-        if (this.getIntent().getSerializableExtra("newProduct") != null) {
-            Produit productToAdd = (Produit) this.getIntent().getSerializableExtra("newProduct");
+        if (this.getActivity().getIntent().getSerializableExtra("newProduct") != null) {
+            Produit productToAdd = (Produit) this.getActivity().getIntent().getSerializableExtra("newProduct");
             this.listProduitToShow.add(productToAdd);
         }
 
@@ -87,7 +85,7 @@ public class CatalogueActivity extends AppCompatActivity implements DialogInterf
 
             this.basket = new Panier(new ArrayList<Triplet<Integer, String, String>>());
 
-            this.idCateg = this.getIntent().getIntExtra("id_categ", -1);
+            this.idCateg = this.getArguments().getInt("id_categ", -1);
             if (this.idCateg != -1) {
                 // filter items that corresponds to id_categ
                 this.listProduitToShow = new ArrayList<Produit>(this.listProduitToShow
@@ -98,38 +96,39 @@ public class CatalogueActivity extends AppCompatActivity implements DialogInterf
                 // ???
             }
         }
+        return root;
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
 
         // -- BUTTONS --
-        this.prevBtn = this.findViewById(R.id.prevButton);
-        this.nextBtn = this.findViewById(R.id.nextButton);
+        this.prevBtn.setOnClickListener(this::onClickBtnPrev);
+        this.nextBtn.setOnClickListener(this::onClickBtnNext);
 
         // -- IMAGEBUTTONS --
-        this.basketImageButton = this.findViewById(R.id.cartImageButton);
-        this.cancelImageButton = this.findViewById(R.id.cancelImageButton);
+        this.basketImageButton = this.root.findViewById(R.id.cartImageButton);
+        this.cancelImageButton = this.root.findViewById(R.id.cancelImageButton);
 
         // -- TEXTVIEWS --
-        this.priceTextView = this.findViewById(R.id.priceTextView);
-        this.descriptionTextView = this.findViewById(R.id.descriptionTextView);
-        this.titleTextView = this.findViewById(R.id.titleTextView);
+        this.priceTextView = this.root.findViewById(R.id.priceTextView);
+        this.descriptionTextView = this.root.findViewById(R.id.descriptionTextView);
+        this.titleTextView = this.root.findViewById(R.id.titleTextView);
 
         // -- IMAGEVIEWS --
-        this.pullImageView = this.findViewById(R.id.productImageView);
-        this.pullImageViewZoomed = this.findViewById(R.id.expandedImageView);
+        this.pullImageView.setOnClickListener(this::onClickImage);
+        this.pullImageViewZoomed.setOnClickListener(this::onClickImageZoomed);
 
         // -- SPINNERS --
-        this.sizeSpinner = this.findViewById(R.id.sizeSpinner);
-        this.colorSpinner = this.findViewById(R.id.colorSpinner);
+        this.sizeSpinner = this.root.findViewById(R.id.sizeSpinner);
+        this.colorSpinner = this.root.findViewById(R.id.colorSpinner);
 
         this.sizeSpinner.setOnItemSelectedListener(this);
         this.colorSpinner.setOnItemSelectedListener(this);
 
         // -- VIEWS --
-        this.whiteBackgroundView = this.findViewById(R.id.blankView);
+        this.whiteBackgroundView = this.root.findViewById(R.id.blankView);
 
         if (this.basket.getBasketContent().isEmpty() || this.basket.getBasketContent() == null || this.basket.getBasketSize() < 0) {
             this.cancelImageButton.setEnabled(false);
@@ -139,7 +138,7 @@ public class CatalogueActivity extends AppCompatActivity implements DialogInterf
             zoomImage();
         }
 
-        if (this.getIntent().getIntExtra("requestCode", 0) == MAIN_VENTE) {
+        if (this.getArguments().getInt("requestCode", 0) == MAIN_VENTE) {
             this.basketImageButton.setVisibility(View.VISIBLE);
             this.cancelImageButton.setVisibility(View.VISIBLE);
         } else {
@@ -149,7 +148,7 @@ public class CatalogueActivity extends AppCompatActivity implements DialogInterf
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
         outState.putInt("index", this.index);
@@ -176,13 +175,13 @@ public class CatalogueActivity extends AppCompatActivity implements DialogInterf
     public void showToastAddProductToBasket() {
         switch (this.idCateg) {
             case 0:
-                Toast.makeText(this, String.format(getString(R.string.add_pull_basket), this.index), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this.getContext(), String.format(getString(R.string.add_pull_basket), this.index), Toast.LENGTH_SHORT).show();
                 break;
             case 1:
-                Toast.makeText(this, String.format(getString(R.string.add_bonnet_basket), this.index), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this.getContext(), String.format(getString(R.string.add_bonnet_basket), this.index), Toast.LENGTH_SHORT).show();
                 break;
             default:
-                Toast.makeText(this, String.format(getString(R.string.add_article_basket), this.index), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this.getContext(), String.format(getString(R.string.add_article_basket), this.index), Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -216,7 +215,7 @@ public class CatalogueActivity extends AppCompatActivity implements DialogInterf
         this.whiteBackgroundView.setVisibility(View.VISIBLE);
         this.whiteBackgroundView.bringToFront();
 
-        int id = getResources().getIdentifier(this.listProduitToShow.get(this.index).getImgSrc(), "drawable", getPackageName());
+        int id = getResources().getIdentifier(this.listProduitToShow.get(this.index).getImgSrc(), "drawable", getActivity().getPackageName());
         this.pullImageViewZoomed.setImageResource(id);
         this.pullImageViewZoomed.setVisibility(View.VISIBLE);
         this.pullImageViewZoomed.bringToFront();
@@ -227,10 +226,10 @@ public class CatalogueActivity extends AppCompatActivity implements DialogInterf
         this.pullImageViewZoomed.setVisibility(View.INVISIBLE);
     }
 
+    /**
     // ---- TOOLBAR EVENTS ----
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
@@ -239,22 +238,19 @@ public class CatalogueActivity extends AppCompatActivity implements DialogInterf
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    @Override
     public void onBackPressed() {
         this.onClickGoBack(null);
     }
 
-
     // ---- ON CLICK EVENTS ----
-    public void onClickGoBack (View v) {
+    public void onClickGoBack(View v) {
         Intent intent = new Intent();
         intent.putExtra("basketAmount", this.basketAmount);
         intent.putExtra("basket", this.basket);
         this.setResult(RETOUR, intent);
         this.finish();
     }
-
+    **/
     public void onClickBtnNext(View v) {
         this.index++;
         ProductDAO.findProduct(this, this.index);
@@ -266,7 +262,7 @@ public class CatalogueActivity extends AppCompatActivity implements DialogInterf
         ProductDAO.findProduct(this, this.index);
         checkSpinnerValue();
     }
-
+/**
     public void onClickBtnBasket(View v) {
         this.cancelImageButton.setEnabled(true);
         this.basket.addArticle(this.listProduitToShow.get(this.index).getId(), sizeSpinner.getSelectedItem().toString(), colorSpinner.getSelectedItem().toString());
@@ -274,13 +270,12 @@ public class CatalogueActivity extends AppCompatActivity implements DialogInterf
         showToastAddProductToBasket();
     }
 
-    public void onClickCancel (View v) {
+    public void onClickCancel(View v) {
         if (this.basket.getBasketSize() > 0 && this.basket != null) {
             CancelAlert alert = new CancelAlert();
             alert.show(getSupportFragmentManager(), "Suppression");
         }
-    }
-
+    }**/
     public void onClickImage(View v) {
         zoomImage();
     }
@@ -288,23 +283,23 @@ public class CatalogueActivity extends AppCompatActivity implements DialogInterf
     public void onClickImageZoomed(View v) {
         unzoomImage();
     }
-
+/**
     // ---- DIALOG ONCLICK ----
-    @Override
     public void onClick(DialogInterface dialog, int which) {
         if (which == -1) {
             this.basket.removeAllArticles();
             this.basketAmount = 0;
-            Toast.makeText(this, getString(R.string.clear_basket), Toast.LENGTH_LONG).show();
+            Toast.makeText(this.getContext(), getString(R.string.clear_basket), Toast.LENGTH_LONG).show();
             this.cancelImageButton.setEnabled(false);
         } else {
-            Toast.makeText(this, getString(R.string.cancel_clear_basket), Toast.LENGTH_LONG).show();
+            Toast.makeText(this.getContext(), getString(R.string.cancel_clear_basket), Toast.LENGTH_LONG).show();
         }
-    }
+    }**/
+
 
     // ---- SPINNER EVENTS ----
-    public void checkSpinnerValue () {
-        if (!this.colorSpinner.getSelectedItem().toString().equals("Choix du coloris") &&  !this.sizeSpinner.getSelectedItem().toString().equals("Choix de la taille")) {
+    public void checkSpinnerValue() {
+        if (!this.colorSpinner.getSelectedItem().toString().equals("Choix du coloris") && !this.sizeSpinner.getSelectedItem().toString().equals("Choix de la taille")) {
             this.basketImageButton.setEnabled(true);
         } else {
             this.basketImageButton.setEnabled(false);
@@ -322,7 +317,7 @@ public class CatalogueActivity extends AppCompatActivity implements DialogInterf
     }
 
     @Override
-    public void getImage(Object[] results)  {
+    public void getImage(Object[] results) {
         if (results[0] != null) {
             int idx = Integer.parseInt(results[1].toString());
             Bitmap img = (Bitmap) results[0];
@@ -330,7 +325,7 @@ public class CatalogueActivity extends AppCompatActivity implements DialogInterf
             boolean imgNotFound = this.listImgProduitToShow.size() < index;
 
             if (imgNotFound) {
-                int id = getResources().getIdentifier("img", "drawable", getPackageName());
+                int id = getResources().getIdentifier("img", "drawable", getActivity().getPackageName());
                 this.pullImageView.setImageResource(id);
             } else {
                 this.listImgProduitToShow.set(idx, img);
@@ -342,7 +337,7 @@ public class CatalogueActivity extends AppCompatActivity implements DialogInterf
     @Override
     public void onErrorResponse(VolleyError error) {
         Log.e("Erreur JSON", error + "là");
-        Toast.makeText(this, R.string.error_bdd, Toast.LENGTH_LONG).show();
+        Toast.makeText(this.getContext(), R.string.error_bdd, Toast.LENGTH_LONG).show();
     }
 
     @Override

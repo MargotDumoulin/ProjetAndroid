@@ -21,5 +21,14 @@
         android:id="@+id/nav_boutique"
         android:name="com.example.td1.CategoriesFragment"
         android:label="Boutique"
-        tools:layout="@layout/fragment_categories"/>
+        tools:layout="@layout/fragment_categories">
+        <action
+            android:id="@+id/action_nav_boutique_to_catalogueFragment2"
+            app:destination="@id/catalogueFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/catalogueFragment"
+        android:name="com.example.td1.CatalogueFragment"
+        android:label="fragment_catalogue"
+        tools:layout="@layout/fragment_catalogue" />
 </navigation>

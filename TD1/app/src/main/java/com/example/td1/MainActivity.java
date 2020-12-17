@@ -14,7 +14,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ActivityECommerce {
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -49,5 +49,25 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void getPanier() {
+
+    }
+
+    @Override
+    public void addPanier() {
+
+    }
+
+    @Override
+    public void setClient() {
+
+    }
+
+    @Override
+    public void getClient() {
+
     }
 }

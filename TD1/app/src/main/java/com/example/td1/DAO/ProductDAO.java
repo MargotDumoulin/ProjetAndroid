@@ -2,6 +2,8 @@ package com.example.td1.DAO;
 
 import android.content.Context;
 
+import androidx.fragment.app.Fragment;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -13,8 +15,8 @@ import org.json.JSONObject;
 
 public class ProductDAO {
 
-    public static void findProduct(Context activity, int index) {
-        RequestQueue queue = Volley.newRequestQueue(activity);
+    public static void findProduct(Fragment activity, int index) {
+        RequestQueue queue = Volley.newRequestQueue(activity.getContext());
         String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/produits/findProduct.php?id=" + index;
 
         // Request a string response from the provided URL.

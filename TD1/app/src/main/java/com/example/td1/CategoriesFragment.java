@@ -3,6 +3,7 @@ package com.example.td1;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -31,7 +32,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-public class CategoriesFragment extends Fragment implements/** AdapterView.OnItemClickListener,**/ ActivityWaitingImage, com.android.volley.Response.Listener<JSONArray>, com.android.volley.Response.ErrorListener {
+public class CategoriesFragment extends Fragment implements AdapterView.OnItemClickListener, ActivityWaitingImage, com.android.volley.Response.Listener<JSONArray>, com.android.volley.Response.ErrorListener {
 
     private static final int MAIN_VENTE = 0;
     private static final int MAIN_CATALOGUE = 1;
@@ -98,12 +99,12 @@ public class CategoriesFragment extends Fragment implements/** AdapterView.OnIte
             }
         }
     }
-/**
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        if (resultCode == CatalogueActivity.RETOUR) {
+        if (resultCode == CatalogueFragment.RETOUR) {
             if (requestCode == MAIN_VENTE) {
                 Panier productsToAdd = (Panier) intent.getSerializableExtra("basket");
                 double basketAmountFromMainActivity = intent.getDoubleExtra("basketAmount", -1);
@@ -121,15 +122,11 @@ public class CategoriesFragment extends Fragment implements/** AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int index, long id) {
-        Intent intent = new Intent(CategoriesFragment.this.getContext(), CatalogueActivity.class);
-        intent.putExtra("id_categ", this.listCategories.get(index).getId());
-
-        this.modeSelected = this.catalogRadioButton.isChecked() ? MAIN_CATALOGUE : MAIN_VENTE;
-
-        intent.putExtra("requestCode", this.modeSelected);
-        startActivityForResult(intent, this.modeSelected);
+        Bundle bundle = new Bundle();
+        bundle.putInt("id_categ", this.listCategories.get(index).getId());
+        Navigation.findNavController(view).navigate(R.id.action_nav_boutique_to_catalogueFragment2,bundle);
     }
-**/
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void updateBasket(Panier productsToAdd, double basketAmountFromMainActivity)  {
         if (this.basket == null) { this.basket = new Panier(new ArrayList<>()); }

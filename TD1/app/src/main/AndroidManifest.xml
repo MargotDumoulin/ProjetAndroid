@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".NewProductActivity" />
-        <activity android:name=".CatalogueActivity" />
+        <activity android:name=".CatalogueFragment" />
     </application>
 
 </manifest>
