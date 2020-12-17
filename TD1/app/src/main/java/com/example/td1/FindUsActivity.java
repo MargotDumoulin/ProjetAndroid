@@ -15,6 +15,9 @@ public class FindUsActivity extends FragmentActivity implements OnMapReadyCallba
 
     private GoogleMap mMap;
 
+    // For the "unknown fragment" error
+    // https://stackoverflow.com/questions/23898992/android-studio-google-map-v2-fragment-rendering
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +41,22 @@ public class FindUsActivity extends FragmentActivity implements OnMapReadyCallba
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        // Add markers
+        LatLng metz = new LatLng(49.119316234091514, 6.162745805048774);
+        LatLng nancy = new LatLng(48.692493197272846, 6.182190035924221);
+        LatLng paris = new LatLng(48.857644176650005, 2.3432683247462442);
+        LatLng lille = new LatLng(50.62953781296629, 3.0555714809088697);
+        LatLng lyon = new LatLng(45.76381840665436, 4.832373960260015);
+        LatLng strasbourg = new LatLng(48.571591257454465, 7.751106118589273);
+
+        mMap.addMarker(new MarkerOptions().position(metz).title("Shop at Metz"));
+        mMap.addMarker(new MarkerOptions().position(nancy).title("Shop at Nancy"));
+        mMap.addMarker(new MarkerOptions().position(paris).title("Shop at Paris"));
+        mMap.addMarker(new MarkerOptions().position(lille).title("Shop at Lille"));
+        mMap.addMarker(new MarkerOptions().position(lyon).title("Shop at Lyon"));
+        mMap.addMarker(new MarkerOptions().position(strasbourg).title("Shop at Strasbourg"));
+
+        // Center camera on marker
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(paris, 5));
     }
 }
