@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,10 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.VolleyError;
-import com.example.td1.DAO.CategorieDAO;
 import com.example.td1.modele.Categorie;
 import com.example.td1.modele.Panier;
 import com.example.td1.utils.Paired;
@@ -28,7 +24,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class CategoriesActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, ActivityWaitingImage, com.android.volley.Response.Listener<JSONArray>, com.android.volley.Response.ErrorListener {
+public class CategoriesActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, ActivityWaitingImage {
 
     private static final int MAIN_VENTE = 0;
     private static final int MAIN_CATALOGUE = 1;
@@ -47,8 +43,6 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
-
-        CategorieDAO.findAll(this);
 
         if (savedInstanceState != null) {
             this.basket = (Panier) savedInstanceState.getSerializable("basket");
@@ -75,6 +69,26 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
 
         this.catalogRadioButton = this.findViewById(R.id.catalogRadioButton);
         this.totalTextView = this.findViewById(R.id.totalTextView);
+
+        String categories = this.getIntent().getStringExtra("categories");
+
+        if(categories.length() > 0) {
+            try {
+                this.listCategories = new ArrayList<Categorie>();
+                JSONArray catArray = new JSONArray(categories);
+
+                for (int i = 0; i < catArray.length(); i++) {
+                    JSONObject o = catArray.getJSONObject(i);
+                    Categorie cat = new Categorie(o.getInt("id_categorie"), o.getString("titre"), o.getString("visuel"));
+                    this.listCategories.add(cat);
+                }
+                this.fillImgCategories();
+                this.setCategoriesAdapter();
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
         updateTotal();
     }
@@ -158,28 +172,5 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
 
         this.categoriesAdapter = new CategoriesAdapter(this, this.listCategories, this.listImgCategories);
         this.lvCategories.setAdapter(this.categoriesAdapter);
-    }
-
-    @Override
-    public void onErrorResponse(VolleyError error) {
-        Log.e("Erreur JSON", error + "là");
-        Toast.makeText(this, R.string.error_bdd, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onResponse(JSONArray response) {
-        try {
-            this.listCategories = new ArrayList<Categorie>();
-            for (int i = 0; i < response.length(); i++) {
-                JSONObject o = response.getJSONObject(i);
-                Categorie cat = new Categorie(o.getInt("id_categorie"), o.getString("titre"), o.getString("visuel"));
-                this.listCategories.add(cat);
-            }
-            this.fillImgCategories();
-            this.setCategoriesAdapter();
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 }
