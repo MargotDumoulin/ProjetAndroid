@@ -1,5 +1,6 @@
 package com.example.td1;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -7,11 +8,13 @@ import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -303,6 +306,27 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     }
 
     public void onClickBtnBasket(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View view = inflater.inflate(R.layout.item_quantity, null);
+        final EditText text = view.findViewById(R.id.editTextItemQuantity);
+
+                builder.setTitle(getString(R.string.quantity));
+                builder.setView(view);
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                    Log.e("quantity", "yo :)");
+                    final String quantity = text.getText().toString();
+                    Log.e("quantity", quantity);
+                    Log.e("quantity", "TEST");
+                });
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                builder.setNegativeButton(android.R.string.no, null);
+                //.setIcon(android.R.drawable.ic_dialog_alert)
+                builder.show();
+
         this.basket.addArticle(this.listProduitToShow.get(this.index).getId(), sizeSpinner.getSelectedItem().toString());
         this.basketAmount += this.listProduitToShow.get(this.index).getPrice();
         showToastAddProductToBasket();
@@ -389,6 +413,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                 JSONObject o = response.getJSONObject(i);
                 // test if it is an array of products or an array of sizes
                 if (o.has("libelle")) { // Array of size
+                    Log.e("TEST", String.valueOf(this.getIndexById(o.getInt("id_produit"))));
                     // Adding sizes for each product :)
                     int indexOfProductToChange = this.getIndexById(o.getInt("id_produit"));
                     this.listProduitToShow.get(indexOfProductToChange).addSize(o.getString("libelle"));
@@ -402,18 +427,21 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                     this.enablePrevNextButtons(this.index);
 
                     if (i == response.length() - 1) {
+
+                        for (int y = 0; y < this.listProduitToShow.size(); y++) {
+                            this.listImgProduitToShow.add(null);
+                            ImageFromURL loader = new ImageFromURL(this);
+                            Log.e("getImage", String.valueOf("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(y).getImgSrc()));
+                            loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(y).getImgSrc(), String.valueOf(y));
+                        }
+
                         ProductDAO.findAllSizesByCateg(this, this.idCateg);
                     }
                 }
 
             }
 
-            for (int i = 0; i < this.listProduitToShow.size(); i++) {
-                this.listImgProduitToShow.add(null);
-                ImageFromURL loader = new ImageFromURL(this);
-                Log.e("getImage", String.valueOf("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(i).getImgSrc()));
-                loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(i).getImgSrc(), String.valueOf(i));
-            }
+
 
         } catch (JSONException e) {
             e.printStackTrace();

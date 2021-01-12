@@ -27,6 +27,7 @@
     <string name="made_in_2021">Réalisé en 2021</string>
     <string name="create_new_pull">Créer un nouveau pull</string>
     <string name="title">Titre</string>
+    <string name="quantity">Quantité</string>
     <string name="description">Description</string>
     <string name="price">Prix</string>
     <string name="create">Créer</string>
