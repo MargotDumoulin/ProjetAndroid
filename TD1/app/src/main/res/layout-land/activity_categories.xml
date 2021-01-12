@@ -10,7 +10,7 @@
         android:id="@+id/totalTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Total du panier:"
+        android:text="@string/basket_total_without_price"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -56,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="Vente"
+            android:text="@string/sell_mode"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/catalogRadioButton" />
@@ -65,7 +65,7 @@
             android:id="@+id/catalogRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Catalogue"
+            android:text="@string/catalog_mode"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="@+id/sellOrCatalogRadioGroup" />
 
@@ -86,7 +86,7 @@
         android:id="@+id/footerTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="  Réalisé en 2020"
+        android:text="@string/made_in_2021"
         android:background="@color/red_500"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
