@@ -57,7 +57,7 @@ public class NewProductActivity extends AppCompatActivity {
 
     public void onClickAddProduct(View v) {
         if (!this.titleEditText.getText().toString().equals("") && !this.descriptionEditText.getText().toString().equals("") && !this.priceEditText.getText().toString().equals("")) {
-            Intent intent = new Intent(NewProductActivity.this, MainActivity.class);
+            Intent intent = new Intent(NewProductActivity.this, VenteCatalogueFragment.class);
             intent.putExtra("newProduct", new Produit(5, 0, Double.parseDouble(String.valueOf(this.priceEditText.getText())), "img", String.valueOf(this.descriptionEditText.getText()), String.valueOf(this.titleEditText.getText()), new ArrayList<>()));
             intent.putExtra("id_categ", 0);
             intent.putExtra("requestCode", MAIN_CATALOGUE);

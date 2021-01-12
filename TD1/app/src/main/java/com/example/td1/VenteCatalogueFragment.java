@@ -3,12 +3,13 @@ package com.example.td1;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -18,9 +19,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 
 import com.android.volley.VolleyError;
 import com.example.td1.DAO.ProductDAO;
@@ -35,7 +37,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class MainActivity extends AppCompatActivity implements DialogInterface.OnClickListener, AdapterView.OnItemSelectedListener, ActivityWaitingImage, com.android.volley.Response.Listener<JSONArray>, com.android.volley.Response.ErrorListener {
+public class VenteCatalogueFragment extends Fragment implements /**DialogInterface.OnClickListener,**/AdapterView.OnItemSelectedListener, ActivityWaitingImage, com.android.volley.Response.Listener<JSONArray>, com.android.volley.Response.ErrorListener {
 
     private Button prevBtn;
     private Button nextBtn;
@@ -70,28 +72,30 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     private int productTableLength;
     private int idCateg;
 
+    private View root;
     public static final int RETOUR = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+         root = inflater.inflate(R.layout.vente_catalogue_fragment, container, false);
+
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         this.listProduitToShow = new ArrayList<Produit>();
         this.listImgProduitToShow = new ArrayList<Bitmap>();
         this.alreadyHaveInfo = false;
 
-        if (this.getIntent().getSerializableExtra("newProduct") != null) {
-            Produit productToAdd = (Produit) this.getIntent().getSerializableExtra("newProduct");
+        if (this.getActivity().getIntent().getSerializableExtra("newProduct") != null) {
+            Produit productToAdd = (Produit) this.getActivity().getIntent().getSerializableExtra("newProduct");
             this.listProduitToShow.add(productToAdd);
         }
 
         if (savedInstanceState != null) {
             this.listProduitToShow = (ArrayList<Produit>) savedInstanceState.getSerializable("listProduitToShow");
             this.listImgProduitToShow = (ArrayList<Bitmap>) savedInstanceState.getSerializable("listImgProduitToShow");
-            this.basket = (Panier) savedInstanceState.getSerializable("basket");
+            this.basket = ((InterfaceECommerce) this.getActivity()).getPanier();
             this.basketAmount = savedInstanceState.getDouble("basketAmount");
             this.index = savedInstanceState.getInt("index");
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
@@ -106,47 +110,53 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
             this.basket = new Panier(new ArrayList<Paired<Integer, String>>());
 
-            this.idCateg = this.getIntent().getIntExtra("id_categ", -1);
+            this.idCateg = this.getArguments().getInt("id_categ", -1);
             if (this.idCateg != -1) {
-                ProductDAO.findAllByCateg(this, this.idCateg);
+                this.listProduitToShow = new ArrayList<Produit>(this.listProduitToShow
+                        .stream()
+                        .filter(element -> element.getIdCategorie() == this.idCateg).collect(Collectors.toList()));
+                Log.e("terereerereret",this.listProduitToShow+"");
+                //ProductDAO.findAllByCateg(this.getActivity(), this.idCateg);
+                //?????????????????????????????????????????????? probleme to take product ????????????????????????????????????????
             } else {
                 // ???
             }
         }
+        return root;
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
 
         // -- BUTTONS --
-        this.prevBtn = this.findViewById(R.id.prevButton);
-        this.nextBtn = this.findViewById(R.id.nextButton);
+        this.prevBtn = this.root.findViewById(R.id.prevButton);
+        this.nextBtn = this.root.findViewById(R.id.nextButton);
 
         // -- IMAGEBUTTONS --
-        this.basketImageButton = this.findViewById(R.id.cartImageButton);
+        this.basketImageButton = this.root.findViewById(R.id.cartImageButton);
 
         // -- TEXTVIEWS --
-        this.priceTextView = this.findViewById(R.id.priceTextView);
-        this.descriptionTextView = this.findViewById(R.id.descriptionTextView);
-        this.titleTextView = this.findViewById(R.id.titleTextView);
+        this.priceTextView = this.root.findViewById(R.id.priceTextView);
+        this.descriptionTextView = this.root.findViewById(R.id.descriptionTextView);
+        this.titleTextView = this.root.findViewById(R.id.titleTextView);
 
         // -- IMAGEVIEWS --
-        this.pullImageView = this.findViewById(R.id.productImageView);
-        this.pullImageViewZoomed = this.findViewById(R.id.expandedImageView);
+        this.pullImageView = this.root.findViewById(R.id.productImageView);
+        this.pullImageViewZoomed = this.root.findViewById(R.id.expandedImageView);
 
         // -- SPINNERS --
-        this.sizeSpinner = this.findViewById(R.id.sizeSpinner);
+        this.sizeSpinner = this.root.findViewById(R.id.sizeSpinner);
         this.sizeSpinner.setOnItemSelectedListener(this);
 
         // -- VIEWS --
-        this.whiteBackgroundView = this.findViewById(R.id.blankView);
+        this.whiteBackgroundView = this.root.findViewById(R.id.blankView);
 
         if (this.isImageZoomed) {
             zoomImage();
         }
 
-        if (this.getIntent().getIntExtra("requestCode", 0) == MAIN_VENTE) {
+        if (this.getActivity().getIntent().getIntExtra("requestCode", 0) == MAIN_VENTE) {
             this.basketImageButton.setVisibility(View.VISIBLE);
         } else {
             this.basketImageButton.setVisibility(View.INVISIBLE);
@@ -162,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
     // ------ ROTATION ---------------------------------
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
         outState.putInt("index", this.index);
@@ -186,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         this.descriptionTextView.setText(this.listProduitToShow.get(index).getDescription());
         this.titleTextView.setText(this.listProduitToShow.get(index).getTitle());
 
-        this.sizeSpinnerArrayAdapter= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, this.listProduitToShow.get(this.index).getSizes());
+        this.sizeSpinnerArrayAdapter= new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, this.listProduitToShow.get(this.index).getSizes());
         this.sizeSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         this.sizeSpinner.setAdapter(this.sizeSpinnerArrayAdapter);
     }
@@ -194,16 +204,16 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     public void showToastAddProductToBasket() {
         switch (this.idCateg) {
             case 1:
-                Toast.makeText(this, String.format(getString(R.string.add_pull_basket), this.index), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this.getContext(), String.format(getString(R.string.add_pull_basket), this.index), Toast.LENGTH_SHORT).show();
                 break;
             case 2:
-                Toast.makeText(this, String.format(getString(R.string.add_bonnet_basket), this.index), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this.getContext(), String.format(getString(R.string.add_bonnet_basket), this.index), Toast.LENGTH_SHORT).show();
                 break;
             case 3:
-                Toast.makeText(this, String.format(getString(R.string.add_casquette_basket), this.index), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this.getContext(), String.format(getString(R.string.add_casquette_basket), this.index), Toast.LENGTH_SHORT).show();
                 break;
             default:
-                Toast.makeText(this, String.format(getString(R.string.add_article_basket), this.index), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this.getContext(), String.format(getString(R.string.add_article_basket), this.index), Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -257,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         }
         return -1;// not there is list
     }
-
+/**
     // ---- TOOLBAR EVENTS ----
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -271,7 +281,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         }
     }
 
-    @Override
     public void onBackPressed() {
         this.onClickGoBack(null);
     }
@@ -284,7 +293,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         intent.putExtra("basket", this.basket);
         this.setResult(RETOUR, intent);
         this.finish();
-    }
+    }**/
 
     public void onClickBtnNext(View v) {
         this.index++;
@@ -307,14 +316,14 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         this.basketAmount += this.listProduitToShow.get(this.index).getPrice();
         showToastAddProductToBasket();
     }
-
+/**
     public void onClickCancel (View v) {
         if (this.basket.getBasketSize() > 0 && this.basket != null) {
             CancelAlert alert = new CancelAlert();
             alert.show(getSupportFragmentManager(), "Suppression");
         }
     }
-
+**/
     public void onClickImage(View v) {
         zoomImage();
     }
@@ -324,14 +333,14 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     }
 
     // ---- DIALOG ONCLICK ----
-    @Override
+
     public void onClick(DialogInterface dialog, int which) {
         if (which == -1) {
             this.basket.removeAllArticles();
             this.basketAmount = 0;
-            Toast.makeText(this, getString(R.string.clear_basket), Toast.LENGTH_LONG).show();
+            Toast.makeText(this.getContext(), getString(R.string.clear_basket), Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(this, getString(R.string.cancel_clear_basket), Toast.LENGTH_LONG).show();
+            Toast.makeText(this.getContext(), getString(R.string.cancel_clear_basket), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -364,7 +373,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             boolean imgNotFound = this.listImgProduitToShow.size() < index;
 
             if (imgNotFound) {
-                int id = getResources().getIdentifier("img", "drawable", getPackageName());
+                int id = getResources().getIdentifier("img", "drawable", getActivity().getPackageName());
                 this.pullImageView.setImageResource(id);
             } else {
                 this.listImgProduitToShow.set(idx, img);
@@ -379,7 +388,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     public void onErrorResponse(VolleyError error) {
         Log.e("test", error + "là");
         Log.e("test", String.valueOf(this.index));
-        Toast.makeText(this, R.string.error_bdd, Toast.LENGTH_LONG).show();
+        Toast.makeText(this.getContext(), R.string.error_bdd, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -402,7 +411,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                     this.enablePrevNextButtons(this.index);
 
                     if (i == response.length() - 1) {
-                        ProductDAO.findAllSizesByCateg(this, this.idCateg);
+                        ProductDAO.findAllSizesByCateg(this.getActivity(), this.idCateg);
                     }
                 }
 

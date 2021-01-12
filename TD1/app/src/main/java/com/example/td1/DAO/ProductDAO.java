@@ -31,7 +31,6 @@ public class ProductDAO {
     public static void findAllByCateg(Context activity, int categ) {
         RequestQueue queue = Volley.newRequestQueue(activity);
         String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/produits/findAllByCateg.php?categ=" + categ;
-
         // Request a string response from the provided URL.
         JsonArrayRequest jsonArray = new JsonArrayRequest(Request.Method.GET, url, null,
                 (com.android.volley.Response.Listener<JSONArray>) activity,
