@@ -21,6 +21,7 @@ public class MainnActivity extends AppCompatActivity implements InterfaceECommer
 
     private AppBarConfiguration mAppBarConfiguration;
     private Panier basket;
+    private double basketPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,5 +64,15 @@ public class MainnActivity extends AppCompatActivity implements InterfaceECommer
     @Override
     public void updatePanier(Panier basket) {
         this.basket = basket;
+    }
+
+    @Override
+    public void updatePanierPrix(double a) {
+        this.basketPrice = a;
+    }
+
+    @Override
+    public double getPanierPrix() {
+        return this.basketPrice;
     }
 }

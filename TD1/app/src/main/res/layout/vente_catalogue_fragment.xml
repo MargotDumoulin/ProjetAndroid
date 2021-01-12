@@ -25,7 +25,6 @@
             android:layout_width="@dimen/button_width"
             android:layout_height="wrap_content"
             android:text="@string/prev_symbol"
-            android:onClick="onClickBtnPrev"
             android:layout_margin="@dimen/button_margin"
             app:layout_constraintTop_toTopOf="@id/productImageView"
             app:layout_constraintBottom_toBottomOf="@id/productImageView"
@@ -37,7 +36,6 @@
             android:layout_width="@dimen/button_width"
             android:layout_height="wrap_content"
             android:text="@string/next_symbol"
-            android:onClick="onClickBtnNext"
             android:layout_margin="@dimen/button_margin"
             app:layout_constraintLeft_toRightOf="@id/productImageView"
             app:layout_constraintTop_toTopOf="@id/productImageView"
@@ -45,7 +43,6 @@
 
         <ImageView
             android:id="@+id/productImageView"
-            android:onClick="onClickImage"
             android:scaleType="fitCenter"
             android:layout_width="@dimen/img_view_width"
             android:layout_height="@dimen/img_view_height"
@@ -74,7 +71,6 @@
             android:layout_height="@dimen/img_button_height"
             android:layout_marginRight="@dimen/img_button_margin_side"
             android:layout_marginBottom="@dimen/img_button_margin_bottom"
-            android:onClick="onClickBtnBasket"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:srcCompat="@drawable/ic_baseline_add_shopping_cart_24" />
@@ -139,7 +135,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:elevation="4dp"
-            android:onClick="onClickImageZoomed"
             android:visibility="invisible"
             app:srcCompat="@drawable/img" />
 

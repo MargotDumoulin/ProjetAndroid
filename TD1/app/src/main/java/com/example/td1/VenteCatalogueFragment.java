@@ -109,15 +109,9 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
             this.index = 0;
 
             this.basket = new Panier(new ArrayList<Paired<Integer, String>>());
-
             this.idCateg = this.getArguments().getInt("id_categ", -1);
             if (this.idCateg != -1) {
-                this.listProduitToShow = new ArrayList<Produit>(this.listProduitToShow
-                        .stream()
-                        .filter(element -> element.getIdCategorie() == this.idCateg).collect(Collectors.toList()));
-                Log.e("terereerereret",this.listProduitToShow+"");
-                //ProductDAO.findAllByCateg(this.getActivity(), this.idCateg);
-                //?????????????????????????????????????????????? probleme to take product ????????????????????????????????????????
+                ProductDAO.findAllByCateg(this, this.idCateg);
             } else {
                 // ???
             }
@@ -135,6 +129,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
 
         // -- IMAGEBUTTONS --
         this.basketImageButton = this.root.findViewById(R.id.cartImageButton);
+        this.basketImageButton.setOnClickListener(this::onClickBtnBasket);
 
         // -- TEXTVIEWS --
         this.priceTextView = this.root.findViewById(R.id.priceTextView);
@@ -144,7 +139,10 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         // -- IMAGEVIEWS --
         this.pullImageView = this.root.findViewById(R.id.productImageView);
         this.pullImageViewZoomed = this.root.findViewById(R.id.expandedImageView);
-
+        this.pullImageView.setOnClickListener(this::onClickImage);
+        this.pullImageViewZoomed.setOnClickListener(this::onClickImageZoomed);
+        this.prevBtn.setOnClickListener(this::onClickBtnNext);
+        this.prevBtn.setOnClickListener(this::onClickBtnPrev);
         // -- SPINNERS --
         this.sizeSpinner = this.root.findViewById(R.id.sizeSpinner);
         this.sizeSpinner.setOnItemSelectedListener(this);
@@ -163,6 +161,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         }
 
         if (this.alreadyHaveInfo) {
+            Log.e("jechercheIndex2",this.index+"");
             this.showPullInfo(this.index);
             this.changeImageView(this.index);
             this.enablePrevNextButtons(this.index);
@@ -296,7 +295,9 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
     }**/
 
     public void onClickBtnNext(View v) {
+        Log.e("blabla5","blabla5");
         this.index++;
+        Log.e("jechercheIndex5",this.index+"");
         this.showPullInfo(this.index);
         this.changeImageView(this.index);
         this.enablePrevNextButtons(this.index);
@@ -304,6 +305,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
     }
 
     public void onClickBtnPrev(View v) {
+        Log.e("blabla4","blabla4");
         this.index--;
         this.showPullInfo(this.index);
         this.changeImageView(this.index);
@@ -312,10 +314,13 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
     }
 
     public void onClickBtnBasket(View v) {
+        Log.e("blabla3","blabla3");
         this.basket.addArticle(this.listProduitToShow.get(this.index).getId(), sizeSpinner.getSelectedItem().toString());
         this.basketAmount += this.listProduitToShow.get(this.index).getPrice();
+        ((InterfaceECommerce) this.getActivity()).updatePanier(this.basket);
+        ((InterfaceECommerce) this.getActivity()).updatePanierPrix(this.basketAmount);
         showToastAddProductToBasket();
-    }
+    };
 /**
     public void onClickCancel (View v) {
         if (this.basket.getBasketSize() > 0 && this.basket != null) {
@@ -325,10 +330,12 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
     }
 **/
     public void onClickImage(View v) {
+        Log.e("blabla1","blabla1");
         zoomImage();
     }
 
     public void onClickImageZoomed(View v) {
+        Log.e("blabla2","blabla2");
         unzoomImage();
     }
 
@@ -387,13 +394,13 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
     @Override
     public void onErrorResponse(VolleyError error) {
         Log.e("test", error + "là");
-        Log.e("test", String.valueOf(this.index));
         Toast.makeText(this.getContext(), R.string.error_bdd, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onResponse(JSONArray response) {
         try {
+            Log.e("what",response.length()+"");
             for (int i = 0; i < response.length(); i++) {
                 JSONObject o = response.getJSONObject(i);
                 // test if it is an array of products or an array of sizes
@@ -407,11 +414,12 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
                 } else {
                     Produit product = new Produit(o.getInt("id_produit"), o.getInt("id_categorie"), o.getDouble("tarif"), o.getString("visuel"), o.getString("description"), o.getString("titre"), new ArrayList<>());
                     this.listProduitToShow.add(product);
+                    Log.e("jechercheIndex1",this.index+"");
                     this.showPullInfo(this.index);
                     this.enablePrevNextButtons(this.index);
 
                     if (i == response.length() - 1) {
-                        ProductDAO.findAllSizesByCateg(this.getActivity(), this.idCateg);
+                        ProductDAO.findAllSizesByCateg(this, this.idCateg);
                     }
                 }
 
@@ -423,7 +431,6 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
                 Log.e("getImage", String.valueOf("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(i).getImgSrc()));
                 loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(i).getImgSrc(), String.valueOf(i));
             }
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
