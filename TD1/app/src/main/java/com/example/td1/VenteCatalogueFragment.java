@@ -95,7 +95,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         if (savedInstanceState != null) {
             this.listProduitToShow = (ArrayList<Produit>) savedInstanceState.getSerializable("listProduitToShow");
             this.listImgProduitToShow = (ArrayList<Bitmap>) savedInstanceState.getSerializable("listImgProduitToShow");
-            this.basket = ((InterfaceECommerce) this.getActivity()).getPanier();
+            this.basket = (Panier) savedInstanceState.getSerializable("basket");
             this.basketAmount = savedInstanceState.getDouble("basketAmount");
             this.index = savedInstanceState.getInt("index");
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
@@ -129,7 +129,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
 
         // -- IMAGEBUTTONS --
         this.basketImageButton = this.root.findViewById(R.id.cartImageButton);
-        this.basketImageButton.setOnClickListener(this::onClickBtnBasket);
+
 
         // -- TEXTVIEWS --
         this.priceTextView = this.root.findViewById(R.id.priceTextView);
@@ -139,10 +139,14 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         // -- IMAGEVIEWS --
         this.pullImageView = this.root.findViewById(R.id.productImageView);
         this.pullImageViewZoomed = this.root.findViewById(R.id.expandedImageView);
+
         this.pullImageView.setOnClickListener(this::onClickImage);
         this.pullImageViewZoomed.setOnClickListener(this::onClickImageZoomed);
-        this.prevBtn.setOnClickListener(this::onClickBtnNext);
-        this.prevBtn.setOnClickListener(this::onClickBtnPrev);
+        this.basketImageButton.setOnClickListener(this::onClickBtnBasket);
+
+        this.prevBtn.setOnClickListener(this::onClickBtnNext);// if you click on the button onClickBtnNext don't start
+        this.prevBtn.setOnClickListener(this::onClickBtnPrev);// if you click on the button onClickBtnPrev don't start
+
         // -- SPINNERS --
         this.sizeSpinner = this.root.findViewById(R.id.sizeSpinner);
         this.sizeSpinner.setOnItemSelectedListener(this);
@@ -161,7 +165,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         }
 
         if (this.alreadyHaveInfo) {
-            Log.e("jechercheIndex2",this.index+"");
+            Log.e("jechercheIndex2", this.index + "");
             this.showPullInfo(this.index);
             this.changeImageView(this.index);
             this.enablePrevNextButtons(this.index);
@@ -195,7 +199,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         this.descriptionTextView.setText(this.listProduitToShow.get(index).getDescription());
         this.titleTextView.setText(this.listProduitToShow.get(index).getTitle());
 
-        this.sizeSpinnerArrayAdapter= new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, this.listProduitToShow.get(this.index).getSizes());
+        this.sizeSpinnerArrayAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, this.listProduitToShow.get(this.index).getSizes());
         this.sizeSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         this.sizeSpinner.setAdapter(this.sizeSpinnerArrayAdapter);
     }
@@ -260,44 +264,46 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
     // --- FIND INDEX IN PRODUCT LIST
     public int getIndexById(int id) {
         for (int i = 0; i < this.listProduitToShow.size(); i++) {
-            if (this.listProduitToShow.get(i) !=null && this.listProduitToShow.get(i).getId() == id) {
+            if (this.listProduitToShow.get(i) != null && this.listProduitToShow.get(i).getId() == id) {
                 return i;
             }
         }
         return -1;// not there is list
     }
-/**
-    // ---- TOOLBAR EVENTS ----
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
-    public void onBackPressed() {
-        this.onClickGoBack(null);
-    }
-
-
-    // ---- ON CLICK EVENTS ----
-    public void onClickGoBack (View v) {
-        Intent intent = new Intent();
-        intent.putExtra("basketAmount", this.basketAmount);
-        intent.putExtra("basket", this.basket);
-        this.setResult(RETOUR, intent);
-        this.finish();
-    }**/
+    /**
+     * // ---- TOOLBAR EVENTS ----
+     *
+     * @Override public boolean onOptionsItemSelected(MenuItem item)
+     * {
+     * switch (item.getItemId()) {
+     * case android.R.id.home:
+     * onBackPressed();
+     * return true;
+     * default:
+     * return super.onOptionsItemSelected(item);
+     * }
+     * }
+     * <p>
+     * public void onBackPressed() {
+     * this.onClickGoBack(null);
+     * }
+     * <p>
+     * <p>
+     * // ---- ON CLICK EVENTS ----
+     * public void onClickGoBack (View v) {
+     * Intent intent = new Intent();
+     * intent.putExtra("basketAmount", this.basketAmount);
+     * intent.putExtra("basket", this.basket);
+     * this.setResult(RETOUR, intent);
+     * this.finish();
+     * }
+     **/
 
     public void onClickBtnNext(View v) {
-        Log.e("blabla5","blabla5");
+        Log.e("blabla5", "blabla5");
         this.index++;
-        Log.e("jechercheIndex5",this.index+"");
+        Log.e("jechercheIndex5", this.index + "");
         this.showPullInfo(this.index);
         this.changeImageView(this.index);
         this.enablePrevNextButtons(this.index);
@@ -305,7 +311,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
     }
 
     public void onClickBtnPrev(View v) {
-        Log.e("blabla4","blabla4");
+        Log.e("blabla4", "blabla4");
         this.index--;
         this.showPullInfo(this.index);
         this.changeImageView(this.index);
@@ -314,28 +320,29 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
     }
 
     public void onClickBtnBasket(View v) {
-        Log.e("blabla3","blabla3");
+        Log.e("blabla3", "blabla3");
         this.basket.addArticle(this.listProduitToShow.get(this.index).getId(), sizeSpinner.getSelectedItem().toString());
         this.basketAmount += this.listProduitToShow.get(this.index).getPrice();
         ((InterfaceECommerce) this.getActivity()).updatePanier(this.basket);
         ((InterfaceECommerce) this.getActivity()).updatePanierPrix(this.basketAmount);
         showToastAddProductToBasket();
-    };
-/**
-    public void onClickCancel (View v) {
-        if (this.basket.getBasketSize() > 0 && this.basket != null) {
-            CancelAlert alert = new CancelAlert();
-            alert.show(getSupportFragmentManager(), "Suppression");
-        }
     }
-**/
+
+    /**
+     * public void onClickCancel (View v) {
+     * if (this.basket.getBasketSize() > 0 && this.basket != null) {
+     * CancelAlert alert = new CancelAlert();
+     * alert.show(getSupportFragmentManager(), "Suppression");
+     * }
+     * }
+     **/
     public void onClickImage(View v) {
-        Log.e("blabla1","blabla1");
+        Log.e("blabla1", "blabla1");
         zoomImage();
     }
 
     public void onClickImageZoomed(View v) {
-        Log.e("blabla2","blabla2");
+        Log.e("blabla2", "blabla2");
         unzoomImage();
     }
 
@@ -352,7 +359,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
     }
 
     // ---- SPINNER EVENTS ----
-    public void checkSpinnerValue () {
+    public void checkSpinnerValue() {
         if (!this.sizeSpinner.getSelectedItem().toString().equals("Choix de la taille")) {
             this.basketImageButton.setEnabled(true);
         } else {
@@ -372,7 +379,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
 
     // ---- DATABASE EVENTS ------------------------
     @Override
-    public void getImage(Object[] results)  {
+    public void getImage(Object[] results) {
         if (results[0] != null) {
             int idx = Integer.parseInt(results[1].toString());
             Bitmap img = (Bitmap) results[0];
@@ -400,7 +407,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
     @Override
     public void onResponse(JSONArray response) {
         try {
-            Log.e("what",response.length()+"");
+            Log.e("what", response.length() + "");
             for (int i = 0; i < response.length(); i++) {
                 JSONObject o = response.getJSONObject(i);
                 // test if it is an array of products or an array of sizes
@@ -414,7 +421,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
                 } else {
                     Produit product = new Produit(o.getInt("id_produit"), o.getInt("id_categorie"), o.getDouble("tarif"), o.getString("visuel"), o.getString("description"), o.getString("titre"), new ArrayList<>());
                     this.listProduitToShow.add(product);
-                    Log.e("jechercheIndex1",this.index+"");
+                    Log.e("jechercheIndex1", this.index + "");
                     this.showPullInfo(this.index);
                     this.enablePrevNextButtons(this.index);
 
