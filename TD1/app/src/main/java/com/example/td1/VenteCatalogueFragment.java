@@ -108,7 +108,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
             this.isImageZoomed = false;
             this.index = 0;
 
-            this.basket = new Panier(new ArrayList<Paired<Integer, String>>());
+            this.basket = ((InterfaceECommerce) this.getActivity()).getPanier();
             this.idCateg = this.getArguments().getInt("id_categ", -1);
             if (this.idCateg != -1) {
                 ProductDAO.findAllByCateg(this, this.idCateg);
@@ -144,7 +144,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         this.pullImageViewZoomed.setOnClickListener(this::onClickImageZoomed);
         this.basketImageButton.setOnClickListener(this::onClickBtnBasket);
 
-        this.prevBtn.setOnClickListener(this::onClickBtnNext);// if you click on the button onClickBtnNext don't start
+        this.nextBtn.setOnClickListener(this::onClickBtnNext);// if you click on the button onClickBtnNext don't start
         this.prevBtn.setOnClickListener(this::onClickBtnPrev);// if you click on the button onClickBtnPrev don't start
 
         // -- SPINNERS --

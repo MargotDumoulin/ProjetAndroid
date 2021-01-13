@@ -51,11 +51,11 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
         root = inflater.inflate(R.layout.fragment_categories, container, false);
 
         if (savedInstanceState != null) {
-            this.basket = ((InterfaceECommerce) this.getActivity()).getPanier();
+            this.basket = (Panier) savedInstanceState.getSerializable("basket");
             this.basketAmount = savedInstanceState.getDouble("basketAmount");
         } else {
-            this.basket = new Panier(new ArrayList<Paired<Integer, String>>());
-            this.basketAmount = 0;
+            this.basket = ((InterfaceECommerce) this.getActivity()).getPanier();
+            this.basketAmount = ((InterfaceECommerce) this.getActivity()).getPanierPrix();
         }
         return root;
     }
@@ -96,7 +96,6 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
                 e.printStackTrace();
             }
         }
-
         updateTotal();
     }
 

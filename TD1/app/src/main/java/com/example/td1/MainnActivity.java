@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.Menu;
 
 import com.example.td1.modele.Panier;
+import com.example.td1.utils.Paired;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -17,10 +18,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.ArrayList;
+
 public class MainnActivity extends AppCompatActivity implements InterfaceECommerce {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private Panier basket;
+    private Panier basket = new Panier(new ArrayList<Paired<Integer, String>>());
     private double basketPrice;
 
     @Override
