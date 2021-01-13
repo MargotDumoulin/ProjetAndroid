@@ -1,13 +1,11 @@
-package com.example.td1;
+package com.example.td1.ui.ventecatalogue;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -21,21 +19,22 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.VolleyError;
+import com.example.td1.ActivityWaitingImage;
 import com.example.td1.DAO.ProductDAO;
+import com.example.td1.ImageFromURL;
+import com.example.td1.ActiviteECommerce;
+import com.example.td1.R;
 import com.example.td1.modele.Panier;
 import com.example.td1.modele.Produit;
-import com.example.td1.utils.Paired;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class VenteCatalogueFragment extends Fragment implements /**DialogInterface.OnClickListener,**/AdapterView.OnItemSelectedListener, ActivityWaitingImage, com.android.volley.Response.Listener<JSONArray>, com.android.volley.Response.ErrorListener {
 
@@ -108,8 +107,8 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
             this.isImageZoomed = false;
             this.index = 0;
 
-            this.basket = ((InterfaceECommerce) this.getActivity()).getPanier();
-            this.basketAmount = ((InterfaceECommerce) this.getActivity()).getPanierPrix();
+            this.basket = ((ActiviteECommerce) this.getActivity()).getPanier();
+            this.basketAmount = ((ActiviteECommerce) this.getActivity()).getPanierPrix();
             this.idCateg = this.getArguments().getInt("id_categ", -1);
             if (this.idCateg != -1) {
                 ProductDAO.findAllByCateg(this, this.idCateg);
@@ -159,7 +158,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
             zoomImage();
         }
 
-        if (this.getActivity().getIntent().getIntExtra("requestCode", 0) == MAIN_VENTE) {
+        if (this.getArguments().getInt("requestCode", 0) == MAIN_VENTE) {
             this.basketImageButton.setVisibility(View.VISIBLE);
         } else {
             this.basketImageButton.setVisibility(View.INVISIBLE);
@@ -319,8 +318,8 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
     public void onClickBtnBasket(View v) {
         this.basket.addArticle(this.listProduitToShow.get(this.index).getId(), sizeSpinner.getSelectedItem().toString());
         this.basketAmount += this.listProduitToShow.get(this.index).getPrice();
-        ((InterfaceECommerce) this.getActivity()).updatePanier(this.basket);
-        ((InterfaceECommerce) this.getActivity()).updatePanierPrix(this.basketAmount);
+        ((ActiviteECommerce) this.getActivity()).updatePanier(this.basket);
+        ((ActiviteECommerce) this.getActivity()).updatePanierPrix(this.basketAmount);
         showToastAddProductToBasket();
     }
 

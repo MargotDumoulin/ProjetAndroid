@@ -1,13 +1,10 @@
 package com.example.td1;
 
 import android.os.Bundle;
-import android.view.View;
 import android.view.Menu;
 
 import com.example.td1.modele.Panier;
 import com.example.td1.utils.Paired;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.navigation.NavController;
@@ -20,7 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 
-public class MainnActivity extends AppCompatActivity implements InterfaceECommerce {
+public class MainActivity extends AppCompatActivity implements ActiviteECommerce {
 
     private AppBarConfiguration mAppBarConfiguration;
     private Panier basket = new Panier(new ArrayList<Paired<Integer, String>>());
@@ -29,7 +26,7 @@ public class MainnActivity extends AppCompatActivity implements InterfaceECommer
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mainn);
+        setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -70,8 +67,8 @@ public class MainnActivity extends AppCompatActivity implements InterfaceECommer
     }
 
     @Override
-    public void updatePanierPrix(double a) {
-        this.basketPrice = a;
+    public void updatePanierPrix(double basketPrice) {
+        this.basketPrice = basketPrice;
     }
 
     @Override

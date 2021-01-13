@@ -24,7 +24,7 @@
         tools:layout="@layout/fragment_slideshow" />
     <fragment
         android:id="@+id/nav_boutique"
-        android:name="com.example.td1.CategoriesFragment"
+        android:name="com.example.td1.ui.categorie.CategoriesFragment"
         android:label="Boutique"
         tools:layout="@layout/fragment_categories">
         <action
@@ -36,12 +36,12 @@
     </fragment>
     <fragment
         android:id="@+id/venteCatalogueFragment"
-        android:name="com.example.td1.VenteCatalogueFragment"
+        android:name="com.example.td1.ui.ventecatalogue.VenteCatalogueFragment"
         android:label="vente_catalogue_fragment"
         tools:layout="@layout/vente_catalogue_fragment" />
     <fragment
         android:id="@+id/newProductFragment"
-        android:name="com.example.td1.NewProductFragment"
+        android:name="com.example.td1.ui.newproduct.NewProductFragment"
         android:label="fragment_new_product"
         tools:layout="@layout/fragment_new_product" >
         <action

@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TD1" >
         <activity
-            android:name=".MainnActivity"
+            android:name=".MainActivity"
             android:label="@string/title_activity_mainn"
             android:theme="@style/Theme.TD1.NoActionBar" >
         </activity>
@@ -30,8 +30,8 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".NewProductFragment" />
-        <activity android:name=".VenteCatalogueFragment" />
+        <activity android:name=".ui.newproduct.NewProductFragment" />
+        <activity android:name=".ui.ventecatalogue.VenteCatalogueFragment" />
         <activity android:name=".FindUsActivity" />
         <activity
             android:name=".SplashScreen"

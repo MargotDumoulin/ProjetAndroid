@@ -33,7 +33,7 @@ public class SplashScreen extends AppCompatActivity implements Response.Listener
 
     @Override
     public void onResponse(JSONArray response) {
-        Intent intent = new Intent(SplashScreen.this, MainnActivity.class);
+        Intent intent = new Intent(SplashScreen.this, MainActivity.class);
         intent.putExtra("categories", response.toString());
         startActivity(intent);
     }

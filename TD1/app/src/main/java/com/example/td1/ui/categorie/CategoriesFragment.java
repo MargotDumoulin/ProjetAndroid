@@ -1,12 +1,10 @@
-package com.example.td1;
+package com.example.td1.ui.categorie;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.widget.ButtonBarLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,14 +12,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.example.td1.ActivityWaitingImage;
+import com.example.td1.CategoriesAdapter;
+import com.example.td1.ImageFromURL;
+import com.example.td1.ActiviteECommerce;
+import com.example.td1.R;
 import com.example.td1.modele.Categorie;
 import com.example.td1.modele.Panier;
-import com.google.android.gms.maps.model.ButtCap;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -56,8 +57,8 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
             this.basket = (Panier) savedInstanceState.getSerializable("basket");
             this.basketAmount = savedInstanceState.getDouble("basketAmount");
         } else {
-            this.basket = ((InterfaceECommerce) this.getActivity()).getPanier();
-            this.basketAmount = ((InterfaceECommerce) this.getActivity()).getPanierPrix();
+            this.basket = ((ActiviteECommerce) this.getActivity()).getPanier();
+            this.basketAmount = ((ActiviteECommerce) this.getActivity()).getPanierPrix();
         }
         return root;
     }
@@ -147,6 +148,9 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
     public void onItemClick(AdapterView<?> parent, View view, int index, long id) {
         Bundle bundle = new Bundle();
         bundle.putInt("id_categ", this.listCategories.get(index).getId());
+        this.modeSelected = this.catalogRadioButton.isChecked() ? MAIN_CATALOGUE : MAIN_VENTE;
+        bundle.putInt("requestCode",modeSelected);
+
         Navigation.findNavController(view).navigate(R.id.action_nav_boutique_to_venteCatalogueFragment, bundle);
         /**
          Intent intent = new Intent(CategoriesFragment.this, VenteCatalogueActivity.class);
@@ -166,7 +170,7 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
 
         productsToAdd.getBasketContent().forEach(product -> {
             this.basket.addArticle(product.first, product.second);
-            ((InterfaceECommerce) this.getActivity()).updatePanier(this.basket);
+            ((ActiviteECommerce) this.getActivity()).updatePanier(this.basket);
             // As we don't have a database yet, we can't retrieve the product price with the product's id and add it to basketAmount.
             // Currently, we have to pass a variable with basketAmount from MainActivity to CategoriesActivity in order to get the amount to add.
         });

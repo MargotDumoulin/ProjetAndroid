@@ -1,4 +1,4 @@
-package com.example.td1;
+package com.example.td1.ui.newproduct;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.td1.R;
 import com.example.td1.modele.Produit;
 
 import java.util.ArrayList;
