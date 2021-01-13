@@ -62,7 +62,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
     private static final int MAIN_VENTE = 0;
 
     private ArrayList<Produit> listProduitToShow;
-    private ArrayList <Bitmap> listImgProduitToShow;
+    private ArrayList<Bitmap> listImgProduitToShow;
 
     private Panier basket;
 
@@ -79,7 +79,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         root = inflater.inflate(R.layout.vente_catalogue_fragment, container, false);
+        root = inflater.inflate(R.layout.vente_catalogue_fragment, container, false);
 
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -109,6 +109,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
             this.index = 0;
 
             this.basket = ((InterfaceECommerce) this.getActivity()).getPanier();
+            this.basketAmount = ((InterfaceECommerce) this.getActivity()).getPanierPrix();
             this.idCateg = this.getArguments().getInt("id_categ", -1);
             if (this.idCateg != -1) {
                 ProductDAO.findAllByCateg(this, this.idCateg);
@@ -144,8 +145,8 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         this.pullImageViewZoomed.setOnClickListener(this::onClickImageZoomed);
         this.basketImageButton.setOnClickListener(this::onClickBtnBasket);
 
-        this.nextBtn.setOnClickListener(this::onClickBtnNext);// if you click on the button onClickBtnNext don't start
-        this.prevBtn.setOnClickListener(this::onClickBtnPrev);// if you click on the button onClickBtnPrev don't start
+        this.nextBtn.setOnClickListener(this::onClickBtnNext);
+        this.prevBtn.setOnClickListener(this::onClickBtnPrev);
 
         // -- SPINNERS --
         this.sizeSpinner = this.root.findViewById(R.id.sizeSpinner);
@@ -165,7 +166,6 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         }
 
         if (this.alreadyHaveInfo) {
-            Log.e("jechercheIndex2", this.index + "");
             this.showPullInfo(this.index);
             this.changeImageView(this.index);
             this.enablePrevNextButtons(this.index);
@@ -301,9 +301,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
      **/
 
     public void onClickBtnNext(View v) {
-        Log.e("blabla5", "blabla5");
         this.index++;
-        Log.e("jechercheIndex5", this.index + "");
         this.showPullInfo(this.index);
         this.changeImageView(this.index);
         this.enablePrevNextButtons(this.index);
@@ -311,7 +309,6 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
     }
 
     public void onClickBtnPrev(View v) {
-        Log.e("blabla4", "blabla4");
         this.index--;
         this.showPullInfo(this.index);
         this.changeImageView(this.index);
@@ -320,7 +317,6 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
     }
 
     public void onClickBtnBasket(View v) {
-        Log.e("blabla3", "blabla3");
         this.basket.addArticle(this.listProduitToShow.get(this.index).getId(), sizeSpinner.getSelectedItem().toString());
         this.basketAmount += this.listProduitToShow.get(this.index).getPrice();
         ((InterfaceECommerce) this.getActivity()).updatePanier(this.basket);
@@ -337,12 +333,10 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
      * }
      **/
     public void onClickImage(View v) {
-        Log.e("blabla1", "blabla1");
         zoomImage();
     }
 
     public void onClickImageZoomed(View v) {
-        Log.e("blabla2", "blabla2");
         unzoomImage();
     }
 
@@ -407,7 +401,6 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
     @Override
     public void onResponse(JSONArray response) {
         try {
-            Log.e("what", response.length() + "");
             for (int i = 0; i < response.length(); i++) {
                 JSONObject o = response.getJSONObject(i);
                 // test if it is an array of products or an array of sizes
@@ -421,7 +414,6 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
                 } else {
                     Produit product = new Produit(o.getInt("id_produit"), o.getInt("id_categorie"), o.getDouble("tarif"), o.getString("visuel"), o.getString("description"), o.getString("titre"), new ArrayList<>());
                     this.listProduitToShow.add(product);
-                    Log.e("jechercheIndex1", this.index + "");
                     this.showPullInfo(this.index);
                     this.enablePrevNextButtons(this.index);
 

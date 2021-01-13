@@ -2,7 +2,7 @@ package com.example.td1;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.ButtonBarLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -10,18 +10,19 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.td1.modele.Categorie;
 import com.example.td1.modele.Panier;
-import com.example.td1.utils.Paired;
+import com.google.android.gms.maps.model.ButtCap;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,6 +45,7 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
     private double basketAmount;
     private CategoriesAdapter categoriesAdapter;
     private View root;
+    private FloatingActionButton floatingActionButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -76,6 +78,8 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
 
         this.catalogRadioButton = this.root.findViewById(R.id.catalogRadioButton);
         this.totalTextView = this.root.findViewById(R.id.totalTextView);
+        this.floatingActionButton = this.root.findViewById(R.id.floatingActionButton);
+        this.floatingActionButton.setOnClickListener(this::onClickCreateProduct);
 
         String categories = this.getActivity().getIntent().getStringExtra("categories");
 
@@ -99,9 +103,12 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
         updateTotal();
     }
 
-    public void onClickCreateProduct(View v) {
-        Intent intent = new Intent(CategoriesFragment.this.getContext(), NewProductActivity.class);
-        startActivity(intent);
+    public void onClickCreateProduct(View view) {
+        /** 
+        Intent intent = new Intent(CategoriesFragment.this.getContext(), NewProductFragment.class);
+        startActivity(intent);**/
+        Bundle bundle = new Bundle();
+        Navigation.findNavController(view).navigate(R.id.action_nav_boutique_to_newProductFragment,bundle);
     }
 
     @Override
