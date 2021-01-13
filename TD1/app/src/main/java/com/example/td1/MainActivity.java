@@ -1,19 +1,25 @@
 package com.example.td1;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +53,9 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     private ImageView pullImageView;
     private ImageView pullImageViewZoomed;
 
+    private View progressBarView;
+    private ProgressBar progressBar;
+
     private boolean isImageZoomed;
     private boolean alreadyHaveInfo;
 
@@ -71,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     private int idCateg;
 
     public static final int RETOUR = 0;
+    final int LOADING_TIME_OUT = 1000;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -108,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
             this.idCateg = this.getIntent().getIntExtra("id_categ", -1);
             if (this.idCateg != -1) {
-                ProductDAO.findAllByCateg(this, this.idCateg);
+                new Handler().postDelayed(() -> ProductDAO.findAllByCateg(this, this.idCateg), LOADING_TIME_OUT);
             } else {
                 // ???
             }
@@ -142,6 +152,9 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         // -- VIEWS --
         this.whiteBackgroundView = this.findViewById(R.id.blankView);
 
+        this.progressBarView = this.findViewById(R.id.loadingView);
+        this.progressBar = this.findViewById(R.id.loading);
+
         if (this.isImageZoomed) {
             zoomImage();
         }
@@ -156,6 +169,8 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             this.showPullInfo(this.index);
             this.changeImageView(this.index);
             this.enablePrevNextButtons(this.index);
+            this.progressBarView.setVisibility(View.GONE);
+            this.progressBar.setVisibility(View.GONE);
         }
 
     }
@@ -389,12 +404,31 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                 JSONObject o = response.getJSONObject(i);
                 // test if it is an array of products or an array of sizes
                 if (o.has("libelle")) { // Array of size
+
                     // Adding sizes for each product :)
                     int indexOfProductToChange = this.getIndexById(o.getInt("id_produit"));
                     this.listProduitToShow.get(indexOfProductToChange).addSize(o.getString("libelle"));
                     Log.e("size", o.getString("libelle"));
 
                     this.sizeSpinnerArrayAdapter.notifyDataSetChanged();
+
+                    if (i == response.length() - 1) {
+                        this.progressBar.animate().alpha(0.0f).setDuration(250).setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                progressBar.setVisibility(View.GONE);
+                            }
+                        });
+
+                        this.progressBarView.animate().alpha(0.0f).setDuration(400).setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                progressBarView.setVisibility(View.GONE);
+                            }
+                        });
+                    }
                 } else {
                     Produit product = new Produit(o.getInt("id_produit"), o.getInt("id_categorie"), o.getDouble("tarif"), o.getString("visuel"), o.getString("description"), o.getString("titre"), new ArrayList<>());
                     this.listProduitToShow.add(product);
@@ -402,17 +436,17 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                     this.enablePrevNextButtons(this.index);
 
                     if (i == response.length() - 1) {
+                        for (int j = 0; j < this.listProduitToShow.size(); j++) {
+                            this.listImgProduitToShow.add(null);
+                            ImageFromURL loader = new ImageFromURL(this);
+                            Log.e("getImage", String.valueOf("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(j).getImgSrc()));
+                            loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(j).getImgSrc(), String.valueOf(j));
+                        }
+
                         ProductDAO.findAllSizesByCateg(this, this.idCateg);
                     }
                 }
 
-            }
-
-            for (int i = 0; i < this.listProduitToShow.size(); i++) {
-                this.listImgProduitToShow.add(null);
-                ImageFromURL loader = new ImageFromURL(this);
-                Log.e("getImage", String.valueOf("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(i).getImgSrc()));
-                loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(i).getImgSrc(), String.valueOf(i));
             }
 
         } catch (JSONException e) {
