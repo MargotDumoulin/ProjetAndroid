@@ -71,7 +71,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:text="Créer"
-            android:onClick="onClickAddProduct"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/productPriceEditText"
             app:layout_constraintBottom_toTopOf="@id/footerTextView"/>
