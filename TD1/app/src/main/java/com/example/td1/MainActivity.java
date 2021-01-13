@@ -40,6 +40,15 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        if (savedInstanceState != null) {
+            this.basket = (Panier)savedInstanceState.getSerializable("basket");
+            this.basketPrice = savedInstanceState.getDouble("basketPrice");
+        }
+    }
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putDouble("basketPrice", this.basketPrice);
+        outState.putSerializable("basket", this.basket);
     }
 
     @Override

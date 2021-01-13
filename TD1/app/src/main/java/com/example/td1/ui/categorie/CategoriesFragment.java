@@ -54,8 +54,12 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
         root = inflater.inflate(R.layout.fragment_categories, container, false);
 
         if (savedInstanceState != null) {
-            this.basket = (Panier) savedInstanceState.getSerializable("basket");
-            this.basketAmount = savedInstanceState.getDouble("basketAmount");
+            //this.basket = (Panier) savedInstanceState.getSerializable("basket");
+            //this.basketAmount = savedInstanceState.getDouble("basketAmount");
+
+            this.basket = ((ActiviteECommerce) this.getActivity()).getPanier();
+            this.basketAmount = ((ActiviteECommerce) this.getActivity()).getPanierPrix();
+
         } else {
             this.basket = ((ActiviteECommerce) this.getActivity()).getPanier();
             this.basketAmount = ((ActiviteECommerce) this.getActivity()).getPanierPrix();

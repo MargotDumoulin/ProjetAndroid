@@ -93,9 +93,14 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
 
         if (savedInstanceState != null) {
             this.listProduitToShow = (ArrayList<Produit>) savedInstanceState.getSerializable("listProduitToShow");
+
             this.listImgProduitToShow = (ArrayList<Bitmap>) savedInstanceState.getSerializable("listImgProduitToShow");
-            this.basket = (Panier) savedInstanceState.getSerializable("basket");
-            this.basketAmount = savedInstanceState.getDouble("basketAmount");
+
+            //this.basket = (Panier) savedInstanceState.getSerializable("basket");
+            //this.basketAmount = savedInstanceState.getDouble("basketAmount");
+            this.basket = ((ActiviteECommerce) this.getActivity()).getPanier();
+            this.basketAmount = ((ActiviteECommerce) this.getActivity()).getPanierPrix();
+
             this.index = savedInstanceState.getInt("index");
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
             this.productTableLength = savedInstanceState.getInt("productTableLength");
