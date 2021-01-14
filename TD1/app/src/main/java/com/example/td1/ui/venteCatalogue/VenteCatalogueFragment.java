@@ -305,21 +305,20 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         // Specifying a listener allows you to take an action before dismissing the dialog.
         // The dialog is automatically dismissed when a dialog button is clicked.
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-            Log.e("quantity", "yo :)");
-            final String quantity = text.getText().toString();
-            Log.e("quantity", quantity);
-            Log.e("quantity", "TEST");
+            final int quantity = Integer.parseInt(text.getText().toString());
+
+            this.basket.addArticle(this.listProduitToShow.get(this.index).getId(), sizeSpinner.getSelectedItem().toString(), quantity);
+            this.basketAmount += this.listProduitToShow.get(this.index).getPrice();
+            ((ActiviteECommerce) this.getActivity()).updatePanier(this.basket);
+            ((ActiviteECommerce) this.getActivity()).updatePanierPrix(this.basketAmount);
+
+            showToastAddProductToBasket();
         });
         // A null listener allows the button to dismiss the dialog and take no further action.
         builder.setNegativeButton(android.R.string.no, null);
-        //.setIcon(android.R.drawable.ic_dialog_alert)
         builder.show();
 
-        this.basket.addArticle(this.listProduitToShow.get(this.index).getId(), sizeSpinner.getSelectedItem().toString());
-        this.basketAmount += this.listProduitToShow.get(this.index).getPrice();
-        ((ActiviteECommerce) this.getActivity()).updatePanier(this.basket);
-        ((ActiviteECommerce) this.getActivity()).updatePanierPrix(this.basketAmount);
-        showToastAddProductToBasket();
+
     }
 
     public void onClickImage(View v) {
