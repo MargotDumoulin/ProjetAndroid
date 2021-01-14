@@ -1,18 +1,22 @@
 package com.example.td1.modele;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.example.td1.utils.Triplet;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Panier implements Serializable {
-    private ArrayList<Triplet<Integer, String, Integer>> basketContent; // using Tuples to create a Triplet with Triplet<idArticle, size, quantity> required
+    private ArrayList<Triplet<Produit, String, Integer>> basketContent; // using Tuples to create a Triplet with Triplet<idArticle, size, quantity> required
 
-    public Panier(ArrayList<Triplet<Integer, String, Integer>> basketContent) {
+    public Panier(ArrayList<Triplet<Produit, String, Integer>> basketContent) {
         this.basketContent = basketContent;
     }
 
-    public void addArticle(Integer idArticle, String size, Integer quantity) {
-        this.basketContent.add(Triplet.of(idArticle, size, quantity));
+    public void addArticle(Produit product, String size, Integer quantity) {
+        this.basketContent.add(Triplet.of(product, size, quantity));
     }
 
     public void removeArticle(int index) {
@@ -27,11 +31,20 @@ public class Panier implements Serializable {
         return this.basketContent.size();
     }
 
-    public Triplet<Integer, String, Integer> getArticle(int index) {
+    public Triplet<Produit, String, Integer> getArticle(int index) {
         return this.basketContent.get(index);
     }
 
-    public ArrayList<Triplet<Integer, String, Integer>> getBasketContent() {
+    public ArrayList<Triplet<Produit, String, Integer>> getBasketContent() {
         return this.basketContent;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public double getBasketTotal() {
+        return this.basketContent
+                .stream()
+                .map(product -> product.first.getPrice() * product.third)
+                .reduce(0.0, (subtotal, element) -> subtotal + element);
+
     }
 }

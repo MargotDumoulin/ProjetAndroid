@@ -67,8 +67,6 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
 
     private Panier basket;
 
-    private double basketAmount;
-
     private int index;
     private int productTableLength;
     private int idCateg;
@@ -95,13 +93,9 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
 
         if (savedInstanceState != null) {
             this.listProduitToShow = (ArrayList<Produit>) savedInstanceState.getSerializable("listProduitToShow");
-
             this.listImgProduitToShow = (ArrayList<Bitmap>) savedInstanceState.getSerializable("listImgProduitToShow");
 
-            //this.basket = (Panier) savedInstanceState.getSerializable("basket");
-            //this.basketAmount = savedInstanceState.getDouble("basketAmount");
-            this.basket = ((ActiviteECommerce) this.getActivity()).getPanier();
-            this.basketAmount = ((ActiviteECommerce) this.getActivity()).getPanierPrix();
+            this.basket = ((ActiviteECommerce) this.getActivity()).getBasket();
 
             this.index = savedInstanceState.getInt("index");
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
@@ -114,8 +108,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
             this.isImageZoomed = false;
             this.index = 0;
 
-            this.basket = ((ActiviteECommerce) this.getActivity()).getPanier();
-            this.basketAmount = ((ActiviteECommerce) this.getActivity()).getPanierPrix();
+            this.basket = ((ActiviteECommerce) this.getActivity()).getBasket();
             this.idCateg = this.getArguments().getInt("id_categ", -1);
             if (this.idCateg != -1) {
                 ProductDAO.findAllByCateg(this, this.idCateg);
@@ -188,7 +181,6 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         outState.putSerializable("listProduitToShow", this.listProduitToShow);
         outState.putSerializable("listImgProduitToShow", this.listImgProduitToShow);
         outState.putSerializable("basket", this.basket);
-        outState.putDouble("basketAmount", this.basketAmount);
         outState.putInt("productTableLength", this.productTableLength);
         outState.putInt("idCateg", this.idCateg);
 
@@ -293,6 +285,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         checkSpinnerValue();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void onClickBtnBasket(View v) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
         LayoutInflater inflater = this.getLayoutInflater();
@@ -307,10 +300,8 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             final int quantity = Integer.parseInt(text.getText().toString());
 
-            this.basket.addArticle(this.listProduitToShow.get(this.index).getId(), sizeSpinner.getSelectedItem().toString(), quantity);
-            this.basketAmount += this.listProduitToShow.get(this.index).getPrice();
-            ((ActiviteECommerce) this.getActivity()).updatePanier(this.basket);
-            ((ActiviteECommerce) this.getActivity()).updatePanierPrix(this.basketAmount);
+            this.basket.addArticle(this.listProduitToShow.get(this.index), sizeSpinner.getSelectedItem().toString(), quantity);
+            ((ActiviteECommerce) this.getActivity()).updateBasket(this.basket);
 
             showToastAddProductToBasket();
         });
@@ -334,7 +325,6 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
     public void onClick(DialogInterface dialog, int which) {
         if (which == -1) {
             this.basket.removeAllArticles();
-            this.basketAmount = 0;
             Toast.makeText(this.getContext(), getString(R.string.clear_basket), Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this.getContext(), getString(R.string.cancel_clear_basket), Toast.LENGTH_LONG).show();

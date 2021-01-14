@@ -1,12 +1,15 @@
 package com.example.td1;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 
 import com.example.td1.modele.Panier;
+import com.example.td1.modele.Produit;
 import com.example.td1.utils.Triplet;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.RequiresApi;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -20,9 +23,10 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements ActiviteECommerce {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private Panier basket = new Panier(new ArrayList<Triplet<Integer, String>>());
-    private double basketPrice;
+    private Panier basket = new Panier(new ArrayList<Triplet<Produit, String, Integer>>());
+    private double basketTotal;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,13 +47,11 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
 
         if (savedInstanceState != null) {
             this.basket = (Panier) savedInstanceState.getSerializable("basket");
-            this.basketPrice = savedInstanceState.getDouble("basketPrice");
         }
     }
 
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putDouble("basketPrice", this.basketPrice);
         outState.putSerializable("basket", this.basket);
     }
 
@@ -68,22 +70,12 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
     }
 
     @Override
-    public Panier getPanier() {
+    public Panier getBasket() {
         return basket;
     }
 
     @Override
-    public void updatePanier(Panier basket) {
+    public void updateBasket(Panier basket) {
         this.basket = basket;
-    }
-
-    @Override
-    public void updatePanierPrix(double basketPrice) {
-        this.basketPrice = basketPrice;
-    }
-
-    @Override
-    public double getPanierPrix() {
-        return this.basketPrice;
     }
 }
