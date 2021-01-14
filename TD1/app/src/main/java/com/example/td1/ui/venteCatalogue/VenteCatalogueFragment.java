@@ -1,4 +1,4 @@
-package com.example.td1.ui.ventecatalogue;
+package com.example.td1.ui.venteCatalogue;
 
 import android.content.DialogInterface;
 import android.graphics.Bitmap;

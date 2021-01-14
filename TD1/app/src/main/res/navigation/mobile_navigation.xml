@@ -35,12 +35,12 @@
     </fragment>
     <fragment
         android:id="@+id/venteCatalogueFragment"
-        android:name="com.example.td1.ui.ventecatalogue.VenteCatalogueFragment"
+        android:name="com.example.td1.ui.venteCatalogue.VenteCatalogueFragment"
         android:label="Catalogue"
         tools:layout="@layout/vente_catalogue_fragment" />
     <fragment
         android:id="@+id/newProductFragment"
-        android:name="com.example.td1.ui.newproduct.NewProductFragment"
+        android:name="com.example.td1.ui.newProduct.NewProductFragment"
         android:label="New product"
         tools:layout="@layout/fragment_new_product" >
         <action
@@ -49,7 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/nav_map"
-        android:name="com.example.td1.ui.findus.FindUsFragment"
+        android:name="com.example.td1.ui.findUs.FindUsFragment"
         android:label="Map"
         tools:layout="@layout/fragment_find_us" />
 </navigation>
