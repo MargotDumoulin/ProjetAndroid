@@ -32,7 +32,7 @@
 
         <activity android:name=".ui.newproduct.NewProductFragment" />
         <activity android:name=".ui.ventecatalogue.VenteCatalogueFragment" />
-        <activity android:name=".FindUsFragment" />
+        <activity android:name=".ui.findus.FindUsFragment" />
         <activity
             android:name=".SplashScreen"
             android:theme="@style/NoActionBar" >
