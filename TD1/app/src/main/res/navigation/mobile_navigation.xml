@@ -41,7 +41,7 @@
     <fragment
         android:id="@+id/newProductFragment"
         android:name="com.example.td1.ui.newproduct.NewProductFragment"
-        android:label="fragment_new_product"
+        android:label="New product"
         tools:layout="@layout/fragment_new_product" >
         <action
             android:id="@+id/action_newProductFragment_to_venteCatalogueFragment"
