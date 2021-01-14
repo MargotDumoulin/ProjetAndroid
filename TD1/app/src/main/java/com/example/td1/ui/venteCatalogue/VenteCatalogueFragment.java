@@ -1,5 +1,6 @@
 package com.example.td1.ui.venteCatalogue;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -292,6 +294,27 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
     }
 
     public void onClickBtnBasket(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+        LayoutInflater inflater = this.getLayoutInflater();
+        View view = inflater.inflate(R.layout.item_quantity, null);
+        final EditText text = view.findViewById(R.id.editTextItemQuantity);
+
+        builder.setTitle(getString(R.string.quantity));
+        builder.setView(view);
+
+        // Specifying a listener allows you to take an action before dismissing the dialog.
+        // The dialog is automatically dismissed when a dialog button is clicked.
+        builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
+            Log.e("quantity", "yo :)");
+            final String quantity = text.getText().toString();
+            Log.e("quantity", quantity);
+            Log.e("quantity", "TEST");
+        });
+        // A null listener allows the button to dismiss the dialog and take no further action.
+        builder.setNegativeButton(android.R.string.no, null);
+        //.setIcon(android.R.drawable.ic_dialog_alert)
+        builder.show();
+
         this.basket.addArticle(this.listProduitToShow.get(this.index).getId(), sizeSpinner.getSelectedItem().toString());
         this.basketAmount += this.listProduitToShow.get(this.index).getPrice();
         ((ActiviteECommerce) this.getActivity()).updatePanier(this.basket);
