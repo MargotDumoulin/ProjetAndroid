@@ -36,7 +36,7 @@
     <fragment
         android:id="@+id/venteCatalogueFragment"
         android:name="com.example.td1.ui.ventecatalogue.VenteCatalogueFragment"
-        android:label="vente_catalogue_fragment"
+        android:label="Catalogue"
         tools:layout="@layout/vente_catalogue_fragment" />
     <fragment
         android:id="@+id/newProductFragment"
