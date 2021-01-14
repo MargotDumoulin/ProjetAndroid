@@ -16,7 +16,6 @@ import com.example.td1.modele.Categorie;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class SplashScreen extends AppCompatActivity implements Response.Listener<JSONArray>, Response.ErrorListener {
 
@@ -34,7 +33,7 @@ public class SplashScreen extends AppCompatActivity implements Response.Listener
 
     @Override
     public void onResponse(JSONArray response) {
-        Intent intent = new Intent(SplashScreen.this, CategoriesActivity.class);
+        Intent intent = new Intent(SplashScreen.this, MainActivity.class);
         intent.putExtra("categories", response.toString());
         startActivity(intent);
     }

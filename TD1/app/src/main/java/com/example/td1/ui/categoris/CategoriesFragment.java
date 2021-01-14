@@ -1,22 +1,29 @@
-package com.example.td1;
+package com.example.td1.ui.categoris;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.example.td1.ActivityWaitingImage;
+import com.example.td1.CategoriesAdapter;
+import com.example.td1.ImageFromURL;
+import com.example.td1.ActiviteECommerce;
+import com.example.td1.R;
 import com.example.td1.modele.Categorie;
 import com.example.td1.modele.Panier;
-import com.example.td1.utils.Paired;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,7 +31,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class CategoriesActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, ActivityWaitingImage {
+public class CategoriesFragment extends Fragment implements AdapterView.OnItemClickListener, ActivityWaitingImage {
 
     private static final int MAIN_VENTE = 0;
     private static final int MAIN_CATALOGUE = 1;
@@ -38,23 +45,27 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
     private ArrayList listImgCategories;
     private double basketAmount;
     private CategoriesAdapter categoriesAdapter;
+    private View root;
+    private FloatingActionButton floatingActionButton;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_categories);
+        root = inflater.inflate(R.layout.fragment_categories, container, false);
 
         if (savedInstanceState != null) {
-            this.basket = (Panier) savedInstanceState.getSerializable("basket");
-            this.basketAmount = savedInstanceState.getDouble("basketAmount");
+            this.basket = ((ActiviteECommerce) this.getActivity()).getPanier();
+            this.basketAmount = ((ActiviteECommerce) this.getActivity()).getPanierPrix();
+
         } else {
-            this.basket = new Panier(new ArrayList<Paired<Integer, String>>());
-            this.basketAmount = 0;
+            this.basket = ((ActiviteECommerce) this.getActivity()).getPanier();
+            this.basketAmount = ((ActiviteECommerce) this.getActivity()).getPanierPrix();
         }
+        return root;
     }
 
     @Override
-    public void getImage(Object[] results)  {
+    public void getImage(Object[] results) {
         if (results[0] != null) {
             int idx = Integer.parseInt(results[1].toString());
             Bitmap img = (Bitmap) results[0];
@@ -67,12 +78,14 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
     public void onStart() {
         super.onStart();
 
-        this.catalogRadioButton = this.findViewById(R.id.catalogRadioButton);
-        this.totalTextView = this.findViewById(R.id.totalTextView);
+        this.catalogRadioButton = this.root.findViewById(R.id.catalogRadioButton);
+        this.totalTextView = this.root.findViewById(R.id.totalTextView);
+        this.floatingActionButton = this.root.findViewById(R.id.floatingActionButton);
+        this.floatingActionButton.setOnClickListener(this::onClickCreateProduct);
 
-        String categories = this.getIntent().getStringExtra("categories");
+        String categories = this.getActivity().getIntent().getStringExtra("categories");
 
-        if(categories.length() > 0) {
+        if (categories.length() > 0) {
             try {
                 this.listCategories = new ArrayList<Categorie>();
                 JSONArray catArray = new JSONArray(categories);
@@ -89,17 +102,16 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
                 e.printStackTrace();
             }
         }
-
         updateTotal();
     }
 
-    public void onClickCreateProduct(View v) {
-        Intent intent = new Intent(CategoriesActivity.this, NewProductActivity.class);
-        startActivity(intent);
+    public void onClickCreateProduct(View view) {
+        Bundle bundle = new Bundle();
+        Navigation.findNavController(view).navigate(R.id.action_nav_boutique_to_newProductFragment, bundle);
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (this.basket != null) {
             if (this.basket.getBasketSize() > 0 && !this.basket.getBasketContent().isEmpty()) {
@@ -109,43 +121,25 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        if (resultCode == MainActivity.RETOUR) {
-            if (requestCode == MAIN_VENTE) {
-                Panier productsToAdd = (Panier) intent.getSerializableExtra("basket");
-                double basketAmountFromMainActivity = intent.getDoubleExtra("basketAmount", -1);
-
-                Log.d("null", String.valueOf(!productsToAdd.getBasketContent().isEmpty()));
-                if (!productsToAdd.getBasketContent().isEmpty()  && basketAmountFromMainActivity != - 1) {
-                    Log.d("null", String.valueOf(productsToAdd.getArticle(0).second));
-                    this.updateBasket(productsToAdd, basketAmountFromMainActivity);
-                }
-            } else if (requestCode == MAIN_CATALOGUE) {
-                // ici, rien à faire si on revient du mode catalogue
-            }
-        } // on ne fait rien en cas d'annulation
-    }
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int index, long id) {
-        Intent intent = new Intent(CategoriesActivity.this, MainActivity.class);
-        intent.putExtra("id_categ", this.listCategories.get(index).getId());
-
+        Bundle bundle = new Bundle();
+        bundle.putInt("id_categ", this.listCategories.get(index).getId());
         this.modeSelected = this.catalogRadioButton.isChecked() ? MAIN_CATALOGUE : MAIN_VENTE;
+        bundle.putInt("requestCode", modeSelected);
 
-        intent.putExtra("requestCode", this.modeSelected);
-        startActivityForResult(intent, this.modeSelected);
+        Navigation.findNavController(view).navigate(R.id.action_nav_boutique_to_venteCatalogueFragment, bundle);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void updateBasket(Panier productsToAdd, double basketAmountFromMainActivity)  {
-        if (this.basket == null) { this.basket = new Panier(new ArrayList<>()); }
+    public void updateBasket(Panier productsToAdd, double basketAmountFromMainActivity) {
+        if (this.basket == null) {
+            this.basket = new Panier(new ArrayList<>());
+        }
 
         productsToAdd.getBasketContent().forEach(product -> {
-                this.basket.addArticle(product.first, product.second);
+            this.basket.addArticle(product.first, product.second);
+            ((ActiviteECommerce) this.getActivity()).updatePanier(this.basket);
             // As we don't have a database yet, we can't retrieve the product price with the product's id and add it to basketAmount.
             // Currently, we have to pass a variable with basketAmount from MainActivity to CategoriesActivity in order to get the amount to add.
         });
@@ -167,10 +161,10 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterView
     }
 
     public void setCategoriesAdapter() {
-        this.lvCategories = this.findViewById(R.id.categoriesListView);
+        this.lvCategories = this.root.findViewById(R.id.categoriesListView);
         this.lvCategories.setOnItemClickListener(this);
 
-        this.categoriesAdapter = new CategoriesAdapter(this, this.listCategories, this.listImgCategories);
+        this.categoriesAdapter = new CategoriesAdapter(this.getContext(), this.listCategories, this.listImgCategories);
         this.lvCategories.setAdapter(this.categoriesAdapter);
     }
 }
