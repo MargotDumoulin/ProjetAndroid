@@ -54,9 +54,6 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
         root = inflater.inflate(R.layout.fragment_categories, container, false);
 
         if (savedInstanceState != null) {
-            //this.basket = (Panier) savedInstanceState.getSerializable("basket");
-            //this.basketAmount = savedInstanceState.getDouble("basketAmount");
-
             this.basket = ((ActiviteECommerce) this.getActivity()).getPanier();
             this.basketAmount = ((ActiviteECommerce) this.getActivity()).getPanierPrix();
 
@@ -109,11 +106,8 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
     }
 
     public void onClickCreateProduct(View view) {
-        /** 
-        Intent intent = new Intent(CategoriesFragment.this.getContext(), NewProductFragment.class);
-        startActivity(intent);**/
         Bundle bundle = new Bundle();
-        Navigation.findNavController(view).navigate(R.id.action_nav_boutique_to_newProductFragment,bundle);
+        Navigation.findNavController(view).navigate(R.id.action_nav_boutique_to_newProductFragment, bundle);
     }
 
     @Override
@@ -127,43 +121,14 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
         }
     }
 
-    /**
-     * @RequiresApi(api = Build.VERSION_CODES.N)
-     * @Override protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-     * super.onActivityResult(requestCode, resultCode, intent);
-     * if (resultCode == VenteCatalogueActivity.RETOUR) {
-     * if (requestCode == MAIN_VENTE) {
-     * Panier productsToAdd = (Panier) intent.getSerializableExtra("basket");
-     * double basketAmountFromMainActivity = intent.getDoubleExtra("basketAmount", -1);
-     * <p>
-     * Log.d("null", String.valueOf(!productsToAdd.getBasketContent().isEmpty()));
-     * if (!productsToAdd.getBasketContent().isEmpty()  && basketAmountFromMainActivity != - 1) {
-     * Log.d("null", String.valueOf(productsToAdd.getArticle(0).second));
-     * this.updateBasket(productsToAdd, basketAmountFromMainActivity);
-     * }
-     * } else if (requestCode == MAIN_CATALOGUE) {
-     * // ici, rien à faire si on revient du mode catalogue
-     * }
-     * } // on ne fait rien en cas d'annulation
-     * }
-     **/
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int index, long id) {
         Bundle bundle = new Bundle();
         bundle.putInt("id_categ", this.listCategories.get(index).getId());
         this.modeSelected = this.catalogRadioButton.isChecked() ? MAIN_CATALOGUE : MAIN_VENTE;
-        bundle.putInt("requestCode",modeSelected);
+        bundle.putInt("requestCode", modeSelected);
 
         Navigation.findNavController(view).navigate(R.id.action_nav_boutique_to_venteCatalogueFragment, bundle);
-        /**
-         Intent intent = new Intent(CategoriesFragment.this, VenteCatalogueActivity.class);
-         intent.putExtra("id_categ", this.listCategories.get(index).getId());
-
-         this.modeSelected = this.catalogRadioButton.isChecked() ? MAIN_CATALOGUE : MAIN_VENTE;
-
-         intent.putExtra("requestCode", this.modeSelected);
-         startActivityForResult(intent, this.modeSelected);**/
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

@@ -275,35 +275,6 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         return -1;// not there is list
     }
 
-    /**
-     * // ---- TOOLBAR EVENTS ----
-     *
-     * @Override public boolean onOptionsItemSelected(MenuItem item)
-     * {
-     * switch (item.getItemId()) {
-     * case android.R.id.home:
-     * onBackPressed();
-     * return true;
-     * default:
-     * return super.onOptionsItemSelected(item);
-     * }
-     * }
-     * <p>
-     * public void onBackPressed() {
-     * this.onClickGoBack(null);
-     * }
-     * <p>
-     * <p>
-     * // ---- ON CLICK EVENTS ----
-     * public void onClickGoBack (View v) {
-     * Intent intent = new Intent();
-     * intent.putExtra("basketAmount", this.basketAmount);
-     * intent.putExtra("basket", this.basket);
-     * this.setResult(RETOUR, intent);
-     * this.finish();
-     * }
-     **/
-
     public void onClickBtnNext(View v) {
         this.index++;
         this.showPullInfo(this.index);
@@ -328,14 +299,6 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         showToastAddProductToBasket();
     }
 
-    /**
-     * public void onClickCancel (View v) {
-     * if (this.basket.getBasketSize() > 0 && this.basket != null) {
-     * CancelAlert alert = new CancelAlert();
-     * alert.show(getSupportFragmentManager(), "Suppression");
-     * }
-     * }
-     **/
     public void onClickImage(View v) {
         zoomImage();
     }

@@ -34,17 +34,19 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery/**, R.id.nav_slideshow**/, R.id.nav_boutique,R.id.nav_map)
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_boutique, R.id.nav_map)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
         if (savedInstanceState != null) {
-            this.basket = (Panier)savedInstanceState.getSerializable("basket");
+            this.basket = (Panier) savedInstanceState.getSerializable("basket");
             this.basketPrice = savedInstanceState.getDouble("basketPrice");
         }
     }
+
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putDouble("basketPrice", this.basketPrice);

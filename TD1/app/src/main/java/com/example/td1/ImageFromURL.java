@@ -30,7 +30,7 @@ public class ImageFromURL extends AsyncTask<String, Void, Object[]> {
         } catch (Exception e) {
             Log.e("Pas d'image", "penser à utiliser une image générique");
         }
-        return new Object[] {img, urlAndIndex[1]};
+        return new Object[]{img, urlAndIndex[1]};
     }
 
     @Override
