@@ -1,4 +1,4 @@
-package com.example.td1.ui.categorie;
+package com.example.td1.ui.categoris;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;

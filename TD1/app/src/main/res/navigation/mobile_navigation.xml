@@ -23,7 +23,7 @@
         tools:layout="@layout/fragment_slideshow" />
     <fragment
         android:id="@+id/nav_boutique"
-        android:name="com.example.td1.ui.categorie.CategoriesFragment"
+        android:name="com.example.td1.ui.categoris.CategoriesFragment"
         android:label="Boutique"
         tools:layout="@layout/fragment_categories">
         <action
