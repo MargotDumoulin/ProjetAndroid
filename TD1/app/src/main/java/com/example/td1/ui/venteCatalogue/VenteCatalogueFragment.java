@@ -20,6 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.android.volley.VolleyError;
 import com.example.td1.ActivityWaitingImage;
@@ -115,6 +116,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
             this.basket = ((ActiviteECommerce) this.getActivity()).getPanier();
             this.basketAmount = ((ActiviteECommerce) this.getActivity()).getPanierPrix();
             this.idCateg = this.getArguments().getInt("id_categ", -1);
+
             if (this.idCateg != -1) {
                 ProductDAO.findAllByCateg(this, this.idCateg);
             } else {
@@ -297,6 +299,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         ((ActiviteECommerce) this.getActivity()).updatePanier(this.basket);
         ((ActiviteECommerce) this.getActivity()).updatePanierPrix(this.basketAmount);
         showToastAddProductToBasket();
+        Navigation.findNavController(this.getActivity(),R.id.nav_host_fragment).navigate(R.id.menu_gestion_panier);
     }
 
     public void onClickImage(View v) {

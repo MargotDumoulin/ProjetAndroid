@@ -2,6 +2,7 @@ package com.example.td1;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.td1.modele.Panier;
 import com.example.td1.utils.Paired;
@@ -45,6 +46,12 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
             this.basket = (Panier) savedInstanceState.getSerializable("basket");
             this.basketPrice = savedInstanceState.getDouble("basketPrice");
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
     }
 
     public void onSaveInstanceState(Bundle outState) {
