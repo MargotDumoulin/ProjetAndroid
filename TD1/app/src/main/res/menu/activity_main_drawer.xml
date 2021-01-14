@@ -16,5 +16,9 @@
             android:id="@+id/nav_boutique"
             android:icon="@drawable/ic_menu_camera"
             android:title="Boutique"/>
+        <item
+            android:id="@+id/nav_map"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="Map"/>
     </group>
 </menu>

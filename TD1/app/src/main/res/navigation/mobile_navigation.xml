@@ -19,7 +19,6 @@
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.example.td1.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
     <fragment
@@ -48,4 +47,9 @@
             android:id="@+id/action_newProductFragment_to_venteCatalogueFragment"
             app:destination="@id/venteCatalogueFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_map"
+        android:name="com.example.td1.FindUsFragment"
+        android:label="Map"
+        tools:layout="@layout/fragment_find_us" />
 </navigation>
