@@ -80,8 +80,6 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         super.onCreate(savedInstanceState);
         root = inflater.inflate(R.layout.vente_catalogue_fragment, container, false);
 
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         this.listProduitToShow = new ArrayList<Produit>();
         this.listImgProduitToShow = new ArrayList<Bitmap>();
         this.alreadyHaveInfo = false;

@@ -33,5 +33,10 @@
             android:id="@+id/action_newProductFragment_to_venteCatalogueFragment"
             app:destination="@id/venteCatalogueFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/findUsFragment"
+        android:name="com.example.td1.ui.findUs.FindUsFragment"
+        android:label="fragment_find_us"
+        tools:layout="@layout/fragment_find_us" />
 
 </navigation>
