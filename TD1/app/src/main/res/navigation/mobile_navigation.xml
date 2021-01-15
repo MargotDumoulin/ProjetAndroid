@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/nav_boutique"
-        android:name="com.example.td1.ui.categoris.CategoriesFragment"
+        android:name="com.example.td1.ui.categories.CategoriesFragment"
         android:label="Boutique"
         tools:layout="@layout/fragment_categories">
         <action
@@ -48,4 +48,9 @@
         android:name="com.example.td1.ui.findUs.FindUsFragment"
         android:label="Map"
         tools:layout="@layout/fragment_find_us" />
+    <fragment
+        android:id="@+id/menu_gestion_panier"
+        android:name="com.example.td1.ui.monPanier.MonPanierFragment"
+        android:label="Mon Panier"
+        tools:layout="@layout/fragment_mon_panier" />
 </navigation>
