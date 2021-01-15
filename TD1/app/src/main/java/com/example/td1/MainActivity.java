@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
 
     private AppBarConfiguration mAppBarConfiguration;
     private Panier basket = new Panier(new ArrayList<Triplet<Produit, String, Integer>>());
-    private double basketTotal;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override

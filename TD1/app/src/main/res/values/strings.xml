@@ -31,6 +31,7 @@
     <string name="description">Description</string>
     <string name="price">Price</string>
     <string name="create">Create</string>
+    <string name="favorite_mode">Favorites</string>
     <string name="title_activity_mainn">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
