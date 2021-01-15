@@ -71,6 +71,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
     private int index;
     private int productTableLength;
     private int idCateg;
+    private String clothingSize = "";
 
     private View root;
     public static final int RETOUR = 0;
@@ -106,8 +107,8 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
             this.productTableLength = savedInstanceState.getInt("productTableLength");
             this.idCateg = savedInstanceState.getInt("idCateg");
+            this.clothingSize = savedInstanceState.getString("taille");
             this.alreadyHaveInfo = true;
-
         } else {
             this.listProduitToShow = new ArrayList<Produit>();
             this.isImageZoomed = false;
@@ -191,6 +192,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         outState.putDouble("basketAmount", this.basketAmount);
         outState.putInt("productTableLength", this.productTableLength);
         outState.putInt("idCateg", this.idCateg);
+        outState.putString("taille",this.sizeSpinner.getSelectedItem().toString());
 
         if (this.pullImageViewZoomed.getVisibility() == View.VISIBLE) {
             outState.putBoolean("isImageZoomed", true);
@@ -208,6 +210,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         this.sizeSpinnerArrayAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, this.listProduitToShow.get(this.index).getSizes());
         this.sizeSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         this.sizeSpinner.setAdapter(this.sizeSpinnerArrayAdapter);
+
     }
 
     public void showToastAddProductToBasket() {
@@ -324,6 +327,10 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
 
     // ---- SPINNER EVENTS ----
     public void checkSpinnerValue() {
+        if(!this.clothingSize.equals("")){
+            this.sizeSpinner.setSelection(sizeSpinnerArrayAdapter.getPosition(this.clothingSize));
+            this.clothingSize="";
+        }
         if (!this.sizeSpinner.getSelectedItem().toString().equals("Choix de la taille")) {
             this.basketImageButton.setEnabled(true);
         } else {
@@ -379,7 +386,6 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
                     int indexOfProductToChange = this.getIndexById(o.getInt("id_produit"));
                     this.listProduitToShow.get(indexOfProductToChange).addSize(o.getString("libelle"));
                     Log.e("size", o.getString("libelle"));
-
                     this.sizeSpinnerArrayAdapter.notifyDataSetChanged();
                 } else {
                     Produit product = new Produit(o.getInt("id_produit"), o.getInt("id_categorie"), o.getDouble("tarif"), o.getString("visuel"), o.getString("description"), o.getString("titre"), new ArrayList<>());
