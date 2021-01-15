@@ -2,31 +2,14 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    android:id="@+id/mobile_navigation_boutique"
+    app:startDestination="@id/categoriesFragment">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.example.td1.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
-
-    <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.td1.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
-
-    <fragment
-        android:id="@+id/nav_boutique"
+        android:id="@+id/categoriesFragment"
         android:name="com.example.td1.ui.categoris.CategoriesFragment"
-        android:label="Boutique"
-        tools:layout="@layout/fragment_categories">
+        android:label="fragment_categories"
+        tools:layout="@layout/fragment_categories" >
         <action
             android:id="@+id/action_nav_boutique_to_venteCatalogueFragment"
             app:destination="@id/venteCatalogueFragment" />
@@ -34,11 +17,13 @@
             android:id="@+id/action_nav_boutique_to_newProductFragment"
             app:destination="@id/newProductFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/venteCatalogueFragment"
         android:name="com.example.td1.ui.venteCatalogue.VenteCatalogueFragment"
         android:label="Catalogue"
         tools:layout="@layout/vente_catalogue_fragment" />
+
     <fragment
         android:id="@+id/newProductFragment"
         android:name="com.example.td1.ui.newProduct.NewProductFragment"
@@ -48,9 +33,5 @@
             android:id="@+id/action_newProductFragment_to_venteCatalogueFragment"
             app:destination="@id/venteCatalogueFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/nav_map"
-        android:name="com.example.td1.ui.findUs.FindUsFragment"
-        android:label="Map"
-        tools:layout="@layout/fragment_find_us" />
+
 </navigation>
