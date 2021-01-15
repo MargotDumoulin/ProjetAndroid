@@ -52,7 +52,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/img" />
 
-
         <Spinner
             android:theme="@style/spinner_style"
             android:id="@+id/sizeSpinner"
@@ -62,8 +61,29 @@
             android:layout_margin="@dimen/spinner_margin"
             app:layout_constraintTop_toBottomOf="@id/titleTextView"
             app:layout_constraintLeft_toRightOf="@+id/descriptionTextView"
-            app:layout_constraintBottom_toTopOf="@+id/colorSpinner"
             app:layout_constraintRight_toRightOf="parent" />
+
+        <ImageButton
+            android:id="@+id/outlinedHeartImageButton"
+            android:style="@style/img_button_heart_style"
+            android:layout_width="@dimen/img_button_width"
+            android:layout_height="@dimen/img_button_height"
+            android:layout_marginRight="@dimen/img_button_margin_side"
+            android:layout_marginBottom="@dimen/img_button_margin_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/cartImageButton"
+            app:srcCompat="@drawable/baseline_favorite_border_black_18dp" />
+
+        <ImageButton
+            android:id="@+id/filledHeartImageButton"
+            android:style="@style/img_button_heart_style"
+            android:layout_width="@dimen/img_button_width"
+            android:layout_height="@dimen/img_button_height"
+            android:layout_marginRight="@dimen/img_button_margin_side"
+            android:layout_marginBottom="@dimen/img_button_margin_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/cartImageButton"
+            app:srcCompat="@drawable/baseline_favorite_black_18dp" />
 
         <ImageButton
             android:id="@+id/cartImageButton"

@@ -56,6 +56,8 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
     private View whiteBackgroundView;
 
     private ImageButton basketImageButton;
+    private ImageButton filledHeartImageButton;
+    private ImageButton outlinedHeartImageButton;
 
     private Spinner sizeSpinner;
     private ArrayAdapter<String> sizeSpinnerArrayAdapter;
@@ -127,7 +129,8 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
 
         // -- IMAGEBUTTONS --
         this.basketImageButton = this.root.findViewById(R.id.cartImageButton);
-
+        this.filledHeartImageButton = this.root.findViewById(R.id.filledHeartImageButton);
+        this.outlinedHeartImageButton = this.root.findViewById(R.id.outlinedHeartImageButton);
 
         // -- TEXTVIEWS --
         this.priceTextView = this.root.findViewById(R.id.priceTextView);
@@ -140,8 +143,11 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
 
         this.pullImageView.setOnClickListener(this::onClickImage);
         this.pullImageViewZoomed.setOnClickListener(this::onClickImageZoomed);
-        this.basketImageButton.setOnClickListener(this::onClickBtnBasket);
 
+        // -- LISTENERS
+        this.basketImageButton.setOnClickListener(this::onClickBtnBasket);
+        this.filledHeartImageButton.setOnClickListener(this::onClickBtnHeartFilled);
+        this.outlinedHeartImageButton.setOnClickListener(this::onClickBtnHeartOutlined);
         this.nextBtn.setOnClickListener(this::onClickBtnNext);
         this.prevBtn.setOnClickListener(this::onClickBtnPrev);
 
@@ -306,8 +312,21 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         // A null listener allows the button to dismiss the dialog and take no further action.
         builder.setNegativeButton(android.R.string.no, null);
         builder.show();
+    }
 
 
+    public void onClickBtnHeartFilled(View v) {
+        this.filledHeartImageButton.setVisibility(View.INVISIBLE);
+        this.outlinedHeartImageButton.setVisibility(View.VISIBLE);
+
+        ProductDAO.unstarProduct(this, this.listProduitToShow.get(this.index).getId(), 1);
+    }
+
+    public void onClickBtnHeartOutlined(View v) {
+        this.filledHeartImageButton.setVisibility(View.VISIBLE);
+        this.outlinedHeartImageButton.setVisibility(View.INVISIBLE);
+
+        ProductDAO.starProduct(this, this.listProduitToShow.get(this.index).getId(), 1);
     }
 
     public void onClickImage(View v) {
