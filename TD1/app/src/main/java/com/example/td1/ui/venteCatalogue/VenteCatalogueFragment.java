@@ -22,6 +22,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.android.volley.VolleyError;
 import com.example.td1.ActivityWaitingImage;
@@ -75,9 +76,10 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
     protected int index;
     protected int productTableLength;
     protected int idCateg;
-
     protected int mode;
-
+    
+    protected String clothingSize = "";
+    
     protected View root;
     public static final int RETOUR = 0;
 
@@ -107,8 +109,8 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
             this.productTableLength = savedInstanceState.getInt("productTableLength");
             this.idCateg = savedInstanceState.getInt("idCateg");
+            this.clothingSize = savedInstanceState.getString("taille");
             this.alreadyHaveInfo = true;
-
         } else {
             this.listProduitToShow = new ArrayList<Produit>();
             this.isImageZoomed = false;
@@ -199,6 +201,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         outState.putSerializable("basket", this.basket);
         outState.putInt("productTableLength", this.productTableLength);
         outState.putInt("idCateg", this.idCateg);
+        outState.putString("taille",this.sizeSpinner.getSelectedItem().toString());
 
         if (this.pullImageViewZoomed.getVisibility() == View.VISIBLE) {
             outState.putBoolean("isImageZoomed", true);
@@ -372,6 +375,10 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
 
     // ---- SPINNER EVENTS ----
     public void checkSpinnerValue() {
+        if(!this.clothingSize.equals("")){
+            this.sizeSpinner.setSelection(sizeSpinnerArrayAdapter.getPosition(this.clothingSize));
+            this.clothingSize="";
+        }
         if (!this.sizeSpinner.getSelectedItem().toString().equals("Choix de la taille")) {
             this.basketImageButton.setEnabled(true);
         } else {
@@ -427,7 +434,6 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
                     int indexOfProductToChange = this.getIndexById(o.getInt("id_produit"));
                     this.listProduitToShow.get(indexOfProductToChange).addSize(o.getString("libelle"));
                     Log.e("size", o.getString("libelle"));
-
                     this.sizeSpinnerArrayAdapter.notifyDataSetChanged();
                 } else {
                     Log.e("FAVORI", String.valueOf(o.getBoolean("favori")));

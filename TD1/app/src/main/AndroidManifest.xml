@@ -19,7 +19,7 @@
         android:theme="@style/Theme.TD1" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_mainn"
+            android:label="@string/title_activity_main"
             android:theme="@style/Theme.TD1.NoActionBar" >
         </activity>
 <!--         <uses-library android:name="com.google.android.gms.maps" android:required="false"/> -->
