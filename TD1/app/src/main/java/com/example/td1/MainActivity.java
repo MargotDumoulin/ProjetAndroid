@@ -53,13 +53,14 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.toString().equals("Votre panier")){
-            Navigation.findNavController(this,R.id.nav_host_fragment).navigate(R.id.menu_gestion_panier);
+        if (item.toString().equals("Votre panier")) {
+            Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.menu_gestion_panier);
             return true;
-        }
-        else{
+
+        } else {
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
             return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
+            
         }
     }
 
