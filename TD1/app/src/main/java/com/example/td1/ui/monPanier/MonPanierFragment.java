@@ -46,6 +46,6 @@ public class MonPanierFragment extends Fragment implements AdapterView.OnItemCli
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        // do nothing :)
     }
 }

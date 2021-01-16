@@ -30,6 +30,7 @@ public class PanierAdapter extends ArrayAdapter<Triplet<Produit, String, Integer
     private ArrayList<Triplet<Produit, String, Integer>> basket;
     private int index;
     private EditText input;
+    private boolean isInEditDialog;
 
     public PanierAdapter(Context context, ArrayList<Triplet<Produit, String, Integer>> basket) {
         super(context, 0, basket);
@@ -65,12 +66,13 @@ public class PanierAdapter extends ArrayAdapter<Triplet<Produit, String, Integer
     }
 
     public void handleEditClick(int index) {
+        this.isInEditDialog = true;
         this.createEditDialog(index);
-        Log.e("CONTENU", "wahou! tu as cliqué sur EDIT avec le produit" + this.basket.get(index).first.getId());
     }
 
     public void handleDeleteClick(int index) {
-        Log.e("CONTENU", "wahou! tu as cliqué sur DELETE avec le produit" + this.basket.get(index).first.getId());
+        this.isInEditDialog = false;
+        this.createDeleteDialog(index);
     }
 
     public void onClick(View v) {
@@ -84,7 +86,12 @@ public class PanierAdapter extends ArrayAdapter<Triplet<Produit, String, Integer
     }
 
     public void onClick(DialogInterface dialog, int which) {
-        this.basket.get(this.index).third = Integer.parseInt(this.input.getText().toString());
+        if (this.isInEditDialog) {
+            this.basket.get(this.index).third = Integer.parseInt(this.input.getText().toString());
+        } else {
+            this.basket.remove(this.index);
+            this.notifyDataSetChanged();
+        }
     }
 
     public void createEditDialog(int index) {
@@ -105,6 +112,24 @@ public class PanierAdapter extends ArrayAdapter<Triplet<Produit, String, Integer
         layout.addView(this.input, params);
 
         alertDialog.setView(layout);
+
+        alertDialog.setPositiveButton(android.R.string.yes, this::onClick);
+
+        alertDialog.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        alertDialog.show();
+    }
+
+    public void createDeleteDialog(int index) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+                getContext());
+
+        alertDialog.setTitle(R.string.delete_article_from_basket);
 
         alertDialog.setPositiveButton(android.R.string.yes, this::onClick);
 
