@@ -10,19 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.td1.modele.Produit;
 import com.example.td1.utils.Triplet;
 
 import java.util.ArrayList;
-
-import static android.provider.Settings.System.getString;
 
 
 public class PanierAdapter extends ArrayAdapter<Triplet<Produit, String, Integer>> {
@@ -31,10 +26,12 @@ public class PanierAdapter extends ArrayAdapter<Triplet<Produit, String, Integer
     private int index;
     private EditText input;
     private boolean isInEditDialog;
+    private BasketTotalInterface responder;
 
-    public PanierAdapter(Context context, ArrayList<Triplet<Produit, String, Integer>> basket) {
+    public PanierAdapter(Context context, ArrayList<Triplet<Produit, String, Integer>> basket, BasketTotalInterface responder) {
         super(context, 0, basket);
         this.basket = basket;
+        this.responder = responder;
     }
 
     public View getView(int index, View convertView, ViewGroup parent) {
@@ -92,6 +89,7 @@ public class PanierAdapter extends ArrayAdapter<Triplet<Produit, String, Integer
             this.basket.remove(this.index);
             this.notifyDataSetChanged();
         }
+        this.responder.changeBasketTotal();
     }
 
     public void createEditDialog(int index) {
