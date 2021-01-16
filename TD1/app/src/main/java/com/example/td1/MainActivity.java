@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
             this.basket = (Panier) savedInstanceState.getSerializable("basket");
             this.basketPrice = savedInstanceState.getDouble("basketPrice");
         }
-        test= null;
     }
 
     @Override
