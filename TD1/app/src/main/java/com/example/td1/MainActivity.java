@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
     private AppBarConfiguration mAppBarConfiguration;
     private Panier basket = new Panier(new ArrayList<Paired<Integer, String>>());
     private double basketPrice;
-    private Fragment test = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
