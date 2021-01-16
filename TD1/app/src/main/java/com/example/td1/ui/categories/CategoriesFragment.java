@@ -37,15 +37,24 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
     private static final int MAIN_CATALOGUE = 1;
 
     private ListView lvCategories;
+
     private RadioButton catalogRadioButton;
+
     private TextView totalTextView;
+
     private int modeSelected;
+
     private Panier basket;
+
     private ArrayList<Categorie> listCategories;
     private ArrayList listImgCategories;
+
     private double basketAmount;
+
     private CategoriesAdapter categoriesAdapter;
+
     private View root;
+
     private FloatingActionButton floatingActionButton;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -56,11 +65,8 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
 
         if (savedInstanceState != null) {
             this.basket = ((ActiviteECommerce) this.getActivity()).getBasket();
-            this.basketAmount = this.basket.getBasketTotal();
-
         } else {
             this.basket = ((ActiviteECommerce) this.getActivity()).getBasket();
-            this.basketAmount = this.basket.getBasketTotal();
         }
         return root;
     }
@@ -117,7 +123,6 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
         super.onSaveInstanceState(outState);
         if (this.basket != null) {
             if (this.basket.getBasketSize() > 0 && !this.basket.getBasketContent().isEmpty()) {
-                outState.putDouble("basketAmount", this.basketAmount);
                 outState.putSerializable("basket", this.basket);
             }
         }
@@ -142,8 +147,6 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
         productsToAdd.getBasketContent().forEach(product -> {
             this.basket.addArticle(product.first, product.second, product.third);
             ((ActiviteECommerce) this.getActivity()).updateBasket(this.basket);
-            // As we don't have a database yet, we can't retrieve the product price with the product's id and add it to basketAmount.
-            // Currently, we have to pass a variable with basketAmount from MainActivity to CategoriesActivity in order to get the amount to add.
         });
     }
 
