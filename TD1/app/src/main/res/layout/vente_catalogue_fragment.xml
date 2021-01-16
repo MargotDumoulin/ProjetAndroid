@@ -65,7 +65,7 @@
 
         <ImageButton
             android:id="@+id/outlinedHeartImageButton"
-            android:style="@style/img_button_heart_style"
+            style="@style/img_button_heart_style"
             android:layout_width="@dimen/img_button_width"
             android:layout_height="@dimen/img_button_height"
             android:layout_marginRight="@dimen/img_button_margin_side"
@@ -76,7 +76,7 @@
 
         <ImageButton
             android:id="@+id/filledHeartImageButton"
-            android:style="@style/img_button_heart_style"
+            style="@style/img_button_heart_style"
             android:layout_width="@dimen/img_button_width"
             android:layout_height="@dimen/img_button_height"
             android:layout_marginRight="@dimen/img_button_margin_side"

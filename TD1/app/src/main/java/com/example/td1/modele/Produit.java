@@ -8,13 +8,24 @@ public class Produit extends Base {
     protected int idCategorie;
     protected double price;
     protected String description;
+    protected boolean favori;
     protected ArrayList<String> sizes;
+
+    public Produit(int id, int idCategorie, double price, String imgSrc, String description, String title, boolean favori, ArrayList sizes) {
+        super(id, imgSrc, title);
+        this.idCategorie = idCategorie;
+        this.price = price;
+        this.description = description;
+        this.favori = favori;
+        this.sizes = sizes;
+    }
 
     public Produit(int id, int idCategorie, double price, String imgSrc, String description, String title, ArrayList sizes) {
         super(id, imgSrc, title);
         this.idCategorie = idCategorie;
         this.price = price;
         this.description = description;
+        this.favori = false;
         this.sizes = sizes;
     }
 
@@ -30,6 +41,14 @@ public class Produit extends Base {
 
     public double getPrice() {
         return this.price;
+    }
+
+    public boolean getFavori() {
+        return this.favori;
+    }
+
+    public void setFavori(boolean favori) {
+        this.favori = favori;
     }
 
     public void setDescription(String description) {

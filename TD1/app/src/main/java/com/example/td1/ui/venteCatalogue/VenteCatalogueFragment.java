@@ -110,8 +110,9 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
 
             this.basket = ((ActiviteECommerce) this.getActivity()).getBasket();
             this.idCateg = this.getArguments().getInt("id_categ", -1);
+
             if (this.idCateg != -1) {
-                ProductDAO.findAllByCateg(this, this.idCateg);
+                ProductDAO.findAllByCateg(this, this.idCateg, 1);
             } else {
                 // ???
             }
@@ -204,6 +205,14 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         this.sizeSpinnerArrayAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, this.listProduitToShow.get(this.index).getSizes());
         this.sizeSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         this.sizeSpinner.setAdapter(this.sizeSpinnerArrayAdapter);
+
+        if (this.listProduitToShow.get(this.index).getFavori()) {
+            this.filledHeartImageButton.setVisibility(View.VISIBLE);
+            this.outlinedHeartImageButton.setVisibility(View.INVISIBLE);
+        } else {
+            this.filledHeartImageButton.setVisibility(View.INVISIBLE);
+            this.outlinedHeartImageButton.setVisibility(View.VISIBLE);
+        }
     }
 
     public void showToastAddProductToBasket() {
@@ -320,6 +329,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         this.outlinedHeartImageButton.setVisibility(View.VISIBLE);
 
         ProductDAO.unstarProduct(this, this.listProduitToShow.get(this.index).getId(), 1);
+        this.listProduitToShow.get(this.index).setFavori(false);
     }
 
     public void onClickBtnHeartOutlined(View v) {
@@ -327,6 +337,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         this.outlinedHeartImageButton.setVisibility(View.INVISIBLE);
 
         ProductDAO.starProduct(this, this.listProduitToShow.get(this.index).getId(), 1);
+        this.listProduitToShow.get(this.index).setFavori(true);
     }
 
     public void onClickImage(View v) {
@@ -408,7 +419,9 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
 
                     this.sizeSpinnerArrayAdapter.notifyDataSetChanged();
                 } else {
-                    Produit product = new Produit(o.getInt("id_produit"), o.getInt("id_categorie"), o.getDouble("tarif"), o.getString("visuel"), o.getString("description"), o.getString("titre"), new ArrayList<>());
+                    Log.e("FAVORI", String.valueOf(o.getBoolean("favori")));
+                    Produit product = new Produit(o.getInt("id_produit"), o.getInt("id_categorie"), o.getDouble("tarif"), o.getString("visuel"), o.getString("description"), o.getString("titre"), o.getBoolean("favori"), new ArrayList<>());
+                    Log.e("FAVORI", String.valueOf(product.getFavori()));
                     this.listProduitToShow.add(product);
                     this.showPullInfo(this.index);
                     this.enablePrevNextButtons(this.index);
@@ -417,7 +430,6 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
                         ProductDAO.findAllSizesByCateg(this, this.idCateg);
                     }
                 }
-
             }
 
             for (int i = 0; i < this.listProduitToShow.size(); i++) {

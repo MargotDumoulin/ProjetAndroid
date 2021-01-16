@@ -31,9 +31,15 @@ public class ProductDAO {
         queue.add(jsonRequest);
     }
 
-    public static void findAllByCateg(Fragment activity, int categ) {
+    public static void findAllByCateg(Fragment activity, int categ, int idCustomer) {
         RequestQueue queue = Volley.newRequestQueue(activity.getContext());
-        String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/produits/findAllByCateg.php?categ=" + categ;
+        String url = "";
+
+        if (idCustomer == -1) { // user not connected
+            url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/produits/findAllByCateg.php?categ=" + categ;
+        } else {
+            url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/produits/findAllByCateg.php?categ=" + categ + "&customer=" + idCustomer;
+        }
         // Request a string response from the provided URL.
         JsonArrayRequest jsonArray = new JsonArrayRequest(Request.Method.GET, url, null,
                 (com.android.volley.Response.Listener<JSONArray>) activity,
@@ -88,6 +94,19 @@ public class ProductDAO {
     public static void unstarProduct(Fragment activity, int productId, int customerId) {
         RequestQueue queue = Volley.newRequestQueue(activity.getContext());
         String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/produits/unstarProduct.php?product=" + productId + "&customer=" + customerId;
+
+        // Request a string response from the provided URL.
+        JsonArrayRequest jsonArray = new JsonArrayRequest(Request.Method.GET, url, null,
+                (com.android.volley.Response.Listener<JSONArray>) activity,
+                (Response.ErrorListener) activity);
+
+        // Add the request to the RequestQueue
+        queue.add(jsonArray);
+    }
+
+    public static void findAllStarred(Fragment activity, int customerId) {
+        RequestQueue queue = Volley.newRequestQueue(activity.getContext());
+        String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/produits/findAllStarred.php?customer=" + customerId;
 
         // Request a string response from the provided URL.
         JsonArrayRequest jsonArray = new JsonArrayRequest(Request.Method.GET, url, null,
