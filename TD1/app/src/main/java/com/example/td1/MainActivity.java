@@ -1,6 +1,8 @@
 package com.example.td1;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -8,6 +10,7 @@ import com.example.td1.modele.Panier;
 import com.example.td1.utils.Paired;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -23,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
     private AppBarConfiguration mAppBarConfiguration;
     private Panier basket = new Panier(new ArrayList<Paired<Integer, String>>());
     private double basketPrice;
+    private Fragment test = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +50,19 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
             this.basket = (Panier) savedInstanceState.getSerializable("basket");
             this.basketPrice = savedInstanceState.getDouble("basketPrice");
         }
+        test= null;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
+        if(item.toString().equals("Votre panier")){
+            Navigation.findNavController(this,R.id.nav_host_fragment).navigate(R.id.menu_gestion_panier);
+            return true;
+        }
+        else{
+            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+            return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
+        }
     }
 
     public void onSaveInstanceState(Bundle outState) {
