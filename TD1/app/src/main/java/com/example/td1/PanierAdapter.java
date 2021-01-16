@@ -29,6 +29,7 @@ public class PanierAdapter extends ArrayAdapter<Triplet<Produit, String, Integer
 
     private ArrayList<Triplet<Produit, String, Integer>> basket;
     private int index;
+    private EditText input;
 
     public PanierAdapter(Context context, ArrayList<Triplet<Produit, String, Integer>> basket) {
         super(context, 0, basket);
@@ -82,6 +83,10 @@ public class PanierAdapter extends ArrayAdapter<Triplet<Produit, String, Integer
 
     }
 
+    public void onClick(DialogInterface dialog, int which) {
+        this.basket.get(this.index).third = Integer.parseInt(this.input.getText().toString());
+    }
+
     public void createEditDialog(int index) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(
                 getContext());
@@ -95,24 +100,17 @@ public class PanierAdapter extends ArrayAdapter<Triplet<Produit, String, Integer
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         params.setMargins(50, 0, 350, 0);
 
-        final EditText input = new EditText(getContext());
-        input.setInputType(InputType.TYPE_CLASS_NUMBER);
-        layout.addView(input, params);
+        this.input = new EditText(getContext());
+        this.input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        layout.addView(this.input, params);
 
         alertDialog.setView(layout);
 
-        alertDialog.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Log.e("CONTENU", "c'est positif");
-            }
-        });
+        alertDialog.setPositiveButton(android.R.string.yes, this::onClick);
 
         alertDialog.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Log.e("CONTENU", "c'est annulé");
                 dialog.cancel();
             }
         });

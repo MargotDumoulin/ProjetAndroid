@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Triplet<U, V, T> implements Serializable {
     public final U first;
     public final V second;
-    public final T third;
+    public T third;
 
     private Triplet(U first, V second, T third) {
         this.first = first;
