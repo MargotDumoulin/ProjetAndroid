@@ -12,12 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.td1.ActiviteECommerce;
-import com.example.td1.CategoriesAdapter;
 import com.example.td1.PanierAdapter;
 import com.example.td1.R;
 import com.example.td1.modele.Panier;
-
-import java.util.ArrayList;
 
 public class MonPanierFragment extends Fragment implements AdapterView.OnItemClickListener {
 

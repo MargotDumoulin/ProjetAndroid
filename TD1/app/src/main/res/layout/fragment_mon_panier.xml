@@ -10,7 +10,7 @@
 
     <TextView
         android:id="@+id/panierHeaderDescriptionTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:text="Description"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,7 +19,7 @@
     <TextView
         android:id="@+id/panierHeaderQuantityTextView"
         android:text="Quantity"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@+id/panierHeaderDescriptionTextView"
         app:layout_constraintEnd_toStartOf="@+id/panierHeaderPriceTextView"
@@ -28,15 +28,16 @@
     <TextView
         android:id="@+id/panierHeaderPriceTextView"
         android:text="Price"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@+id/panierHeaderQuantityTextView"
         app:layout_constraintEnd_toStartOf="@+id/panierHeaderEditTextView"
         app:layout_constraintBottom_toTopOf="@id/separatorTopLine"/>
+
     <TextView
         android:id="@+id/panierHeaderEditTextView"
         android:text="Edit"
-        android:layout_width="wrap_content"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@+id/panierHeaderPriceTextView"
         app:layout_constraintEnd_toStartOf="@+id/panierHeaderDeleteTextView"
@@ -45,7 +46,7 @@
     <TextView
         android:id="@+id/panierHeaderDeleteTextView"
         android:text="Delete"
-        android:layout_width="wrap_content"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@+id/panierHeaderEditTextView"
         app:layout_constraintEnd_toEndOf="parent"
