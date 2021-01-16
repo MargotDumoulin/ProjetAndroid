@@ -30,4 +30,10 @@
         android:label="Map"
         tools:layout="@layout/fragment_find_us" />
 
+    <fragment
+        android:id="@+id/menu_gestion_panier"
+        android:name="com.example.td1.ui.monPanier.MonPanierFragment"
+        android:label="@string/my_basket"
+        tools:layout="@layout/fragment_mon_panier" />
+
 </navigation>
