@@ -192,7 +192,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         outState.putDouble("basketAmount", this.basketAmount);
         outState.putInt("productTableLength", this.productTableLength);
         outState.putInt("idCateg", this.idCateg);
-        outState.putString("taille",this.sizeSpinner.getSelectedItem().toString());
+        outState.putString("taille", this.sizeSpinner.getSelectedItem().toString());
 
         if (this.pullImageViewZoomed.getVisibility() == View.VISIBLE) {
             outState.putBoolean("isImageZoomed", true);
@@ -302,7 +302,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         ((ActiviteECommerce) this.getActivity()).updatePanier(this.basket);
         ((ActiviteECommerce) this.getActivity()).updatePanierPrix(this.basketAmount);
         showToastAddProductToBasket();
-        Navigation.findNavController(this.getActivity(),R.id.nav_host_fragment).navigate(R.id.menu_gestion_panier);
+        Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment).navigate(R.id.menu_gestion_panier);
     }
 
     public void onClickImage(View v) {
@@ -327,14 +327,17 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
 
     // ---- SPINNER EVENTS ----
     public void checkSpinnerValue() {
-        if(!this.clothingSize.equals("")){
+        if (!this.clothingSize.equals("")) {
             this.sizeSpinner.setSelection(sizeSpinnerArrayAdapter.getPosition(this.clothingSize));
-            this.clothingSize="";
+            this.clothingSize = "";
+
         }
         if (!this.sizeSpinner.getSelectedItem().toString().equals("Choix de la taille")) {
             this.basketImageButton.setEnabled(true);
+
         } else {
             this.basketImageButton.setEnabled(false);
+
         }
     }
 

@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
         } else {
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
             return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
-            
+
         }
     }
 
