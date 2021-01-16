@@ -63,6 +63,20 @@ public class ProductDAO {
         // Add the request to the RequestQueue
         queue.add(jsonArray);
     }
+    public static void findAllSizesByStarred(Fragment activity, int idCustomer) {
+        RequestQueue queue = Volley.newRequestQueue(activity.getContext());
+        String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/produits/findAllSizesByStarred.php?customer=" + idCustomer;
+
+        // Request a string response from the provided URL.
+        JsonArrayRequest jsonArray = new JsonArrayRequest(Request.Method.GET, url, null,
+                (com.android.volley.Response.Listener<JSONArray>) activity,
+                (Response.ErrorListener) activity);
+
+
+        // Add the request to the RequestQueue
+        queue.add(jsonArray);
+    }
+
 
     public static void getProductTableLength(Context activity, int categ) {
         RequestQueue queue = Volley.newRequestQueue(activity);

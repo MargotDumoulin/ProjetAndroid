@@ -35,45 +35,50 @@ import com.example.td1.modele.Produit;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 public class VenteCatalogueFragment extends Fragment implements /**DialogInterface.OnClickListener,**/AdapterView.OnItemSelectedListener, ActivityWaitingImage, com.android.volley.Response.Listener<JSONArray>, com.android.volley.Response.ErrorListener {
 
-    private Button prevBtn;
-    private Button nextBtn;
+    protected Button prevBtn;
+    protected Button nextBtn;
 
-    private TextView priceTextView;
-    private TextView descriptionTextView;
-    private TextView titleTextView;
+    protected TextView priceTextView;
+    protected TextView descriptionTextView;
+    protected TextView titleTextView;
+    protected TextView noProductsTextView;
 
-    private ImageView pullImageView;
-    private ImageView pullImageViewZoomed;
+    protected ImageView pullImageView;
+    protected ImageView pullImageViewZoomed;
 
-    private boolean isImageZoomed;
-    private boolean alreadyHaveInfo;
+    protected boolean isImageZoomed;
+    protected boolean alreadyHaveInfo;
 
-    private View whiteBackgroundView;
+    protected View whiteBackgroundView;
+    protected View whiteBlankView;
 
-    private ImageButton basketImageButton;
-    private ImageButton filledHeartImageButton;
-    private ImageButton outlinedHeartImageButton;
+    protected ImageButton basketImageButton;
+    protected ImageButton filledHeartImageButton;
+    protected ImageButton outlinedHeartImageButton;
 
-    private Spinner sizeSpinner;
-    private ArrayAdapter<String> sizeSpinnerArrayAdapter;
+    protected Spinner sizeSpinner;
+    protected ArrayAdapter<String> sizeSpinnerArrayAdapter;
 
-    private static final int MAIN_VENTE = 0;
+    protected static final int MAIN_VENTE = 0;
 
-    private ArrayList<Produit> listProduitToShow;
-    private ArrayList<Bitmap> listImgProduitToShow;
+    protected ArrayList<Produit> listProduitToShow;
+    protected ArrayList<Bitmap> listImgProduitToShow;
 
-    private Panier basket;
+    protected Panier basket;
 
-    private int index;
-    private int productTableLength;
-    private int idCateg;
+    protected int index;
+    protected int productTableLength;
+    protected int idCateg;
 
-    private View root;
+    protected int mode;
+
+    protected View root;
     public static final int RETOUR = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -85,6 +90,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         this.listProduitToShow = new ArrayList<Produit>();
         this.listImgProduitToShow = new ArrayList<Bitmap>();
         this.alreadyHaveInfo = false;
+        this.mode = this.getArguments().getInt("requestCode", 0);
 
         if (this.getActivity().getIntent().getSerializableExtra("newProduct") != null) {
             Produit productToAdd = (Produit) this.getActivity().getIntent().getSerializableExtra("newProduct");
@@ -137,6 +143,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         this.priceTextView = this.root.findViewById(R.id.priceTextView);
         this.descriptionTextView = this.root.findViewById(R.id.descriptionTextView);
         this.titleTextView = this.root.findViewById(R.id.titleTextView);
+        this.noProductsTextView = this.root.findViewById(R.id.noProductsTextView);
 
         // -- IMAGEVIEWS --
         this.pullImageView = this.root.findViewById(R.id.productImageView);
@@ -158,12 +165,13 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
 
         // -- VIEWS --
         this.whiteBackgroundView = this.root.findViewById(R.id.blankView);
+        this.whiteBlankView = this.root.findViewById(R.id.whiteBlankView);
 
         if (this.isImageZoomed) {
             zoomImage();
         }
 
-        if (this.getArguments().getInt("requestCode", 0) == MAIN_VENTE) {
+        if (this.mode == MAIN_VENTE) {
             this.basketImageButton.setVisibility(View.VISIBLE);
         } else {
             this.basketImageButton.setVisibility(View.INVISIBLE);
@@ -174,6 +182,9 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
             this.changeImageView(this.index);
             this.enablePrevNextButtons(this.index);
         }
+
+        this.whiteBlankView.setVisibility(View.INVISIBLE);
+        this.noProductsTextView.setVisibility(View.INVISIBLE);
 
     }
 

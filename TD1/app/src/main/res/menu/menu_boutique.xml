@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
         <item
             android:id="@+id/categoriesFragment"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_home" />
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/catalog_mode" />
         <item
-            android:id="@+id/findUsFragment"
-            android:icon="@drawable/ic_launcher_foreground"
-            android:title="Map"/>
+            android:id="@+id/favorisFragment"
+            android:icon="@drawable/baseline_favorite_border_black_18dp"
+            android:title="@string/favorite_mode"/>
 </menu>
