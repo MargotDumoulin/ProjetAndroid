@@ -16,6 +16,7 @@ import com.example.td1.DAO.ProductDAO;
 import com.example.td1.ImageFromURL;
 import com.example.td1.R;
 import com.example.td1.modele.Produit;
+import com.example.td1.modele.Taille;
 import com.example.td1.ui.venteCatalogue.VenteCatalogueFragment;
 
 import org.json.JSONArray;
@@ -84,7 +85,7 @@ public class FavorisFragment extends VenteCatalogueFragment {
                 if (o.has("libelle")) { // Array of size
                     // Adding sizes for each product :)
                     int indexOfProductToChange = this.getIndexById(o.getInt("id_produit"));
-                    this.listProduitToShow.get(indexOfProductToChange).addSize(o.getString("libelle"));
+                    this.listProduitToShow.get(indexOfProductToChange).addSize(new Taille(o.getInt("id_taille"), o.getString("libelle")));
                     this.sizeSpinnerArrayAdapter.notifyDataSetChanged();
                 } else {
                     Produit product = new Produit(o.getInt("id_produit"), o.getInt("id_categorie"), o.getDouble("tarif"), o.getString("visuel"), o.getString("description"), o.getString("titre"), o.getBoolean("favori"), new ArrayList<>());

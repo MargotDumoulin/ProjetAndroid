@@ -9,9 +9,9 @@ public class Produit extends Base {
     protected double price;
     protected String description;
     protected boolean favori;
-    protected ArrayList<String> sizes;
+    protected ArrayList<Taille> sizes;
 
-    public Produit(int id, int idCategorie, double price, String imgSrc, String description, String title, boolean favori, ArrayList sizes) {
+    public Produit(int id, int idCategorie, double price, String imgSrc, String description, String title, boolean favori, ArrayList<Taille> sizes) {
         super(id, imgSrc, title);
         this.idCategorie = idCategorie;
         this.price = price;
@@ -20,7 +20,7 @@ public class Produit extends Base {
         this.sizes = sizes;
     }
 
-    public Produit(int id, int idCategorie, double price, String imgSrc, String description, String title, ArrayList sizes) {
+    public Produit(int id, int idCategorie, double price, String imgSrc, String description, String title, ArrayList<Taille> sizes) {
         super(id, imgSrc, title);
         this.idCategorie = idCategorie;
         this.price = price;
@@ -59,15 +59,15 @@ public class Produit extends Base {
         return this.description;
     }
 
-    public ArrayList<String> getSizes() {
+    public ArrayList<Taille> getSizes() {
         return this.sizes;
     }
 
-    public void setSizes(ArrayList sizes) {
+    public void setSizes(ArrayList<Taille> sizes) {
         this.sizes = sizes;
     }
 
-    public void addSize(String size) {
+    public void addSize(Taille size) {
         this.sizes.add(size);
     }
 

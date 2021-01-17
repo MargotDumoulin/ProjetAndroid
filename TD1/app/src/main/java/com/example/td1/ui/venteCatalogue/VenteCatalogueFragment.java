@@ -32,6 +32,7 @@ import com.example.td1.ActiviteECommerce;
 import com.example.td1.R;
 import com.example.td1.modele.Panier;
 import com.example.td1.modele.Produit;
+import com.example.td1.modele.Taille;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,7 +41,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-public class VenteCatalogueFragment extends Fragment implements /**DialogInterface.OnClickListener,**/AdapterView.OnItemSelectedListener, ActivityWaitingImage, com.android.volley.Response.Listener<JSONArray>, com.android.volley.Response.ErrorListener {
+public class VenteCatalogueFragment extends Fragment implements AdapterView.OnItemSelectedListener, ActivityWaitingImage, com.android.volley.Response.Listener<JSONArray>, com.android.volley.Response.ErrorListener {
 
     protected Button prevBtn;
     protected Button nextBtn;
@@ -216,7 +217,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         this.descriptionTextView.setText(this.listProduitToShow.get(index).getDescription());
         this.titleTextView.setText(this.listProduitToShow.get(index).getTitle());
 
-        this.sizeSpinnerArrayAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, this.listProduitToShow.get(this.index).getSizes());
+        this.sizeSpinnerArrayAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, this.extractArraySizesLabels());
         this.sizeSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         this.sizeSpinner.setAdapter(this.sizeSpinnerArrayAdapter);
 
@@ -293,9 +294,31 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
                 return i;
             }
         }
-        return -1;// not there is list
+        return -1;
     }
 
+    // --- FIND ID OF SELECTED ITEM IN SPINNER
+    public int getSpinnerSelectedSizeId(String sizeLabel) {
+        ArrayList<Taille> sizes = this.listProduitToShow.get(this.index).getSizes();
+        for (int i = 0; i < sizes.size(); i++) {
+            if (sizes.get(i).getLabel() == sizeLabel) {
+                return sizes.get(i).getId();
+            }
+        }
+        return -1;
+    }
+
+    // --- EXTRACT ARRAY SIZE LABELS TO INJECT INTO SPINNER
+    public ArrayList<String> extractArraySizesLabels() {
+        ArrayList<String> sizesLabels = new ArrayList<String>();
+        ArrayList<Taille> sizes = this.listProduitToShow.get(this.index).getSizes();
+        for (int i = 0; i < sizes.size(); i++) {
+            sizesLabels.add(sizes.get(i).getLabel());
+        }
+        return sizesLabels;
+    }
+
+    // --- CLICK EVENTS ----
     public void onClickBtnNext(View v) {
         this.index++;
         this.showPullInfo(this.index);
@@ -326,7 +349,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
         // The dialog is automatically dismissed when a dialog button is clicked.
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             final int quantity = Integer.parseInt(text.getText().toString());
-
+            int sizeId = this.getSpinnerSelectedSizeId(sizeSpinner.getSelectedItem().toString());
             this.basket.addArticle(this.listProduitToShow.get(this.index), sizeSpinner.getSelectedItem().toString(), quantity);
             ((ActiviteECommerce) this.getActivity()).updateBasket(this.basket);
 
@@ -432,8 +455,7 @@ public class VenteCatalogueFragment extends Fragment implements /**DialogInterfa
                 if (o.has("libelle")) { // Array of size
                     // Adding sizes for each product :)
                     int indexOfProductToChange = this.getIndexById(o.getInt("id_produit"));
-                    this.listProduitToShow.get(indexOfProductToChange).addSize(o.getString("libelle"));
-                    Log.e("size", o.getString("libelle"));
+                    this.listProduitToShow.get(indexOfProductToChange).addSize(new Taille(o.getInt("id_taille"), o.getString("libelle")));
                     this.sizeSpinnerArrayAdapter.notifyDataSetChanged();
                 } else {
                     Log.e("FAVORI", String.valueOf(o.getBoolean("favori")));
