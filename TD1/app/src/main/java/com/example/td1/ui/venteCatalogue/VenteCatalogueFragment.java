@@ -204,7 +204,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         outState.putSerializable("basket", this.basket);
         outState.putInt("productTableLength", this.productTableLength);
         outState.putInt("idCateg", this.idCateg);
-        outState.putString("taille",this.sizeSpinner.getSelectedItem().toString());
+        outState.putString("taille", this.sizeSpinner.getSelectedItem().toString());
 
         if (this.pullImageViewZoomed.getVisibility() == View.VISIBLE) {
             outState.putBoolean("isImageZoomed", true);
@@ -360,6 +360,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         // A null listener allows the button to dismiss the dialog and take no further action.
         builder.setNegativeButton(android.R.string.no, null);
         builder.show();
+        Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment).navigate(R.id.menu_gestion_panier);
     }
 
 
@@ -400,14 +401,17 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
 
     // ---- SPINNER EVENTS ----
     public void checkSpinnerValue() {
-        if(!this.clothingSize.equals("")){
+        if (!this.clothingSize.equals("")) {
             this.sizeSpinner.setSelection(sizeSpinnerArrayAdapter.getPosition(this.clothingSize));
-            this.clothingSize="";
+            this.clothingSize = "";
+
         }
         if (!this.sizeSpinner.getSelectedItem().toString().equals("Choix de la taille")) {
             this.basketImageButton.setEnabled(true);
+
         } else {
             this.basketImageButton.setEnabled(false);
+
         }
     }
 

@@ -1,7 +1,9 @@
 package com.example.td1;
 
 import android.os.Build;
+import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -12,6 +14,7 @@ import com.example.td1.utils.Triplet;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -53,8 +56,15 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
+        if (item.toString().equals("Votre panier")) {
+            Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.menu_gestion_panier);
+            return true;
+
+        } else {
+            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+            return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
+
+        }
     }
 
     public void onSaveInstanceState(Bundle outState) {
