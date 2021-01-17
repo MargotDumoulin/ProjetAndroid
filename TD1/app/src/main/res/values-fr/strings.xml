@@ -48,6 +48,6 @@
     <string name="favorite_mode">Favoris</string>
     <string name="my_basket">Mon panier</string>
     <string name="size">Taille</string>
-    <string name="edit">Modif.</string>
+    <string name="edit">Mod.</string>
     <string name="delete">Supp.</string>
 </resources>
