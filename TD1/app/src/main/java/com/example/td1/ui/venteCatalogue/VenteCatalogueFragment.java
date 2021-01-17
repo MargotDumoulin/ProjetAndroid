@@ -71,6 +71,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
 
     protected ArrayList<Produit> listProduitToShow;
     protected ArrayList<Bitmap> listImgProduitToShow;
+    protected ArrayList<String> listSizesLabels;
 
     protected Panier basket;
 
@@ -92,6 +93,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
 
         this.listProduitToShow = new ArrayList<Produit>();
         this.listImgProduitToShow = new ArrayList<Bitmap>();
+        this.listSizesLabels = new ArrayList<String>();
         this.alreadyHaveInfo = false;
         this.mode = this.getArguments().getInt("requestCode", 0);
 
@@ -217,11 +219,13 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         this.descriptionTextView.setText(this.listProduitToShow.get(index).getDescription());
         this.titleTextView.setText(this.listProduitToShow.get(index).getTitle());
 
-        this.sizeSpinnerArrayAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, this.extractArraySizesLabels());
+        this.listSizesLabels.clear();
+        this.listSizesLabels.addAll(this.listProduitToShow.get(this.index).getSizesLabels());
+        this.sizeSpinnerArrayAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, this.listSizesLabels);
         this.sizeSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         this.sizeSpinner.setAdapter(this.sizeSpinnerArrayAdapter);
 
-        if (this.listProduitToShow.get(this.index).getFavori()) {
+        if (this.listProduitToShow.get(index).getFavori()) {
             this.filledHeartImageButton.setVisibility(View.VISIBLE);
             this.outlinedHeartImageButton.setVisibility(View.INVISIBLE);
         } else {
@@ -308,16 +312,6 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         return -1;
     }
 
-    // --- EXTRACT ARRAY SIZE LABELS TO INJECT INTO SPINNER
-    public ArrayList<String> extractArraySizesLabels() {
-        ArrayList<String> sizesLabels = new ArrayList<String>();
-        ArrayList<Taille> sizes = this.listProduitToShow.get(this.index).getSizes();
-        for (int i = 0; i < sizes.size(); i++) {
-            sizesLabels.add(sizes.get(i).getLabel());
-        }
-        return sizesLabels;
-    }
-
     // --- CLICK EVENTS ----
     public void onClickBtnNext(View v) {
         this.index++;
@@ -350,7 +344,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             final int quantity = Integer.parseInt(text.getText().toString());
             int sizeId = this.getSpinnerSelectedSizeId(sizeSpinner.getSelectedItem().toString());
-            this.basket.addArticle(this.listProduitToShow.get(this.index), sizeSpinner.getSelectedItem().toString(), quantity);
+            this.basket.addArticle(this.listProduitToShow.get(this.index), new Taille(this.getSpinnerSelectedSizeId(sizeSpinner.getSelectedItem().toString()), sizeSpinner.getSelectedItem().toString()), quantity);
             ((ActiviteECommerce) this.getActivity()).updateBasket(this.basket);
 
             showToastAddProductToBasket();
@@ -456,27 +450,36 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
                     // Adding sizes for each product :)
                     int indexOfProductToChange = this.getIndexById(o.getInt("id_produit"));
                     this.listProduitToShow.get(indexOfProductToChange).addSize(new Taille(o.getInt("id_taille"), o.getString("libelle")));
-                    this.sizeSpinnerArrayAdapter.notifyDataSetChanged();
+
+                    Log.e("notify", "on a notifié que le dataset avait changé");
+
+                    if (i == response.length() - 1) {
+                        this.listSizesLabels.clear();
+                        this.listSizesLabels.addAll(this.listProduitToShow.get(this.index).getSizesLabels());
+                        this.sizeSpinnerArrayAdapter.notifyDataSetChanged();
+                    }
+
                 } else {
-                    Log.e("FAVORI", String.valueOf(o.getBoolean("favori")));
                     Produit product = new Produit(o.getInt("id_produit"), o.getInt("id_categorie"), o.getDouble("tarif"), o.getString("visuel"), o.getString("description"), o.getString("titre"), o.getBoolean("favori"), new ArrayList<>());
-                    Log.e("FAVORI", String.valueOf(product.getFavori()));
                     this.listProduitToShow.add(product);
                     this.showPullInfo(this.index);
                     this.enablePrevNextButtons(this.index);
 
                     if (i == response.length() - 1) {
                         ProductDAO.findAllSizesByCateg(this, this.idCateg);
+
+                        for (int y = 0; y < this.listProduitToShow.size(); y++) {
+                            this.listImgProduitToShow.add(null);
+                            ImageFromURL loader = new ImageFromURL(this);
+                            Log.e("getImage", String.valueOf("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(y).getImgSrc()));
+                            loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(y).getImgSrc(), String.valueOf(y));
+                        }
                     }
                 }
             }
 
-            for (int i = 0; i < this.listProduitToShow.size(); i++) {
-                this.listImgProduitToShow.add(null);
-                ImageFromURL loader = new ImageFromURL(this);
-                Log.e("getImage", String.valueOf("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(i).getImgSrc()));
-                loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(i).getImgSrc(), String.valueOf(i));
-            }
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

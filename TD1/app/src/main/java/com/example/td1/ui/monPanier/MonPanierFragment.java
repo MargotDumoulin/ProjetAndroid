@@ -23,6 +23,7 @@ import com.example.td1.R;
 import com.example.td1.BasketTotalInterface;
 import com.example.td1.modele.Panier;
 import com.example.td1.modele.Produit;
+import com.example.td1.modele.Taille;
 import com.example.td1.utils.Triplet;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -32,7 +33,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MonPanierFragment extends Fragment implements AdapterView.OnItemClickListener, BasketTotalInterface, com.android.volley.Response.Listener<JSONArray>, com.android.volley.Response.ErrorListener {
+public class MonPanierFragment extends Fragment implements AdapterView.OnItemClickListener, BasketTotalInterface, com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener {
 
     private View root;
 
@@ -86,7 +87,7 @@ public class MonPanierFragment extends Fragment implements AdapterView.OnItemCli
     }
 
     public void onClickCreateOrder(View v) {
-        OrderDAO.registerOrder(this.getActivity(), 1);
+        OrderDAO.registerOrder(this, 1);
     }
 
     @Override
@@ -95,27 +96,35 @@ public class MonPanierFragment extends Fragment implements AdapterView.OnItemCli
         Toast.makeText(this.getContext(), R.string.error_bdd, Toast.LENGTH_LONG).show();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public void onResponse(JSONArray response) {
+    public void onResponse(JSONObject response) {
         try {
-
             if (this.orderId == -1) {
-                for (int i = 0; i < response.length(); i++) {
-                    JSONObject o = response.getJSONObject(i);
-                    this.orderId = o.getInt("order");
+                    Log.e("REGISTER", "on passe dans la condition !!");
+                    this.orderId = response.getInt("orderId");
+                Log.e("REGISTER", String.valueOf(this.orderId));
                     this.triggerRegisterOrderLine();
-                }
+            } else {
+                Log.e("REGISTER", "on passe PAS dans la condition !!");
             }
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void triggerRegisterOrderLine() {
-        ArrayList<Triplet<Produit, String, Integer>> basketContent = this.basket.getBasketContent();
+        Log.e("REGISTER", "ON ENTRE DANS LA CONDITION");
+        ArrayList<Triplet<Produit, Taille, Integer>> basketContent = this.basket.getBasketContent();
         for (int y = 0; y < basketContent.size(); y++) {
-            OrderDAO.registerOrderLine(this.getActivity(), this.orderId, basketContent.get(y).second, basketContent.get(y).third, basketContent.get(y).first.getPrice());
+            Log.e("REGISTER", "REGISTER");
+            OrderDAO.registerOrderLine(this, this.orderId, basketContent.get(y).second.getId(), basketContent.get(y).third, basketContent.get(y).first.getPrice(), basketContent.get(y).first.getId());
         }
+        Log.e("REGISTER", "test");
+        Toast.makeText(this.getContext(), getString(R.string.order_well_registered), Toast.LENGTH_SHORT).show();
+        this.basket.removeAllArticles();
+        this.changeBasketTotal();
+        this.panierAdapter.notifyDataSetChanged();
     }
 }

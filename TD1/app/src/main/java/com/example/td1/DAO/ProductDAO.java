@@ -18,8 +18,8 @@ import org.json.JSONObject;
 
 public class ProductDAO {
 
-    public static void findProduct(Context activity, int index, int categ) {
-        RequestQueue queue = Volley.newRequestQueue(activity);
+    public static void findProduct(Fragment activity, int index, int categ) {
+        RequestQueue queue = Volley.newRequestQueue(activity.getContext());
         String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/produits/findProduct.php?index=" + (index + 1) + "&categ=" + categ;
 
         // Request a string response from the provided URL.
@@ -78,8 +78,8 @@ public class ProductDAO {
     }
 
 
-    public static void getProductTableLength(Context activity, int categ) {
-        RequestQueue queue = Volley.newRequestQueue(activity);
+    public static void getProductTableLength(Fragment activity, int categ) {
+        RequestQueue queue = Volley.newRequestQueue(activity.getContext());
         String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/produits/productTableLength.php?categ=" + categ;
 
         // Request a string response from the provided URL.

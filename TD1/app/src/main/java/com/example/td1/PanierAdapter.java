@@ -15,28 +15,27 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.td1.modele.Produit;
+import com.example.td1.modele.Taille;
 import com.example.td1.utils.Triplet;
 
 import java.util.ArrayList;
 
 
-public class PanierAdapter extends ArrayAdapter<Triplet<Produit, String, Integer>> {
+public class PanierAdapter extends ArrayAdapter<Triplet<Produit, Taille, Integer>> {
 
-    private ArrayList<Triplet<Produit, String, Integer>> basket;
+    private ArrayList<Triplet<Produit, Taille, Integer>> basket;
     private int index;
     private EditText input;
     private boolean isInEditDialog;
     private BasketTotalInterface responder;
 
-    public PanierAdapter(Context context, ArrayList<Triplet<Produit, String, Integer>> basket, BasketTotalInterface responder) {
+    public PanierAdapter(Context context, ArrayList<Triplet<Produit, Taille, Integer>> basket, BasketTotalInterface responder) {
         super(context, 0, basket);
         this.basket = basket;
         this.responder = responder;
     }
 
     public View getView(int index, View convertView, ViewGroup parent) {
-        Log.e("CONTENU", "test");
-        Log.e("CONTENU", this.basket.get(index).second);
         this.index = index;
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_list_panier, parent, false);

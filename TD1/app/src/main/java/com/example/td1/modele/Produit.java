@@ -67,6 +67,14 @@ public class Produit extends Base {
         this.sizes = sizes;
     }
 
+    public ArrayList<String> getSizesLabels() {
+        ArrayList<String> labels = new ArrayList<String>();
+        for (int i = 0; i < this.getSizes().size(); i++) {
+            labels.add(this.getSizes().get(i).getLabel());
+        }
+        return labels;
+    }
+
     public void addSize(Taille size) {
         this.sizes.add(size);
     }

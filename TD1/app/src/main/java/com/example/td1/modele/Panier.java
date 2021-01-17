@@ -9,13 +9,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Panier implements Serializable {
-    private ArrayList<Triplet<Produit, String, Integer>> basketContent; // using Tuples to create a Triplet with Triplet<idArticle, size, quantity> required
+    private ArrayList<Triplet<Produit, Taille, Integer>> basketContent; // using Tuples to create a Triplet with Triplet<idArticle, size, quantity> required
 
-    public Panier(ArrayList<Triplet<Produit, String, Integer>> basketContent) {
+    public Panier(ArrayList<Triplet<Produit, Taille, Integer>> basketContent) {
         this.basketContent = basketContent;
     }
 
-    public void addArticle(Produit product, String size, Integer quantity) {
+    public void addArticle(Produit product, Taille size, Integer quantity) {
         this.basketContent.add(Triplet.of(product, size, quantity));
     }
 
@@ -31,11 +31,11 @@ public class Panier implements Serializable {
         return this.basketContent.size();
     }
 
-    public Triplet<Produit, String, Integer> getArticle(int index) {
+    public Triplet<Produit, Taille, Integer> getArticle(int index) {
         return this.basketContent.get(index);
     }
 
-    public ArrayList<Triplet<Produit, String, Integer>> getBasketContent() {
+    public ArrayList<Triplet<Produit, Taille, Integer>> getBasketContent() {
         return this.basketContent;
     }
 

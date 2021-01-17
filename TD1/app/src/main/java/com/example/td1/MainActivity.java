@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 import com.example.td1.modele.Panier;
 import com.example.td1.modele.Produit;
+import com.example.td1.modele.Taille;
 import com.example.td1.utils.Triplet;
 import com.google.android.material.navigation.NavigationView;
 
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements ActiviteECommerce {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private Panier basket = new Panier(new ArrayList<Triplet<Produit, String, Integer>>());
+    private Panier basket = new Panier(new ArrayList<Triplet<Produit, Taille, Integer>>());
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override

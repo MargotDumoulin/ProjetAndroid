@@ -30,6 +30,7 @@
     <string name="description">Description</string>
     <string name="price">Price</string>
     <string name="create">Create</string>
+    <string name="order_well_registered">Your order has been registered.</string>
     <string name="delete_article_from_basket">Delete article from basket ?</string>
     <string name="no_products">No products.</string>
     <string name="favorite_mode">Favorites</string>

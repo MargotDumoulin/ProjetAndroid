@@ -2,6 +2,8 @@ package com.example.td1.DAO;
 
 import android.content.Context;
 
+import androidx.fragment.app.Fragment;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -13,9 +15,9 @@ import org.json.JSONObject;
 
 public class OrderDAO {
 
-    public static void registerOrder(Context activity, int customer) {
+    public static void registerOrder(Fragment activity, int customer) {
 
-        RequestQueue queue = Volley.newRequestQueue(activity);
+        RequestQueue queue = Volley.newRequestQueue(activity.getContext());
         String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/produits/registerOrder.php?customer=" + customer;
 
         // Request a string response from the provided URL.
@@ -27,9 +29,9 @@ public class OrderDAO {
         queue.add(jsonRequest);
     }
 
-    public static void registerOrderLine(Context activity, int order, String size, int quantity, double tarif) {
-        RequestQueue queue = Volley.newRequestQueue(activity);
-        String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/produits/registerOrderLine.php?order=" + order + "&size=" + size + "&quantity=" + quantity + "&tarif=" + tarif;
+    public static void registerOrderLine(Fragment activity, int order, int size, int quantity, double tarif, int product) {
+        RequestQueue queue = Volley.newRequestQueue(activity.getContext());
+        String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/produits/registerOrderLine.php?order=" + order + "&size=" + size + "&quantity=" + quantity + "&price=" + tarif + "&product=" + product;
 
         // Request a string response from the provided URL.
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, url, null,
