@@ -342,7 +342,12 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         // Specifying a listener allows you to take an action before dismissing the dialog.
         // The dialog is automatically dismissed when a dialog button is clicked.
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-            final int quantity = Integer.parseInt(text.getText().toString());
+            final String input = text.getText().toString();
+            int quantity = 1; // default quantity is 1 :)
+
+            if (!input.matches("")) {
+                quantity = Integer.parseInt(input);
+            }
             int sizeId = this.getSpinnerSelectedSizeId(sizeSpinner.getSelectedItem().toString());
             this.basket.addArticle(this.listProduitToShow.get(this.index), new Taille(this.getSpinnerSelectedSizeId(sizeSpinner.getSelectedItem().toString()), sizeSpinner.getSelectedItem().toString()), quantity);
             ((ActiviteECommerce) this.getActivity()).updateBasket(this.basket);

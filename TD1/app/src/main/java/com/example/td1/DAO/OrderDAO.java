@@ -18,7 +18,7 @@ public class OrderDAO {
     public static void registerOrder(Fragment activity, int customer) {
 
         RequestQueue queue = Volley.newRequestQueue(activity.getContext());
-        String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/produits/registerOrder.php?customer=" + customer;
+        String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/commandes/registerOrder.php?customer=" + customer;
 
         // Request a string response from the provided URL.
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -31,7 +31,7 @@ public class OrderDAO {
 
     public static void registerOrderLine(Fragment activity, int order, int size, int quantity, double tarif, int product) {
         RequestQueue queue = Volley.newRequestQueue(activity.getContext());
-        String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/produits/registerOrderLine.php?order=" + order + "&size=" + size + "&quantity=" + quantity + "&price=" + tarif + "&product=" + product;
+        String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/commandes/registerOrderLine.php?order=" + order + "&size=" + size + "&quantity=" + quantity + "&price=" + tarif + "&product=" + product;
 
         // Request a string response from the provided URL.
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, url, null,
