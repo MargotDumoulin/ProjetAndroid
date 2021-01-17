@@ -39,6 +39,24 @@ public class Panier implements Serializable {
         return this.basketContent;
     }
 
+    public boolean isArticleAlreadyInBasket(int idArticle) {
+        for (int i = 0; i < getBasketSize(); i++) {
+            if (this.getBasketContent().get(i).first.getId() == idArticle) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void addArticleQuantity(int idArticle, int quantity) {
+        for (int i = 0; i < getBasketSize(); i++) {
+            if (this.getBasketContent().get(i).first.getId() == idArticle) {
+                this.getBasketContent().get(i).third = this.getBasketContent().get(i).third + quantity;
+                return;
+            }
+        }
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     public double getBasketTotal() {
         return this.basketContent

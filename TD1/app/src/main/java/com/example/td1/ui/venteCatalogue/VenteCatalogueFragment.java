@@ -348,8 +348,11 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             if (!input.matches("")) {
                 quantity = Integer.parseInt(input);
             }
-            int sizeId = this.getSpinnerSelectedSizeId(sizeSpinner.getSelectedItem().toString());
-            this.basket.addArticle(this.listProduitToShow.get(this.index), new Taille(this.getSpinnerSelectedSizeId(sizeSpinner.getSelectedItem().toString()), sizeSpinner.getSelectedItem().toString()), quantity);
+            if (this.basket.isArticleAlreadyInBasket(this.listProduitToShow.get(this.index).getId())) {
+                this.basket.addArticleQuantity(this.listProduitToShow.get(this.index).getId(), quantity);
+            } else {
+                this.basket.addArticle(this.listProduitToShow.get(this.index), new Taille(this.getSpinnerSelectedSizeId(sizeSpinner.getSelectedItem().toString()), sizeSpinner.getSelectedItem().toString()), quantity);
+            }
             ((ActiviteECommerce) this.getActivity()).updateBasket(this.basket);
 
             showToastAddProductToBasket();
