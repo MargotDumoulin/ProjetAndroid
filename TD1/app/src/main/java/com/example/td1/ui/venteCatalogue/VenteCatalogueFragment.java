@@ -353,13 +353,14 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
                 this.basket.addArticle(this.listProduitToShow.get(this.index), new Taille(this.getSpinnerSelectedSizeId(sizeSpinner.getSelectedItem().toString()), sizeSpinner.getSelectedItem().toString()), quantity);
             }
             ((ActiviteECommerce) this.getActivity()).updateBasket(this.basket);
+            Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment).navigate(R.id.menu_gestion_panier);
 
             showToastAddProductToBasket();
         });
         // A null listener allows the button to dismiss the dialog and take no further action.
         builder.setNegativeButton(android.R.string.no, null);
         builder.show();
-        Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment).navigate(R.id.menu_gestion_panier);
+
     }
 
 
@@ -477,7 +478,6 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
                     this.enablePrevNextButtons(this.index);
 
                     if (i == response.length() - 1) {
-                        ProductDAO.findAllSizesByCateg(this, this.idCateg);
 
                         for (int y = 0; y < this.listProduitToShow.size(); y++) {
                             this.listImgProduitToShow.add(null);
@@ -485,6 +485,8 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
                             Log.e("getImage", String.valueOf("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(y).getImgSrc()));
                             loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(y).getImgSrc(), String.valueOf(y));
                         }
+
+                        ProductDAO.findAllSizesByCateg(this, this.idCateg);
                     }
                 }
             }
