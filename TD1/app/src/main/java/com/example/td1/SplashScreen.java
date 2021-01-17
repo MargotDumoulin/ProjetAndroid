@@ -41,6 +41,6 @@ public class SplashScreen extends AppCompatActivity implements Response.Listener
     @Override
     public void onErrorResponse(VolleyError error) {
         Log.e("Erreur JSON", error + "");
-        Toast.makeText(this, R.string.error_bdd, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.error_db, Toast.LENGTH_LONG).show();
     }
 }

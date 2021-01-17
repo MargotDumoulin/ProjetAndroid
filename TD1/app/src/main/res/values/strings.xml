@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">MonPullMoche Shop</string>
-    <string name="add_pull_basket">Pull n°%d added to basket</string>
+    <string name="add_pull_basket">Pullover n°%d added to basket</string>
     <string name="add_bonnet_basket">Hat n°%d added to basket</string>
     <string name="add_casquette_basket">Cap n°%d added to basketr</string>
     <string name="add_article_basket">Article n°%d added to basket</string>
@@ -19,7 +19,7 @@
     <string name="price_example">Price.</string>
     <string name="prev_symbol">&lt;</string>
     <string name="next_symbol">&gt;</string>
-    <string name="error_bdd">An error occured.</string>
+    <string name="error_db">An error has occured.</string>
     <string name="basket_total_without_price">Basket\'s total: </string>
     <string name="sell_mode">Sell</string>
     <string name="catalog_mode">Catalog</string>
@@ -37,7 +37,7 @@
     <string name="delete_article_from_basket">Delete article from basket ?</string>
     <string name="no_products">No products.</string>
     <string name="favorite_mode">Favorites</string>
-    <string name="my_basket">Mon Panier</string>
+    <string name="my_basket">My basket</string>
     <string name="title_activity_find_us">Map</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -45,7 +45,7 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Mon panier</string>
+    <string name="action_settings">My basket</string>
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_boutique">Boutique</string>

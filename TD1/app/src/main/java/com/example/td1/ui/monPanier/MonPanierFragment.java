@@ -27,7 +27,6 @@ import com.example.td1.modele.Taille;
 import com.example.td1.utils.Triplet;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -93,7 +92,7 @@ public class MonPanierFragment extends Fragment implements AdapterView.OnItemCli
     @Override
     public void onErrorResponse(VolleyError error) {
         Log.e("test", error + "là");
-        Toast.makeText(this.getContext(), R.string.error_bdd, Toast.LENGTH_LONG).show();
+        Toast.makeText(this.getContext(), R.string.error_db, Toast.LENGTH_LONG).show();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

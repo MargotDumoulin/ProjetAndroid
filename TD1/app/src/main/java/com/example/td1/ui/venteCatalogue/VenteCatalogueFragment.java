@@ -37,7 +37,6 @@ import com.example.td1.modele.Taille;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -449,7 +448,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
     @Override
     public void onErrorResponse(VolleyError error) {
         Log.e("test", error + "là");
-        Toast.makeText(this.getContext(), R.string.error_bdd, Toast.LENGTH_LONG).show();
+        Toast.makeText(this.getContext(), R.string.error_db, Toast.LENGTH_LONG).show();
     }
 
     @Override
