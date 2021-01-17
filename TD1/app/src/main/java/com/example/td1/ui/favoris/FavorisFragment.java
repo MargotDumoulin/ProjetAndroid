@@ -35,6 +35,7 @@ public class FavorisFragment extends VenteCatalogueFragment {
 
         this.listProduitToShow = new ArrayList<Produit>();
         this.listImgProduitToShow = new ArrayList<Bitmap>();
+        this.listSizesLabels = new ArrayList<String>();
         this.alreadyHaveInfo = false;
         this.mode = MAIN_VENTE;
 
@@ -86,7 +87,11 @@ public class FavorisFragment extends VenteCatalogueFragment {
                     // Adding sizes for each product :)
                     int indexOfProductToChange = this.getIndexById(o.getInt("id_produit"));
                     this.listProduitToShow.get(indexOfProductToChange).addSize(new Taille(o.getInt("id_taille"), o.getString("libelle")));
-                    this.sizeSpinnerArrayAdapter.notifyDataSetChanged();
+
+                    if (i == response.length() - 1) {
+                        this.showPullInfo(this.index);
+                    }
+
                 } else {
                     Produit product = new Produit(o.getInt("id_produit"), o.getInt("id_categorie"), o.getDouble("tarif"), o.getString("visuel"), o.getString("description"), o.getString("titre"), o.getBoolean("favori"), new ArrayList<>());
                     this.listProduitToShow.add(product);
@@ -94,21 +99,23 @@ public class FavorisFragment extends VenteCatalogueFragment {
                     this.enablePrevNextButtons(this.index);
 
                     if (i == response.length() - 1) {
+
+                        for (int y = 0; y < this.listProduitToShow.size(); y++) {
+                            this.listImgProduitToShow.add(null);
+                            ImageFromURL loader = new ImageFromURL(this);
+                            loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(y).getImgSrc(), String.valueOf(y));
+                        }
+
                         ProductDAO.findAllSizesByStarred(this, 1);
                     }
                 }
-            }
-
-            for (int i = 0; i < this.listProduitToShow.size(); i++) {
-                this.listImgProduitToShow.add(null);
-                ImageFromURL loader = new ImageFromURL(this);
-                loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(i).getImgSrc(), String.valueOf(i));
             }
 
             if (this.listImgProduitToShow.size() <= 0) {
                 this.whiteBlankView.setVisibility(View.VISIBLE);
                 this.noProductsTextView.setVisibility(View.VISIBLE);
             }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

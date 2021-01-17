@@ -187,6 +187,10 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             this.enablePrevNextButtons(this.index);
         }
 
+        this.sizeSpinnerArrayAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, this.listSizesLabels);
+        this.sizeSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        this.sizeSpinner.setAdapter(this.sizeSpinnerArrayAdapter);
+
         this.whiteBlankView.setVisibility(View.INVISIBLE);
         this.noProductsTextView.setVisibility(View.INVISIBLE);
 
@@ -218,11 +222,14 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         this.descriptionTextView.setText(this.listProduitToShow.get(index).getDescription());
         this.titleTextView.setText(this.listProduitToShow.get(index).getTitle());
 
-        this.listSizesLabels.clear();
+        if (this.listSizesLabels != null) {
+            this.listSizesLabels.clear();
+        } else {
+            this.listSizesLabels = new ArrayList<String>();
+        }
         this.listSizesLabels.addAll(this.listProduitToShow.get(this.index).getSizesLabels());
-        this.sizeSpinnerArrayAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, this.listSizesLabels);
-        this.sizeSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        this.sizeSpinner.setAdapter(this.sizeSpinnerArrayAdapter);
+        this.sizeSpinnerArrayAdapter.notifyDataSetChanged();
+
 
         if (this.listProduitToShow.get(index).getFavori()) {
             this.filledHeartImageButton.setVisibility(View.VISIBLE);
@@ -347,14 +354,15 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             if (!input.matches("")) {
                 quantity = Integer.parseInt(input);
             }
+
             if (this.basket.isArticleAlreadyInBasket(this.listProduitToShow.get(this.index).getId())) {
                 this.basket.addArticleQuantity(this.listProduitToShow.get(this.index).getId(), quantity);
             } else {
                 this.basket.addArticle(this.listProduitToShow.get(this.index), new Taille(this.getSpinnerSelectedSizeId(sizeSpinner.getSelectedItem().toString()), sizeSpinner.getSelectedItem().toString()), quantity);
             }
+
             ((ActiviteECommerce) this.getActivity()).updateBasket(this.basket);
             Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment).navigate(R.id.menu_gestion_panier);
-
             showToastAddProductToBasket();
         });
         // A null listener allows the button to dismiss the dialog and take no further action.
@@ -389,7 +397,6 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
     }
 
     // ---- DIALOG ONCLICK ----
-
     public void onClick(DialogInterface dialog, int which) {
         if (which == -1) {
             this.basket.removeAllArticles();
@@ -401,17 +408,16 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
 
     // ---- SPINNER EVENTS ----
     public void checkSpinnerValue() {
+
         if (!this.clothingSize.equals("")) {
             this.sizeSpinner.setSelection(sizeSpinnerArrayAdapter.getPosition(this.clothingSize));
             this.clothingSize = "";
-
         }
+
         if (!this.sizeSpinner.getSelectedItem().toString().equals("Choix de la taille")) {
             this.basketImageButton.setEnabled(true);
-
         } else {
             this.basketImageButton.setEnabled(false);
-
         }
     }
 
@@ -463,12 +469,8 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
                     int indexOfProductToChange = this.getIndexById(o.getInt("id_produit"));
                     this.listProduitToShow.get(indexOfProductToChange).addSize(new Taille(o.getInt("id_taille"), o.getString("libelle")));
 
-                    Log.e("notify", "on a notifié que le dataset avait changé");
-
                     if (i == response.length() - 1) {
-                        this.listSizesLabels.clear();
-                        this.listSizesLabels.addAll(this.listProduitToShow.get(this.index).getSizesLabels());
-                        this.sizeSpinnerArrayAdapter.notifyDataSetChanged();
+                        this.showPullInfo(this.index);
                     }
 
                 } else {
