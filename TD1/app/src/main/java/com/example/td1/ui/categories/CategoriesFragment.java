@@ -49,8 +49,6 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
     private ArrayList<Categorie> listCategories;
     private ArrayList listImgCategories;
 
-    private double basketAmount;
-
     private CategoriesAdapter categoriesAdapter;
 
     private View root;
@@ -87,7 +85,6 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
         super.onStart();
 
         this.catalogRadioButton = this.root.findViewById(R.id.catalogRadioButton);
-        this.totalTextView = this.root.findViewById(R.id.totalTextView);
         this.floatingActionButton = this.root.findViewById(R.id.floatingActionButton);
         this.floatingActionButton.setOnClickListener(this::onClickCreateProduct);
 
@@ -110,7 +107,6 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
                 e.printStackTrace();
             }
         }
-        this.updateTotal();
     }
 
     public void onClickCreateProduct(View view) {
@@ -148,11 +144,6 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
             this.basket.addArticle(product.first, product.second, product.third);
             ((ActiviteECommerce) this.getActivity()).updateBasket(this.basket);
         });
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public void updateTotal() {
-        this.totalTextView.setText(String.format(getString(R.string.basket_total), this.basket.getBasketTotal()));
     }
 
     public void fillImgCategories() {
