@@ -47,6 +47,9 @@ public class PanierAdapter extends ArrayAdapter<Triplet<Produit, Taille, Integer
         TextView tvPrice = convertView.findViewById(R.id.productPriceIlpTextView);
         tvPrice.setText(String.valueOf(this.basket.get(index).first.getPrice()));
 
+        TextView tvSize = convertView.findViewById(R.id.productSizeIlpTextView);
+        tvSize.setText(String.valueOf(this.basket.get(index).second.getLabel()));
+
         TextView tvQuantity = convertView.findViewById(R.id.productQuantityIlpTextView);
         tvQuantity.setText(String.valueOf(this.basket.get(index).third));
 

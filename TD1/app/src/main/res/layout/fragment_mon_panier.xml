@@ -12,32 +12,41 @@
         android:id="@+id/panierHeaderDescriptionTextView"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:text="Description"
+        android:text="@string/description"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/separatorTopLine"/>
 
     <TextView
         android:id="@+id/panierHeaderQuantityTextView"
-        android:text="Quantity"
-        android:layout_width="60dp"
+        android:text="@string/quantity"
+        android:layout_width="55dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@+id/panierHeaderDescriptionTextView"
+        app:layout_constraintEnd_toStartOf="@+id/panierHeaderSizeTextView"
+        app:layout_constraintBottom_toTopOf="@id/separatorTopLine"/>
+
+    <TextView
+        android:id="@+id/panierHeaderSizeTextView"
+        android:text="@string/size"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/panierHeaderQuantityTextView"
         app:layout_constraintEnd_toStartOf="@+id/panierHeaderPriceTextView"
         app:layout_constraintBottom_toTopOf="@id/separatorTopLine"/>
 
     <TextView
         android:id="@+id/panierHeaderPriceTextView"
-        android:text="Price"
-        android:layout_width="60dp"
+        android:text="@string/price"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@+id/panierHeaderQuantityTextView"
+        app:layout_constraintStart_toEndOf="@+id/panierHeaderSizeTextView"
         app:layout_constraintEnd_toStartOf="@+id/panierHeaderEditTextView"
         app:layout_constraintBottom_toTopOf="@id/separatorTopLine"/>
 
     <TextView
         android:id="@+id/panierHeaderEditTextView"
-        android:text="Edit"
-        android:layout_width="40dp"
+        android:text="@string/edit"
+        android:layout_width="35dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@+id/panierHeaderPriceTextView"
         app:layout_constraintEnd_toStartOf="@+id/panierHeaderDeleteTextView"
@@ -45,7 +54,7 @@
 
     <TextView
         android:id="@+id/panierHeaderDeleteTextView"
-        android:text="Delete"
+        android:text="@string/delete"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@+id/panierHeaderEditTextView"

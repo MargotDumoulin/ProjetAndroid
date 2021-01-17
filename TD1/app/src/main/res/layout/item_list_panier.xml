@@ -19,7 +19,7 @@
 
     <TextView
         android:id="@+id/productQuantityIlpTextView"
-        android:layout_width="60dp"
+        android:layout_width="30dp"
         android:layout_height="wrap_content"
         android:text="@string/quantity"
         android:autoSizeMinTextSize="12sp"
@@ -31,13 +31,25 @@
 
     <TextView
         android:id="@+id/productPriceIlpTextView"
-        android:layout_width="60dp"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:text="@string/price"
         android:autoSizeMinTextSize="12sp"
         android:autoSizeMaxTextSize="100sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/editImageButton"
+        app:layout_constraintStart_toEndOf="@+id/productSizeIlpTextView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/productSizeIlpTextView"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:text="@string/size"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeMaxTextSize="100sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/productPriceIlpTextView"
         app:layout_constraintStart_toEndOf="@+id/productQuantityIlpTextView"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,7 +60,7 @@
         android:layout_height="@dimen/img_button_height"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/deleteImageButton"
-        app:layout_constraintStart_toEndOf="@+id/productPriceIlpTextView"
+        app:layout_constraintStart_toEndOf="@+id/productSizeIlpTextView"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/baseline_create_black_18dp" />
 
