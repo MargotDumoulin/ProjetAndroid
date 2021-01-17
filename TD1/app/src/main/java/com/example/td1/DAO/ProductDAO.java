@@ -3,6 +3,9 @@ package com.example.td1.DAO;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -28,10 +31,9 @@ public class ProductDAO {
         queue.add(jsonRequest);
     }
 
-    public static void findAllByCateg(Context activity, int categ) {
-        RequestQueue queue = Volley.newRequestQueue(activity);
+    public static void findAllByCateg(Fragment activity, int categ) {
+        RequestQueue queue = Volley.newRequestQueue(activity.getContext());
         String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/produits/findAllByCateg.php?categ=" + categ;
-
         // Request a string response from the provided URL.
         JsonArrayRequest jsonArray = new JsonArrayRequest(Request.Method.GET, url, null,
                 (com.android.volley.Response.Listener<JSONArray>) activity,
@@ -42,8 +44,8 @@ public class ProductDAO {
         queue.add(jsonArray);
     }
 
-    public static void findAllSizesByCateg(Context activity, int categ) {
-        RequestQueue queue = Volley.newRequestQueue(activity);
+    public static void findAllSizesByCateg(Fragment activity, int categ) {
+        RequestQueue queue = Volley.newRequestQueue(activity.getContext());
         String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/produits/findAllSizesByCateg.php?categ=" + categ;
 
         // Request a string response from the provided URL.

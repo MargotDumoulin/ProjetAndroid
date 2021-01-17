@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CategoriesActivity">
+    tools:context=".ui.categories.CategoriesFragment">
 
     <TextView
         android:id="@+id/totalTextView"
@@ -30,7 +30,7 @@
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@+id/separatorTopLine"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/separatorBottomLine"/>
+        app:layout_constraintBottom_toTopOf="@+id/separatorBottomLine" />
 
     <View
         android:id="@+id/separatorBottomLine"
@@ -39,7 +39,7 @@
         app:layout_constraintBottom_toTopOf="@+id/sellOrCatalogRadioGroup"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:background="#c0c0c0" />
+        android:background="#c0c0c0"/>
 
     <RadioGroup
         android:id="@+id/sellOrCatalogRadioGroup"
@@ -77,7 +77,6 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:layout_margin="20dp"
-        android:onClick="onClickCreateProduct"
         app:srcCompat="@drawable/baseline_add_white_18dp"
         app:layout_constraintBottom_toTopOf="@id/sellOrCatalogRadioGroup"
         app:layout_constraintRight_toRightOf="parent"/>
