@@ -411,16 +411,9 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
 
     // ---- SPINNER EVENTS ----
     public void checkSpinnerValue() {
-
         if (!this.clothingSize.equals("")) {
             this.sizeSpinner.setSelection(sizeSpinnerArrayAdapter.getPosition(this.clothingSize));
             this.clothingSize = "";
-        }
-
-        if (!this.sizeSpinner.getSelectedItem().toString().equals("Choix de la taille")) {
-            this.basketImageButton.setEnabled(true);
-        } else {
-            this.basketImageButton.setEnabled(false);
         }
     }
 
