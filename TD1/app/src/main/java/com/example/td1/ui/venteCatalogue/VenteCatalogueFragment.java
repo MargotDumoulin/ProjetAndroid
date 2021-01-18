@@ -171,6 +171,11 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         this.whiteBackgroundView = this.root.findViewById(R.id.blankView);
         this.whiteBlankView = this.root.findViewById(R.id.whiteBlankView);
 
+        // -- ADAPTER --
+        this.sizeSpinnerArrayAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, this.listSizesLabels);
+        this.sizeSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        this.sizeSpinner.setAdapter(this.sizeSpinnerArrayAdapter);
+
         if (this.isImageZoomed) {
             zoomImage();
         }
@@ -187,9 +192,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             this.enablePrevNextButtons(this.index);
         }
 
-        this.sizeSpinnerArrayAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, this.listSizesLabels);
-        this.sizeSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        this.sizeSpinner.setAdapter(this.sizeSpinnerArrayAdapter);
+
 
         this.whiteBlankView.setVisibility(View.INVISIBLE);
         this.noProductsTextView.setVisibility(View.INVISIBLE);
