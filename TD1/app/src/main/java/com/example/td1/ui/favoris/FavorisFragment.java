@@ -75,6 +75,23 @@ public class FavorisFragment extends VenteCatalogueFragment {
         this.listProduitToShow.get(this.index).setFavori(false);
         this.listProduitToShow.remove(this.index);
         this.listImgProduitToShow.remove(this.index);
+
+        if (this.listProduitToShow.isEmpty()) {
+            this.whiteBlankView.setVisibility(View.VISIBLE);
+            this.noProductsTextView.setVisibility(View.VISIBLE);
+        } else {
+            if (this.listProduitToShow.size() == 1 || this.index == 0) {
+                this.index = 0;
+            } else {
+                this.index = this.index - 1;
+            }
+            
+            this.showPullInfo(this.index);
+            this.enablePrevNextButtons(this.index);
+            this.changeImageView(this.index);
+        }
+
+
     }
 
     @Override
