@@ -85,7 +85,7 @@ public class FavorisFragment extends VenteCatalogueFragment {
             } else {
                 this.index = this.index - 1;
             }
-            
+
             this.showPullInfo(this.index);
             this.enablePrevNextButtons(this.index);
             this.changeImageView(this.index);

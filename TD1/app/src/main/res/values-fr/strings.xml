@@ -40,7 +40,7 @@
     <string name="action_settings">Mon panier</string>
     <string name="menu_home">Accueil</string>
     <string name="menu_gallery">Gallerie</string>
-    <string name="menu_boutique">Boutique</string>
+    <string name="menu_shop">Boutique</string>
     <string name="menu_map">Nous trouver</string>
     <string name="order_well_registered">Votre commande a été enregistrée.</string>
     <string name="delete_article_from_basket">Supprimer cet article du panier ?</string>
