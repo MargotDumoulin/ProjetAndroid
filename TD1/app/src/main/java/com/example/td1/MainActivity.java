@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.toString().equals("Votre panier")) {
+        if (item.toString().equals(getString(R.string.my_basket))) {
             Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.menu_gestion_panier);
             return true;
 
