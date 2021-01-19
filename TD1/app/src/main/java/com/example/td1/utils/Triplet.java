@@ -7,7 +7,7 @@ public class Triplet<U, V, T> implements Serializable {
     public final V second;
     public T third;
 
-    private Triplet(U first, V second, T third) {
+    public Triplet(U first, V second, T third) {
         this.first = first;
         this.second = second;
         this.third = third;

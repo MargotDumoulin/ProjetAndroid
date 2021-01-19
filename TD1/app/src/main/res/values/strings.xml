@@ -69,4 +69,8 @@
     <string name="passwords_must_match">"Password fields must match."</string>
     <string name="account_created">"Your account has been created."</string>
     <string name="identifier_already_exists">Your identifier already exists.</string>
+    <string name="empty">Empty</string>
+    <string name="not_a_number">Not a number</string>
+    <string name="passwords_does_not_match">Passwords does not match</string>
+    <string name="identifier_taken">Identifier taken</string>
 </resources>
