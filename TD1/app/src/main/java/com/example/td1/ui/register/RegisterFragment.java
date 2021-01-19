@@ -113,30 +113,6 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
 
     public void onClickRegister(View v) {
         this.validateFields();
-
-        if (this.errors.isEmpty()) {
-            // no errors = we can register the new customer :)
-            Client customer = new Client(
-                    this.firstnameEditText.getText().toString(),
-                    this.lastnameEditText.getText().toString(),
-                    this.identifierEditText.getText().toString(),
-                    this.passwordEditText.getText().toString(),
-                    this.addrStreetEditText.getText().toString(),
-                    Integer.parseInt(this.addrPostalCodeEditText.getText().toString()),
-                    Integer.parseInt(this.addrNumberEditText.getText().toString()),
-                    this.addrCityEditText.getText().toString(),
-                    this.addrCountryEditText.getText().toString());
-
-            try {
-                JSONObject customerJson = new JSONObject(customer.toJson());
-                CustomerDAO.registerCustomer(this, customerJson);
-            } catch (Exception e) {
-                Log.e("Error", String.valueOf(e));
-            }
-
-        } else {
-            Toast.makeText(this.getContext(), this.errors.get(0).second, Toast.LENGTH_SHORT).show();
-        }
     }
 
     public void validateFields() {
@@ -155,10 +131,11 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
                     } else {
                         this.errors.remove(new Pair(input.second, String.format(getString(R.string.field_is_not_number), input.second)));
                     }
-                }
-
-                if (input.second == getString(R.string.confirm)) {
+                    
+                } else if (input.second == getString(R.string.confirm)) {
                     this.testPasswordMatch(input.first, this.passwordEditText);
+                } else if (input.second == getString(R.string.id)) {
+                    CustomerDAO.doesIdentifierAlreadyExist(this, input.first.getText().toString());
                 }
             }
         }
@@ -187,9 +164,49 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
     @Override
     public void onResponse(JSONObject response) {
         try {
-            if (response.getInt("id") != -1) {
+
+            if (response.has("identifierAlreadyExists")) {
+
+                if (response.getBoolean("identifierAlreadyExists")) {
+
+                    this.errors.add(new Pair(getString(R.string.id), getString(R.string.identifier_already_exists)));
+                    Toast.makeText(this.getContext(), getString(R.string.identifier_already_exists), Toast.LENGTH_SHORT).show();
+
+                } else {
+
+                    this.errors.remove(new Pair(getString(R.string.id), getString(R.string.identifier_already_exists)));
+
+                    if (this.errors.isEmpty()) {
+                        // no errors = we can register the new customer :)
+                        Client customer = new Client(
+                                this.firstnameEditText.getText().toString(),
+                                this.lastnameEditText.getText().toString(),
+                                this.identifierEditText.getText().toString(),
+                                this.passwordEditText.getText().toString(),
+                                this.addrStreetEditText.getText().toString(),
+                                Integer.parseInt(this.addrPostalCodeEditText.getText().toString()),
+                                Integer.parseInt(this.addrNumberEditText.getText().toString()),
+                                this.addrCityEditText.getText().toString(),
+                                this.addrCountryEditText.getText().toString()
+                        );
+
+                        try {
+                            JSONObject customerJson = new JSONObject(customer.toJson());
+                            CustomerDAO.registerCustomer(this, customerJson);
+                        } catch (Exception e) {
+                            Log.e("Error", String.valueOf(e));
+                        }
+
+                    } else {
+                        Toast.makeText(this.getContext(), this.errors.get(0).second, Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+            } else if (response.getInt("id") != -1) {
                 Toast.makeText(this.getContext(), getString(R.string.account_created), Toast.LENGTH_SHORT).show();
             }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

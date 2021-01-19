@@ -103,12 +103,8 @@ public class MonPanierFragment extends Fragment implements AdapterView.OnItemCli
     public void onResponse(JSONObject response) {
         try {
             if (this.orderId == -1) {
-                    Log.e("REGISTER", "on passe dans la condition !!");
                     this.orderId = response.getInt("orderId");
-                Log.e("REGISTER", String.valueOf(this.orderId));
                     this.triggerRegisterOrderLine();
-            } else {
-                Log.e("REGISTER", "on passe PAS dans la condition !!");
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -117,12 +113,8 @@ public class MonPanierFragment extends Fragment implements AdapterView.OnItemCli
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void triggerRegisterOrderLine() {
-        Log.e("REGISTER", "ON ENTRE DANS LA CONDITION");
         ArrayList<Triplet<Produit, Taille, Integer>> basketContent = this.basket.getBasketContent();
         for (int y = 0; y < basketContent.size(); y++) {
-            Log.e("REGISTER", "REGISTER");
-
-
             LigneCommande orderLine = new LigneCommande(
                     this.orderId,
                     basketContent.get(y).second.getId(),
@@ -138,7 +130,6 @@ public class MonPanierFragment extends Fragment implements AdapterView.OnItemCli
                 Log.e("Error", String.valueOf(e));
             }
         }
-        Log.e("REGISTER", "test");
         Toast.makeText(this.getContext(), getString(R.string.order_well_registered), Toast.LENGTH_SHORT).show();
         this.basket.removeAllArticles();
         this.changeBasketTotal();
