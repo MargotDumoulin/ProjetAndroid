@@ -31,9 +31,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:hint="@string/lastname"
+            android:hint="@string/firstname"
             android:ems="10"
-            android:inputType="numberDecimal"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titleSectionInfoTextView" />
 
@@ -42,9 +41,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:hint="@string/firstname"
+            android:hint="@string/lastname"
             android:ems="10"
-            android:inputType="numberDecimal"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/firstnameEditText" />
 
@@ -55,7 +53,6 @@
             android:layout_marginLeft="20dp"
             android:hint="@string/id"
             android:ems="10"
-            android:inputType="numberDecimal"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lastnameEditText"
             app:layout_constraintBottom_toTopOf="@+id/passwordEditText"/>
@@ -67,7 +64,6 @@
             android:layout_marginLeft="20dp"
             android:hint="@string/password"
             android:ems="6"
-            android:inputType="numberDecimal"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/idEditText"
             app:layout_constraintBottom_toTopOf="@+id/titleSectionAddressTextView"/>
@@ -117,7 +113,6 @@
             android:hint="@string/street"
             android:gravity="start|top"
             android:ems="8"
-            android:inputType="textMultiLine"
             app:layout_constraintLeft_toRightOf="@+id/numberEditText"
             app:layout_constraintTop_toBottomOf="@id/titleSectionAddressTextView"
             app:layout_constraintBottom_toTopOf="@id/postalCodeEditText" />
@@ -142,7 +137,6 @@
             android:hint="@string/city"
             android:gravity="start|top"
             android:ems="8"
-            android:inputType="textMultiLine"
             app:layout_constraintLeft_toRightOf="@+id/postalCodeEditText"
             app:layout_constraintTop_toBottomOf="@id/streetEditText"
             app:layout_constraintBottom_toTopOf="@id/countryEditText" />
@@ -154,7 +148,6 @@
             android:layout_marginLeft="20dp"
             android:hint="@string/country"
             android:ems="10"
-            android:inputType="numberDecimal"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/postalCodeEditText"
             app:layout_constraintBottom_toTopOf="@id/registerButton" />

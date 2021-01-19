@@ -68,6 +68,8 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        this.fields = new ArrayList<Pair<EditText, String>>();
+        this.errors = new ArrayList<Pair<String, String>>();
 
         this.firstnameEditText = this.root.findViewById(R.id.firstnameEditText);
         this.fields.add(new Pair(this.firstnameEditText, getString(R.string.firstname)));
@@ -109,7 +111,7 @@ public class RegisterFragment extends Fragment {
         if (this.errors.isEmpty()) {
             // register
         } else {
-            Toast.makeText(this.getContext(), this.errors.get(0).first, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.getContext(), this.errors.get(0).second, Toast.LENGTH_SHORT).show();
         }
     }
 
