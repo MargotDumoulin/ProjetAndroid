@@ -50,4 +50,17 @@
     <string name="size">Taille</string>
     <string name="edit">Mod.</string>
     <string name="delete">Supp.</string>
+    <string name="register">Enregistrer</string>
+    <string name="firstname">Nom</string>
+    <string name="lastname">Prénom</string>
+    <string name="id">Identifiant</string>
+    <string name="password">Mot de passe</string>
+    <string name="confirm">Confirmer</string>
+    <string name="number">Numéro</string>
+    <string name="street">Voie</string>
+    <string name="postal_code">Code postal</string>
+    <string name="city">Ville</string>
+    <string name="country">Pays</string>
+    <string name="address">Adresse</string>
+    <string name="personal_info">Informations personnelles</string>
 </resources>
