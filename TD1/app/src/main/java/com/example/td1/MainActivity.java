@@ -1,5 +1,6 @@
 package com.example.td1;
 
+import android.os.Build;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,9 +8,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.td1.modele.Panier;
-import com.example.td1.utils.Paired;
+import com.example.td1.modele.Produit;
+import com.example.td1.modele.Taille;
+import com.example.td1.utils.Triplet;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -24,9 +28,9 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements ActiviteECommerce {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private Panier basket = new Panier(new ArrayList<Paired<Integer, String>>());
-    private double basketPrice;
+    private Panier basket = new Panier(new ArrayList<Triplet<Produit, Taille, Integer>>());
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,13 +51,12 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
 
         if (savedInstanceState != null) {
             this.basket = (Panier) savedInstanceState.getSerializable("basket");
-            this.basketPrice = savedInstanceState.getDouble("basketPrice");
         }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.toString().equals("Votre panier")) {
+        if (item.toString().equals(getString(R.string.my_basket))) {
             Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.menu_gestion_panier);
             return true;
 
@@ -66,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
 
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putDouble("basketPrice", this.basketPrice);
         outState.putSerializable("basket", this.basket);
     }
 
@@ -85,22 +87,12 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
     }
 
     @Override
-    public Panier getPanier() {
+    public Panier getBasket() {
         return basket;
     }
 
     @Override
-    public void updatePanier(Panier basket) {
+    public void updateBasket(Panier basket) {
         this.basket = basket;
-    }
-
-    @Override
-    public void updatePanierPrix(double basketPrice) {
-        this.basketPrice = basketPrice;
-    }
-
-    @Override
-    public double getPanierPrix() {
-        return this.basketPrice;
     }
 }

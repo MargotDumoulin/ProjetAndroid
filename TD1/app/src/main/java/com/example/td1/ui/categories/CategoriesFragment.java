@@ -37,29 +37,34 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
     private static final int MAIN_CATALOGUE = 1;
 
     private ListView lvCategories;
+
     private RadioButton catalogRadioButton;
+
     private TextView totalTextView;
+
     private int modeSelected;
+
     private Panier basket;
+
     private ArrayList<Categorie> listCategories;
     private ArrayList listImgCategories;
-    private double basketAmount;
+
     private CategoriesAdapter categoriesAdapter;
+
     private View root;
+
     private FloatingActionButton floatingActionButton;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         root = inflater.inflate(R.layout.fragment_categories, container, false);
 
         if (savedInstanceState != null) {
-            this.basket = ((ActiviteECommerce) this.getActivity()).getPanier();
-            this.basketAmount = ((ActiviteECommerce) this.getActivity()).getPanierPrix();
-
+            this.basket = ((ActiviteECommerce) this.getActivity()).getBasket();
         } else {
-            this.basket = ((ActiviteECommerce) this.getActivity()).getPanier();
-            this.basketAmount = ((ActiviteECommerce) this.getActivity()).getPanierPrix();
+            this.basket = ((ActiviteECommerce) this.getActivity()).getBasket();
         }
         return root;
     }
@@ -74,12 +79,12 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onStart() {
         super.onStart();
 
         this.catalogRadioButton = this.root.findViewById(R.id.catalogRadioButton);
-        this.totalTextView = this.root.findViewById(R.id.totalTextView);
         this.floatingActionButton = this.root.findViewById(R.id.floatingActionButton);
         this.floatingActionButton.setOnClickListener(this::onClickCreateProduct);
 
@@ -102,7 +107,6 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
                 e.printStackTrace();
             }
         }
-        updateTotal();
     }
 
     public void onClickCreateProduct(View view) {
@@ -115,7 +119,6 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
         super.onSaveInstanceState(outState);
         if (this.basket != null) {
             if (this.basket.getBasketSize() > 0 && !this.basket.getBasketContent().isEmpty()) {
-                outState.putDouble("basketAmount", this.basketAmount);
                 outState.putSerializable("basket", this.basket);
             }
         }
@@ -138,17 +141,9 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
         }
 
         productsToAdd.getBasketContent().forEach(product -> {
-            this.basket.addArticle(product.first, product.second);
-            ((ActiviteECommerce) this.getActivity()).updatePanier(this.basket);
-            // As we don't have a database yet, we can't retrieve the product price with the product's id and add it to basketAmount.
-            // Currently, we have to pass a variable with basketAmount from MainActivity to CategoriesActivity in order to get the amount to add.
+            this.basket.addArticle(product.first, product.second, product.third);
+            ((ActiviteECommerce) this.getActivity()).updateBasket(this.basket);
         });
-        this.basketAmount += basketAmountFromMainActivity;
-        updateTotal();
-    }
-
-    public void updateTotal() {
-        this.totalTextView.setText(String.format(getString(R.string.basket_total), this.basketAmount));
     }
 
     public void fillImgCategories() {

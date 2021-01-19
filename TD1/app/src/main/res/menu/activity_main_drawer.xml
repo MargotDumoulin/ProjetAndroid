@@ -15,7 +15,7 @@
         <item
             android:id="@+id/nav_boutique"
             android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_boutique"/>
+            android:title="@string/menu_shop"/>
         <item
             android:id="@+id/nav_map"
             android:icon="@drawable/ic_launcher_foreground"

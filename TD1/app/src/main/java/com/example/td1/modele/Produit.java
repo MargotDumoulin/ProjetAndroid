@@ -8,13 +8,24 @@ public class Produit extends Base {
     protected int idCategorie;
     protected double price;
     protected String description;
-    protected ArrayList<String> sizes;
+    protected boolean favori;
+    protected ArrayList<Taille> sizes;
 
-    public Produit(int id, int idCategorie, double price, String imgSrc, String description, String title, ArrayList sizes) {
+    public Produit(int id, int idCategorie, double price, String imgSrc, String description, String title, boolean favori, ArrayList<Taille> sizes) {
         super(id, imgSrc, title);
         this.idCategorie = idCategorie;
         this.price = price;
         this.description = description;
+        this.favori = favori;
+        this.sizes = sizes;
+    }
+
+    public Produit(int id, int idCategorie, double price, String imgSrc, String description, String title, ArrayList<Taille> sizes) {
+        super(id, imgSrc, title);
+        this.idCategorie = idCategorie;
+        this.price = price;
+        this.description = description;
+        this.favori = false;
         this.sizes = sizes;
     }
 
@@ -32,6 +43,14 @@ public class Produit extends Base {
         return this.price;
     }
 
+    public boolean getFavori() {
+        return this.favori;
+    }
+
+    public void setFavori(boolean favori) {
+        this.favori = favori;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -40,15 +59,23 @@ public class Produit extends Base {
         return this.description;
     }
 
-    public ArrayList<String> getSizes() {
+    public ArrayList<Taille> getSizes() {
         return this.sizes;
     }
 
-    public void setSizes(ArrayList sizes) {
+    public void setSizes(ArrayList<Taille> sizes) {
         this.sizes = sizes;
     }
 
-    public void addSize(String size) {
+    public ArrayList<String> getSizesLabels() {
+        ArrayList<String> labels = new ArrayList<String>();
+        for (int i = 0; i < this.getSizes().size(); i++) {
+            labels.add(this.getSizes().get(i).getLabel());
+        }
+        return labels;
+    }
+
+    public void addSize(Taille size) {
         this.sizes.add(size);
     }
 

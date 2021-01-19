@@ -19,31 +19,9 @@
 
     <fragment
         android:id="@+id/nav_boutique"
-        android:name="com.example.td1.ui.categories.CategoriesFragment"
+        android:name="com.example.td1.ui.boutique.BoutiqueFragment"
         android:label="Boutique"
-        tools:layout="@layout/fragment_categories">
-        <action
-            android:id="@+id/action_nav_boutique_to_venteCatalogueFragment"
-            app:destination="@id/venteCatalogueFragment" />
-        <action
-            android:id="@+id/action_nav_boutique_to_newProductFragment"
-            app:destination="@id/newProductFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/venteCatalogueFragment"
-        android:name="com.example.td1.ui.venteCatalogue.VenteCatalogueFragment"
-        android:label="Catalogue"
-        tools:layout="@layout/vente_catalogue_fragment" />
-
-    <fragment
-        android:id="@+id/newProductFragment"
-        android:name="com.example.td1.ui.newProduct.NewProductFragment"
-        android:label="New product"
-        tools:layout="@layout/fragment_new_product">
-        <action
-            android:id="@+id/action_newProductFragment_to_venteCatalogueFragment"
-            app:destination="@id/venteCatalogueFragment" />
+        tools:layout="@layout/fragment_boutique">
     </fragment>
 
     <fragment
@@ -55,6 +33,7 @@
     <fragment
         android:id="@+id/menu_gestion_panier"
         android:name="com.example.td1.ui.monPanier.MonPanierFragment"
-        android:label="Mon Panier"
+        android:label="@string/my_basket"
         tools:layout="@layout/fragment_mon_panier" />
+
 </navigation>

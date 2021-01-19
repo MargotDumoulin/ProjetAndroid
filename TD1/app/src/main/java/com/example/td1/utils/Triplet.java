@@ -2,17 +2,19 @@ package com.example.td1.utils;
 
 import java.io.Serializable;
 
-public class Paired<U, V> implements Serializable {
+public class Triplet<U, V, T> implements Serializable {
     public final U first;
     public final V second;
+    public T third;
 
-    private Paired(U first, V second) {
+    private Triplet(U first, V second, T third) {
         this.first = first;
         this.second = second;
+        this.third = third;
     }
 
     // Factory method for creating a Typed immutable instance of Triplet
-    public static <U, V> Paired<U, V> of(U a, V b) {
-        return new Paired<>(a, b);
+    public static <U, V, T> Triplet<U, V, T> of(U a, V b, T c) {
+        return new Triplet<>(a, b, c);
     }
 }
