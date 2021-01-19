@@ -18,12 +18,12 @@ import org.json.JSONObject;
 
 public class CustomerDAO {
 
-    public static void registerCustomer(Fragment fragment, Client customer) throws JSONException {
+    public static void registerCustomer(Fragment fragment, JSONObject customerJson) throws JSONException {
         RequestQueue queue = Volley.newRequestQueue(fragment.getContext());
         String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/clients/registerCustomer.php";
 
         // Request a string response from the provided URL.
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(customer.toJson()),
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, customerJson,
                 (Response.Listener<JSONObject>) fragment,
                 (Response.ErrorListener) fragment);
 

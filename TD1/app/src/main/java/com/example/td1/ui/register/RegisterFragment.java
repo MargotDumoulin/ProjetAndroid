@@ -126,7 +126,14 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
                     Integer.parseInt(this.addrNumberEditText.getText().toString()),
                     this.addrCityEditText.getText().toString(),
                     this.addrCountryEditText.getText().toString());
-            CustomerDAO.registerCustomer(this, customer);
+
+            try {
+                JSONObject customerJson = new JSONObject(customer.toJson());
+                CustomerDAO.registerCustomer(this, customerJson);
+            } catch (Exception e) {
+                Log.e("Error", String.valueOf(e));
+            }
+
         } else {
             Toast.makeText(this.getContext(), this.errors.get(0).second, Toast.LENGTH_SHORT).show();
         }
@@ -173,7 +180,7 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Log.e("Volley error", error + "");
+        Log.e("Volley error", String.valueOf(error.networkResponse.data));
         Toast.makeText(this.getContext(), R.string.error_db, Toast.LENGTH_LONG).show();
     }
 

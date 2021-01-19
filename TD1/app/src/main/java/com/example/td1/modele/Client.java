@@ -120,15 +120,15 @@ public class Client {
     }
 
     public String toJson() {
-        return "{ \"firstName\" :  \"" + getFirstname() + "," +
-                "\"lastName\" :  \"" + getLastname() + "," +
-                "\"identifier\" :  \"" + getIdentifier() + "," +
-                "\"password\" :  \"" + getPassword() + "," +
-                "\"street\" :  \"" + getAddrStreet() + "," +
-                "\"city\" :  \"" + getAddrCity() + "," +
-                "\"postal_code\" :  \"" + getAddrPostalCode() + "," +
-                "\"country\" :  \"" + getAddrCountry() + "," +
-                "\"number\" :  \"" + getAddrNumber() + "}";
+        return "{ \"firstname\" :  \"" + getFirstname() + "\"," +
+                "\"lastname\" :  \"" + getLastname() + "\"," +
+                "\"identifier\" :  \"" + getIdentifier() + "\"," +
+                "\"password\" :  \"" + getPassword() + "\"," +
+                "\"street\" :  \"" + getAddrStreet() + "\"," +
+                "\"city\" :  \"" + getAddrCity() + "\"," +
+                "\"postalCode\" :  \"" + getAddrPostalCode() + "\"," +
+                "\"country\" :  \"" + getAddrCountry() + "\"," +
+                "\"number\" :  \"" + getAddrNumber() + "\"}";
     }
 
 }
