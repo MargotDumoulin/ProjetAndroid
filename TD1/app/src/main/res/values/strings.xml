@@ -63,4 +63,6 @@
     <string name="country">Country</string>
     <string name="address">Address</string>
     <string name="personal_info">Personal informations</string>
+    <string name="empty_field">You must fill the field: %1$s</string>
+    <string name="field_is_not_number">The field %1$s must contain a number</string>
 </resources>

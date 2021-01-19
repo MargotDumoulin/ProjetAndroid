@@ -32,7 +32,6 @@ public class NewProductFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         root = inflater.inflate(R.layout.fragment_new_product, container, false);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         return root;
     }
 
