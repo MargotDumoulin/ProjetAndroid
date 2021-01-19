@@ -180,7 +180,7 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Log.e("Volley error", String.valueOf(error.networkResponse.data));
+        Log.e("Volley error", String.valueOf(error));
         Toast.makeText(this.getContext(), R.string.error_db, Toast.LENGTH_LONG).show();
     }
 
