@@ -14,7 +14,6 @@ public class Client {
     private String addr_city;
     private String addr_country;
 
-
     public Client(int id, String firstname, String lastname, String identifier, String password, String addr_street, int addr_postal_code, String addr_city, String addr_country) {
         this.id = id;
         this.firstname = firstname;

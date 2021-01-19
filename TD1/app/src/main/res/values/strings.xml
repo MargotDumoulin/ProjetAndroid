@@ -67,4 +67,5 @@
     <string name="field_is_not_number">The field %1$s must contain a number</string>
     <string name="must_field_password_fields">"You must fill all password related fields."</string>
     <string name="passwords_must_match">"Password fields must match."</string>
+    <string name="account_created">"Your account has been created."</string>
 </resources>

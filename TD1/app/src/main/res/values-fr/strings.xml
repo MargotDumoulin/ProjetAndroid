@@ -67,4 +67,5 @@
     <string name="field_is_not_number">Le champ %1$s doit contenir un nombre</string>
     <string name="must_field_password_fields">"Il faut remplir le ou les champs liés au mot de passe."</string>
     <string name="passwords_must_match">"Le mot de passe doit être le même sur les deux champs dédiés."</string>
+    <string name="account_created">"Votre compte a été créé."</string>
 </resources>

@@ -23,14 +23,19 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.example.td1.ActivityWaitingImage;
 import com.example.td1.CategoriesAdapter;
+import com.example.td1.DAO.CustomerDAO;
 import com.example.td1.ImageFromURL;
 import com.example.td1.ActiviteECommerce;
 import com.example.td1.R;
 import com.example.td1.modele.Categorie;
+import com.example.td1.modele.Client;
 import com.example.td1.modele.Panier;
 import com.example.td1.modele.Produit;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -40,7 +45,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RegisterFragment extends Fragment {
+public class RegisterFragment extends Fragment implements com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener{
 
     private View root;
     private EditText firstnameEditText;
@@ -110,7 +115,17 @@ public class RegisterFragment extends Fragment {
         this.validateFields();
 
         if (this.errors.isEmpty()) {
-            // register
+            // no errors = we can register the new customer :)
+            Client customer = new Client(
+                    this.firstnameEditText.getText().toString(),
+                    this.lastnameEditText.getText().toString(),
+                    this.identifierEditText.getText().toString(),
+                    this.passwordEditText.getText().toString(),
+                    this.addrStreetEditText.getText().toString(),
+                    Integer.parseInt(this.addrPostalCodeEditText.getText().toString()),
+                    this.addrCityEditText.getText().toString(),
+                    this.addrCountryEditText.getText().toString());
+            CustomerDAO.registerCustomer(this, customer);
         } else {
             Toast.makeText(this.getContext(), this.errors.get(0).second, Toast.LENGTH_SHORT).show();
         }
@@ -152,6 +167,23 @@ public class RegisterFragment extends Fragment {
             } else {
                 this.errors.remove(new Pair(getString(R.string.confirm), getString(R.string.passwords_must_match)));
             }
+        }
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        Log.e("Volley error", error + "");
+        Toast.makeText(this.getContext(), R.string.error_db, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+        try {
+            if (response.getInt("id") != -1) {
+                Toast.makeText(this.getContext(), getString(R.string.account_created), Toast.LENGTH_SHORT).show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
