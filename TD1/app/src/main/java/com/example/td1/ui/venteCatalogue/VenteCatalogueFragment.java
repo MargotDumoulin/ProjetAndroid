@@ -77,12 +77,10 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
     protected int index;
     protected int productTableLength;
     protected int idCateg;
-    protected int mode;
     
     protected String clothingSize = "";
     
     protected View root;
-    public static final int RETOUR = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -94,7 +92,6 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         this.listImgProduitToShow = new ArrayList<Bitmap>();
         this.listSizesLabels = new ArrayList<String>();
         this.alreadyHaveInfo = false;
-        this.mode = this.getArguments().getInt("requestCode", 0);
 
         if (this.getActivity().getIntent().getSerializableExtra("newProduct") != null) {
             Produit productToAdd = (Produit) this.getActivity().getIntent().getSerializableExtra("newProduct");
@@ -180,19 +177,13 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             zoomImage();
         }
 
-        if (this.mode == MAIN_VENTE) {
-            this.basketImageButton.setVisibility(View.VISIBLE);
-        } else {
-            this.basketImageButton.setVisibility(View.INVISIBLE);
-        }
+        this.basketImageButton.setVisibility(View.VISIBLE);
 
         if (this.alreadyHaveInfo) {
             this.showPullInfo(this.index);
             this.changeImageView(this.index);
             this.enablePrevNextButtons(this.index);
         }
-
-
 
         this.whiteBlankView.setVisibility(View.INVISIBLE);
         this.noProductsTextView.setVisibility(View.INVISIBLE);

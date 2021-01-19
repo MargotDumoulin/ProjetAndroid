@@ -15,28 +15,28 @@ import org.json.JSONObject;
 
 public class OrderDAO {
 
-    public static void registerOrder(Fragment activity, int customer) {
+    public static void registerOrder(Fragment fragment, int customer) {
 
-        RequestQueue queue = Volley.newRequestQueue(activity.getContext());
+        RequestQueue queue = Volley.newRequestQueue(fragment.getContext());
         String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/commandes/registerOrder.php?customer=" + customer;
 
         // Request a string response from the provided URL.
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, url, null,
-                (com.android.volley.Response.Listener<JSONObject>) activity,
-                (Response.ErrorListener) activity);
+                (com.android.volley.Response.Listener<JSONObject>) fragment,
+                (Response.ErrorListener) fragment);
 
         // Add the request to the RequestQueue
         queue.add(jsonRequest);
     }
 
-    public static void registerOrderLine(Fragment activity, int order, int size, int quantity, double tarif, int product) {
-        RequestQueue queue = Volley.newRequestQueue(activity.getContext());
+    public static void registerOrderLine(Fragment fragment, int order, int size, int quantity, double tarif, int product) {
+        RequestQueue queue = Volley.newRequestQueue(fragment.getContext());
         String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/commandes/registerOrderLine.php?order=" + order + "&size=" + size + "&quantity=" + quantity + "&price=" + tarif + "&product=" + product;
 
         // Request a string response from the provided URL.
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, url, null,
-                (com.android.volley.Response.Listener<JSONObject>) activity,
-                (Response.ErrorListener) activity);
+                (com.android.volley.Response.Listener<JSONObject>) fragment,
+                (Response.ErrorListener) fragment);
 
         // Add the request to the RequestQueue
         queue.add(jsonRequest);

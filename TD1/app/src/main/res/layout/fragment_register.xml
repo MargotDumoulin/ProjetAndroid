@@ -4,8 +4,6 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.newProduct.NewProductFragment"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,31 +20,29 @@
             android:text="@string/personal_info"
             android:textSize="24sp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/nameEditText"
+            app:layout_constraintBottom_toTopOf="@+id/firstnameEditText"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
 
         <EditText
-            android:id="@+id/nameEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:hint="@string/lastname"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titleSectionInfoTextView" />
-
-        <EditText
-            android:id="@+id/surnameEditText"
+            android:id="@+id/firstnameEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:hint="@string/firstname"
             android:ems="10"
-            android:inputType="numberDecimal"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nameEditText" />
+            app:layout_constraintTop_toBottomOf="@+id/titleSectionInfoTextView" />
+
+        <EditText
+            android:id="@+id/lastnameEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:hint="@string/lastname"
+            android:ems="10"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/firstnameEditText" />
 
         <EditText
             android:id="@+id/idEditText"
@@ -55,9 +51,8 @@
             android:layout_marginLeft="20dp"
             android:hint="@string/id"
             android:ems="10"
-            android:inputType="numberDecimal"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/surnameEditText"
+            app:layout_constraintTop_toBottomOf="@+id/lastnameEditText"
             app:layout_constraintBottom_toTopOf="@+id/passwordEditText"/>
 
         <EditText
@@ -67,7 +62,7 @@
             android:layout_marginLeft="20dp"
             android:hint="@string/password"
             android:ems="6"
-            android:inputType="numberDecimal"
+            android:inputType="textPassword"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/idEditText"
             app:layout_constraintBottom_toTopOf="@+id/titleSectionAddressTextView"/>
@@ -80,6 +75,7 @@
             android:layout_marginBottom="15dp"
             android:hint="@string/confirm"
             android:ems="6"
+            android:inputType="textPassword"
             app:layout_constraintLeft_toRightOf="@id/passwordEditText"
             app:layout_constraintTop_toBottomOf="@+id/idEditText"
             app:layout_constraintBottom_toTopOf="@+id/titleSectionAddressTextView"/>
@@ -117,7 +113,6 @@
             android:hint="@string/street"
             android:gravity="start|top"
             android:ems="8"
-            android:inputType="textMultiLine"
             app:layout_constraintLeft_toRightOf="@+id/numberEditText"
             app:layout_constraintTop_toBottomOf="@id/titleSectionAddressTextView"
             app:layout_constraintBottom_toTopOf="@id/postalCodeEditText" />
@@ -132,7 +127,7 @@
             android:ems="6"
             app:layout_constraintTop_toBottomOf="@+id/numberEditText"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/productPriceEditText" />
+            app:layout_constraintBottom_toTopOf="@id/countryEditText" />
 
         <EditText
             android:id="@+id/cityEditText"
@@ -142,25 +137,23 @@
             android:hint="@string/city"
             android:gravity="start|top"
             android:ems="8"
-            android:inputType="textMultiLine"
             app:layout_constraintLeft_toRightOf="@+id/postalCodeEditText"
             app:layout_constraintTop_toBottomOf="@id/streetEditText"
-            app:layout_constraintBottom_toTopOf="@id/productPriceEditText" />
+            app:layout_constraintBottom_toTopOf="@id/countryEditText" />
 
         <EditText
-            android:id="@+id/productPriceEditText"
+            android:id="@+id/countryEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:hint="@string/country"
             android:ems="10"
-            android:inputType="numberDecimal"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/postalCodeEditText"
-            app:layout_constraintBottom_toTopOf="@id/createButton" />
+            app:layout_constraintBottom_toTopOf="@id/registerButton" />
 
         <Button
-            android:id="@+id/createButton"
+            android:id="@+id/registerButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
