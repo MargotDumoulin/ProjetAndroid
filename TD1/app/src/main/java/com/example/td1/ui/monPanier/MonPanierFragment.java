@@ -17,10 +17,13 @@ import androidx.fragment.app.Fragment;
 
 import com.android.volley.VolleyError;
 import com.example.td1.ActiviteECommerce;
+import com.example.td1.DAO.CustomerDAO;
 import com.example.td1.DAO.OrderDAO;
 import com.example.td1.PanierAdapter;
 import com.example.td1.R;
 import com.example.td1.BasketTotalInterface;
+import com.example.td1.modele.Client;
+import com.example.td1.modele.LigneCommande;
 import com.example.td1.modele.Panier;
 import com.example.td1.modele.Produit;
 import com.example.td1.modele.Taille;
@@ -118,7 +121,22 @@ public class MonPanierFragment extends Fragment implements AdapterView.OnItemCli
         ArrayList<Triplet<Produit, Taille, Integer>> basketContent = this.basket.getBasketContent();
         for (int y = 0; y < basketContent.size(); y++) {
             Log.e("REGISTER", "REGISTER");
-            OrderDAO.registerOrderLine(this, this.orderId, basketContent.get(y).second.getId(), basketContent.get(y).third, basketContent.get(y).first.getPrice(), basketContent.get(y).first.getId());
+
+
+            LigneCommande orderLine = new LigneCommande(
+                    this.orderId,
+                    basketContent.get(y).second.getId(),
+                    basketContent.get(y).first.getId(),
+                    basketContent.get(y).third,
+                    basketContent.get(y).first.getPrice()
+            );
+
+            try {
+                JSONObject orderLineJson = new JSONObject(orderLine.toJson());
+                OrderDAO.registerOrderLine(this, orderLineJson);
+            } catch (Exception e) {
+                Log.e("Error", String.valueOf(e));
+            }
         }
         Log.e("REGISTER", "test");
         Toast.makeText(this.getContext(), getString(R.string.order_well_registered), Toast.LENGTH_SHORT).show();

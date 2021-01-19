@@ -29,12 +29,12 @@ public class OrderDAO {
         queue.add(jsonRequest);
     }
 
-    public static void registerOrderLine(Fragment fragment, int order, int size, int quantity, double tarif, int product) {
+    public static void registerOrderLine(Fragment fragment, JSONObject orderLine) {
         RequestQueue queue = Volley.newRequestQueue(fragment.getContext());
-        String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/commandes/registerOrderLine.php?order=" + order + "&size=" + size + "&quantity=" + quantity + "&price=" + tarif + "&product=" + product;
+        String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/commandes/registerOrderLine.php";
 
         // Request a string response from the provided URL.
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, orderLine,
                 (com.android.volley.Response.Listener<JSONObject>) fragment,
                 (Response.ErrorListener) fragment);
 
