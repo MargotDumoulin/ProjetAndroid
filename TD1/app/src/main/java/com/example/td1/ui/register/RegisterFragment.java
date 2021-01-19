@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -146,7 +147,7 @@ public class RegisterFragment extends Fragment {
         } else {
             this.errors.remove(new Pair(getString(R.string.password), getString(R.string.must_field_password_fields)));
 
-            if (inputPassword.getText().toString() != inputConfirm.getText().toString()) {
+            if (!inputPassword.getText().toString().equals(inputConfirm.getText().toString())) {
                 this.errors.add(new Pair(getString(R.string.confirm), getString(R.string.passwords_must_match)));
             } else {
                 this.errors.remove(new Pair(getString(R.string.confirm), getString(R.string.passwords_must_match)));
