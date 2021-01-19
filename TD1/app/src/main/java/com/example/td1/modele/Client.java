@@ -4,18 +4,10 @@ import java.util.ArrayList;
 
 public class Client {
 
+    private int id;
     private String firstname;
     private String lastname;
     private String identifier;
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     private String password;
     private String addr_street;
     private int addr_postal_code;
@@ -43,7 +35,13 @@ public class Client {
         this.id = id;
     }
 
-    private int id;
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getAddr_street() {
         return addr_street;
