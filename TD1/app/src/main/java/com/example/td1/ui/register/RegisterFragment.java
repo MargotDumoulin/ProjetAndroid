@@ -121,12 +121,15 @@ public class RegisterFragment extends Fragment {
             if (TextUtils.isEmpty(input.first.getText().toString())) {
                 this.errors.add(new Pair(input.second, String.format(getString(R.string.empty_field), input.second)));
             } else {
+                this.errors.remove(new Pair(input.second, String.format(getString(R.string.empty_field), input.second)));
 
                 int inputTypeValue = input.first.getInputType();
                 if (inputTypeValue == InputType.TYPE_CLASS_NUMBER) {
                     // test if it is a number
                     if (!input.first.getText().toString().matches("\\d+(?:\\.\\d+)?")) {
                         this.errors.add(new Pair(input.second, String.format(getString(R.string.field_is_not_number), input.second)));
+                    } else {
+                        this.errors.remove(new Pair(input.second, String.format(getString(R.string.field_is_not_number), input.second)));
                     }
                 }
 
@@ -142,6 +145,8 @@ public class RegisterFragment extends Fragment {
             this.errors.add(new Pair("password", "Il faut remplir le ou les champs liés au mot de passe."));
         } else if (inputPassword.getText().toString() != inputConfirm.getText().toString()) {
             this.errors.add(new Pair("confirmPassword", "Le mot de passe doit être le même sur les deux champs dédiés."));
+        } else {
+            //
         }
     }
 

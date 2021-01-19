@@ -64,6 +64,7 @@
             android:layout_marginLeft="20dp"
             android:hint="@string/password"
             android:ems="6"
+            android:inputType="textPassword"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/idEditText"
             app:layout_constraintBottom_toTopOf="@+id/titleSectionAddressTextView"/>
@@ -76,6 +77,7 @@
             android:layout_marginBottom="15dp"
             android:hint="@string/confirm"
             android:ems="6"
+            android:inputType="textPassword"
             app:layout_constraintLeft_toRightOf="@id/passwordEditText"
             app:layout_constraintTop_toBottomOf="@+id/idEditText"
             app:layout_constraintBottom_toTopOf="@+id/titleSectionAddressTextView"/>
