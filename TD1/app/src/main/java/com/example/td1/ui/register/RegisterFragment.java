@@ -133,7 +133,7 @@ public class RegisterFragment extends Fragment {
                     }
                 }
 
-                if (input.second == "confirmPassword") {
+                if (input.second == getString(R.string.confirm)) {
                     this.testPasswordMatch(input.first, this.passwordEditText);
                 }
             }
@@ -142,11 +142,15 @@ public class RegisterFragment extends Fragment {
 
     public void testPasswordMatch(EditText inputConfirm, EditText inputPassword) {
         if (TextUtils.isEmpty(inputPassword.getText().toString()) || TextUtils.isEmpty(inputConfirm.getText().toString())) {
-            this.errors.add(new Pair("password", "Il faut remplir le ou les champs liés au mot de passe."));
-        } else if (inputPassword.getText().toString() != inputConfirm.getText().toString()) {
-            this.errors.add(new Pair("confirmPassword", "Le mot de passe doit être le même sur les deux champs dédiés."));
+            this.errors.add(new Pair(getString(R.string.password), getString(R.string.must_field_password_fields)));
         } else {
-            //
+            this.errors.remove(new Pair(getString(R.string.password), getString(R.string.must_field_password_fields)));
+
+            if (inputPassword.getText().toString() != inputConfirm.getText().toString()) {
+                this.errors.add(new Pair(getString(R.string.confirm), getString(R.string.passwords_must_match)));
+            } else {
+                this.errors.remove(new Pair(getString(R.string.confirm), getString(R.string.passwords_must_match)));
+            }
         }
     }
 
