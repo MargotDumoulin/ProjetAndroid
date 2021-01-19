@@ -246,13 +246,13 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
     public void showToastAddProductToBasket() {
         switch (this.idCateg) {
             case 1:
-                Toast.makeText(this.getContext(), String.format(getString(R.string.add_pull_basket), this.index), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this.getContext(), String.format(getString(R.string.add_pullover_basket), this.index), Toast.LENGTH_SHORT).show();
                 break;
             case 2:
-                Toast.makeText(this.getContext(), String.format(getString(R.string.add_bonnet_basket), this.index), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this.getContext(), String.format(getString(R.string.add_hat_basket), this.index), Toast.LENGTH_SHORT).show();
                 break;
             case 3:
-                Toast.makeText(this.getContext(), String.format(getString(R.string.add_casquette_basket), this.index), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this.getContext(), String.format(getString(R.string.add_cap_basket), this.index), Toast.LENGTH_SHORT).show();
                 break;
             default:
                 Toast.makeText(this.getContext(), String.format(getString(R.string.add_article_basket), this.index), Toast.LENGTH_SHORT).show();
