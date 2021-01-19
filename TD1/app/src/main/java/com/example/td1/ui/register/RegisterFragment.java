@@ -123,6 +123,7 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
                     this.passwordEditText.getText().toString(),
                     this.addrStreetEditText.getText().toString(),
                     Integer.parseInt(this.addrPostalCodeEditText.getText().toString()),
+                    Integer.parseInt(this.addrNumberEditText.getText().toString()),
                     this.addrCityEditText.getText().toString(),
                     this.addrCountryEditText.getText().toString());
             CustomerDAO.registerCustomer(this, customer);
