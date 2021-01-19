@@ -27,6 +27,18 @@ public class Client {
         this.addr_city = addr_city;
     }
 
+    public Client(String firstname, String lastname, String identifier, String password, String addr_street, int addr_postal_code, String addr_city, String addr_country) {
+        this.id = -1;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.identifier = identifier;
+        this.password = password;
+        this.addr_street = addr_street;
+        this.addr_country = addr_country;
+        this.addr_postal_code = addr_postal_code;
+        this.addr_city = addr_city;
+    }
+
     public int getId() {
         return id;
     }
