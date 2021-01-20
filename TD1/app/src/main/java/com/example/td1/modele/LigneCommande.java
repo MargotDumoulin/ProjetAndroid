@@ -1,5 +1,8 @@
 package com.example.td1.modele;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 public class LigneCommande {
@@ -59,10 +62,18 @@ public class LigneCommande {
     }
 
     public String toJson() {
-        return "{ \"order\" :  \"" + getIdOrder() + "\"," +
-                "\"size\" :  \"" + getIdSize() + "\"," +
-                "\"quantity\" :  \"" + getQuantity() + "\"," +
-                "\"product\" :  \"" + getIdProduit() + "\"," +
-                "\"price\" :  \"" + getPrice() + "\"}";
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("product", getIdProduit());
+            jsonObject.put("order", getIdOrder());
+            jsonObject.put("size", getIdSize());
+            jsonObject.put("quantity", getQuantity());
+            jsonObject.put("price", getPrice());
+
+            return jsonObject.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 }

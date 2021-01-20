@@ -117,8 +117,8 @@ public class MonPanierFragment extends Fragment implements AdapterView.OnItemCli
         for (int y = 0; y < basketContent.size(); y++) {
             LigneCommande orderLine = new LigneCommande(
                     this.orderId,
-                    basketContent.get(y).second.getId(),
                     basketContent.get(y).first.getId(),
+                    basketContent.get(y).second.getId(),
                     basketContent.get(y).third,
                     basketContent.get(y).first.getPrice()
             );

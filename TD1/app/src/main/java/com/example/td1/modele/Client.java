@@ -1,5 +1,8 @@
 package com.example.td1.modele;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Client {
 
     private int id;
@@ -120,15 +123,23 @@ public class Client {
     }
 
     public String toJson() {
-        return "{ \"firstname\" :  \"" + getFirstname() + "\"," +
-                "\"lastname\" :  \"" + getLastname() + "\"," +
-                "\"identifier\" :  \"" + getIdentifier() + "\"," +
-                "\"password\" :  \"" + getPassword() + "\"," +
-                "\"street\" :  \"" + getAddrStreet() + "\"," +
-                "\"city\" :  \"" + getAddrCity() + "\"," +
-                "\"postalCode\" :  \"" + getAddrPostalCode() + "\"," +
-                "\"country\" :  \"" + getAddrCountry() + "\"," +
-                "\"number\" :  \"" + getAddrNumber() + "\"}";
+        JSONObject jsonObject= new JSONObject();
+        try {
+            jsonObject.put("number", getAddrNumber());
+            jsonObject.put("street", getAddrStreet());
+            jsonObject.put("city", getAddrCity());
+            jsonObject.put("country", getAddrCountry());
+            jsonObject.put("postalCode", getAddrPostalCode());
+            jsonObject.put("lastname", getLastname());
+            jsonObject.put("firstname", getFirstname());
+            jsonObject.put("identifier", getIdentifier());
+            jsonObject.put("password", getPassword());
+
+            return jsonObject.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
 }

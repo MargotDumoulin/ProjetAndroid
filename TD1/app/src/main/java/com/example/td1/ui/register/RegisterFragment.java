@@ -160,15 +160,15 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
                     if (this.errors.isEmpty()) {
                         // no errors = we can register the new customer :)
                         Client customer = new Client(
-                                this.firstnameEditText.getText().toString(),
-                                this.lastnameEditText.getText().toString(),
-                                this.identifierEditText.getText().toString(),
-                                this.passwordEditText.getText().toString(),
-                                this.addrStreetEditText.getText().toString(),
+                                this.firstnameEditText.getText().toString().trim(),
+                                this.lastnameEditText.getText().toString().trim(),
+                                this.identifierEditText.getText().toString().trim(),
+                                this.passwordEditText.getText().toString().trim(),
+                                this.addrStreetEditText.getText().toString().trim(),
                                 Integer.parseInt(this.addrPostalCodeEditText.getText().toString()),
                                 Integer.parseInt(this.addrNumberEditText.getText().toString()),
-                                this.addrCityEditText.getText().toString(),
-                                this.addrCountryEditText.getText().toString()
+                                this.addrCityEditText.getText().toString().trim(),
+                                this.addrCountryEditText.getText().toString().trim()
                         );
 
                         try {
