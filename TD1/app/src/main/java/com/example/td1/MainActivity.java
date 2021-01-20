@@ -32,10 +32,11 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements ActiviteECommerce {
+public class MainActivity extends AppCompatActivity implements ActiviteECommerce, ActivityLogin {
 
     private AppBarConfiguration mAppBarConfiguration;
     private Panier basket = new Panier(new ArrayList<Triplet<Produit, Taille, Integer>>());
+    private boolean isLoggedIn = false;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -76,7 +77,12 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
             return true;
         } else if (itemId == R.id.nav_register) {
             if (currentDestination != null && currentDestination.getId() != R.id.nav_register) {
-                navController.navigate(R.id.nav_register);
+                if (this.isLoggedIn) {
+                    // needs to be changed
+                    navController.navigate(R.id.nav_register);
+                } else {
+                    navController.navigate(R.id.nav_login);
+                }
             }
 
             return true;
@@ -129,6 +135,14 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
     @Override
     public Panier getBasket() {
         return basket;
+    }
+
+    public void login() {
+        this.isLoggedIn = true;
+    }
+
+    public void logout() {
+        this.isLoggedIn = false;
     }
 
     @Override

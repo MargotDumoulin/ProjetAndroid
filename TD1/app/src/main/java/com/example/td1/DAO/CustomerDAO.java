@@ -31,6 +31,19 @@ public class CustomerDAO {
         queue.add(jsonRequest);
     }
 
+    public static void isLoginInfoCorrect(Fragment fragment, JSONObject credentialsJson) {
+        RequestQueue queue = Volley.newRequestQueue(fragment.getContext());
+        String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/clients/isLoginInfoCorrect.php";
+
+        // Request a string response from the provided URL.
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, credentialsJson,
+                (Response.Listener<JSONObject>) fragment,
+                (Response.ErrorListener) fragment);
+
+        // Add the request to the RequestQueue
+        queue.add(jsonRequest);
+    }
+
     public static void doesIdentifierAlreadyExist(Fragment fragment, String identifier) {
         RequestQueue queue = Volley.newRequestQueue(fragment.getContext());
         String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/clients/doesIdentifierAlreadyExist.php?identifier=" + identifier;

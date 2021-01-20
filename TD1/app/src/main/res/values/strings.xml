@@ -76,4 +76,8 @@
     <string name="my_account">My account</string>
     <string name="my_basket_tag">my_basket_fragment</string>
     <string name="register_tag">register_fragment</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="must_fill_all_fields">You must fill all fields</string>
+    <string name="incorrect_login_info">Wrong informations.</string>
 </resources>
