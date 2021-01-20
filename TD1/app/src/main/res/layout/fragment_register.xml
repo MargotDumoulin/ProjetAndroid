@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/titleSectionInfoTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="casual"
+            android:text="@string/personal_info"
+            android:textSize="24sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/firstnameEditText"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <EditText
+            android:id="@+id/firstnameEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:hint="@string/firstname"
+            android:ems="10"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleSectionInfoTextView" />
+
+        <EditText
+            android:id="@+id/lastnameEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:hint="@string/lastname"
+            android:ems="10"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/firstnameEditText" />
+
+        <EditText
+            android:id="@+id/idEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:hint="@string/id"
+            android:ems="10"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lastnameEditText"
+            app:layout_constraintBottom_toTopOf="@+id/passwordEditText"/>
+
+        <EditText
+            android:id="@+id/passwordEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:hint="@string/password"
+            android:ems="6"
+            android:inputType="textPassword"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/idEditText"
+            app:layout_constraintBottom_toTopOf="@+id/titleSectionAddressTextView"/>
+
+        <EditText
+            android:id="@+id/confirmPasswordEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="15dp"
+            android:hint="@string/confirm"
+            android:ems="6"
+            android:inputType="textPassword"
+            app:layout_constraintLeft_toRightOf="@id/passwordEditText"
+            app:layout_constraintTop_toBottomOf="@+id/idEditText"
+            app:layout_constraintBottom_toTopOf="@+id/titleSectionAddressTextView"/>
+
+        <TextView
+            android:id="@+id/titleSectionAddressTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="casual"
+            android:text="@string/address"
+            android:textSize="24sp"
+            app:layout_constraintTop_toBottomOf="@id/passwordEditText"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/numberEditText" />
+
+        <EditText
+            android:id="@+id/numberEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:inputType="number"
+            android:hint="@string/number"
+            android:ems="4"
+            app:layout_constraintTop_toBottomOf="@id/titleSectionAddressTextView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/postalCodeEditText" />
+
+        <EditText
+            android:id="@+id/streetEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:hint="@string/street"
+            android:gravity="start|top"
+            android:ems="8"
+            app:layout_constraintLeft_toRightOf="@+id/numberEditText"
+            app:layout_constraintTop_toBottomOf="@id/titleSectionAddressTextView"
+            app:layout_constraintBottom_toTopOf="@id/postalCodeEditText" />
+
+        <EditText
+            android:id="@+id/postalCodeEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:layout_marginLeft="20dp"
+            android:hint="@string/postal_code"
+            android:ems="6"
+            app:layout_constraintTop_toBottomOf="@+id/numberEditText"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/countryEditText" />
+
+        <EditText
+            android:id="@+id/cityEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:hint="@string/city"
+            android:gravity="start|top"
+            android:ems="8"
+            app:layout_constraintLeft_toRightOf="@+id/postalCodeEditText"
+            app:layout_constraintTop_toBottomOf="@id/streetEditText"
+            app:layout_constraintBottom_toTopOf="@id/countryEditText" />
+
+        <EditText
+            android:id="@+id/countryEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:hint="@string/country"
+            android:ems="10"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/postalCodeEditText"
+            app:layout_constraintBottom_toTopOf="@id/registerButton" />
+
+        <Button
+            android:id="@+id/registerButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="@string/register"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/productPriceEditText"
+            app:layout_constraintBottom_toTopOf="@id/footerTextView"/>
+
+        <TextView
+            android:id="@+id/footerTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/made_in_2021"
+            android:background="@color/red_500"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

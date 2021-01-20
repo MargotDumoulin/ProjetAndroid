@@ -33,16 +33,7 @@ import java.util.ArrayList;
 
 public class CategoriesFragment extends Fragment implements AdapterView.OnItemClickListener, ActivityWaitingImage {
 
-    private static final int MAIN_VENTE = 0;
-    private static final int MAIN_CATALOGUE = 1;
-
     private ListView lvCategories;
-
-    private RadioButton catalogRadioButton;
-
-    private TextView totalTextView;
-
-    private int modeSelected;
 
     private Panier basket;
 
@@ -52,8 +43,6 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
     private CategoriesAdapter categoriesAdapter;
 
     private View root;
-
-    private FloatingActionButton floatingActionButton;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -84,10 +73,6 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
     public void onStart() {
         super.onStart();
 
-        this.catalogRadioButton = this.root.findViewById(R.id.catalogRadioButton);
-        this.floatingActionButton = this.root.findViewById(R.id.floatingActionButton);
-        this.floatingActionButton.setOnClickListener(this::onClickCreateProduct);
-
         String categories = this.getActivity().getIntent().getStringExtra("categories");
 
         if (categories.length() > 0) {
@@ -109,11 +94,6 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
         }
     }
 
-    public void onClickCreateProduct(View view) {
-        Bundle bundle = new Bundle();
-        Navigation.findNavController(view).navigate(R.id.action_nav_boutique_to_newProductFragment, bundle);
-    }
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -128,9 +108,6 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
     public void onItemClick(AdapterView<?> parent, View view, int index, long id) {
         Bundle bundle = new Bundle();
         bundle.putInt("id_categ", this.listCategories.get(index).getId());
-        this.modeSelected = this.catalogRadioButton.isChecked() ? MAIN_CATALOGUE : MAIN_VENTE;
-        bundle.putInt("requestCode", modeSelected);
-
         Navigation.findNavController(view).navigate(R.id.action_nav_boutique_to_venteCatalogueFragment, bundle);
     }
 

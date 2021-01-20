@@ -50,4 +50,27 @@
     <string name="size">Taille</string>
     <string name="edit">Mod.</string>
     <string name="delete">Supp.</string>
+    <string name="register">Enregistrer</string>
+    <string name="firstname">Nom</string>
+    <string name="lastname">Prénom</string>
+    <string name="id">Identifiant</string>
+    <string name="password">Mot de passe</string>
+    <string name="confirm">Confirmer</string>
+    <string name="number">Numéro</string>
+    <string name="street">Voie</string>
+    <string name="postal_code">Code postal</string>
+    <string name="city">Ville</string>
+    <string name="country">Pays</string>
+    <string name="address">Adresse</string>
+    <string name="personal_info">Informations personnelles</string>
+    <string name="empty_field">Vous devez remplir le champ: %1$s</string>
+    <string name="field_is_not_number">Le champ %1$s doit contenir un nombre</string>
+    <string name="must_field_password_fields">"Il faut remplir le ou les champs liés au mot de passe."</string>
+    <string name="passwords_must_match">"Le mot de passe doit être le même sur les deux champs dédiés."</string>
+    <string name="account_created">"Votre compte a été créé."</string>
+    <string name="identifier_already_exists">L\'identifiant existe déjà.</string>
+    <string name="empty">Vide</string>
+    <string name="not_a_number">Pas un nombre</string>
+    <string name="passwords_does_not_match">Mots de passe ne correspondent pas</string>
+    <string name="identifier_taken">Identifiant pris</string>
 </resources>
