@@ -30,8 +30,9 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class MentionLegalesFragment extends Fragment implements com.android.volley.Response.Listener<JSONArray>, com.android.volley.Response.ErrorListener {
-    String[] tableName;
+
     private View root;
+
     private TextView explante_legal_mention;
     private TextView title_editing_the_application_legal_mention;
     private TextView content_editing_the_application_legal_mention;
@@ -78,16 +79,19 @@ public class MentionLegalesFragment extends Fragment implements com.android.voll
         content_intellectual_property_legal_mention = this.root.findViewById(R.id.content_intellectual_property_legal_mention);
         title_services_provided_property_legal_mention = this.root.findViewById(R.id.title_services_provided_property_legal_mention);
         content_services_provided_property_legal_mention = this.root.findViewById(R.id.content_services_provided_property_legal_mention);
-        if(Locale.getDefault().getDisplayLanguage().equals("français"))
-        MentionLegalesDAO.findMension(this, "fr");
-        else{
+
+        if (Locale.getDefault().getDisplayLanguage().equals("français"))
+            MentionLegalesDAO.findMension(this, "fr");
+
+        else {
             MentionLegalesDAO.findMension(this, "en");
+
         }
 
     }
 
-    public static String[] decoupe(String value, String sep) {
-        return value.split(sep);
+    public static String[] cutout(String text, String sep) {
+        return text.split(sep);
     }
 
     @Override
@@ -97,12 +101,12 @@ public class MentionLegalesFragment extends Fragment implements com.android.voll
     }
 
     @Override
-    public void onResponse(JSONArray response) {
+    public void onResponse(JSONArray answer) {
         try {
-            for (int i = 0; i < response.length(); i++) {
-                JSONObject o = response.getJSONObject(i);
+            for (int i = 0; i < answer.length(); i++) {
+                JSONObject o = answer.getJSONObject(i);
                 String mention = o.getString("mentions");
-                String[] tab = decoupe(mention, "###");
+                String[] tab = cutout(mention, "###");
 
                 explante_legal_mention.setText(tab[0]);
                 title_editing_the_application_legal_mention.setText(tab[1]);
