@@ -27,57 +27,67 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class MentionLegalesFragment extends Fragment implements com.android.volley.Response.Listener<JSONArray>, com.android.volley.Response.ErrorListener {
     String[] tableName;
     private View root;
+    private TextView explante_legal_mention;
+    private TextView title_editing_the_application_legal_mention;
+    private TextView content_editing_the_application_legal_mention;
+    private TextView title_responsible_for_publication_legal_mention;
+    private TextView content_responsible_for_publication_legal_mention;
+    private TextView title_host_legal_mention;
+    private TextView content_host_legal_mention;
+    private TextView title_contact_us_legal_mention;
+    private TextView content_contact_us_legal_mention;
+    private TextView title_CNIL_legal_mention;
+    private TextView content_CNIL_legal_mention;
+    private TextView title_disputes_legal_mention;
+    private TextView content_disputes_legal_mention;
+    private TextView title_intellectual_property_legal_mention;
+    private TextView content_intellectual_property_legal_mention;
+    private TextView title_services_provided_property_legal_mention;
+    private TextView content_services_provided_property_legal_mention;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_mention_legales, container, false);
-        MentionLegalesDAO.findMension(this.getContext(), "teste");
 
-        final TextView explante_legal_mention = this.root.findViewById(R.id.explante_legal_mention);
-        final TextView title_editing_the_application_legal_mention = this.root.findViewById(R.id.title_editing_the_application_legal_mention);
-        final TextView content_editing_the_application_legal_mention = this.root.findViewById(R.id.content_editing_the_application_legal_mention);
-        final TextView title_responsible_for_publication_legal_mention = this.root.findViewById(R.id.title_responsible_for_publication_legal_mention);
-        final TextView content_responsible_for_publication_legal_mention = this.root.findViewById(R.id.content_responsible_for_publication_legal_mention);
-        final TextView title_host_legal_mention = this.root.findViewById(R.id.title_host_legal_mention);
-        final TextView content_host_legal_mention = this.root.findViewById(R.id.content_host_legal_mention);
-        final TextView title_contact_us_legal_mention = this.root.findViewById(R.id.title_contact_us_legal_mention);
-        final TextView content_contact_us_legal_mention = this.root.findViewById(R.id.content_contact_us_legal_mention);
-        final TextView title_CNIL_legal_mention = this.root.findViewById(R.id.title_CNIL_legal_mention);
-        final TextView content_CNIL_legal_mention = this.root.findViewById(R.id.content_CNIL_legal_mention);
-        final TextView title_disputes_legal_mention = this.root.findViewById(R.id.title_disputes_legal_mention);
-        final TextView content_disputes_legal_mention = this.root.findViewById(R.id.content_disputes_legal_mention);
-        final TextView title_intellectual_property_legal_mention = this.root.findViewById(R.id.title_intellectual_property_legal_mention);
-        final TextView content_intellectual_property_legal_mention = this.root.findViewById(R.id.content_intellectual_property_legal_mention);
-        final TextView title_services_provided_property_legal_mention = this.root.findViewById(R.id.title_services_provided_property_legal_mention);
-        final TextView content_services_provided_property_legal_mention = this.root.findViewById(R.id.content_services_provided_property_legal_mention);
 
-        explante_legal_mention.setText("tatata");
-        title_editing_the_application_legal_mention.setText("tatata");
-        content_editing_the_application_legal_mention.setText("tatata");
-        title_responsible_for_publication_legal_mention.setText("tatata");
-        content_responsible_for_publication_legal_mention.setText("tatata");
-        title_host_legal_mention.setText("tatata");
-        content_host_legal_mention.setText("tatata");
-        title_contact_us_legal_mention.setText("tatata");
-        content_contact_us_legal_mention.setText("tatata");
-        title_CNIL_legal_mention.setText("tatata");
-        content_CNIL_legal_mention.setText("tatata");
-        title_disputes_legal_mention.setText("tatata");
-        content_disputes_legal_mention.setText("tatata");
-        title_intellectual_property_legal_mention.setText("tatata");
-        content_intellectual_property_legal_mention.setText("tatata");
-        title_services_provided_property_legal_mention.setText("tatata");
-        content_services_provided_property_legal_mention.setText("tatata");
         return root;
     }
 
     public void onStart() {
         super.onStart();
 
+        explante_legal_mention = this.root.findViewById(R.id.explante_legal_mention);
+        title_editing_the_application_legal_mention = this.root.findViewById(R.id.title_editing_the_application_legal_mention);
+        content_editing_the_application_legal_mention = this.root.findViewById(R.id.content_editing_the_application_legal_mention);
+        title_responsible_for_publication_legal_mention = this.root.findViewById(R.id.title_responsible_for_publication_legal_mention);
+        content_responsible_for_publication_legal_mention = this.root.findViewById(R.id.content_responsible_for_publication_legal_mention);
+        title_host_legal_mention = this.root.findViewById(R.id.title_host_legal_mention);
+        content_host_legal_mention = this.root.findViewById(R.id.content_host_legal_mention);
+        title_contact_us_legal_mention = this.root.findViewById(R.id.title_contact_us_legal_mention);
+        content_contact_us_legal_mention = this.root.findViewById(R.id.content_contact_us_legal_mention);
+        title_CNIL_legal_mention = this.root.findViewById(R.id.title_CNIL_legal_mention);
+        content_CNIL_legal_mention = this.root.findViewById(R.id.content_CNIL_legal_mention);
+        title_disputes_legal_mention = this.root.findViewById(R.id.title_disputes_legal_mention);
+        content_disputes_legal_mention = this.root.findViewById(R.id.content_disputes_legal_mention);
+        title_intellectual_property_legal_mention = this.root.findViewById(R.id.title_intellectual_property_legal_mention);
+        content_intellectual_property_legal_mention = this.root.findViewById(R.id.content_intellectual_property_legal_mention);
+        title_services_provided_property_legal_mention = this.root.findViewById(R.id.title_services_provided_property_legal_mention);
+        content_services_provided_property_legal_mention = this.root.findViewById(R.id.content_services_provided_property_legal_mention);
+        if(Locale.getDefault().getDisplayLanguage().equals("français"))
+        MentionLegalesDAO.findMension(this, "fr");
+        else{
+            MentionLegalesDAO.findMension(this, "en");
+        }
+
+    }
+
+    public static String[] decoupe(String value, String sep) {
+        return value.split(sep);
     }
 
     @Override
@@ -89,13 +99,29 @@ public class MentionLegalesFragment extends Fragment implements com.android.voll
     @Override
     public void onResponse(JSONArray response) {
         try {
-            Log.e("tatatata","ttatta");
             for (int i = 0; i < response.length(); i++) {
                 JSONObject o = response.getJSONObject(i);
-                Log.e("tatatata",o.hashCode()+"");
-                if (o.has("libelle")){
+                String mention = o.getString("mentions");
+                String[] tab = decoupe(mention, "###");
 
-                }
+                explante_legal_mention.setText(tab[0]);
+                title_editing_the_application_legal_mention.setText(tab[1]);
+                content_editing_the_application_legal_mention.setText(tab[2]);
+                title_responsible_for_publication_legal_mention.setText(tab[3]);
+                content_responsible_for_publication_legal_mention.setText(tab[4]);
+                title_host_legal_mention.setText(tab[5]);
+                content_host_legal_mention.setText(tab[6]);
+                title_contact_us_legal_mention.setText(tab[7]);
+                content_contact_us_legal_mention.setText(tab[8]);
+                title_CNIL_legal_mention.setText(tab[9]);
+                content_CNIL_legal_mention.setText(tab[10]);
+                title_disputes_legal_mention.setText(tab[11]);
+                content_disputes_legal_mention.setText(tab[12]);
+                title_intellectual_property_legal_mention.setText(tab[13]);
+                content_intellectual_property_legal_mention.setText(tab[14]);
+                title_services_provided_property_legal_mention.setText(tab[15]);
+                content_services_provided_property_legal_mention.setText(tab[16]);
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
