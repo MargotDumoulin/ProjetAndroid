@@ -68,6 +68,11 @@
     <string name="must_field_password_fields">"Il faut remplir le ou les champs liés au mot de passe."</string>
     <string name="passwords_must_match">"Le mot de passe doit être le même sur les deux champs dédiés."</string>
     <string name="account_created">"Votre compte a été créé."</string>
+    <string name="identifier_already_exists">L\'identifiant existe déjà.</string>
+    <string name="empty">Vide</string>
+    <string name="not_a_number">Pas un nombre</string>
+    <string name="passwords_does_not_match">Mots de passe ne correspondent pas</string>
+    <string name="identifier_taken">Identifiant pris</string>
     <string name="my_account">Mon compte</string>
     <string name="my_basket_tag">my_basket_fragment</string>
     <string name="register_tag">register_fragment</string>

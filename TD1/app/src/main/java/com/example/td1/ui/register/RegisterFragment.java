@@ -15,35 +15,21 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
-import com.example.td1.ActivityWaitingImage;
-import com.example.td1.CategoriesAdapter;
 import com.example.td1.DAO.CustomerDAO;
-import com.example.td1.ImageFromURL;
-import com.example.td1.ActiviteECommerce;
 import com.example.td1.R;
-import com.example.td1.modele.Categorie;
 import com.example.td1.modele.Client;
-import com.example.td1.modele.Panier;
-import com.example.td1.modele.Produit;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.td1.utils.Triplet;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 public class RegisterFragment extends Fragment implements com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener{
 
@@ -59,8 +45,8 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
     private EditText addrCountryEditText;
     private EditText addrNumberEditText;
     private Button registerButton;
-    private ArrayList<Pair<String, String>> errors;
-    private ArrayList<Pair<EditText, String>> fields;
+    private ArrayList<Triplet<String, String, String>> errors; // first = field's name, second = error type, third = error message
+    private ArrayList<Pair<EditText, String>> fields;// first = value, second = field's name
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -75,7 +61,7 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
     public void onStart() {
         super.onStart();
         this.fields = new ArrayList<Pair<EditText, String>>();
-        this.errors = new ArrayList<Pair<String, String>>();
+        this.errors = new ArrayList<Triplet<String, String, String>>();
 
         this.firstnameEditText = this.root.findViewById(R.id.firstnameEditText);
         this.fields.add(new Pair(this.firstnameEditText, getString(R.string.firstname)));
@@ -113,67 +99,42 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
 
     public void onClickRegister(View v) {
         this.validateFields();
-
-        if (this.errors.isEmpty()) {
-            // no errors = we can register the new customer :)
-            Client customer = new Client(
-                    this.firstnameEditText.getText().toString(),
-                    this.lastnameEditText.getText().toString(),
-                    this.identifierEditText.getText().toString(),
-                    this.passwordEditText.getText().toString(),
-                    this.addrStreetEditText.getText().toString(),
-                    Integer.parseInt(this.addrPostalCodeEditText.getText().toString()),
-                    Integer.parseInt(this.addrNumberEditText.getText().toString()),
-                    this.addrCityEditText.getText().toString(),
-                    this.addrCountryEditText.getText().toString());
-
-            try {
-                JSONObject customerJson = new JSONObject(customer.toJson());
-                CustomerDAO.registerCustomer(this, customerJson);
-            } catch (Exception e) {
-                Log.e("Error", String.valueOf(e));
-            }
-
-        } else {
-            Toast.makeText(this.getContext(), this.errors.get(0).second, Toast.LENGTH_SHORT).show();
-        }
     }
 
     public void validateFields() {
+        this.errors = new ArrayList<Triplet<String, String, String>>();
         for (Pair<EditText, String> input: this.fields) {
 
             if (TextUtils.isEmpty(input.first.getText().toString())) {
-                this.errors.add(new Pair(input.second, String.format(getString(R.string.empty_field), input.second)));
+
+                this.errors.add(new Triplet(input.second, getString(R.string.empty), String.format(getString(R.string.empty_field), input.second)));
+
             } else {
-                this.errors.remove(new Pair(input.second, String.format(getString(R.string.empty_field), input.second)));
 
                 int inputTypeValue = input.first.getInputType();
                 if (inputTypeValue == InputType.TYPE_CLASS_NUMBER) {
                     // test if it is a number
                     if (!input.first.getText().toString().matches("\\d+(?:\\.\\d+)?")) {
-                        this.errors.add(new Pair(input.second, String.format(getString(R.string.field_is_not_number), input.second)));
-                    } else {
-                        this.errors.remove(new Pair(input.second, String.format(getString(R.string.field_is_not_number), input.second)));
+                        this.errors.add(new Triplet(input.second, getString(R.string.not_a_number), String.format(getString(R.string.field_is_not_number), input.second)));
                     }
-                }
 
-                if (input.second == getString(R.string.confirm)) {
+                } else if (input.second.equals(getString(R.string.confirm))) {
                     this.testPasswordMatch(input.first, this.passwordEditText);
                 }
             }
         }
+
+        CustomerDAO.doesIdentifierAlreadyExist(this, this.identifierEditText.getText().toString());
     }
+
 
     public void testPasswordMatch(EditText inputConfirm, EditText inputPassword) {
         if (TextUtils.isEmpty(inputPassword.getText().toString()) || TextUtils.isEmpty(inputConfirm.getText().toString())) {
-            this.errors.add(new Pair(getString(R.string.password), getString(R.string.must_field_password_fields)));
+            this.errors.add(new Triplet(getString(R.string.password), getString(R.string.empty), getString(R.string.must_field_password_fields)));
         } else {
-            this.errors.remove(new Pair(getString(R.string.password), getString(R.string.must_field_password_fields)));
 
             if (!inputPassword.getText().toString().equals(inputConfirm.getText().toString())) {
-                this.errors.add(new Pair(getString(R.string.confirm), getString(R.string.passwords_must_match)));
-            } else {
-                this.errors.remove(new Pair(getString(R.string.confirm), getString(R.string.passwords_must_match)));
+                this.errors.add(new Triplet(getString(R.string.confirm), getString(R.string.passwords_must_match), getString(R.string.passwords_must_match)));
             }
         }
     }
@@ -187,9 +148,46 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
     @Override
     public void onResponse(JSONObject response) {
         try {
-            if (response.getInt("id") != -1) {
+            if (response.has("identifierAlreadyExists")) {
+
+                if (response.getBoolean("identifierAlreadyExists")) {
+
+                    this.errors.add(new Triplet(getString(R.string.id), getString(R.string.identifier_already_exists), getString(R.string.identifier_already_exists)));
+                    Toast.makeText(this.getContext(), getString(R.string.identifier_already_exists), Toast.LENGTH_SHORT).show();
+
+                } else {
+
+                    if (this.errors.isEmpty()) {
+                        // no errors = we can register the new customer :)
+                        Client customer = new Client(
+                                this.firstnameEditText.getText().toString().trim(),
+                                this.lastnameEditText.getText().toString().trim(),
+                                this.identifierEditText.getText().toString().trim(),
+                                this.passwordEditText.getText().toString().trim(),
+                                this.addrStreetEditText.getText().toString().trim(),
+                                Integer.parseInt(this.addrPostalCodeEditText.getText().toString()),
+                                Integer.parseInt(this.addrNumberEditText.getText().toString()),
+                                this.addrCityEditText.getText().toString().trim(),
+                                this.addrCountryEditText.getText().toString().trim()
+                        );
+
+                        try {
+                            JSONObject customerJson = new JSONObject(customer.toJson());
+                            CustomerDAO.registerCustomer(this, customerJson);
+                        } catch (Exception e) {
+                            Log.e("Error", String.valueOf(e));
+                        }
+
+                    } else {
+                        Toast.makeText(this.getContext(), this.errors.get(0).third, Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+            } else if (response.getInt("id") != -1) {
                 Toast.makeText(this.getContext(), getString(R.string.account_created), Toast.LENGTH_SHORT).show();
             }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
