@@ -90,7 +90,6 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
         this.floatingActionButton = this.root.findViewById(R.id.floatingActionButton);
         this.floatingActionButton.setOnClickListener(this::onClickCreateProduct);
         String categories = this.getActivity().getIntent().getStringExtra("categories");
-        Log.e("babababa",categories);
         if (categories.length() > 0) {
             try {
                 this.listCategories = new ArrayList<Categorie>();
