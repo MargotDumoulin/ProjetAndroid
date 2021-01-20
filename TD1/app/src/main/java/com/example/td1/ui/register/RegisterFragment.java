@@ -33,20 +33,20 @@ import java.util.ArrayList;
 
 public class RegisterFragment extends Fragment implements com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener{
 
-    private View root;
-    private EditText firstnameEditText;
-    private EditText lastnameEditText;
-    private EditText identifierEditText;
-    private EditText passwordEditText;
-    private EditText confirmPasswordEditText;
-    private EditText addrStreetEditText;
-    private EditText addrPostalCodeEditText;
-    private EditText addrCityEditText;
-    private EditText addrCountryEditText;
-    private EditText addrNumberEditText;
-    private Button registerButton;
-    private ArrayList<Triplet<String, String, String>> errors; // first = field's name, second = error type, third = error message
-    private ArrayList<Pair<EditText, String>> fields;// first = value, second = field's name
+    protected View root;
+    protected EditText firstnameEditText;
+    protected EditText lastnameEditText;
+    protected EditText identifierEditText;
+    protected EditText passwordEditText;
+    protected EditText confirmPasswordEditText;
+    protected EditText addrStreetEditText;
+    protected EditText addrPostalCodeEditText;
+    protected EditText addrCityEditText;
+    protected EditText addrCountryEditText;
+    protected EditText addrNumberEditText;
+    protected Button registerButton;
+    protected ArrayList<Triplet<String, String, String>> errors; // first = field's name, second = error type, third = error message
+    protected ArrayList<Pair<EditText, String>> fields;// first = value, second = field's name
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater,

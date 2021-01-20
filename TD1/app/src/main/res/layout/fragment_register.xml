@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:tag="@string/register_tag"
-    android:fillViewport="true">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:tag="@string/register_tag">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:layout_marginTop="200dp"
+        android:paddingTop="15dp">
 
         <TextView
             android:id="@+id/titleSectionInfoTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:fontFamily="casual"
+            android:textStyle="bold"
+            android:layout_marginStart="24dp"
             android:text="@string/personal_info"
-            android:textSize="24sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/firstnameEditText"
+            android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/firstnameEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:hint="@string/firstname"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
             android:ems="10"
+            android:hint="@string/firstname"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titleSectionInfoTextView" />
 
@@ -40,9 +40,10 @@
             android:id="@+id/lastnameEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:hint="@string/lastname"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
             android:ems="10"
+            android:hint="@string/lastname"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/firstnameEditText" />
 
@@ -50,130 +51,151 @@
             android:id="@+id/idEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:hint="@string/id"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
             android:ems="10"
+            android:hint="@string/id"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lastnameEditText"
-            app:layout_constraintBottom_toTopOf="@+id/passwordEditText"/>
+            app:layout_constraintTop_toBottomOf="@+id/lastnameEditText" />
 
         <EditText
             android:id="@+id/passwordEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:hint="@string/password"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
             android:ems="6"
+            android:hint="@string/password"
             android:inputType="textPassword"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/idEditText"
-            app:layout_constraintBottom_toTopOf="@+id/titleSectionAddressTextView"/>
+            app:layout_constraintTop_toBottomOf="@+id/idEditText" />
+
+        <EditText
+            android:id="@+id/oldPasswordEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:ems="6"
+            android:hint="@string/oldPassword"
+            android:inputType="textPassword"
+            android:visibility="invisible"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/idEditText" />
 
         <EditText
             android:id="@+id/confirmPasswordEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="15dp"
-            android:hint="@string/confirm"
+            android:layout_marginStart="20dp"
             android:ems="6"
+            android:hint="@string/confirm"
             android:inputType="textPassword"
             app:layout_constraintLeft_toRightOf="@id/passwordEditText"
-            app:layout_constraintTop_toBottomOf="@+id/idEditText"
-            app:layout_constraintBottom_toTopOf="@+id/titleSectionAddressTextView"/>
+            app:layout_constraintTop_toTopOf="@id/passwordEditText" />
 
         <TextView
             android:id="@+id/titleSectionAddressTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
+            android:textStyle="bold"
+            android:layout_marginStart="24dp"
             android:fontFamily="casual"
             android:text="@string/address"
-            android:textSize="24sp"
-            app:layout_constraintTop_toBottomOf="@id/passwordEditText"
+            android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/numberEditText" />
+            app:layout_constraintTop_toBottomOf="@id/passwordEditText" />
 
         <EditText
             android:id="@+id/numberEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:inputType="number"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:ems="6"
             android:hint="@string/number"
-            android:ems="4"
-            app:layout_constraintTop_toBottomOf="@id/titleSectionAddressTextView"
+            android:inputType="number"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/postalCodeEditText" />
+            app:layout_constraintTop_toBottomOf="@id/titleSectionAddressTextView" />
 
         <EditText
             android:id="@+id/streetEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:hint="@string/street"
-            android:gravity="start|top"
+            android:layout_marginStart="20dp"
             android:ems="8"
+            android:gravity="start|top"
+            android:hint="@string/street"
             app:layout_constraintLeft_toRightOf="@+id/numberEditText"
-            app:layout_constraintTop_toBottomOf="@id/titleSectionAddressTextView"
-            app:layout_constraintBottom_toTopOf="@id/postalCodeEditText" />
+            app:layout_constraintTop_toTopOf="@id/numberEditText" />
 
         <EditText
             android:id="@+id/postalCodeEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:layout_marginLeft="20dp"
-            android:hint="@string/postal_code"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
             android:ems="6"
-            app:layout_constraintTop_toBottomOf="@+id/numberEditText"
+            android:hint="@string/postal_code"
+            android:inputType="number"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/countryEditText" />
+            app:layout_constraintTop_toBottomOf="@+id/numberEditText" />
 
         <EditText
             android:id="@+id/cityEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:hint="@string/city"
-            android:gravity="start|top"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
             android:ems="8"
+            android:gravity="start|top"
+            android:hint="@string/city"
             app:layout_constraintLeft_toRightOf="@+id/postalCodeEditText"
-            app:layout_constraintTop_toBottomOf="@id/streetEditText"
-            app:layout_constraintBottom_toTopOf="@id/countryEditText" />
+            app:layout_constraintTop_toBottomOf="@id/streetEditText" />
 
         <EditText
             android:id="@+id/countryEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:hint="@string/country"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
             android:ems="10"
+            android:hint="@string/country"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/postalCodeEditText"
-            app:layout_constraintBottom_toTopOf="@id/registerButton" />
+            app:layout_constraintTop_toBottomOf="@+id/postalCodeEditText" />
 
         <Button
             android:id="@+id/registerButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginStart="20dp"
             android:text="@string/register"
+            app:layout_constraintBottom_toTopOf="@id/footerTextView"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/countryEditText"
-            app:layout_constraintBottom_toTopOf="@id/footerTextView"/>
+            app:layout_constraintTop_toBottomOf="@+id/countryEditText" />
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="@string/save"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@id/footerTextView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/countryEditText" />
 
         <TextView
             android:id="@+id/footerTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/made_in_2021"
             android:background="@color/red_500"
+            android:text="@string/made_in_2021"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

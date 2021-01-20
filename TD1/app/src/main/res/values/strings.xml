@@ -51,9 +51,11 @@
     <string name="menu_shop">Boutique</string>
     <string name="menu_map">Map</string>
     <string name="register">Register</string>
+    <string name="save">Save</string>
     <string name="firstname">Firstname</string>
     <string name="lastname">Lastname</string>
     <string name="id">Identifier</string>
+    <string name="oldPassword">Old password</string>
     <string name="password">Password</string>
     <string name="confirm">Confirm</string>
     <string name="number">Number</string>

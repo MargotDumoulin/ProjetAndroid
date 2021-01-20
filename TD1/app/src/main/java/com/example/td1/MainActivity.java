@@ -1,12 +1,9 @@
 package com.example.td1;
 
 import android.os.Build;
-import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.td1.modele.Panier;
 import com.example.td1.modele.Produit;
@@ -14,15 +11,11 @@ import com.example.td1.modele.Taille;
 import com.example.td1.utils.Triplet;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.core.app.NavUtils;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -30,7 +23,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements ActiviteECommerce {
 
@@ -74,9 +66,9 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
             }
 
             return true;
-        } else if (itemId == R.id.nav_register) {
-            if (currentDestination != null && currentDestination.getId() != R.id.nav_register) {
-                navController.navigate(R.id.nav_register);
+        } else if (itemId == R.id.nav_edit_personal_info) {
+            if (currentDestination != null && currentDestination.getId() != R.id.nav_edit_personal_info) {
+                navController.navigate(R.id.nav_edit_personal_info);
             }
 
             return true;
