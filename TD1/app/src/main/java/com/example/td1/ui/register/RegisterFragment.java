@@ -3,6 +3,7 @@ package com.example.td1.ui.register;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.graphics.Bitmap;
@@ -101,6 +102,11 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
         this.validateFields();
     }
 
+    public void redirectAfterRegister() {
+        NavController navController = Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment);
+        navController.navigate(R.id.nav_login);
+    }
+
     public void validateFields() {
         this.errors = new ArrayList<Triplet<String, String, String>>();
         for (Pair<EditText, String> input: this.fields) {
@@ -186,6 +192,8 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
 
             } else if (response.getInt("id") != -1) {
                 Toast.makeText(this.getContext(), getString(R.string.account_created), Toast.LENGTH_SHORT).show();
+                this.redirectAfterRegister();
+
             }
 
         } catch (JSONException e) {
