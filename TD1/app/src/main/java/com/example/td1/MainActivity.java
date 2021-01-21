@@ -87,11 +87,10 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
             navController.navigate(R.id.nav_home);
             return true;
 
-        }  else if (itemId == R.id.nav_register) {
-            if (currentDestination != null && currentDestination.getId() != R.id.nav_register) {
+        }  else if (itemId == R.id.nav_my_account) {
+            if (currentDestination != null && currentDestination.getId() != R.id.nav_my_account) {
                 if (this.isLoggedIn) {
-                    // needs to be changed
-                    navController.navigate(R.id.nav_register);
+                    navController.navigate(R.id.nav_edit_personal_info);
                 } else {
                     navController.navigate(R.id.nav_login);
                 }
