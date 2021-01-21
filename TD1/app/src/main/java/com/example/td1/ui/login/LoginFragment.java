@@ -43,9 +43,6 @@ public class LoginFragment extends Fragment implements com.android.volley.Respon
     private EditText identifierEditText;
     private EditText passwordEditText;
 
-    private TextView accountNameTextView;
-    private TextView accountIdentifierTextView;
-
     private Button loginBtn;
     private Button signInBtn;
 
@@ -65,8 +62,7 @@ public class LoginFragment extends Fragment implements com.android.volley.Respon
         this.identifierEditText = this.root.findViewById(R.id.identifierLoginEditText);
         this.passwordEditText = this.root.findViewById(R.id.passwordLoginEditText);
 
-        this.accountNameTextView = this.root.findViewById(R.id.accountNameTextView);
-        this.accountIdentifierTextView = this.root.findViewById(R.id.accountIdentifierTextView);
+
 
         this.signInBtn = this.root.findViewById(R.id.signInButton);
         this.loginBtn = this.root.findViewById(R.id.loginButton);
@@ -126,29 +122,29 @@ public class LoginFragment extends Fragment implements com.android.volley.Respon
                     Toast.makeText(this.getContext(), getString(R.string.incorrect_login_info), Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Log.e("test", response.getString("identifier"));
+                Log.e("test", response.getString("identifiant"));
                 // we're getting info regarding the user logged in
-                Client customer = new Client(response.getInt("id"),
-                        response.getString("firstname"),
-                        response.getString("lastanme"),
-                        response.getString("identifier"),
-                        response.getString("password"),
-                        response.getString("street"),
-                        response.getInt("postalCode"),
-                        response.getInt("number"),
-                        response.getString("city"),
-                        response.getString("country")
+                Client customer = new Client(response.getInt("id_client"),
+                        response.getString("prenom"),
+                        response.getString("nom"),
+                        response.getString("identifiant"),
+                        response.getString("mot_de_passe"),
+                        response.getString("adr_voie"),
+                        response.getInt("adr_code_postal"),
+                        response.getInt("adr_numero"),
+                        response.getString("adr_ville"),
+                        response.getString("adr_pays")
                 );
 
                 ((ActivityLogin) this.getActivity()).updateLoggedInCustomer(customer);
-                this.accountIdentifierTextView.setText(customer.getIdentifier());
-                this.accountNameTextView.setText(customer.getFirstname() + " " + customer.getLastname());
+                ((ActivityLogin) this.getActivity()).updateDrawerWithCustomerInfo(customer);
                 this.redirectLoggedInCustomer();
 
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
+            Log.e("CATCH", e.getMessage());
         }
     }
 

@@ -7,4 +7,5 @@ public interface ActivityLogin {
     public void logout();
     public Client getLoggedInCustomer();
     public void updateLoggedInCustomer(Client customer);
+    public void updateDrawerWithCustomerInfo(Client customer);
 }

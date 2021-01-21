@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.td1.modele.Client;
@@ -40,6 +42,9 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
     private Panier basket = new Panier(new ArrayList<Triplet<Produit, Taille, Integer>>());
     private boolean isLoggedIn = false;
 
+    private TextView accountNameTextView;
+    private TextView accountIdentifierTextView;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +54,12 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+
+
+        View headerView = navigationView.getHeaderView(0);
+        this.accountNameTextView = (TextView) headerView.findViewById(R.id.accountNameTextView);
+        this.accountIdentifierTextView = (TextView) headerView.findViewById(R.id.accountIdentifierTextView);
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -165,5 +176,11 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
     public Fragment getChildFragment() {
         Fragment navHostFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         return navHostFragment == null ? null : navHostFragment.getChildFragmentManager().getFragments().get(0);
+    }
+
+    @Override
+    public void updateDrawerWithCustomerInfo(Client customer) {
+        this.accountIdentifierTextView.setText(customer.getIdentifier());
+        this.accountNameTextView.setText(customer.getFirstname() + " " + customer.getLastname());
     }
 }
