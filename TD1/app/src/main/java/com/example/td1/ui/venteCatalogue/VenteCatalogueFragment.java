@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.android.volley.VolleyError;
+import com.example.td1.ActivityLogin;
 import com.example.td1.ActivityWaitingImage;
 import com.example.td1.DAO.ProductDAO;
 import com.example.td1.ImageFromURL;
@@ -119,7 +120,13 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             this.idCateg = this.getArguments().getInt("id_categ", -1);
 
             if (this.idCateg != -1) {
-                ProductDAO.findAllByCateg(this, this.idCateg, 1);
+                if (((ActivityLogin) this.getActivity()).isLoggedIn()) {
+                    // get products + if they are starred or not
+                    ProductDAO.findAllByCateg(this, this.idCateg, ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
+                } else {
+                    // only get products
+                    ProductDAO.findAllByCateg(this, this.idCateg, -1);
+                }
             } else {
                 // ???
             }
@@ -370,7 +377,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         this.filledHeartImageButton.setVisibility(View.INVISIBLE);
         this.outlinedHeartImageButton.setVisibility(View.VISIBLE);
 
-        ProductDAO.unstarProduct(this, this.listProduitToShow.get(this.index).getId(), 1);
+        ProductDAO.unstarProduct(this, this.listProduitToShow.get(this.index).getId(), ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
         this.listProduitToShow.get(this.index).setFavori(false);
     }
 
@@ -378,7 +385,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         this.filledHeartImageButton.setVisibility(View.VISIBLE);
         this.outlinedHeartImageButton.setVisibility(View.INVISIBLE);
 
-        ProductDAO.starProduct(this, this.listProduitToShow.get(this.index).getId(), 1);
+        ProductDAO.starProduct(this, this.listProduitToShow.get(this.index).getId(), ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
         this.listProduitToShow.get(this.index).setFavori(true);
     }
 

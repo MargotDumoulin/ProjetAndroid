@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 
 import com.android.volley.VolleyError;
 import com.example.td1.ActiviteECommerce;
+import com.example.td1.ActivityLogin;
 import com.example.td1.DAO.CustomerDAO;
 import com.example.td1.DAO.OrderDAO;
 import com.example.td1.PanierAdapter;
@@ -93,7 +94,7 @@ public class MonPanierFragment extends Fragment implements AdapterView.OnItemCli
     }
 
     public void onClickCreateOrder(View v) {
-        OrderDAO.registerOrder(this, 1);
+        OrderDAO.registerOrder(this, ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
     }
 
     @Override

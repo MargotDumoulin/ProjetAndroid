@@ -62,8 +62,6 @@ public class LoginFragment extends Fragment implements com.android.volley.Respon
         this.identifierEditText = this.root.findViewById(R.id.identifierLoginEditText);
         this.passwordEditText = this.root.findViewById(R.id.passwordLoginEditText);
 
-
-
         this.signInBtn = this.root.findViewById(R.id.signInButton);
         this.loginBtn = this.root.findViewById(R.id.loginButton);
 
@@ -122,7 +120,6 @@ public class LoginFragment extends Fragment implements com.android.volley.Respon
                     Toast.makeText(this.getContext(), getString(R.string.incorrect_login_info), Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Log.e("test", response.getString("identifiant"));
                 // we're getting info regarding the user logged in
                 Client customer = new Client(response.getInt("id_client"),
                         response.getString("prenom"),
@@ -139,7 +136,6 @@ public class LoginFragment extends Fragment implements com.android.volley.Respon
                 ((ActivityLogin) this.getActivity()).updateLoggedInCustomer(customer);
                 ((ActivityLogin) this.getActivity()).updateDrawerWithCustomerInfo(customer);
                 this.redirectLoggedInCustomer();
-
             }
 
         } catch (JSONException e) {

@@ -28,7 +28,7 @@ public class HomeFragment extends Fragment {
             String params[] = new String[2];
             params[0] = customer.getLastname();
             params[1] = customer.getFirstname();
-            textView.setText(String.format(getString(R.string.welcome_name), params[0], params[1]));
+            textView.setText(String.format(getString(R.string.welcome_name), params[1], params[0]));
         } else {
             textView.setText(getString(R.string.welcome_not_logged_in));
         }
