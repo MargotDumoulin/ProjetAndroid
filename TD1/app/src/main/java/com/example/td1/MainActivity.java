@@ -67,6 +67,12 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
 
         if (savedInstanceState != null) {
             this.basket = (Panier) savedInstanceState.getSerializable("basket");
+            this.loggedInCustomer = (Client) savedInstanceState.getSerializable("customer");
+            this.isLoggedIn = savedInstanceState.getBoolean("isLoggedIn");
+
+            if (this.isLoggedIn) {
+                this.updateDrawerWithCustomerInfo(this.loggedInCustomer);
+            }
         }
     }
 
@@ -130,6 +136,8 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable("basket", this.basket);
+        outState.putSerializable("customer", this.loggedInCustomer);
+        outState.putBoolean("isLoggedIn", this.isLoggedIn);
     }
 
     @Override
