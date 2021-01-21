@@ -34,8 +34,8 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="navigation_drawer_open">Ouvrir le menu de navigation</string>
     <string name="navigation_drawer_close">Fermer le menu de navigation</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">Non connecté</string>
+    <string name="nav_header_subtitle">Connectez-vous pour profiter pleinement de l\'application</string>
     <string name="nav_header_desc">Entête de navigation</string>
     <string name="action_settings">Mon panier</string>
     <string name="menu_home">Accueil</string>
@@ -78,4 +78,11 @@
     <string name="my_account">Mon compte</string>
     <string name="my_basket_tag">my_basket_fragment</string>
     <string name="register_tag">register_fragment</string>
+    <string name="login">Se connecter</string>
+    <string name="logout">Se déconnecter</string>
+    <string name="must_fill_all_fields">Vous devez remplir tous les champs.</string>
+    <string name="incorrect_login_info">Identifiants incorrects.</string>
+    <string name="welcome_name">Bienvenue  %1$s %2$s !</string>
+    <string name="fullname">%1$s %2$s</string>
+    <string name="welcome_not_logged_in">Bienvenue !</string>
 </resources>

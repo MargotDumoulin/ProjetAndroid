@@ -8,8 +8,14 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/menu_gestion_panier"
+        android:id="@+id/nav_gestion_panier"
         android:orderInCategory="100"
         android:title="@string/action_settings"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/nav_logout"
+        android:orderInCategory="100"
+        android:title="@string/logout"
         app:showAsAction="never" />
 </menu>
