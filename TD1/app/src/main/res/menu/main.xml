@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/nav_register"
+        android:id="@+id/nav_my_account"
         android:icon="@drawable/ic_baseline_account_circle_24"
         android:title="@string/my_account"
         app:showAsAction="ifRoom" />
