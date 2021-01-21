@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.td1.modele.Client;
 import com.example.td1.modele.Panier;
 import com.example.td1.modele.Produit;
 import com.example.td1.modele.Taille;
@@ -35,6 +36,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements ActiviteECommerce, ActivityLogin {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private Client loggedInCustomer;
     private Panier basket = new Panier(new ArrayList<Triplet<Produit, Taille, Integer>>());
     private boolean isLoggedIn = false;
 
@@ -137,10 +139,20 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
         return basket;
     }
 
-    public void login() {
-        this.isLoggedIn = true;
+    @Override
+    public void login() { this.isLoggedIn = true; }
+
+    @Override
+    public void updateLoggedInCustomer(Client customer) {
+        this.loggedInCustomer = customer;
     }
 
+    @Override
+    public Client getLoggedInCustomer() {
+        return this.loggedInCustomer;
+    }
+
+    @Override
     public void logout() {
         this.isLoggedIn = false;
     }

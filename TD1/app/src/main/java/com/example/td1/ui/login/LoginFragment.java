@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
@@ -42,6 +43,9 @@ public class LoginFragment extends Fragment implements com.android.volley.Respon
     private EditText identifierEditText;
     private EditText passwordEditText;
 
+    private TextView accountNameTextView;
+    private TextView accountIdentifierTextView;
+
     private Button loginBtn;
     private Button signInBtn;
 
@@ -60,6 +64,9 @@ public class LoginFragment extends Fragment implements com.android.volley.Respon
 
         this.identifierEditText = this.root.findViewById(R.id.identifierLoginEditText);
         this.passwordEditText = this.root.findViewById(R.id.passwordLoginEditText);
+
+        this.accountNameTextView = this.root.findViewById(R.id.accountNameTextView);
+        this.accountIdentifierTextView = this.root.findViewById(R.id.accountIdentifierTextView);
 
         this.signInBtn = this.root.findViewById(R.id.signInButton);
         this.loginBtn = this.root.findViewById(R.id.loginButton);
@@ -96,6 +103,11 @@ public class LoginFragment extends Fragment implements com.android.volley.Respon
         }
     }
 
+    public void redirectLoggedInCustomer() {
+        NavController navController = Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment);
+        navController.navigate(R.id.nav_home);
+    }
+
     @Override
     public void onErrorResponse(VolleyError error) {
         Log.e("Volley error", String.valueOf(error));
@@ -105,13 +117,36 @@ public class LoginFragment extends Fragment implements com.android.volley.Respon
     @Override
     public void onResponse(JSONObject response) {
         try {
-            if (response.getBoolean("isLoginInfoCorrect")) {
-                ((ActivityLogin) this.getActivity()).login();
-                NavController navController = Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment);
-                navController.navigate(R.id.nav_home);
+            if (response.has("isLoginInfoCorrect")) {
+                // we're testing if the login info is correct
+                if (response.getBoolean("isLoginInfoCorrect")) {
+                    ((ActivityLogin) this.getActivity()).login();
+                    CustomerDAO.getCustomerByIdentifier(this, this.identifierEditText.getText().toString());
+                } else {
+                    Toast.makeText(this.getContext(), getString(R.string.incorrect_login_info), Toast.LENGTH_SHORT).show();
+                }
             } else {
-                Toast.makeText(this.getContext(), getString(R.string.incorrect_login_info), Toast.LENGTH_SHORT).show();
+                Log.e("test", response.getString("identifier"));
+                // we're getting info regarding the user logged in
+                Client customer = new Client(response.getInt("id"),
+                        response.getString("firstname"),
+                        response.getString("lastanme"),
+                        response.getString("identifier"),
+                        response.getString("password"),
+                        response.getString("street"),
+                        response.getInt("postalCode"),
+                        response.getInt("number"),
+                        response.getString("city"),
+                        response.getString("country")
+                );
+
+                ((ActivityLogin) this.getActivity()).updateLoggedInCustomer(customer);
+                this.accountIdentifierTextView.setText(customer.getIdentifier());
+                this.accountNameTextView.setText(customer.getFirstname() + " " + customer.getLastname());
+                this.redirectLoggedInCustomer();
+
             }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
