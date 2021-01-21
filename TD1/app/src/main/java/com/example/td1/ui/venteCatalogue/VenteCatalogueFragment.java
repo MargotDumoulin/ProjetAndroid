@@ -184,7 +184,13 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             zoomImage();
         }
 
-        this.basketImageButton.setVisibility(View.VISIBLE);
+        if (((ActivityLogin) this.getActivity()).isLoggedIn()) {
+            this.basketImageButton.setVisibility(View.VISIBLE);
+        } else {
+            this.basketImageButton.setVisibility(View.INVISIBLE);
+            this.filledHeartImageButton.setVisibility(View.INVISIBLE);
+            this.outlinedHeartImageButton.setVisibility(View.INVISIBLE);
+        }
 
         if (this.alreadyHaveInfo) {
             this.showPullInfo(this.index);
@@ -232,13 +238,19 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         this.sizeSpinnerArrayAdapter.notifyDataSetChanged();
 
 
-        if (this.listProduitToShow.get(index).getFavori()) {
-            this.filledHeartImageButton.setVisibility(View.VISIBLE);
-            this.outlinedHeartImageButton.setVisibility(View.INVISIBLE);
+        if (((ActivityLogin) this.getActivity()).isLoggedIn()) {
+            if (this.listProduitToShow.get(index).getFavori()) {
+                this.filledHeartImageButton.setVisibility(View.VISIBLE);
+                this.outlinedHeartImageButton.setVisibility(View.INVISIBLE);
+            } else {
+                this.filledHeartImageButton.setVisibility(View.INVISIBLE);
+                this.outlinedHeartImageButton.setVisibility(View.VISIBLE);
+            }
         } else {
             this.filledHeartImageButton.setVisibility(View.INVISIBLE);
-            this.outlinedHeartImageButton.setVisibility(View.VISIBLE);
+            this.outlinedHeartImageButton.setVisibility(View.INVISIBLE);
         }
+
     }
 
     public void showToastAddProductToBasket() {
