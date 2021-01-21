@@ -150,11 +150,11 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
     public void changeMenu(Menu menu) {
         if (this.isLoggedIn) {
             menu.getItem(0).setIcon(R.drawable.ic_baseline_account_circle_24);
-            menu.getItem(1).setVisible(false);
+            menu.getItem(1).setEnabled(true);
             menu.getItem(2).setVisible(true);
         } else {
             menu.getItem(0).setIcon(R.drawable.ic_person_outline_white_24dp);
-            menu.getItem(1).setVisible(true);
+            menu.getItem(1).setEnabled(false);
             menu.getItem(2).setVisible(false);
         }
     }
