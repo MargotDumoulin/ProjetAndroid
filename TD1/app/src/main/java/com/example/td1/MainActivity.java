@@ -1,14 +1,11 @@
 package com.example.td1;
 
 import android.os.Build;
-import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.td1.modele.Client;
 import com.example.td1.modele.Panier;
@@ -17,15 +14,11 @@ import com.example.td1.modele.Taille;
 import com.example.td1.utils.Triplet;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.core.app.NavUtils;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -33,7 +26,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements ActiviteECommerce, ActivityLogin {
 
@@ -63,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_boutique, R.id.nav_map, R.id.nav_register)
+                R.id.nav_home, R.id.nav_boutique, R.id.nav_map, R.id.nav_register)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -82,13 +74,20 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
 
         int itemId = item.getItemId();
 
-        if (itemId == R.id.menu_gestion_panier) {
-            if (currentDestination != null && currentDestination.getId() != R.id.menu_gestion_panier) {
-                navController.navigate(R.id.menu_gestion_panier);
+        if (itemId == R.id.nav_gestion_panier) {
+            if (currentDestination != null && currentDestination.getId() != R.id.nav_gestion_panier) {
+                navController.navigate(R.id.nav_gestion_panier);
             }
 
             return true;
-        } else if (itemId == R.id.nav_register) {
+        } else if (itemId == R.id.nav_logout) {
+            this.isLoggedIn = false;
+            this.removeInfoFromDrawer();
+            this.loggedInCustomer = null;
+            navController.navigate(R.id.nav_home);
+            return true;
+
+        }  else if (itemId == R.id.nav_register) {
             if (currentDestination != null && currentDestination.getId() != R.id.nav_register) {
                 if (this.isLoggedIn) {
                     // needs to be changed
@@ -115,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
 //            Object currentTag = currentChildFragment.getView().getTag();
 //
 //            if (currentTag == null || !currentTag.toString().equals(getString(R.string.my_basket_tag))) {
-//                Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.menu_gestion_panier);
+//                Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.nav_gestion_panier);
 //            }
 //
 //            return false;
@@ -134,6 +133,19 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (this.isLoggedIn) {
+            menu.getItem(1).setVisible(false);
+            menu.getItem(2).setVisible(true);
+        } else {
+            menu.getItem(1).setVisible(true);
+            menu.getItem(2).setVisible(false);
+        }
         return true;
     }
 
@@ -164,6 +176,11 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
     }
 
     @Override
+    public boolean isLoggedIn() {
+        return this.isLoggedIn;
+    }
+
+    @Override
     public void logout() {
         this.isLoggedIn = false;
     }
@@ -181,6 +198,15 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
     @Override
     public void updateDrawerWithCustomerInfo(Client customer) {
         this.accountIdentifierTextView.setText(customer.getIdentifier());
-        this.accountNameTextView.setText(customer.getFirstname() + " " + customer.getLastname());
+        String params[] = new String[2];
+        params[0] = customer.getLastname();
+        params[1] = customer.getFirstname();
+        this.accountNameTextView.setText(String.format(getString(R.string.fullname), params[0], params[1]));
+    }
+
+    @Override
+    public void removeInfoFromDrawer() {
+        this.accountIdentifierTextView.setText(getString(R.string.nav_header_subtitle));
+        this.accountNameTextView.setText(getString(R.string.nav_header_title));
     }
 }

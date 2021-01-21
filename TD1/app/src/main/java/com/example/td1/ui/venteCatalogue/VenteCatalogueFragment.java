@@ -356,7 +356,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             }
 
             ((ActiviteECommerce) this.getActivity()).updateBasket(this.basket);
-            Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment).navigate(R.id.menu_gestion_panier);
+            Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment).navigate(R.id.nav_gestion_panier);
             showToastAddProductToBasket();
         });
         // A null listener allows the button to dismiss the dialog and take no further action.

@@ -42,8 +42,8 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">Not logged in</string>
+    <string name="nav_header_subtitle">Log in to enjoy the application at its best</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">My basket</string>
     <string name="menu_home">Home</string>
@@ -80,4 +80,7 @@
     <string name="logout">Logout</string>
     <string name="must_fill_all_fields">You must fill all fields</string>
     <string name="incorrect_login_info">Wrong informations.</string>
+    <string name="welcome_name">Welcome  %1$s %2$s ! !</string>
+    <string name="fullname">%1$s %2$s</string>
+    <string name="welcome_not_logged_in">Welcome !</string>
 </resources>

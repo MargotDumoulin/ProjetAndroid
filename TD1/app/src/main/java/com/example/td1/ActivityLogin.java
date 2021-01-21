@@ -8,4 +8,6 @@ public interface ActivityLogin {
     public Client getLoggedInCustomer();
     public void updateLoggedInCustomer(Client customer);
     public void updateDrawerWithCustomerInfo(Client customer);
+    public void removeInfoFromDrawer();
+    public boolean isLoggedIn();
 }
