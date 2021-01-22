@@ -73,5 +73,5 @@
     <string name="not_a_number">Not a number</string>
     <string name="passwords_does_not_match">Passwords does not match</string>
     <string name="identifier_taken">Identifier taken</string>
-    <string name="menu_legal_mention">Legal mention</string>
+    <string name="menu_legal_mention">Legal notices</string>
 </resources>

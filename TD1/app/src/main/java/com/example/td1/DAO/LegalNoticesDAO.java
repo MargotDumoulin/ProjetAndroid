@@ -15,9 +15,9 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class MentionLegalesDAO {
+public class LegalNoticesDAO {
 
-    public static void findMension(Fragment activity, String language) {
+    public static void getLegalNoticesByLang(Fragment activity, String language) {
 
         RequestQueue queue = Volley.newRequestQueue(activity.getContext());
         String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/mentions_legales/findByLanguage.php?lang=" + language;
