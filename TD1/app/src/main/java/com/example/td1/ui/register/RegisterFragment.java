@@ -45,10 +45,13 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
     protected EditText addrCityEditText;
     protected EditText addrCountryEditText;
     protected EditText addrNumberEditText;
+    protected EditText oldPasswordEditText;
+    protected EditText newPasswordEditText;
     protected Button registerButton;
     protected ArrayList<Triplet<String, String, String>> errors; // first = field's name, second = error type, third = error message
     protected ArrayList<Pair<EditText, String>> fields;// first = value, second = field's name
     protected boolean isLoggedIn;
+    protected Client customer;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -99,7 +102,17 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
         this.registerButton = this.root.findViewById(R.id.registerButton);
         this.registerButton.setOnClickListener(this::onClickRegister);
 
+        // Edit personal info only
+        this.oldPasswordEditText = this.root.findViewById(R.id.oldPasswordEditText);
+        this.newPasswordEditText = this.root.findViewById(R.id.newPasswordEditText);
+
         this.isLoggedIn = ((ActivityLogin) this.getActivity()).isLoggedIn();
+
+        if (this.isLoggedIn) {
+            this.customer = (((ActivityLogin) this.getActivity()).getLoggedInCustomer());
+        } else {
+            this.customer = null;
+        }
     }
 
     public void onClickRegister(View v) {
@@ -109,8 +122,6 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
     public void validateFields() {
         this.errors = new ArrayList<Triplet<String, String, String>>();
         for (Pair<EditText, String> input: this.fields) {
-
-//            Log.e("Field", input.second);
 
             if (TextUtils.isEmpty(input.first.getText().toString())) {
 
@@ -134,14 +145,40 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
         if (!this.isLoggedIn) {
             CustomerDAO.doesIdentifierAlreadyExist(this, this.identifierEditText.getText().toString());
         } else {
-            this.updateCustomerInfo();
+            if (this.identifierEditText.getText().toString().trim().equals(this.customer.getIdentifier())) {
+                this.updateCustomerInfo();
+            } else {
+                CustomerDAO.doesIdentifierAlreadyExist(this, this.identifierEditText.getText().toString());
+            }
         }
 
     }
 
     public void updateCustomerInfo() {
         if (this.errors.isEmpty()) {
-            Toast.makeText(this.getContext(), "Modify Customer Info !!!!!!!!", Toast.LENGTH_SHORT).show();
+            String password = "";
+            if (!this.newPasswordEditText.getText().toString().isEmpty()) {
+                password = this.newPasswordEditText.getText().toString();
+            } else {
+                password = this.passwordEditText.getText().toString();
+            }
+
+                Client customer = new Client(
+                        this.firstnameEditText.getText().toString().trim(),
+                        this.lastnameEditText.getText().toString().trim(),
+                        this.identifierEditText.getText().toString().trim(),
+                        password,
+                        this.addrStreetEditText.getText().toString().trim(),
+                        Integer.parseInt(this.addrPostalCodeEditText.getText().toString()),
+                        Integer.parseInt(this.addrNumberEditText.getText().toString()),
+                        this.addrCityEditText.getText().toString().trim(),
+                        this.addrCountryEditText.getText().toString().trim()
+                );
+
+            ((ActivityLogin) this.getActivity()).updateLoggedInCustomer(customer);
+            ((ActivityLogin) this.getActivity()).updateDrawerWithCustomerInfo(customer);
+            Log.e("after new Client", "MODIFY CUSTOMER INFO !!");
+
         } else {
             Toast.makeText(this.getContext(), this.errors.get(0).third, Toast.LENGTH_SHORT).show();
         }
@@ -182,7 +219,7 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
                                 this.firstnameEditText.getText().toString().trim(),
                                 this.lastnameEditText.getText().toString().trim(),
                                 this.identifierEditText.getText().toString().trim(),
-                                this.passwordEditText.getText().toString().trim(),
+                                this.passwordEditText.getText().toString(),
                                 this.addrStreetEditText.getText().toString().trim(),
                                 Integer.parseInt(this.addrPostalCodeEditText.getText().toString()),
                                 Integer.parseInt(this.addrNumberEditText.getText().toString()),
@@ -190,11 +227,15 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
                                 this.addrCountryEditText.getText().toString().trim()
                         );
 
-                        try {
-                            JSONObject customerJson = new JSONObject(customer.toJson());
-                            CustomerDAO.registerCustomer(this, customerJson);
-                        } catch (Exception e) {
-                            Log.e("Error", String.valueOf(e));
+                        if (!this.isLoggedIn) {
+                            try {
+                                JSONObject customerJson = new JSONObject(customer.toJson());
+                                CustomerDAO.registerCustomer(this, customerJson);
+                            } catch (Exception e) {
+                                Log.e("Error", String.valueOf(e));
+                            }
+                        } else {
+                            this.updateCustomerInfo();
                         }
 
                     } else {

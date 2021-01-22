@@ -17,8 +17,6 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 public class EditPersonalInfoFragment extends RegisterFragment {
 
     private Button saveButton;
-    private EditText oldPasswordEditText;
-    private EditText newPasswordEditText;
     private String customerPassword;
 
     @Override
@@ -31,10 +29,7 @@ public class EditPersonalInfoFragment extends RegisterFragment {
         // Init save btn and current password
         this.saveButton = this.root.findViewById(R.id.saveButton);
 
-        this.oldPasswordEditText = this.root.findViewById(R.id.oldPasswordEditText);
         this.fields.add(new Pair(this.oldPasswordEditText, getString(R.string.oldPassword)));
-
-        this.newPasswordEditText = this.root.findViewById(R.id.newPasswordEditText);
         this.fields.add(new Pair(this.newPasswordEditText, getString(R.string.newPassword)));
 
         // Change visibility for btns and password
@@ -58,6 +53,23 @@ public class EditPersonalInfoFragment extends RegisterFragment {
         this.saveButton.setOnClickListener(this::onClickSave);
     }
 
+    public void filterFieldsAndValidate() {
+        for (int i = 0; i < this.fields.size(); i++) {
+            Pair<EditText, String> field = this.fields.get(i);
+
+            if (field.second.equals(getString(R.string.confirm))
+                    || field.second.equals(getString(R.string.oldPassword))
+                    || field.second.equals(getString(R.string.newPassword))
+                    || field.second.equals(getString(R.string.password))
+            ) {
+                this.fields.remove(i);
+                i--;
+            }
+        }
+
+        this.validateFields();
+    }
+
     private void onClickSave(View view) {
         String oldPassword = this.customerPassword;
 
@@ -68,28 +80,11 @@ public class EditPersonalInfoFragment extends RegisterFragment {
         } else if (this.newPasswordEditText.getText().toString().trim().length() > 0) {
             if (!this.newPasswordEditText.getText().toString().trim().equals(this.confirmPasswordEditText.getText().toString().trim())) {
                 Toast.makeText(this.getContext(), getString(R.string.passwords_does_not_match), Toast.LENGTH_LONG).show();
+            } else {
+                this.filterFieldsAndValidate();
             }
         } else {
-            for (int i = 0; i < this.fields.size(); i++) {
-                Pair<EditText, String> field = this.fields.get(i);
-
-                Log.e("Before Field", field.second);
-
-                if (field.second.equals(getString(R.string.confirm))
-                        || field.second.equals(getString(R.string.oldPassword))
-                        || field.second.equals(getString(R.string.newPassword))
-                        || field.second.equals(getString(R.string.password))
-                ) {
-                    this.fields.remove(i);
-                    i--;
-                }
-            }
-
-            for (Pair<EditText, String> field : this.fields) {
-                Log.e("After Field", field.second);
-            }
-
-            this.validateFields();
+           this.filterFieldsAndValidate();
         }
     }
 }
