@@ -125,6 +125,7 @@ public class Client {
     public String toJson() {
         JSONObject jsonObject= new JSONObject();
         try {
+            jsonObject.put("id", getId());
             jsonObject.put("number", getAddrNumber());
             jsonObject.put("street", getAddrStreet());
             jsonObject.put("city", getAddrCity());

@@ -51,7 +51,6 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
     protected ArrayList<Triplet<String, String, String>> errors; // first = field's name, second = error type, third = error message
     protected ArrayList<Pair<EditText, String>> fields;// first = value, second = field's name
     protected boolean isLoggedIn;
-    protected Client customer;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -106,13 +105,6 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
         this.oldPasswordEditText = this.root.findViewById(R.id.oldPasswordEditText);
         this.newPasswordEditText = this.root.findViewById(R.id.newPasswordEditText);
 
-        this.isLoggedIn = ((ActivityLogin) this.getActivity()).isLoggedIn();
-
-        if (this.isLoggedIn) {
-            this.customer = (((ActivityLogin) this.getActivity()).getLoggedInCustomer());
-        } else {
-            this.customer = null;
-        }
     }
 
     public void onClickRegister(View v) {
@@ -125,7 +117,7 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
 
             if (TextUtils.isEmpty(input.first.getText().toString())) {
 
-                    this.errors.add(new Triplet(input.second, getString(R.string.empty), String.format(getString(R.string.empty_field), input.second)));
+                this.errors.add(new Triplet(input.second, getString(R.string.empty), String.format(getString(R.string.empty_field), input.second)));
 
             } else {
 
@@ -137,53 +129,18 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
                     }
 
                 } else if (input.second.equals(getString(R.string.confirm))) {
-                        this.testPasswordMatch(input.first, this.passwordEditText);
+                    this.testPasswordMatch(input.first, this.passwordEditText);
                 }
             }
         }
 
-        if (!this.isLoggedIn) {
-            CustomerDAO.doesIdentifierAlreadyExist(this, this.identifierEditText.getText().toString());
-        } else {
-            if (this.identifierEditText.getText().toString().trim().equals(this.customer.getIdentifier())) {
-                this.updateCustomerInfo();
-            } else {
-                CustomerDAO.doesIdentifierAlreadyExist(this, this.identifierEditText.getText().toString());
-            }
-        }
+        this.validateIdentifierField();
 
     }
 
-    public void updateCustomerInfo() {
-        if (this.errors.isEmpty()) {
-            String password = "";
-            if (!this.newPasswordEditText.getText().toString().isEmpty()) {
-                password = this.newPasswordEditText.getText().toString();
-            } else {
-                password = this.passwordEditText.getText().toString();
-            }
-
-                Client customer = new Client(
-                        this.firstnameEditText.getText().toString().trim(),
-                        this.lastnameEditText.getText().toString().trim(),
-                        this.identifierEditText.getText().toString().trim(),
-                        password,
-                        this.addrStreetEditText.getText().toString().trim(),
-                        Integer.parseInt(this.addrPostalCodeEditText.getText().toString()),
-                        Integer.parseInt(this.addrNumberEditText.getText().toString()),
-                        this.addrCityEditText.getText().toString().trim(),
-                        this.addrCountryEditText.getText().toString().trim()
-                );
-
-            ((ActivityLogin) this.getActivity()).updateLoggedInCustomer(customer);
-            ((ActivityLogin) this.getActivity()).updateDrawerWithCustomerInfo(customer);
-            Log.e("after new Client", "MODIFY CUSTOMER INFO !!");
-
-        } else {
-            Toast.makeText(this.getContext(), this.errors.get(0).third, Toast.LENGTH_SHORT).show();
-        }
+    public void validateIdentifierField() {
+        CustomerDAO.doesIdentifierAlreadyExist(this, this.identifierEditText.getText().toString());
     }
-
 
     public void testPasswordMatch(EditText inputConfirm, EditText inputPassword) {
         if (TextUtils.isEmpty(inputPassword.getText().toString()) || TextUtils.isEmpty(inputConfirm.getText().toString())) {
@@ -227,15 +184,11 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
                                 this.addrCountryEditText.getText().toString().trim()
                         );
 
-                        if (!this.isLoggedIn) {
-                            try {
-                                JSONObject customerJson = new JSONObject(customer.toJson());
-                                CustomerDAO.registerCustomer(this, customerJson);
-                            } catch (Exception e) {
-                                Log.e("Error", String.valueOf(e));
-                            }
-                        } else {
-                            this.updateCustomerInfo();
+                        try {
+                            JSONObject customerJson = new JSONObject(customer.toJson());
+                            CustomerDAO.registerCustomer(this, customerJson);
+                        } catch (Exception e) {
+                            Log.e("Error", String.valueOf(e));
                         }
 
                     } else {

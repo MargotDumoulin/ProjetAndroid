@@ -89,4 +89,5 @@
     <string name="welcome_not_logged_in">Welcome !</string>
     <string name="empty_old_password">The field old password cannot be empty.</string>
     <string name="wrong_old_password">Old password is incorrect.</string>
+    <string name="customer_successfully_updated">Your account has been updated.</string>
 </resources>

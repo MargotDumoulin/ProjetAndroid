@@ -8,23 +8,30 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.td1.ActivityLogin;
+import com.example.td1.DAO.CustomerDAO;
 import com.example.td1.R;
 import com.example.td1.modele.Client;
 import com.example.td1.ui.register.RegisterFragment;
+import com.example.td1.utils.Triplet;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import at.favre.lib.crypto.bcrypt.BCryptFormatter;
 
 public class EditPersonalInfoFragment extends RegisterFragment {
 
     private Button saveButton;
     private String customerPassword;
+    private Client customer;
 
     @Override
     public void onStart() {
         super.onStart();
 
-        Client customer = ((ActivityLogin) this.getActivity()).getLoggedInCustomer();
-        this.customerPassword = customer.getPassword();
+        this.customer = ((ActivityLogin) this.getActivity()).getLoggedInCustomer();
+        this.customerPassword = this.customer.getPassword();
 
         // Init save btn and current password
         this.saveButton = this.root.findViewById(R.id.saveButton);
@@ -41,16 +48,25 @@ public class EditPersonalInfoFragment extends RegisterFragment {
         this.passwordEditText.setVisibility(View.INVISIBLE);
 
         // Fill the fields
-        this.firstnameEditText.setText(customer.getFirstname());
-        this.lastnameEditText.setText(customer.getLastname());
-        this.identifierEditText.setText(customer.getIdentifier());
-        this.addrNumberEditText.setText(String.valueOf(customer.getAddrNumber()));
-        this.addrStreetEditText.setText(customer.getAddrStreet());
-        this.addrPostalCodeEditText.setText(String.valueOf(customer.getAddrPostalCode()));
-        this.addrCityEditText.setText(customer.getAddrCity());
-        this.addrCountryEditText.setText(customer.getAddrCountry());
+        this.firstnameEditText.setText(this.customer.getFirstname());
+        this.lastnameEditText.setText(this.customer.getLastname());
+        this.identifierEditText.setText(this.customer.getIdentifier());
+        this.addrNumberEditText.setText(String.valueOf(this.customer.getAddrNumber()));
+        this.addrStreetEditText.setText(this.customer.getAddrStreet());
+        this.addrPostalCodeEditText.setText(String.valueOf(this.customer.getAddrPostalCode()));
+        this.addrCityEditText.setText(this.customer.getAddrCity());
+        this.addrCountryEditText.setText(this.customer.getAddrCountry());
 
         this.saveButton.setOnClickListener(this::onClickSave);
+    }
+
+    @Override
+    public void validateIdentifierField() {
+        if (this.identifierEditText.getText().toString().trim().toLowerCase().equals(this.customer.getIdentifier().toLowerCase())) {
+            this.updateCustomerInfo();
+        } else {
+            CustomerDAO.doesIdentifierAlreadyExist(this, this.identifierEditText.getText().toString());
+        }
     }
 
     public void filterFieldsAndValidate() {
@@ -70,6 +86,40 @@ public class EditPersonalInfoFragment extends RegisterFragment {
         this.validateFields();
     }
 
+    public void updateCustomerInfo() {
+        if (this.errors.isEmpty()) {
+            String password = "";
+
+            if (!this.newPasswordEditText.getText().toString().isEmpty()) {
+                password = this.newPasswordEditText.getText().toString();
+            } else {
+                password = this.oldPasswordEditText.getText().toString();
+            }
+
+            Client customer = new Client(
+                    this.customer.getId(),
+                    this.firstnameEditText.getText().toString().trim(),
+                    this.lastnameEditText.getText().toString().trim(),
+                    this.identifierEditText.getText().toString().trim(),
+                    password,
+                    this.addrStreetEditText.getText().toString().trim(),
+                    Integer.parseInt(this.addrPostalCodeEditText.getText().toString()),
+                    Integer.parseInt(this.addrNumberEditText.getText().toString()),
+                    this.addrCityEditText.getText().toString().trim(),
+                    this.addrCountryEditText.getText().toString().trim()
+            );
+
+            try {
+                JSONObject customerJson = new JSONObject(customer.toJson());
+                CustomerDAO.updateCustomer(this, customerJson);
+            } catch (Exception e) {
+                Log.e("Error", String.valueOf(e));
+            }
+        } else {
+            Toast.makeText(this.getContext(), this.errors.get(0).third, Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void onClickSave(View view) {
         String oldPassword = this.customerPassword;
 
@@ -84,7 +134,44 @@ public class EditPersonalInfoFragment extends RegisterFragment {
                 this.filterFieldsAndValidate();
             }
         } else {
-           this.filterFieldsAndValidate();
+            this.filterFieldsAndValidate();
+        }
+    }
+
+    public void onResponse(JSONObject response) {
+        try {
+            if (response.has("identifierAlreadyExists")) {
+
+                if (response.getBoolean("identifierAlreadyExists")) {
+                    this.errors.add(new Triplet(getString(R.string.id), getString(R.string.identifier_already_exists), getString(R.string.identifier_already_exists)));
+                    Toast.makeText(this.getContext(), getString(R.string.identifier_already_exists), Toast.LENGTH_SHORT).show();
+                } else {
+                    this.updateCustomerInfo();
+                }
+            } else if (response.getInt("id") != -1) {
+                String hashedPassword = response.getString("password");
+
+                Client updatedCustomer = new Client(
+                        this.customer.getId(),
+                        this.firstnameEditText.getText().toString().trim(),
+                        this.lastnameEditText.getText().toString().trim(),
+                        this.identifierEditText.getText().toString().trim(),
+                        hashedPassword,
+                        this.addrStreetEditText.getText().toString().trim(),
+                        Integer.parseInt(this.addrPostalCodeEditText.getText().toString()),
+                        Integer.parseInt(this.addrNumberEditText.getText().toString()),
+                        this.addrCityEditText.getText().toString().trim(),
+                        this.addrCountryEditText.getText().toString().trim()
+                );
+
+                ((ActivityLogin) this.getActivity()).updateLoggedInCustomer(updatedCustomer);
+                ((ActivityLogin) this.getActivity()).updateDrawerWithCustomerInfo(updatedCustomer);
+
+                Toast.makeText(this.getContext(), getString(R.string.customer_successfully_updated), Toast.LENGTH_LONG).show();
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 }
