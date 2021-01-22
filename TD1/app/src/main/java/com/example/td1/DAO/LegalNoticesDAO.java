@@ -22,11 +22,11 @@ public class LegalNoticesDAO {
         RequestQueue queue = Volley.newRequestQueue(activity.getContext());
         String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/mentions_legales/findByLanguage.php?lang=" + language;
         // Request a string response from the provided URL.
-        JsonArrayRequest jsonArray = new JsonArrayRequest(Request.Method.GET, url, null,
-                (com.android.volley.Response.Listener<JSONArray>) activity,
+        JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.GET, url, null,
+                (com.android.volley.Response.Listener<JSONObject>) activity,
                 (Response.ErrorListener) activity);
 
         // Add the request to the RequestQueue
-        queue.add(jsonArray);
+        queue.add(jsonObject);
     }
 }

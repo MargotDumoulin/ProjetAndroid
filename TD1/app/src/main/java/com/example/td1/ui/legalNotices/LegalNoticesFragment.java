@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 import java.util.Locale;
 
-public class MentionLegalesFragment extends Fragment implements com.android.volley.Response.Listener<JSONArray>, com.android.volley.Response.ErrorListener {
+public class LegalNoticesFragment extends Fragment implements com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener {
 
     private View root;
 
@@ -88,34 +88,34 @@ public class MentionLegalesFragment extends Fragment implements com.android.voll
     }
 
     @Override
-    public void onResponse(JSONArray answer) {
+    public void onResponse(JSONObject o) {
+        String legalNotices = null;
         try {
-            for (int i = 0; i < answer.length(); i++) {
-                JSONObject o = answer.getJSONObject(i);
-                String legalNotices = o.getString("mentions");
-                String[] legalNoticesTab = cutout(legalNotices, "###");
+            legalNotices = o.getString("mentions");
+            String[] legalNoticesTab = cutout(legalNotices, "###");
 
-                beginningTextView.setText(legalNoticesTab[0]);
-                titleEditAppTextView.setText(legalNoticesTab[1]);
-                contentEditAppTextView.setText(legalNoticesTab[2]);
-                titleRespPublicationTextView.setText(legalNoticesTab[3]);
-                contentRespPublicationTextView.setText(legalNoticesTab[4]);
-                titleHostTextView.setText(legalNoticesTab[5]);
-                contentHostTextView.setText(legalNoticesTab[6]);
-                titleContactUsTextView.setText(legalNoticesTab[7]);
-                contentContactUsTextView.setText(legalNoticesTab[8]);
-                titleCNILTextView.setText(legalNoticesTab[9]);
-                contentCNILTextView.setText(legalNoticesTab[10]);
-                titleDisputesTextView.setText(legalNoticesTab[11]);
-                contentDisputesTextView.setText(legalNoticesTab[12]);
-                titleIntPropTextView.setText(legalNoticesTab[13]);
-                contentIntPropTextView.setText(legalNoticesTab[14]);
-                titleServProvidedTextView.setText(legalNoticesTab[15]);
-                contentServProvidedTextView.setText(legalNoticesTab[16]);
+            beginningTextView.setText(legalNoticesTab[0]);
+            titleEditAppTextView.setText(legalNoticesTab[1]);
+            contentEditAppTextView.setText(legalNoticesTab[2]);
+            titleRespPublicationTextView.setText(legalNoticesTab[3]);
+            contentRespPublicationTextView.setText(legalNoticesTab[4]);
+            titleHostTextView.setText(legalNoticesTab[5]);
+            contentHostTextView.setText(legalNoticesTab[6]);
+            titleContactUsTextView.setText(legalNoticesTab[7]);
+            contentContactUsTextView.setText(legalNoticesTab[8]);
+            titleCNILTextView.setText(legalNoticesTab[9]);
+            contentCNILTextView.setText(legalNoticesTab[10]);
+            titleDisputesTextView.setText(legalNoticesTab[11]);
+            contentDisputesTextView.setText(legalNoticesTab[12]);
+            titleIntPropTextView.setText(legalNoticesTab[13]);
+            contentIntPropTextView.setText(legalNoticesTab[14]);
+            titleServProvidedTextView.setText(legalNoticesTab[15]);
+            contentServProvidedTextView.setText(legalNoticesTab[16]);
 
-            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+
     }
 }
