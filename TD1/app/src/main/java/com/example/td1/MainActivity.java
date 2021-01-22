@@ -90,9 +90,13 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
         }  else if (itemId == R.id.nav_my_account) {
             if (currentDestination != null && currentDestination.getId() != R.id.nav_my_account) {
                 if (this.isLoggedIn) {
-                    navController.navigate(R.id.nav_edit_personal_info);
+                    if (currentDestination.getId() != R.id.nav_edit_personal_info) {
+                        navController.navigate(R.id.nav_edit_personal_info);
+                    }
                 } else {
-                    navController.navigate(R.id.nav_login);
+                    if (currentDestination.getId() != R.id.nav_login) {
+                        navController.navigate(R.id.nav_login);
+                    }
                 }
             }
 

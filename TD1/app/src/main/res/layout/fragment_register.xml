@@ -10,17 +10,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="15dp">
+        android:paddingTop="10dp">
 
         <TextView
             android:id="@+id/titleSectionInfoTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="casual"
-            android:textStyle="bold"
             android:layout_marginStart="24dp"
+            android:fontFamily="casual"
             android:text="@string/personal_info"
             android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:ems="10"
             android:hint="@string/firstname"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -83,35 +83,48 @@
             app:layout_constraintTop_toBottomOf="@+id/idEditText" />
 
         <EditText
-            android:id="@+id/confirmPasswordEditText"
+            android:id="@+id/newPasswordEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:ems="6"
-            android:hint="@string/confirm"
+            android:hint="@string/newPassword"
+            android:visibility="invisible"
             android:inputType="textPassword"
             app:layout_constraintLeft_toRightOf="@id/passwordEditText"
             app:layout_constraintTop_toTopOf="@id/passwordEditText" />
+
+        <EditText
+            android:id="@+id/confirmPasswordEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:ems="6"
+            android:hint="@string/confirm"
+            android:inputType="textPassword"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/passwordEditText" />
 
         <TextView
             android:id="@+id/titleSectionAddressTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:textStyle="bold"
             android:layout_marginStart="24dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="casual"
             android:text="@string/address"
             android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/passwordEditText" />
+            app:layout_constraintTop_toBottomOf="@id/confirmPasswordEditText" />
 
         <EditText
             android:id="@+id/numberEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:ems="6"
             android:hint="@string/number"
             android:inputType="number"

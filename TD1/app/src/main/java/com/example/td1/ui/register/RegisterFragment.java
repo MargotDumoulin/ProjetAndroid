@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.example.td1.ActivityLogin;
 import com.example.td1.DAO.CustomerDAO;
 import com.example.td1.R;
 import com.example.td1.modele.Client;
@@ -47,6 +48,7 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
     protected Button registerButton;
     protected ArrayList<Triplet<String, String, String>> errors; // first = field's name, second = error type, third = error message
     protected ArrayList<Pair<EditText, String>> fields;// first = value, second = field's name
+    protected boolean isLoggedIn;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -95,6 +97,8 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
 
         this.registerButton = this.root.findViewById(R.id.registerButton);
         this.registerButton.setOnClickListener(this::onClickRegister);
+
+        this.isLoggedIn = ((ActivityLogin) this.getActivity()).isLoggedIn();
     }
 
     public void onClickRegister(View v) {
@@ -107,7 +111,7 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
 
             if (TextUtils.isEmpty(input.first.getText().toString())) {
 
-                this.errors.add(new Triplet(input.second, getString(R.string.empty), String.format(getString(R.string.empty_field), input.second)));
+                    this.errors.add(new Triplet(input.second, getString(R.string.empty), String.format(getString(R.string.empty_field), input.second)));
 
             } else {
 
@@ -119,12 +123,25 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
                     }
 
                 } else if (input.second.equals(getString(R.string.confirm))) {
-                    this.testPasswordMatch(input.first, this.passwordEditText);
+                        this.testPasswordMatch(input.first, this.passwordEditText);
                 }
             }
         }
 
-        CustomerDAO.doesIdentifierAlreadyExist(this, this.identifierEditText.getText().toString());
+//        if (!this.isLoggedIn) {
+            CustomerDAO.doesIdentifierAlreadyExist(this, this.identifierEditText.getText().toString());
+//        } else {
+//            this.updateCustomerInfo();
+//        }
+
+    }
+
+    public void updateCustomerInfo() {
+        if (this.errors.isEmpty()) {
+            Toast.makeText(this.getContext(), "Modify Customer Info !!!!!!!!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this.getContext(), this.errors.get(0).third, Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -132,7 +149,6 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
         if (TextUtils.isEmpty(inputPassword.getText().toString()) || TextUtils.isEmpty(inputConfirm.getText().toString())) {
             this.errors.add(new Triplet(getString(R.string.password), getString(R.string.empty), getString(R.string.must_field_password_fields)));
         } else {
-
             if (!inputPassword.getText().toString().equals(inputConfirm.getText().toString())) {
                 this.errors.add(new Triplet(getString(R.string.confirm), getString(R.string.passwords_must_match), getString(R.string.passwords_must_match)));
             }
