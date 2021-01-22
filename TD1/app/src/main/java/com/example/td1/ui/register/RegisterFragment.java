@@ -62,6 +62,7 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
     @Override
     public void onStart() {
         super.onStart();
+
         this.fields = new ArrayList<Pair<EditText, String>>();
         this.errors = new ArrayList<Triplet<String, String, String>>();
 
@@ -109,6 +110,8 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
         this.errors = new ArrayList<Triplet<String, String, String>>();
         for (Pair<EditText, String> input: this.fields) {
 
+//            Log.e("Field", input.second);
+
             if (TextUtils.isEmpty(input.first.getText().toString())) {
 
                     this.errors.add(new Triplet(input.second, getString(R.string.empty), String.format(getString(R.string.empty_field), input.second)));
@@ -128,11 +131,11 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
             }
         }
 
-//        if (!this.isLoggedIn) {
+        if (!this.isLoggedIn) {
             CustomerDAO.doesIdentifierAlreadyExist(this, this.identifierEditText.getText().toString());
-//        } else {
-//            this.updateCustomerInfo();
-//        }
+        } else {
+            this.updateCustomerInfo();
+        }
 
     }
 

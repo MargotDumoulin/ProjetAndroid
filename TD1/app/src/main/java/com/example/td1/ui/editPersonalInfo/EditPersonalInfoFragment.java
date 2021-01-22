@@ -73,9 +73,20 @@ public class EditPersonalInfoFragment extends RegisterFragment {
             for (int i = 0; i < this.fields.size(); i++) {
                 Pair<EditText, String> field = this.fields.get(i);
 
-                if (field.second.equals(getString(R.string.password))) {
-                    this.fields.remove(field);
+                Log.e("Before Field", field.second);
+
+                if (field.second.equals(getString(R.string.confirm))
+                        || field.second.equals(getString(R.string.oldPassword))
+                        || field.second.equals(getString(R.string.newPassword))
+                        || field.second.equals(getString(R.string.password))
+                ) {
+                    this.fields.remove(i);
+                    i--;
                 }
+            }
+
+            for (Pair<EditText, String> field : this.fields) {
+                Log.e("After Field", field.second);
             }
 
             this.validateFields();
