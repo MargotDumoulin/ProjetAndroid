@@ -37,7 +37,6 @@ public class FavorisFragment extends VenteCatalogueFragment {
         this.listImgProduitToShow = new ArrayList<Bitmap>();
         this.listSizesLabels = new ArrayList<String>();
         this.alreadyHaveInfo = false;
-        this.mode = MAIN_VENTE;
 
         if (this.getActivity().getIntent().getSerializableExtra("newProduct") != null) {
             Produit productToAdd = (Produit) this.getActivity().getIntent().getSerializableExtra("newProduct");
