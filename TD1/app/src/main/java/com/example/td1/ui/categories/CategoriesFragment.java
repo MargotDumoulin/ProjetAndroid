@@ -8,6 +8,7 @@ import androidx.navigation.Navigation;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,9 +73,7 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
     @Override
     public void onStart() {
         super.onStart();
-
         String categories = this.getActivity().getIntent().getStringExtra("categories");
-
         if (categories.length() > 0) {
             try {
                 this.listCategories = new ArrayList<Categorie>();
@@ -87,7 +86,6 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
                 }
                 this.fillImgCategories();
                 this.setCategoriesAdapter();
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
