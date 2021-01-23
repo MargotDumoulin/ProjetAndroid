@@ -57,25 +57,25 @@
 
     <ImageButton
         android:id="@+id/outlinedHeartImageButton"
-        style="@style/img_button_heart_style"
+        android:background="@android:color/transparent"
         android:layout_width="@dimen/img_button_width"
         android:layout_height="@dimen/img_button_height"
         android:layout_marginRight="@dimen/img_button_margin_side"
         android:layout_marginTop="@dimen/img_button_margin_side"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/baseline_favorite_border_black_18dp" />
+        app:srcCompat="@drawable/ic_favorite_border_24px" />
 
     <ImageButton
         android:id="@+id/filledHeartImageButton"
-        style="@style/img_button_heart_style"
+        android:background="@android:color/transparent"
         android:layout_width="@dimen/img_button_width"
         android:layout_height="@dimen/img_button_height"
         android:layout_marginRight="@dimen/img_button_margin_side"
         android:layout_marginTop="@dimen/img_button_margin_side"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/baseline_favorite_black_18dp" />
+        app:srcCompat="@drawable/ic_favorite_24px" />
 
     <TextView
         android:id="@+id/descriptionTextView"
@@ -101,6 +101,7 @@
         android:text="@string/add_to_cart"
         app:layout_constraintBottom_toTopOf="@+id/footerTextView"
         app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="@color/green_500"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button

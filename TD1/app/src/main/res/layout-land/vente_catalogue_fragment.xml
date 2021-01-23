@@ -64,25 +64,25 @@
 
     <ImageButton
         android:id="@+id/outlinedHeartImageButton"
-        style="@style/img_button_heart_style"
+        android:background="@android:color/transparent"
         android:layout_width="@dimen/img_button_width"
         android:layout_height="@dimen/img_button_height"
         android:layout_marginRight="@dimen/img_button_margin_side"
         android:layout_marginBottom="@dimen/img_button_margin_bottom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@id/cartButton"
-        app:srcCompat="@drawable/baseline_favorite_border_black_18dp" />
+        app:srcCompat="@drawable/ic_favorite_border_24px" />
 
     <ImageButton
         android:id="@+id/filledHeartImageButton"
-        style="@style/img_button_heart_style"
+        android:background="@android:color/transparent"
         android:layout_width="@dimen/img_button_width"
         android:layout_height="@dimen/img_button_height"
         android:layout_marginRight="@dimen/img_button_margin_side"
         android:layout_marginBottom="@dimen/img_button_margin_bottom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@id/cartButton"
-        app:srcCompat="@drawable/baseline_favorite_black_18dp" />
+        app:srcCompat="@drawable/ic_favorite_24px" />
 
     <ImageButton
         android:id="@+id/cartButton"
