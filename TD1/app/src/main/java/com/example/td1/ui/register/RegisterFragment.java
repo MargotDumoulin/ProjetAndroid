@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
@@ -21,7 +20,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
-import com.example.td1.ActivityLogin;
 import com.example.td1.DAO.CustomerDAO;
 import com.example.td1.R;
 import com.example.td1.modele.Client;
@@ -30,7 +28,6 @@ import com.example.td1.utils.Triplet;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class RegisterFragment extends Fragment implements com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener{
@@ -46,7 +43,7 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
     protected EditText addrCityEditText;
     protected EditText addrCountryEditText;
     protected EditText addrNumberEditText;
-    protected EditText oldPasswordEditText;
+    protected EditText currentPasswordEditText;
     protected EditText newPasswordEditText;
     protected Button registerButton;
     protected ArrayList<Triplet<String, String, String>> errors; // first = field's name, second = error type, third = error message
@@ -103,7 +100,7 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
         this.registerButton.setOnClickListener(this::onClickRegister);
 
         // Edit personal info only
-        this.oldPasswordEditText = this.root.findViewById(R.id.oldPasswordEditText);
+        this.currentPasswordEditText = this.root.findViewById(R.id.oldPasswordEditText);
         this.newPasswordEditText = this.root.findViewById(R.id.newPasswordEditText);
 
     }
