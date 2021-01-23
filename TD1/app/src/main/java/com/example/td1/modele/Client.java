@@ -3,7 +3,9 @@ package com.example.td1.modele;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Client {
+import java.io.Serializable;
+
+public class Client implements Serializable {
 
     private int id;
     private int addrPostalCode;

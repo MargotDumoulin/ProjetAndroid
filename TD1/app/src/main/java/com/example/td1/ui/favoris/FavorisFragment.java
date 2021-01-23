@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import com.example.td1.ActiviteECommerce;
+import com.example.td1.ActivityLogin;
 import com.example.td1.DAO.ProductDAO;
 import com.example.td1.ImageFromURL;
 import com.example.td1.R;
@@ -61,7 +62,7 @@ public class FavorisFragment extends VenteCatalogueFragment {
 
             this.basket = ((ActiviteECommerce) this.getActivity()).getBasket();
 
-            ProductDAO.findAllStarred(this, 1);
+            ProductDAO.findAllStarred(this, ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
         }
         return root;
     }
@@ -70,7 +71,7 @@ public class FavorisFragment extends VenteCatalogueFragment {
         this.filledHeartImageButton.setVisibility(View.INVISIBLE);
         this.outlinedHeartImageButton.setVisibility(View.VISIBLE);
 
-        ProductDAO.unstarProduct(this, this.listProduitToShow.get(this.index).getId(), 1);
+        ProductDAO.unstarProduct(this, this.listProduitToShow.get(this.index).getId(), ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
         this.listProduitToShow.get(this.index).setFavori(false);
         this.listProduitToShow.remove(this.index);
         this.listImgProduitToShow.remove(this.index);
@@ -122,7 +123,7 @@ public class FavorisFragment extends VenteCatalogueFragment {
                             loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(y).getImgSrc(), String.valueOf(y));
                         }
 
-                        ProductDAO.findAllSizesByStarred(this, 1);
+                        ProductDAO.findAllSizesByStarred(this, ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
                     }
                 }
             }
