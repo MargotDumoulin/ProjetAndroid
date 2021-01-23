@@ -17,5 +17,9 @@
             android:id="@+id/nav_map"
             android:icon="@drawable/ic_launcher_foreground"
             android:title="@string/menu_map"/>
+        <item
+            android:id="@+id/nav_mention_legales"
+            android:icon="@drawable/common_full_open_on_phone"
+            android:title="@string/menu_legal_mention"/>
     </group>
 </menu>

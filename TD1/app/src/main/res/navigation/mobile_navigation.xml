@@ -28,6 +28,11 @@
         android:name="com.example.td1.ui.monPanier.MonPanierFragment"
         android:label="@string/my_basket"
         tools:layout="@layout/fragment_mon_panier" />
+    <fragment
+        android:id="@+id/nav_mention_legales"
+        android:name="com.example.td1.ui.legalNotices.LegalNoticesFragment"
+        android:label="@string/menu_legal_mention"
+        tools:layout="@layout/fragment_legal_notices" />
 
     <fragment
         android:id="@+id/nav_edit_personal_info"
