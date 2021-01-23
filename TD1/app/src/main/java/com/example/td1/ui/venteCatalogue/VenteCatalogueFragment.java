@@ -176,8 +176,8 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         this.whiteBlankView = this.root.findViewById(R.id.whiteBlankView);
 
         // -- ADAPTER --
-        this.sizeSpinnerArrayAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, this.listSizesLabels);
-        this.sizeSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        this.sizeSpinnerArrayAdapter = new ArrayAdapter<String>(this.getContext(), R.layout.spinner_sizes, this.listSizesLabels);
+        this.sizeSpinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_sizes);
         this.sizeSpinner.setAdapter(this.sizeSpinnerArrayAdapter);
 
         if (this.isImageZoomed) {

@@ -14,55 +14,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/separatorBottomLine"/>
 
-    <View
-        android:id="@+id/separatorBottomLine"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        app:layout_constraintBottom_toTopOf="@+id/sellOrCatalogRadioGroup"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:background="#c0c0c0" />
-
-    <RadioGroup
-        android:id="@+id/sellOrCatalogRadioGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@id/footerTextView"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <RadioButton
-            android:id="@+id/sellRadioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/sell_mode"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/catalogRadioButton" />
-
-        <RadioButton
-            android:id="@+id/catalogRadioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/catalog_mode"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="@+id/sellOrCatalogRadioGroup" />
-
-    </RadioGroup>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:layout_margin="20dp"
-        app:srcCompat="@drawable/baseline_add_white_18dp"
-        app:layout_constraintBottom_toTopOf="@id/sellOrCatalogRadioGroup"
-        app:layout_constraintRight_toRightOf="parent"/>
-
     <TextView
         android:id="@+id/footerTextView"
         android:layout_width="match_parent"
