@@ -14,11 +14,14 @@ import androidx.fragment.app.Fragment;
 import com.android.volley.VolleyError;
 import com.example.td1.DAO.LegalNoticesDAO;
 import com.example.td1.R;
+import com.example.td1.modele.Produit;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class LegalNoticesFragment extends Fragment implements com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener {
@@ -43,9 +46,17 @@ public class LegalNoticesFragment extends Fragment implements com.android.volley
     private TextView titleServProvidedTextView;
     private TextView contentServProvidedTextView;
 
+    private String[] legalNoticesTab = null;
+
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         root = inflater.inflate(R.layout.fragment_legal_notices, container, false);
+
+        if (savedInstanceState != null) {
+            legalNoticesTab = (String[]) savedInstanceState.getSerializable("legalNoticesTab");
+        }
         return root;
     }
 
@@ -70,11 +81,44 @@ public class LegalNoticesFragment extends Fragment implements com.android.volley
         titleServProvidedTextView = this.root.findViewById(R.id.titleServProvidedLegalNoticesTextView);
         contentServProvidedTextView = this.root.findViewById(R.id.contentServProvidedLegalNoticesTextView);
 
-        if (Locale.getDefault().getDisplayLanguage().equals("français"))
-            LegalNoticesDAO.getLegalNoticesByLang(this, "fr");
-        else {
-            LegalNoticesDAO.getLegalNoticesByLang(this, "en");
+        if (legalNoticesTab == null) {
+            if (Locale.getDefault().getDisplayLanguage().equals("français")) {
+                LegalNoticesDAO.getLegalNoticesByLang(this, "fr");
+            } else {
+                LegalNoticesDAO.getLegalNoticesByLang(this, "en");
+            }
+        } else {
+            integrateValueIntoTextView();
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NotNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("legalNoticesTab", this.legalNoticesTab);
+    }
+
+    public void integrateValueIntoTextView() {
+        if (this.legalNoticesTab != null) {
+            beginningTextView.setText(this.legalNoticesTab[0]);
+            titleEditAppTextView.setText(this.legalNoticesTab[1]);
+            contentEditAppTextView.setText(this.legalNoticesTab[2]);
+            titleRespPublicationTextView.setText(this.legalNoticesTab[3]);
+            contentRespPublicationTextView.setText(this.legalNoticesTab[4]);
+            titleHostTextView.setText(this.legalNoticesTab[5]);
+            contentHostTextView.setText(this.legalNoticesTab[6]);
+            titleContactUsTextView.setText(this.legalNoticesTab[7]);
+            contentContactUsTextView.setText(this.legalNoticesTab[8]);
+            titleCNILTextView.setText(this.legalNoticesTab[9]);
+            contentCNILTextView.setText(this.legalNoticesTab[10]);
+            titleDisputesTextView.setText(this.legalNoticesTab[11]);
+            contentDisputesTextView.setText(this.legalNoticesTab[12]);
+            titleIntPropTextView.setText(this.legalNoticesTab[13]);
+            contentIntPropTextView.setText(this.legalNoticesTab[14]);
+            titleServProvidedTextView.setText(this.legalNoticesTab[15]);
+            contentServProvidedTextView.setText(this.legalNoticesTab[16]);
+        }
+
     }
 
     public static String[] cutout(String text, String sep) {
@@ -92,26 +136,8 @@ public class LegalNoticesFragment extends Fragment implements com.android.volley
         String legalNotices = null;
         try {
             legalNotices = o.getString("mentions");
-            String[] legalNoticesTab = cutout(legalNotices, "###");
-
-            beginningTextView.setText(legalNoticesTab[0]);
-            titleEditAppTextView.setText(legalNoticesTab[1]);
-            contentEditAppTextView.setText(legalNoticesTab[2]);
-            titleRespPublicationTextView.setText(legalNoticesTab[3]);
-            contentRespPublicationTextView.setText(legalNoticesTab[4]);
-            titleHostTextView.setText(legalNoticesTab[5]);
-            contentHostTextView.setText(legalNoticesTab[6]);
-            titleContactUsTextView.setText(legalNoticesTab[7]);
-            contentContactUsTextView.setText(legalNoticesTab[8]);
-            titleCNILTextView.setText(legalNoticesTab[9]);
-            contentCNILTextView.setText(legalNoticesTab[10]);
-            titleDisputesTextView.setText(legalNoticesTab[11]);
-            contentDisputesTextView.setText(legalNoticesTab[12]);
-            titleIntPropTextView.setText(legalNoticesTab[13]);
-            contentIntPropTextView.setText(legalNoticesTab[14]);
-            titleServProvidedTextView.setText(legalNoticesTab[15]);
-            contentServProvidedTextView.setText(legalNoticesTab[16]);
-
+            this.legalNoticesTab = cutout(legalNotices, "###");
+            integrateValueIntoTextView();
         } catch (JSONException e) {
             e.printStackTrace();
         }
