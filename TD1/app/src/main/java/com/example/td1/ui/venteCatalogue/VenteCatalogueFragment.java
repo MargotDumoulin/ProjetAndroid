@@ -1,10 +1,13 @@
 package com.example.td1.ui.venteCatalogue;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,6 +64,9 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
     protected View whiteBackgroundView;
     protected View whiteBlankView;
 
+    private View progressBarView;
+    private ProgressBar progressBar;
+
     protected ImageButton basketImageButton;
     protected ImageButton filledHeartImageButton;
     protected ImageButton outlinedHeartImageButton;
@@ -82,6 +89,8 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
     protected String clothingSize = "";
     
     protected View root;
+
+    final int LOADING_TIME_OUT = 1000;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -122,10 +131,10 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             if (this.idCateg != -1) {
                 if (((ActivityLogin) this.getActivity()).isLoggedIn()) {
                     // get products + if they are starred or not
-                    ProductDAO.findAllByCateg(this, this.idCateg, ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
+                    new Handler().postDelayed(() -> ProductDAO.findAllByCateg(this, this.idCateg, ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId()), LOADING_TIME_OUT);
                 } else {
                     // only get products
-                    ProductDAO.findAllByCateg(this, this.idCateg, -1);
+                    new Handler().postDelayed(() -> ProductDAO.findAllByCateg(this, this.idCateg, -1), LOADING_TIME_OUT);
                 }
             } else {
                 // ???
@@ -175,6 +184,9 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         this.whiteBackgroundView = this.root.findViewById(R.id.blankView);
         this.whiteBlankView = this.root.findViewById(R.id.whiteBlankView);
 
+        this.progressBarView = this.root.findViewById(R.id.loadingView);
+        this.progressBar = this.root.findViewById(R.id.loading);
+
         // -- ADAPTER --
         this.sizeSpinnerArrayAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, this.listSizesLabels);
         this.sizeSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -196,6 +208,8 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             this.showPullInfo(this.index);
             this.changeImageView(this.index);
             this.enablePrevNextButtons(this.index);
+            this.progressBarView.setVisibility(View.GONE);
+            this.progressBar.setVisibility(View.GONE);
         }
 
         this.whiteBlankView.setVisibility(View.INVISIBLE);
@@ -477,6 +491,22 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
 
                     if (i == response.length() - 1) {
                         this.showPullInfo(this.index);
+
+                        this.progressBar.animate().alpha(0.0f).setDuration(250).setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                progressBar.setVisibility(View.GONE);
+                            }
+                        });
+
+                        this.progressBarView.animate().alpha(0.0f).setDuration(400).setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                progressBarView.setVisibility(View.GONE);
+                            }
+                        });
                     }
 
                 } else {
@@ -498,8 +528,6 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
                     }
                 }
             }
-
-
 
         } catch (JSONException e) {
             e.printStackTrace();
