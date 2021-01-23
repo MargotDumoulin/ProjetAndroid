@@ -55,7 +55,8 @@
     <string name="firstname">Firstname</string>
     <string name="lastname">Lastname</string>
     <string name="id">Identifier</string>
-    <string name="oldPassword">Old password</string>
+    <string name="currentPassword">Current password</string>
+    <string name="newPassword">New password</string>
     <string name="password">Password</string>
     <string name="confirm">Confirm</string>
     <string name="number">Number</string>
@@ -74,6 +75,7 @@
     <string name="empty">Empty</string>
     <string name="not_a_number">Not a number</string>
     <string name="passwords_does_not_match">Passwords does not match</string>
+    <!--  TODO : PASSWORDS DOES -> DO or PASSWORD does not... -->
     <string name="identifier_taken">Identifier taken</string>
     <string name="my_account">My account</string>
     <string name="my_basket_tag">my_basket_fragment</string>
@@ -85,5 +87,8 @@
     <string name="welcome_name">Welcome  %1$s %2$s ! !</string>
     <string name="fullname">%1$s %2$s</string>
     <string name="welcome_not_logged_in">Welcome !</string>
+    <string name="empty_current_password">The field current password cannot be empty.</string>
+    <string name="wrong_current_password">Current password is incorrect.</string>
+    <string name="customer_successfully_updated">Your account has been updated.</string>
     <string name="legal_notices">Legal notices</string>
 </resources>

@@ -55,7 +55,8 @@
     <string name="firstname">Nom</string>
     <string name="lastname">Prénom</string>
     <string name="id">Identifiant</string>
-    <string name="oldPassword">Ancien mot de passe</string>
+    <string name="currentPassword">Mot de passe actuel</string>
+    <string name="newPassword">Nouveau mot de passe</string>
     <string name="password">Mot de passe</string>
     <string name="confirm">Confirmer</string>
     <string name="number">Numéro</string>
@@ -85,5 +86,8 @@
     <string name="welcome_name">Bienvenue  %1$s %2$s !</string>
     <string name="fullname">%1$s %2$s</string>
     <string name="welcome_not_logged_in">Bienvenue !</string>
+    <string name="empty_current_password">Le champ mot de passe actuel ne peut pas être vide.</string>
+    <string name="wrong_current_password">Mot de passe actuel est incorrect.</string>
+    <string name="customer_successfully_updated">Votre compte a été mis à jour.</string>
     <string name="legal_notices">Mentions légales</string>
 </resources>
