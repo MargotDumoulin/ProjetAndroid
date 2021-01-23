@@ -78,7 +78,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:ems="6"
-            android:hint="@string/oldPassword"
+            android:hint="@string/currentPassword"
             android:inputType="textPassword"
             android:visibility="invisible"
             app:layout_constraintLeft_toLeftOf="parent"

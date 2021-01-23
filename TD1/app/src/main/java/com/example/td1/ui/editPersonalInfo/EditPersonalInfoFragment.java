@@ -23,7 +23,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import at.favre.lib.crypto.bcrypt.BCryptFormatter;
 
 public class EditPersonalInfoFragment extends RegisterFragment {
 
@@ -62,12 +61,12 @@ public class EditPersonalInfoFragment extends RegisterFragment {
         // Init save btn and current password
         this.saveButton = this.root.findViewById(R.id.saveButton);
 
-        this.fields.add(new Pair(this.oldPasswordEditText, getString(R.string.oldPassword)));
+        this.fields.add(new Pair(this.currentPasswordEditText, getString(R.string.currentPassword)));
         this.fields.add(new Pair(this.newPasswordEditText, getString(R.string.newPassword)));
 
         // Change visibility for btns and password
         this.saveButton.setVisibility(View.VISIBLE);
-        this.oldPasswordEditText.setVisibility(View.VISIBLE);
+        this.currentPasswordEditText.setVisibility(View.VISIBLE);
         this.newPasswordEditText.setVisibility(View.VISIBLE);
 
         this.registerButton.setVisibility(View.INVISIBLE);
@@ -102,7 +101,7 @@ public class EditPersonalInfoFragment extends RegisterFragment {
             Pair<EditText, String> field = this.fields.get(i);
 
             if (field.second.equals(getString(R.string.confirm))
-                    || field.second.equals(getString(R.string.oldPassword))
+                    || field.second.equals(getString(R.string.currentPassword))
                     || field.second.equals(getString(R.string.newPassword))
                     || field.second.equals(getString(R.string.password))
             ) {
@@ -116,12 +115,12 @@ public class EditPersonalInfoFragment extends RegisterFragment {
 
     public void updateCustomerInfo() {
         if (this.errors.isEmpty()) {
-            String password = "";
+            String password = null;
 
             if (!this.newPasswordEditText.getText().toString().isEmpty()) {
                 password = this.newPasswordEditText.getText().toString();
             } else {
-                password = this.oldPasswordEditText.getText().toString();
+                password = this.currentPasswordEditText.getText().toString();
             }
 
             Client customer = new Client(
@@ -149,12 +148,10 @@ public class EditPersonalInfoFragment extends RegisterFragment {
     }
 
     private void onClickSave(View view) {
-        String oldPassword = this.customerPassword;
-
-        if (this.oldPasswordEditText.getText().toString().trim().isEmpty()) {
-            Toast.makeText(this.getContext(), getString(R.string.empty_old_password), Toast.LENGTH_LONG).show();
-        } else if (!(BCrypt.verifyer().verify(this.oldPasswordEditText.getText().toString().toCharArray(), this.customerPassword)).verified) {
-            Toast.makeText(this.getContext(), getString(R.string.wrong_old_password), Toast.LENGTH_LONG).show();
+        if (this.currentPasswordEditText.getText().toString().trim().isEmpty()) {
+            Toast.makeText(this.getContext(), getString(R.string.empty_current_password), Toast.LENGTH_LONG).show();
+        } else if (!(BCrypt.verifyer().verify(this.currentPasswordEditText.getText().toString().toCharArray(), this.customerPassword)).verified) {
+            Toast.makeText(this.getContext(), getString(R.string.wrong_current_password), Toast.LENGTH_LONG).show();
         } else if (this.newPasswordEditText.getText().toString().trim().length() > 0) {
             if (!this.newPasswordEditText.getText().toString().trim().equals(this.confirmPasswordEditText.getText().toString().trim())) {
                 Toast.makeText(this.getContext(), getString(R.string.passwords_does_not_match), Toast.LENGTH_LONG).show();
