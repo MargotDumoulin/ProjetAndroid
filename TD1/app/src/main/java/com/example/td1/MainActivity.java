@@ -99,7 +99,12 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
             this.changeMenu(this.menu);
             this.removeInfoFromDrawer();
             this.loggedInCustomer = null;
+
+            // clears nav history
+            navController.popBackStack(R.id.nav_home, true);
+
             navController.navigate(R.id.nav_home);
+
             return true;
 
         }  else if (itemId == R.id.nav_my_account) {
