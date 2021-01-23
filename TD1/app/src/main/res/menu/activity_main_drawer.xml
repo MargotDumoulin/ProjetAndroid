@@ -8,10 +8,7 @@
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/menu_home" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
+
         <item
             android:id="@+id/nav_boutique"
             android:icon="@drawable/ic_menu_camera"
@@ -21,12 +18,8 @@
             android:icon="@drawable/ic_launcher_foreground"
             android:title="@string/menu_map"/>
         <item
-            android:id="@+id/nav_register"
-            android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/register"/>
-        <item
             android:id="@+id/nav_mention_legales"
             android:icon="@drawable/common_full_open_on_phone"
-            android:title="@string/menu_legal_mention"/>
+            android:title="@string/legal_notices"/>
     </group>
 </menu>

@@ -12,7 +12,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.td1.ActivityLogin;
 import com.example.td1.R;
+import com.example.td1.modele.Client;
 
 public class HomeFragment extends Fragment {
 
@@ -20,7 +22,17 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         final TextView textView = root.findViewById(R.id.text_home);
-        textView.setText("Home !");
+
+        if (((ActivityLogin) this.getActivity()).isLoggedIn()) {
+            Client customer = ((ActivityLogin) this.getActivity()).getLoggedInCustomer();
+            String params[] = new String[2];
+            params[0] = customer.getLastname();
+            params[1] = customer.getFirstname();
+            textView.setText(String.format(getString(R.string.welcome_name), params[1], params[0]));
+        } else {
+            textView.setText(getString(R.string.welcome_not_logged_in));
+        }
+
         return root;
     }
 }

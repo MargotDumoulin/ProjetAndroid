@@ -4,6 +4,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -17,6 +20,7 @@ import androidx.fragment.app.Fragment;
 
 import com.android.volley.VolleyError;
 import com.example.td1.ActiviteECommerce;
+import com.example.td1.ActivityLogin;
 import com.example.td1.DAO.CustomerDAO;
 import com.example.td1.DAO.OrderDAO;
 import com.example.td1.PanierAdapter;
@@ -65,6 +69,7 @@ public class MonPanierFragment extends Fragment implements AdapterView.OnItemCli
         this.confirmOrderFloatingActionButton.setOnClickListener(this::onClickCreateOrder);
 
         this.setPanierAdapter();
+
         return root;
     }
 
@@ -89,7 +94,7 @@ public class MonPanierFragment extends Fragment implements AdapterView.OnItemCli
     }
 
     public void onClickCreateOrder(View v) {
-        OrderDAO.registerOrder(this, 1);
+        OrderDAO.registerOrder(this, ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
     }
 
     @Override

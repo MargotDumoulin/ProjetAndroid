@@ -42,8 +42,8 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">Not logged in</string>
+    <string name="nav_header_subtitle">Log in to enjoy the application at its best</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">My basket</string>
     <string name="menu_home">Home</string>
@@ -51,9 +51,11 @@
     <string name="menu_shop">Boutique</string>
     <string name="menu_map">Map</string>
     <string name="register">Register</string>
+    <string name="save">Save</string>
     <string name="firstname">Firstname</string>
     <string name="lastname">Lastname</string>
     <string name="id">Identifier</string>
+    <string name="oldPassword">Old password</string>
     <string name="password">Password</string>
     <string name="confirm">Confirm</string>
     <string name="number">Number</string>
@@ -73,5 +75,15 @@
     <string name="not_a_number">Not a number</string>
     <string name="passwords_does_not_match">Passwords does not match</string>
     <string name="identifier_taken">Identifier taken</string>
-    <string name="menu_legal_mention">Legal notices</string>
+    <string name="my_account">My account</string>
+    <string name="my_basket_tag">my_basket_fragment</string>
+    <string name="register_tag">register_fragment</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="must_fill_all_fields">You must fill all fields</string>
+    <string name="incorrect_login_info">Wrong informations.</string>
+    <string name="welcome_name">Welcome  %1$s %2$s ! !</string>
+    <string name="fullname">%1$s %2$s</string>
+    <string name="welcome_not_logged_in">Welcome !</string>
+    <string name="legal_notices">Legal notices</string>
 </resources>

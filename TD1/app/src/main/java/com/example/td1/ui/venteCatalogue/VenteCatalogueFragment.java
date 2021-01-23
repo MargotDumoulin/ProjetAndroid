@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.android.volley.VolleyError;
+import com.example.td1.ActivityLogin;
 import com.example.td1.ActivityWaitingImage;
 import com.example.td1.DAO.ProductDAO;
 import com.example.td1.ImageFromURL;
@@ -119,7 +120,13 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             this.idCateg = this.getArguments().getInt("id_categ", -1);
 
             if (this.idCateg != -1) {
-                ProductDAO.findAllByCateg(this, this.idCateg, 1);
+                if (((ActivityLogin) this.getActivity()).isLoggedIn()) {
+                    // get products + if they are starred or not
+                    ProductDAO.findAllByCateg(this, this.idCateg, ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
+                } else {
+                    // only get products
+                    ProductDAO.findAllByCateg(this, this.idCateg, -1);
+                }
             } else {
                 // ???
             }
@@ -177,7 +184,13 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             zoomImage();
         }
 
-        this.basketImageButton.setVisibility(View.VISIBLE);
+        if (((ActivityLogin) this.getActivity()).isLoggedIn()) {
+            this.basketImageButton.setVisibility(View.VISIBLE);
+        } else {
+            this.basketImageButton.setVisibility(View.INVISIBLE);
+            this.filledHeartImageButton.setVisibility(View.INVISIBLE);
+            this.outlinedHeartImageButton.setVisibility(View.INVISIBLE);
+        }
 
         if (this.alreadyHaveInfo) {
             this.showPullInfo(this.index);
@@ -225,13 +238,19 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         this.sizeSpinnerArrayAdapter.notifyDataSetChanged();
 
 
-        if (this.listProduitToShow.get(index).getFavori()) {
-            this.filledHeartImageButton.setVisibility(View.VISIBLE);
-            this.outlinedHeartImageButton.setVisibility(View.INVISIBLE);
+        if (((ActivityLogin) this.getActivity()).isLoggedIn()) {
+            if (this.listProduitToShow.get(index).getFavori()) {
+                this.filledHeartImageButton.setVisibility(View.VISIBLE);
+                this.outlinedHeartImageButton.setVisibility(View.INVISIBLE);
+            } else {
+                this.filledHeartImageButton.setVisibility(View.INVISIBLE);
+                this.outlinedHeartImageButton.setVisibility(View.VISIBLE);
+            }
         } else {
             this.filledHeartImageButton.setVisibility(View.INVISIBLE);
-            this.outlinedHeartImageButton.setVisibility(View.VISIBLE);
+            this.outlinedHeartImageButton.setVisibility(View.INVISIBLE);
         }
+
     }
 
     public void showToastAddProductToBasket() {
@@ -356,7 +375,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             }
 
             ((ActiviteECommerce) this.getActivity()).updateBasket(this.basket);
-            Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment).navigate(R.id.menu_gestion_panier);
+            Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment).navigate(R.id.nav_gestion_panier);
             showToastAddProductToBasket();
         });
         // A null listener allows the button to dismiss the dialog and take no further action.
@@ -370,7 +389,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         this.filledHeartImageButton.setVisibility(View.INVISIBLE);
         this.outlinedHeartImageButton.setVisibility(View.VISIBLE);
 
-        ProductDAO.unstarProduct(this, this.listProduitToShow.get(this.index).getId(), 1);
+        ProductDAO.unstarProduct(this, this.listProduitToShow.get(this.index).getId(), ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
         this.listProduitToShow.get(this.index).setFavori(false);
     }
 
@@ -378,7 +397,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         this.filledHeartImageButton.setVisibility(View.VISIBLE);
         this.outlinedHeartImageButton.setVisibility(View.INVISIBLE);
 
-        ProductDAO.starProduct(this, this.listProduitToShow.get(this.index).getId(), 1);
+        ProductDAO.starProduct(this, this.listProduitToShow.get(this.index).getId(), ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
         this.listProduitToShow.get(this.index).setFavori(true);
     }
 
