@@ -89,4 +89,5 @@
     <string name="empty_old_password">Le champ ancien mot de passe ne peut pas être vide.</string>
     <string name="wrong_old_password">Ancien mot de passe est incorrect.</string>
     <string name="customer_successfully_updated">Votre compte a été mis à jour.</string>
+    <string name="legal_notices">Mentions légales</string>
 </resources>
