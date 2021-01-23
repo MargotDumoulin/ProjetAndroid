@@ -2,6 +2,7 @@ package com.example.td1;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
     private Panier basket = new Panier(new ArrayList<Triplet<Produit, Taille, Integer>>());
     private boolean isLoggedIn = false;
 
+    private Menu menu;
+
     private TextView accountNameTextView;
     private TextView accountIdentifierTextView;
 
@@ -55,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_boutique, R.id.nav_map, R.id.nav_register)
+                R.id.nav_home, R.id.nav_boutique, R.id.nav_map)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -64,6 +67,12 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
 
         if (savedInstanceState != null) {
             this.basket = (Panier) savedInstanceState.getSerializable("basket");
+            this.loggedInCustomer = (Client) savedInstanceState.getSerializable("customer");
+            this.isLoggedIn = savedInstanceState.getBoolean("isLoggedIn");
+
+            if (this.isLoggedIn) {
+                this.updateDrawerWithCustomerInfo(this.loggedInCustomer);
+            }
         }
     }
 
@@ -82,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
             return true;
         } else if (itemId == R.id.nav_logout) {
             this.isLoggedIn = false;
+            this.changeMenu(this.menu);
             this.removeInfoFromDrawer();
             this.loggedInCustomer = null;
             navController.navigate(R.id.nav_home);
@@ -130,26 +140,35 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable("basket", this.basket);
+        outState.putSerializable("customer", this.loggedInCustomer);
+        outState.putBoolean("isLoggedIn", this.isLoggedIn);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-
+        this.menu = menu;
         return true;
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+
+        this.changeMenu(menu);
+        return true;
+    }
+
+    public void changeMenu(Menu menu) {
         if (this.isLoggedIn) {
-            menu.getItem(1).setVisible(false);
+            menu.getItem(0).setIcon(R.drawable.ic_baseline_account_circle_24);
+            menu.getItem(1).setEnabled(true);
             menu.getItem(2).setVisible(true);
         } else {
-            menu.getItem(1).setVisible(true);
+            menu.getItem(0).setIcon(R.drawable.ic_person_outline_white_24dp);
+            menu.getItem(1).setEnabled(false);
             menu.getItem(2).setVisible(false);
         }
-        return true;
     }
 
     @Override
@@ -166,7 +185,10 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
     }
 
     @Override
-    public void login() { this.isLoggedIn = true; }
+    public void login() {
+        this.isLoggedIn = true;
+        this.changeMenu(this.menu);
+    }
 
     @Override
     public void updateLoggedInCustomer(Client customer) {
@@ -186,6 +208,7 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
     @Override
     public void logout() {
         this.isLoggedIn = false;
+        this.changeMenu(this.menu);
     }
 
     @Override
@@ -204,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
         String params[] = new String[2];
         params[0] = customer.getLastname();
         params[1] = customer.getFirstname();
-        this.accountNameTextView.setText(String.format(getString(R.string.fullname), params[0], params[1]));
+        this.accountNameTextView.setText(String.format(getString(R.string.fullname), params[1], params[0]));
     }
 
     @Override
