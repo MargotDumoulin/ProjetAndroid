@@ -31,7 +31,7 @@
     <fragment
         android:id="@+id/nav_mention_legales"
         android:name="com.example.td1.ui.legalNotices.LegalNoticesFragment"
-        android:label="@string/menu_legal_mention"
+        android:label="@string/legal_notices"
         tools:layout="@layout/fragment_legal_notices" />
 
     <fragment
