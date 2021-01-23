@@ -85,4 +85,5 @@
     <string name="welcome_name">Welcome  %1$s %2$s ! !</string>
     <string name="fullname">%1$s %2$s</string>
     <string name="welcome_not_logged_in">Welcome !</string>
+    <string name="add_to_cart">Add to cart</string>
 </resources>

@@ -8,107 +8,120 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
+        android:id="@+id/priceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="100dp"
+        android:text="@string/price_example"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/sizeSpinner"
+        app:layout_constraintTop_toBottomOf="@id/productImageView" />
+
+    <Spinner
+        android:theme="@style/spinner_style"
+        android:id="@+id/sizeSpinner"
+        android:entries="@array/taille"
+        android:layout_width="100dp"
+        android:layout_height="@dimen/spinner_height"
+        android:layout_marginRight="80dp"
+        android:layout_marginTop="@dimen/spinner_margin"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/productImageView" />
+
+    <TextView
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="cursive"
+        android:layout_marginTop="@dimen/img_button_margin_bottom"
         android:text="@string/title_example"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="15sp"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/priceTextView" />
 
-        <Button
-            android:theme="@style/button_style"
-            android:id="@+id/prevButton"
-            android:layout_width="@dimen/button_width"
-            android:layout_height="wrap_content"
-            android:text="@string/prev_symbol"
-            android:layout_margin="@dimen/button_margin"
-            app:layout_constraintTop_toTopOf="@id/productImageView"
-            app:layout_constraintBottom_toBottomOf="@id/productImageView"
-            app:layout_constraintRight_toLeftOf="@id/productImageView" />
+    <ImageView
+        android:id="@+id/productImageView"
+        android:scaleType="fitCenter"
+        android:layout_width="@dimen/img_view_width"
+        android:layout_height="@dimen/img_view_height"
+        android:layout_margin="40dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/img" />
 
-        <Button
-            android:theme="@style/button_style"
-            android:id="@+id/nextButton"
-            android:layout_width="@dimen/button_width"
-            android:layout_height="wrap_content"
-            android:text="@string/next_symbol"
-            android:layout_margin="@dimen/button_margin"
-            app:layout_constraintLeft_toRightOf="@id/productImageView"
-            app:layout_constraintTop_toTopOf="@id/productImageView"
-            app:layout_constraintBottom_toBottomOf="@id/productImageView" />
+    <ImageButton
+        android:id="@+id/outlinedHeartImageButton"
+        style="@style/img_button_heart_style"
+        android:layout_width="@dimen/img_button_width"
+        android:layout_height="@dimen/img_button_height"
+        android:layout_marginRight="@dimen/img_button_margin_side"
+        android:layout_marginTop="@dimen/img_button_margin_side"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/baseline_favorite_border_black_18dp" />
 
-        <ImageView
-            android:id="@+id/productImageView"
-            android:scaleType="fitCenter"
-            android:layout_width="@dimen/img_view_width"
-            android:layout_height="@dimen/img_view_height"
-            android:layout_margin="40dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/img" />
+    <ImageButton
+        android:id="@+id/filledHeartImageButton"
+        style="@style/img_button_heart_style"
+        android:layout_width="@dimen/img_button_width"
+        android:layout_height="@dimen/img_button_height"
+        android:layout_marginRight="@dimen/img_button_margin_side"
+        android:layout_marginTop="@dimen/img_button_margin_side"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/baseline_favorite_black_18dp" />
 
-        <Spinner
-            android:theme="@style/spinner_style"
-            android:id="@+id/sizeSpinner"
-            android:entries="@array/taille"
-            android:layout_width="@dimen/spinner_width"
-            android:layout_height="@dimen/spinner_height"
-            android:layout_margin="@dimen/spinner_margin"
-            app:layout_constraintTop_toBottomOf="@id/titleTextView"
-            app:layout_constraintLeft_toRightOf="@+id/descriptionTextView"
-            app:layout_constraintRight_toRightOf="parent" />
+    <TextView
+        android:id="@+id/descriptionTextView"
+        android:layout_width="300sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:maxLines="11"
+        android:padding="7dp"
+        android:textAlignment="center"
+        android:text="@string/description_example"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 
-        <ImageButton
-            android:id="@+id/outlinedHeartImageButton"
-            style="@style/img_button_heart_style"
-            android:layout_width="@dimen/img_button_width"
-            android:layout_height="@dimen/img_button_height"
-            android:layout_marginRight="@dimen/img_button_margin_side"
-            android:layout_marginBottom="@dimen/img_button_margin_bottom"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/cartImageButton"
-            app:srcCompat="@drawable/baseline_favorite_border_black_18dp" />
+    <Button
+        android:id="@+id/cartButton"
+        android:layout_width="200dp"
+        android:layout_margin="@dimen/button_margin"
+        android:layout_height="wrap_content"
+        android:text="@string/add_to_cart"
+        app:layout_constraintBottom_toTopOf="@+id/footerTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageButton
-            android:id="@+id/filledHeartImageButton"
-            style="@style/img_button_heart_style"
-            android:layout_width="@dimen/img_button_width"
-            android:layout_height="@dimen/img_button_height"
-            android:layout_marginRight="@dimen/img_button_margin_side"
-            android:layout_marginBottom="@dimen/img_button_margin_bottom"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/cartImageButton"
-            app:srcCompat="@drawable/baseline_favorite_black_18dp" />
+    <Button
+        android:theme="@style/button_style"
+        android:id="@+id/prevButton"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="wrap_content"
+        android:text="@string/prev_symbol"
+        android:layout_margin="@dimen/button_margin"
+        app:layout_constraintBottom_toTopOf="@id/footerTextView"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
-        <ImageButton
-            android:id="@+id/cartImageButton"
-            android:layout_width="@dimen/img_button_width"
-            android:layout_height="@dimen/img_button_height"
-            android:layout_marginRight="@dimen/img_button_margin_side"
-            android:layout_marginBottom="@dimen/img_button_margin_bottom"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:srcCompat="@drawable/ic_baseline_add_shopping_cart_24" />
-
-        <TextView
-            android:id="@+id/descriptionTextView"
-            android:layout_width="133sp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="30dp"
-            android:maxLines="11"
-            android:padding="7dp"
-            android:textSize="12sp"
-            android:textColor="@color/black"
-            android:text="@string/description_example"
-            app:layout_constraintTop_toBottomOf="@+id/titleTextView"
-            android:background="@drawable/cadre"
-            app:layout_constraintLeft_toLeftOf="parent" />
+    <Button
+        android:theme="@style/button_style"
+        android:id="@+id/nextButton"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="wrap_content"
+        android:text="@string/next_symbol"
+        android:layout_margin="@dimen/button_margin"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/footerTextView" />
 
         <TextView
             android:id="@+id/footerTextView"
@@ -121,18 +134,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />
-
-    <TextView
-        android:id="@+id/priceTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:text="@string/price_example"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/productImageView" />
 
         <View
             android:id="@+id/whiteBlankView"
