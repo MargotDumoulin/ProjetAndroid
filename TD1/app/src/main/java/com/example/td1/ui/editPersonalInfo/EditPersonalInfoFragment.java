@@ -1,11 +1,16 @@
 package com.example.td1.ui.editPersonalInfo;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.example.td1.ActivityLogin;
 import com.example.td1.DAO.CustomerDAO;
@@ -25,13 +30,34 @@ public class EditPersonalInfoFragment extends RegisterFragment {
     private Button saveButton;
     private String customerPassword;
     private Client customer;
+    private boolean hasInfo;
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        root = inflater.inflate(R.layout.fragment_register, container, false);
+
+        this.customer = ((ActivityLogin) this.getActivity()).getLoggedInCustomer();
+        this.customerPassword = this.customer.getPassword();
+        this.hasInfo = false;
+
+        if (savedInstanceState != null) {
+            this.hasInfo = savedInstanceState.getBoolean("hasInfo");
+        }
+
+        return root;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putBoolean("hasInfo", true);
+    }
 
     @Override
     public void onStart() {
         super.onStart();
-
-        this.customer = ((ActivityLogin) this.getActivity()).getLoggedInCustomer();
-        this.customerPassword = this.customer.getPassword();
 
         // Init save btn and current password
         this.saveButton = this.root.findViewById(R.id.saveButton);
@@ -47,15 +73,17 @@ public class EditPersonalInfoFragment extends RegisterFragment {
         this.registerButton.setVisibility(View.INVISIBLE);
         this.passwordEditText.setVisibility(View.INVISIBLE);
 
-        // Fill the fields
-        this.firstnameEditText.setText(this.customer.getFirstname());
-        this.lastnameEditText.setText(this.customer.getLastname());
-        this.identifierEditText.setText(this.customer.getIdentifier());
-        this.addrNumberEditText.setText(String.valueOf(this.customer.getAddrNumber()));
-        this.addrStreetEditText.setText(this.customer.getAddrStreet());
-        this.addrPostalCodeEditText.setText(String.valueOf(this.customer.getAddrPostalCode()));
-        this.addrCityEditText.setText(this.customer.getAddrCity());
-        this.addrCountryEditText.setText(this.customer.getAddrCountry());
+        if (!this.hasInfo) {
+            // Fill the fields
+            this.firstnameEditText.setText(this.customer.getFirstname());
+            this.lastnameEditText.setText(this.customer.getLastname());
+            this.identifierEditText.setText(this.customer.getIdentifier());
+            this.addrNumberEditText.setText(String.valueOf(this.customer.getAddrNumber()));
+            this.addrStreetEditText.setText(this.customer.getAddrStreet());
+            this.addrPostalCodeEditText.setText(String.valueOf(this.customer.getAddrPostalCode()));
+            this.addrCityEditText.setText(this.customer.getAddrCity());
+            this.addrCountryEditText.setText(this.customer.getAddrCountry());
+        }
 
         this.saveButton.setOnClickListener(this::onClickSave);
     }
