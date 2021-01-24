@@ -1,5 +1,7 @@
 package com.example.td1.ui.favoris;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import com.example.td1.ActivityLogin;
 import com.example.td1.DAO.ProductDAO;
 import com.example.td1.ImageFromURL;
 import com.example.td1.R;
+import com.example.td1.WaitingData;
 import com.example.td1.modele.Produit;
 import com.example.td1.modele.Taille;
 import com.example.td1.ui.venteCatalogue.VenteCatalogueFragment;
@@ -26,7 +29,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class FavorisFragment extends VenteCatalogueFragment {
+public class FavorisFragment extends VenteCatalogueFragment implements WaitingData {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -54,6 +57,7 @@ public class FavorisFragment extends VenteCatalogueFragment {
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
             this.productTableLength = savedInstanceState.getInt("productTableLength");
             this.alreadyHaveInfo = true;
+
 
         } else {
             this.listProduitToShow = new ArrayList<Produit>();
@@ -91,7 +95,6 @@ public class FavorisFragment extends VenteCatalogueFragment {
             this.changeImageView(this.index);
         }
 
-
     }
 
     @Override
@@ -107,6 +110,8 @@ public class FavorisFragment extends VenteCatalogueFragment {
 
                     if (i == response.length() - 1) {
                         this.showPullInfo(this.index);
+
+                        this.hideProgressBar();
                     }
 
                 } else {
@@ -129,6 +134,7 @@ public class FavorisFragment extends VenteCatalogueFragment {
             }
 
             if (this.listImgProduitToShow.size() <= 0) {
+                this.hideProgressBar();
                 this.whiteBlankView.setVisibility(View.VISIBLE);
                 this.noProductsTextView.setVisibility(View.VISIBLE);
             }

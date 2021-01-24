@@ -35,6 +35,7 @@ import com.example.td1.DAO.ProductDAO;
 import com.example.td1.ImageFromURL;
 import com.example.td1.ActiviteECommerce;
 import com.example.td1.R;
+import com.example.td1.WaitingData;
 import com.example.td1.modele.Panier;
 import com.example.td1.modele.Produit;
 import com.example.td1.modele.Taille;
@@ -45,7 +46,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class VenteCatalogueFragment extends Fragment implements AdapterView.OnItemSelectedListener, ActivityWaitingImage, com.android.volley.Response.Listener<JSONArray>, com.android.volley.Response.ErrorListener {
+public class VenteCatalogueFragment extends Fragment implements AdapterView.OnItemSelectedListener, ActivityWaitingImage, WaitingData, com.android.volley.Response.Listener<JSONArray>, com.android.volley.Response.ErrorListener {
 
     protected Button prevBtn;
     protected Button nextBtn;
@@ -64,8 +65,8 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
     protected View whiteBackgroundView;
     protected View whiteBlankView;
 
-    private View progressBarView;
-    private ProgressBar progressBar;
+    protected View progressBarView;
+    protected ProgressBar progressBar;
 
     protected ImageButton basketImageButton;
     protected ImageButton filledHeartImageButton;
@@ -228,7 +229,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         outState.putSerializable("basket", this.basket);
         outState.putInt("productTableLength", this.productTableLength);
         outState.putInt("idCateg", this.idCateg);
-        outState.putString("taille", this.sizeSpinner.getSelectedItem().toString());
+        outState.putString("taille", this.sizeSpinner.getSelectedItem().toString()); // FIXME : On orientation change - toString()
 
         if (this.pullImageViewZoomed.getVisibility() == View.VISIBLE) {
             outState.putBoolean("isImageZoomed", true);
@@ -282,6 +283,24 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
                 Toast.makeText(this.getContext(), String.format(getString(R.string.add_article_basket), this.index), Toast.LENGTH_SHORT).show();
                 break;
         }
+    }
+
+    public void hideProgressBar() {
+        this.progressBar.animate().alpha(0.0f).setDuration(250).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+
+        this.progressBarView.animate().alpha(0.0f).setDuration(400).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                progressBarView.setVisibility(View.GONE);
+            }
+        });
     }
 
     public void changeImageView(int index) {
@@ -492,21 +511,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
                     if (i == response.length() - 1) {
                         this.showPullInfo(this.index);
 
-                        this.progressBar.animate().alpha(0.0f).setDuration(250).setListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                super.onAnimationEnd(animation);
-                                progressBar.setVisibility(View.GONE);
-                            }
-                        });
-
-                        this.progressBarView.animate().alpha(0.0f).setDuration(400).setListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                super.onAnimationEnd(animation);
-                                progressBarView.setVisibility(View.GONE);
-                            }
-                        });
+                        this.hideProgressBar();
                     }
 
                 } else {
