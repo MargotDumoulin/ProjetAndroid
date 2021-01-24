@@ -39,13 +39,13 @@
             android:ems="11"
             android:hint="@string/password"
             android:inputType="textPassword"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="@dimen/global_app_margin" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/loginButton"
         android:layout_width="240dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/global_app_margin"
         android:layout_height="wrap_content"
         android:text="@string/login"
         android:backgroundTint="@color/black_from_palette"

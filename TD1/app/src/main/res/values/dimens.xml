@@ -18,6 +18,14 @@
     <dimen name="legal_notices_margin_top">40dp</dimen>
     <dimen name="legal_notices_width_max">500dp</dimen>
     <dimen name="home_text_size">20sp</dimen>
+    <dimen name="register_fields_size">15</dimen>
+    <dimen name="register_margin_top">15dp</dimen>
+    <dimen name="register_margin_bottom">15dp</dimen>
+    <dimen name="register_small_column_size">5</dimen>
+    <dimen name="register_small_column_size_margin_right">25dp</dimen>
+    <dimen name="register_big_column_size">9</dimen>
+    <dimen name="register_width_btn">150dp</dimen>
+    <dimen name="register_title_size">20sp</dimen>
     <dimen name="basket_column_description">120dp</dimen>
     <dimen name="basket_column_quantity">55dp</dimen>
     <dimen name="basket_column_size_price_action">40dp</dimen>

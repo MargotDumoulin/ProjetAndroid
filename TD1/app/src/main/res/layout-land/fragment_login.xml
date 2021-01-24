@@ -39,7 +39,7 @@
             android:ems="11"
             android:hint="@string/password"
             android:inputType="textPassword"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="@dimen/global_app_margin" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -47,6 +47,8 @@
         android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:text="@string/login"
+        android:backgroundTint="@color/black_from_palette"
+        android:layout_marginTop="@dimen/global_app_margin"
         app:layout_constraintBottom_toBottomOf="@+id/signInButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +57,7 @@
 
     <Button
         android:id="@+id/signInButton"
-        style="@style/button_style_text"
+        style="@style/button_style_text_black"
         android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
