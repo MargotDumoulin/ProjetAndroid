@@ -66,8 +66,6 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
             this.basket = (Panier) savedInstanceState.getSerializable("basket");
             this.loggedInCustomer = (Client) savedInstanceState.getSerializable("customer");
             this.isLoggedIn = savedInstanceState.getBoolean("isLoggedIn");
-
-
         }
     }
 
@@ -179,8 +177,6 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
     @Override
     public void updateLoggedInCustomer(Client customer) {
         this.loggedInCustomer = customer;
-        //basket = new Panier(new ArrayList<Triplet<Produit, Taille, Integer>>());
-
     }
 
     @Override
@@ -195,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
 
     @Override
     public void logout() {
-        basket = new Panier(new ArrayList<Triplet<Produit, Taille, Integer>>());
+        this.basket = new Panier(new ArrayList<Triplet<Produit, Taille, Integer>>());
         this.isLoggedIn = false;
         this.changeMenu(this.menu);
         this.removeInfoFromDrawer();
