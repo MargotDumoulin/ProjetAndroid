@@ -67,9 +67,7 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
             this.loggedInCustomer = (Client) savedInstanceState.getSerializable("customer");
             this.isLoggedIn = savedInstanceState.getBoolean("isLoggedIn");
 
-            if (this.isLoggedIn) {
-                this.updateDrawerWithCustomerInfo(this.loggedInCustomer);
-            }
+
         }
     }
 
@@ -79,6 +77,10 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
         View headerView = this.navigationView.getHeaderView(0);
         this.accountNameTextView = (TextView) headerView.findViewById(R.id.accountNameTextView);
         this.accountIdentifierTextView = (TextView) headerView.findViewById(R.id.accountIdentifierTextView);
+
+        if (this.isLoggedIn) {
+            this.updateDrawerWithCustomerInfo(this.loggedInCustomer);
+        }
     }
 
     @Override
