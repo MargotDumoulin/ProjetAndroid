@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
@@ -29,7 +28,6 @@ import com.example.td1.utils.Triplet;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class RegisterFragment extends Fragment implements com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener{
@@ -45,9 +43,12 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
     protected EditText addrCityEditText;
     protected EditText addrCountryEditText;
     protected EditText addrNumberEditText;
+    protected EditText currentPasswordEditText;
+    protected EditText newPasswordEditText;
     protected Button registerButton;
     protected ArrayList<Triplet<String, String, String>> errors; // first = field's name, second = error type, third = error message
     protected ArrayList<Pair<EditText, String>> fields;// first = value, second = field's name
+    protected boolean isLoggedIn;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -61,6 +62,7 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
     @Override
     public void onStart() {
         super.onStart();
+
         this.fields = new ArrayList<Pair<EditText, String>>();
         this.errors = new ArrayList<Triplet<String, String, String>>();
 
@@ -96,6 +98,11 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
 
         this.registerButton = this.root.findViewById(R.id.registerButton);
         this.registerButton.setOnClickListener(this::onClickRegister);
+
+        // Edit personal info only
+        this.currentPasswordEditText = this.root.findViewById(R.id.oldPasswordEditText);
+        this.newPasswordEditText = this.root.findViewById(R.id.newPasswordEditText);
+
     }
 
     public void onClickRegister(View v) {
@@ -130,15 +137,18 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
             }
         }
 
-        CustomerDAO.doesIdentifierAlreadyExist(this, this.identifierEditText.getText().toString());
+        this.validateIdentifierField();
+
     }
 
+    public void validateIdentifierField() {
+        CustomerDAO.doesIdentifierAlreadyExist(this, this.identifierEditText.getText().toString());
+    }
 
     public void testPasswordMatch(EditText inputConfirm, EditText inputPassword) {
         if (TextUtils.isEmpty(inputPassword.getText().toString()) || TextUtils.isEmpty(inputConfirm.getText().toString())) {
             this.errors.add(new Triplet(getString(R.string.password), getString(R.string.empty), getString(R.string.must_field_password_fields)));
         } else {
-
             if (!inputPassword.getText().toString().equals(inputConfirm.getText().toString())) {
                 this.errors.add(new Triplet(getString(R.string.confirm), getString(R.string.passwords_must_match), getString(R.string.passwords_must_match)));
             }
@@ -169,7 +179,7 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
                                 this.firstnameEditText.getText().toString().trim(),
                                 this.lastnameEditText.getText().toString().trim(),
                                 this.identifierEditText.getText().toString().trim(),
-                                this.passwordEditText.getText().toString().trim(),
+                                this.passwordEditText.getText().toString(),
                                 this.addrStreetEditText.getText().toString().trim(),
                                 Integer.parseInt(this.addrPostalCodeEditText.getText().toString()),
                                 Integer.parseInt(this.addrNumberEditText.getText().toString()),

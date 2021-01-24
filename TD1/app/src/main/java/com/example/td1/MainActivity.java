@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
     private TextView accountNameTextView;
     private TextView accountIdentifierTextView;
 
+    private NavigationView navigationView;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +50,7 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-
-
-        View headerView = navigationView.getHeaderView(0);
-        this.accountNameTextView = (TextView) headerView.findViewById(R.id.accountNameTextView);
-        this.accountIdentifierTextView = (TextView) headerView.findViewById(R.id.accountIdentifierTextView);
+        this.navigationView = findViewById(R.id.nav_view);
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -63,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+        NavigationUI.setupWithNavController(this.navigationView, navController);
 
         if (savedInstanceState != null) {
             this.basket = (Panier) savedInstanceState.getSerializable("basket");
@@ -74,6 +71,14 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
                 this.updateDrawerWithCustomerInfo(this.loggedInCustomer);
             }
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        View headerView = this.navigationView.getHeaderView(0);
+        this.accountNameTextView = (TextView) headerView.findViewById(R.id.accountNameTextView);
+        this.accountIdentifierTextView = (TextView) headerView.findViewById(R.id.accountIdentifierTextView);
     }
 
     @Override
@@ -94,15 +99,24 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
             this.changeMenu(this.menu);
             this.removeInfoFromDrawer();
             this.loggedInCustomer = null;
+
+            // clears nav history
+            navController.popBackStack(R.id.nav_home, true);
+
             navController.navigate(R.id.nav_home);
+
             return true;
 
         }  else if (itemId == R.id.nav_my_account) {
             if (currentDestination != null && currentDestination.getId() != R.id.nav_my_account) {
                 if (this.isLoggedIn) {
-                    navController.navigate(R.id.nav_edit_personal_info);
+                    if (currentDestination.getId() != R.id.nav_edit_personal_info) {
+                        navController.navigate(R.id.nav_edit_personal_info);
+                    }
                 } else {
-                    navController.navigate(R.id.nav_login);
+                    if (currentDestination.getId() != R.id.nav_login) {
+                        navController.navigate(R.id.nav_login);
+                    }
                 }
             }
 
@@ -110,27 +124,6 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
         } else {
             return super.onOptionsItemSelected(item);
         }
-//        Fragment currentChildFragment = getChildFragment();
-//        if (item.toString().equals(getString(R.string.my_account)) && currentChildFragment != null) {
-//            Object currentTag = currentChildFragment.getView().getTag();
-//
-//           if (currentTag == null || !currentTag.toString().equals(getString(R.string.register_tag))) {
-//                Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.nav_register);
-//            }
-//
-//            return false;
-//        } else if (item.toString().equals(getString(R.string.my_basket)) && currentChildFragment != null) {
-//            Object currentTag = currentChildFragment.getView().getTag();
-//
-//            if (currentTag == null || !currentTag.toString().equals(getString(R.string.my_basket_tag))) {
-//                Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.nav_gestion_panier);
-//            }
-//
-//            return false;
-//        } else {
-//            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-//            return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
-//        }
     }
 
     public void onSaveInstanceState(Bundle outState) {
