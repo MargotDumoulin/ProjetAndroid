@@ -184,6 +184,8 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
     @Override
     public void updateLoggedInCustomer(Client customer) {
         this.loggedInCustomer = customer;
+        basket = new Panier(new ArrayList<Triplet<Produit, Taille, Integer>>());
+
     }
 
     @Override
