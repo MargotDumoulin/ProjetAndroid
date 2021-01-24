@@ -50,7 +50,7 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_shop">Boutique</string>
     <string name="menu_map">Map</string>
-    <string name="register">Register</string>
+    <string name="register">Sign in</string>
     <string name="save">Save</string>
     <string name="firstname">Firstname</string>
     <string name="lastname">Lastname</string>
@@ -74,8 +74,7 @@
     <string name="identifier_already_exists">Your identifier already exists.</string>
     <string name="empty">Empty</string>
     <string name="not_a_number">Not a number</string>
-    <string name="passwords_does_not_match">Passwords does not match</string>
-    <!--  TODO : PASSWORDS DOES -> DO or PASSWORD does not... -->
+    <string name="passwords_does_not_match">Passwords do not match</string>
     <string name="identifier_taken">Identifier taken</string>
     <string name="my_account">My account</string>
     <string name="my_basket_tag">my_basket_fragment</string>
