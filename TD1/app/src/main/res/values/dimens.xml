@@ -26,6 +26,7 @@
     <dimen name="register_big_column_size">9</dimen>
     <dimen name="register_width_btn">150dp</dimen>
     <dimen name="register_title_size">20sp</dimen>
+    <dimen name="item_list_categories_margin">10dp</dimen>
     <dimen name="basket_column_description">120dp</dimen>
     <dimen name="basket_column_quantity">55dp</dimen>
     <dimen name="basket_column_size_price_action">40dp</dimen>
