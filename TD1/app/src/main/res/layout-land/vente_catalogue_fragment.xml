@@ -105,7 +105,7 @@
         android:layout_margin="@dimen/button_margin"
         android:layout_height="wrap_content"
         android:text="@string/add_to_cart"
-        app:layout_constraintBottom_toTopOf="@+id/footerTextView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:backgroundTint="@color/green_500"
         app:layout_constraintStart_toStartOf="parent" />
@@ -117,7 +117,7 @@
         android:layout_height="wrap_content"
         android:text="@string/prev_symbol"
         android:layout_margin="@dimen/button_margin"
-        app:layout_constraintBottom_toTopOf="@id/footerTextView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <Button
@@ -128,19 +128,7 @@
         android:text="@string/next_symbol"
         android:layout_margin="@dimen/button_margin"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/footerTextView" />
-
-    <TextView
-        android:id="@+id/footerTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/footer"
-        android:paddingLeft="20dp"
-        android:background="@color/red_500"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <View
         android:id="@+id/whiteBlankView"
@@ -160,7 +148,7 @@
         android:layout_height="wrap_content"
         android:text="@string/no_products"
         android:elevation="3dp"
-        app:layout_constraintBottom_toTopOf="@+id/footerTextView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/blankView"
         app:layout_constraintStart_toStartOf="@+id/blankView"
         app:layout_constraintTop_toTopOf="@+id/blankView" />

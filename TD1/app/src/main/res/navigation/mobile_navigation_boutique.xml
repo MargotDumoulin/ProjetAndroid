@@ -21,7 +21,6 @@
         android:label="Catalogue"
         tools:layout="@layout/vente_catalogue_fragment" />
 
-
     <fragment
         android:id="@+id/favorisFragment"
         android:name="com.example.td1.ui.favoris.FavorisFragment"
