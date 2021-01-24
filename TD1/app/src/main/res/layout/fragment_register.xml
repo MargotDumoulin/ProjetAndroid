@@ -73,8 +73,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:ems="12"
-            android:hint="@string/oldPassword"
+            android:ems="15"
+            android:hint="@string/currentPassword"
             android:inputType="textPassword"
             android:visibility="invisible"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -89,6 +89,7 @@
             android:ems="15"
             android:hint="@string/confirm"
             android:inputType="textPassword"
+            android:visibility="invisible"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/passwordEditText" />
@@ -97,12 +98,12 @@
             android:id="@+id/confirmPasswordEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
-            android:ems="6"
+            android:ems="15"
             android:hint="@string/confirm"
             android:inputType="textPassword"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/passwordEditText" />
 
         <TextView
@@ -118,55 +119,82 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/confirmPasswordEditText" />
 
-        <EditText
-            android:id="@+id/numberEditText"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/columnStreetLayout"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleSectionAddressTextView"
+            app:layout_constraintBottom_toTopOf="@+id/columnPostalCodeLayout">
+
+            <EditText
+                android:id="@+id/numberEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="5"
+                android:layout_marginRight="25dp"
+                android:hint="@string/number"
+                android:inputType="number"
+                app:layout_constraintRight_toLeftOf="@id/streetEditText"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                 />
+
+            <EditText
+                android:id="@+id/streetEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="9"
+                android:gravity="start|top"
+                android:hint="@string/street"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/numberEditText"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:ems="5"
-            android:hint="@string/number"
-            android:inputType="number"
-            android:layout_marginRight="25dp"
-            app:layout_constraintEnd_toStartOf="@+id/streetEditText"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleSectionAddressTextView" />
-
-        <EditText
-            android:id="@+id/streetEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="45dp"
-            android:ems="9"
-            android:gravity="start|top"
-            android:hint="@string/street"
+            android:id="@+id/columnPostalCodeLayout"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/numberEditText" />
-
-        <EditText
-            android:id="@+id/postalCodeEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="25dp"
-            android:ems="5"
-            android:hint="@string/postal_code"
-            android:inputType="number"
-            app:layout_constraintEnd_toStartOf="@+id/cityEditText"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/numberEditText" />
+            app:layout_constraintTop_toBottomOf="@id/columnStreetLayout"
+            app:layout_constraintBottom_toTopOf="@+id/countryEditText">
 
-        <EditText
-            android:id="@+id/cityEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="45dp"
-            android:ems="9"
-            android:gravity="start|top"
-            android:hint="@string/city"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/streetEditText" />
+            <EditText
+                android:id="@+id/postalCodeEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="25dp"
+                android:ems="5"
+                android:hint="@string/postal_code"
+                android:inputType="number"
+                app:layout_constraintRight_toLeftOf="@id/cityEditText"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
+            <EditText
+                android:id="@+id/cityEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="9"
+                android:gravity="start|top"
+                android:hint="@string/city"
+                app:layout_constraintLeft_toRightOf="@id/postalCodeEditText"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        
         <EditText
             android:id="@+id/countryEditText"
             android:layout_width="wrap_content"
@@ -176,7 +204,8 @@
             android:hint="@string/country"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/postalCodeEditText" />
+            app:layout_constraintTop_toBottomOf="@+id/columnPostalCodeLayout"
+            app:layout_constraintBottom_toTopOf="@+id/registerButton"/>
 
         <Button
             android:id="@+id/registerButton"
