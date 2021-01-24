@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.td1.ActivityLogin;
 import com.example.td1.DAO.CustomerDAO;
@@ -18,9 +19,11 @@ import com.example.td1.R;
 import com.example.td1.modele.Client;
 import com.example.td1.ui.register.RegisterFragment;
 import com.example.td1.utils.Triplet;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
@@ -30,6 +33,11 @@ public class EditPersonalInfoFragment extends RegisterFragment {
     private String customerPassword;
     private Client customer;
     private boolean hasInfo;
+    private TextInputLayout currentPasswordEditTextLayout;
+    private TextInputLayout newPasswordEditTextLayout;
+    private TextInputLayout passwordEditTextLayout;
+    protected EditText currentPasswordEditText;
+    protected EditText newPasswordEditText;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,12 +73,22 @@ public class EditPersonalInfoFragment extends RegisterFragment {
         this.fields.add(new Pair(this.newPasswordEditText, getString(R.string.newPassword)));
 
         // Change visibility for btns and password
+        this.currentPasswordEditText = this.root.findViewById(R.id.oldPasswordEditText);
+        this.newPasswordEditText = this.root.findViewById(R.id.newPasswordEditText);
+        this.passwordEditTextLayout = this.root.findViewById(R.id.passwordEditTextLayout);
+
         this.saveButton.setVisibility(View.VISIBLE);
-        this.currentPasswordEditText.setVisibility(View.VISIBLE);
-        this.newPasswordEditText.setVisibility(View.VISIBLE);
+
+        this.currentPasswordEditTextLayout = this.root.findViewById(R.id.oldPasswordEditTextLayout);
+        this.currentPasswordEditTextLayout.setVisibility(View.VISIBLE);
+
+        this.newPasswordEditTextLayout = this.root.findViewById(R.id.newPasswordEditTextLayout);
+        this.newPasswordEditTextLayout.setVisibility(View.VISIBLE);
 
         this.registerButton.setVisibility(View.INVISIBLE);
-        this.passwordEditText.setVisibility(View.INVISIBLE);
+
+        this.passwordEditTextLayout.setVisibility(View.INVISIBLE);
+        this.con
 
         if (!this.hasInfo) {
             // Fill the fields
