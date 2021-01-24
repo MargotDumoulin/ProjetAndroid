@@ -138,7 +138,6 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-
         this.changeMenu(menu);
         return true;
     }
