@@ -67,9 +67,7 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
             this.loggedInCustomer = (Client) savedInstanceState.getSerializable("customer");
             this.isLoggedIn = savedInstanceState.getBoolean("isLoggedIn");
 
-            if (this.isLoggedIn) {
-                this.updateDrawerWithCustomerInfo(this.loggedInCustomer);
-            }
+
         }
     }
 
@@ -79,6 +77,10 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
         View headerView = this.navigationView.getHeaderView(0);
         this.accountNameTextView = (TextView) headerView.findViewById(R.id.accountNameTextView);
         this.accountIdentifierTextView = (TextView) headerView.findViewById(R.id.accountIdentifierTextView);
+
+        if (this.isLoggedIn) {
+            this.updateDrawerWithCustomerInfo(this.loggedInCustomer);
+        }
     }
 
     @Override
@@ -99,7 +101,12 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
             this.changeMenu(this.menu);
             this.removeInfoFromDrawer();
             this.loggedInCustomer = null;
+
+            // clears nav history
+            navController.popBackStack(R.id.nav_home, true);
+
             navController.navigate(R.id.nav_home);
+
             return true;
 
         }  else if (itemId == R.id.nav_my_account) {
