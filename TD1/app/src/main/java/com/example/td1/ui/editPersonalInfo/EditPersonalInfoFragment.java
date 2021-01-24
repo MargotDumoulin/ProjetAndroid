@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.example.td1.ActivityLogin;
 import com.example.td1.DAO.CustomerDAO;
@@ -88,7 +89,13 @@ public class EditPersonalInfoFragment extends RegisterFragment {
         this.registerButton.setVisibility(View.INVISIBLE);
 
         this.passwordEditTextLayout.setVisibility(View.INVISIBLE);
-        this.con
+
+        // change constraints for "confirm password" to go under "new password"
+        ConstraintLayout constraintLayout = this.root.findViewById(R.id.registerParentConstraintLayout);
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(constraintLayout);
+        constraintSet.connect(R.id.confirmPasswordEditTextLayout, ConstraintSet.TOP, R.id.newPasswordEditTextLayout, ConstraintSet.BOTTOM,0);
+        constraintSet.applyTo(constraintLayout);
 
         if (!this.hasInfo) {
             // Fill the fields
