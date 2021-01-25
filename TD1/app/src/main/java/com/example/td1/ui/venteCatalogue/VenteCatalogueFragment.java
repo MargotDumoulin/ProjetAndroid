@@ -67,8 +67,6 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
     protected Spinner sizeSpinner;
     protected ArrayAdapter<String> sizeSpinnerArrayAdapter;
 
-    protected static final int MAIN_VENTE = 0;
-
     protected ArrayList<Produit> listProduitToShow;
     protected ArrayList<Bitmap> listImgProduitToShow;
     protected ArrayList<String> listSizesLabels;
