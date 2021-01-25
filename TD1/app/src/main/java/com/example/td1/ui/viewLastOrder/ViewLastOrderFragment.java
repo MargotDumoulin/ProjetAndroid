@@ -75,8 +75,9 @@ public class ViewLastOrderFragment extends Fragment implements com.android.volle
     }
 
     public void updateTexts() {
+        String dateStr = new SimpleDateFormat("dd/MM/yyyy").format(this.order.getDate());
         this.orderNumberTextView.setText(String.format(getString(R.string.order_number), this.order.getId()));
-        this.orderDateTextView.setText(String.format(getString(R.string.order_date), this.order.getDate()));
+        this.orderDateTextView.setText(String.format(getString(R.string.order_date), dateStr));
         this.orderTotalTextView.setText(String.format(getString(R.string.order_total), this.order.getTotal()));
     }
 

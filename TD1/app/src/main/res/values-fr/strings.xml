@@ -96,7 +96,7 @@
     <string name="categories">Categories</string>
     <string name="menu_my_account">Mon compte</string>
     <string name="order_total">Total de la commande : %.2f €</string>
-    <string name="order_date">Passée le %tD</string>
+    <string name="order_date">Passée le %1$s</string>
     <string name="order_number">Commande n°%d</string>
     <string name="last_order_made">Dernière commande passée</string>
 </resources>
