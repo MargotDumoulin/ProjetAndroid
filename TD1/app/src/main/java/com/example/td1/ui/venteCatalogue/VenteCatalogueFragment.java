@@ -391,6 +391,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
 
         ProductDAO.unstarProduct(this, this.listProduitToShow.get(this.index).getId(), ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
         this.listProduitToShow.get(this.index).setFavori(false);
+        Toast.makeText(this.getContext(), getString(R.string.remove_from_favorites), Toast.LENGTH_LONG).show();
     }
 
     public void onClickBtnHeartOutlined(View v) {
@@ -399,6 +400,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
 
         ProductDAO.starProduct(this, this.listProduitToShow.get(this.index).getId(), ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
         this.listProduitToShow.get(this.index).setFavori(true);
+        Toast.makeText(this.getContext(), getString(R.string.add_to_favorites), Toast.LENGTH_LONG).show();
     }
 
     public void onClickImage(View v) {

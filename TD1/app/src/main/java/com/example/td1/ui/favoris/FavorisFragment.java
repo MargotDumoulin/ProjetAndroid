@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -72,9 +73,12 @@ public class FavorisFragment extends VenteCatalogueFragment {
         this.outlinedHeartImageButton.setVisibility(View.VISIBLE);
 
         ProductDAO.unstarProduct(this, this.listProduitToShow.get(this.index).getId(), ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
+
         this.listProduitToShow.get(this.index).setFavori(false);
         this.listProduitToShow.remove(this.index);
         this.listImgProduitToShow.remove(this.index);
+
+        Toast.makeText(this.getContext(), getString(R.string.remove_from_favorites), Toast.LENGTH_LONG).show();
 
         if (this.listProduitToShow.isEmpty()) {
             this.whiteBlankView.setVisibility(View.VISIBLE);

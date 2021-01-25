@@ -91,4 +91,6 @@
     <string name="wrong_current_password">Mot de passe actuel est incorrect.</string>
     <string name="customer_successfully_updated">Votre compte a été mis à jour.</string>
     <string name="legal_notices">Mentions légales</string>
+    <string name="remove_from_favorites">Le produit a été retiré des favoris.</string>
+    <string name="add_to_favorites">Le produit a été ajouté aux favoris.</string>
 </resources>
