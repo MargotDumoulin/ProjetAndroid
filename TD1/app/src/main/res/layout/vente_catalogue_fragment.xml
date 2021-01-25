@@ -60,7 +60,7 @@
 
     <TextView
         android:id="@+id/descriptionTextView"
-        android:layout_width="300sp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:maxLines="4"
@@ -82,8 +82,7 @@
         android:layout_marginTop="@dimen/global_app_margin"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/img" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/outlinedHeartImageButton"
