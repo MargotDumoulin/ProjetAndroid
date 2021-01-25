@@ -159,7 +159,6 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
-
     }
 
     @Override
@@ -200,11 +199,6 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
     @Override
     public void updateBasket(Panier basket) {
         this.basket = basket;
-    }
-
-    public Fragment getChildFragment() {
-        Fragment navHostFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        return navHostFragment == null ? null : navHostFragment.getChildFragmentManager().getFragments().get(0);
     }
 
     @Override
