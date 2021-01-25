@@ -17,9 +17,8 @@ public class OrderLinesAdapter extends ArrayAdapter<OrderLine> {
     private ArrayList<OrderLine> orderLines;
 
     public OrderLinesAdapter(Context context, ArrayList<OrderLine> list) {
-        super(context, 0);
+        super(context, 0, list);
         this.orderLines = list;
-        Log.e("TEST", "on passe dans le constructeur");
     }
 
     public View getView(int index, View convertView, ViewGroup parent) {
