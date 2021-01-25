@@ -40,4 +40,13 @@ public class Order implements Serializable {
         this.date = date;
     }
 
+    public double getTotal() {
+        double total = 0;
+        for (int i = 0; i < this.getLines().size(); i ++) {
+            total = total + this.getLines().get(i).getPrice();
+        }
+
+        return total;
+    }
+
 }

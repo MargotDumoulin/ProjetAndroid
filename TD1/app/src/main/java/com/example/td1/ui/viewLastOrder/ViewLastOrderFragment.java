@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,10 @@ public class ViewLastOrderFragment extends Fragment implements com.android.volle
 
     private ListView lvOrderLines;
 
+    private TextView orderNumberTextView;
+    private TextView orderDateTextView;
+    private TextView orderTotalTextView;
+
     private ArrayAdapter<OrderLine> orderLinesAdapter;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -53,11 +58,26 @@ public class ViewLastOrderFragment extends Fragment implements com.android.volle
         return root;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        this.orderNumberTextView = this.root.findViewById(R.id.orderNumberTextView);
+        this.orderDateTextView = this.root.findViewById(R.id.orderDateTextView);
+        this.orderTotalTextView = this.root.findViewById(R.id.orderTotalTextView);
+    }
+
     public void setOrderLinesAdapter() {
         this.lvOrderLines = this.root.findViewById(R.id.ordersListView);
         this.orderLinesAdapter = new OrderLinesAdapter(this.getContext(), this.order.getLines());
         this.lvOrderLines.setAdapter(this.orderLinesAdapter);
         this.orderLinesAdapter.notifyDataSetChanged();
+    }
+
+    public void updateTexts() {
+        this.orderNumberTextView.setText(String.format(getString(R.string.order_number), this.order.getId()));
+        this.orderDateTextView.setText(String.format(getString(R.string.order_date), this.order.getDate()));
+        this.orderTotalTextView.setText(String.format(getString(R.string.order_total), this.order.getTotal()));
     }
 
     @Override
@@ -90,6 +110,7 @@ public class ViewLastOrderFragment extends Fragment implements com.android.volle
 
             this.order.setLines(lines);
             this.setOrderLinesAdapter();
+            this.updateTexts();
         } catch (JSONException | ParseException e) {
             e.printStackTrace();
         }
