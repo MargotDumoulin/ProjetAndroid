@@ -10,7 +10,7 @@ public class Order implements Serializable {
     private Date date;
     private ArrayList<OrderLine> lines;
 
-    Order(int id, Date orderDate, ArrayList<OrderLine>) {
+    public Order(int id, Date date, ArrayList<OrderLine> lines) {
         this.date = date;
         this.id = id;
         this.lines =  lines;
