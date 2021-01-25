@@ -66,8 +66,6 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
             this.basket = (Panier) savedInstanceState.getSerializable("basket");
             this.loggedInCustomer = (Client) savedInstanceState.getSerializable("customer");
             this.isLoggedIn = savedInstanceState.getBoolean("isLoggedIn");
-
-
         }
     }
 
