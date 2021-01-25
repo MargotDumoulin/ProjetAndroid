@@ -43,6 +43,9 @@ public class ViewLastOrderFragment extends Fragment implements com.android.volle
     private TextView orderNumberTextView;
     private TextView orderDateTextView;
     private TextView orderTotalTextView;
+    private TextView noOrderFoundTextView;
+
+    private View noOrderFoundWhiteBlankView;
 
     private ArrayAdapter<OrderLine> orderLinesAdapter;
 
@@ -65,6 +68,8 @@ public class ViewLastOrderFragment extends Fragment implements com.android.volle
         this.orderNumberTextView = this.root.findViewById(R.id.orderNumberTextView);
         this.orderDateTextView = this.root.findViewById(R.id.orderDateTextView);
         this.orderTotalTextView = this.root.findViewById(R.id.orderTotalTextView);
+        this.noOrderFoundTextView = this.root.findViewById(R.id.noOrderFoundTextView);
+        this.noOrderFoundWhiteBlankView = this.root.findViewById(R.id.noOrderFoundWhiteBlankView);
     }
 
     public void setOrderLinesAdapter() {
@@ -91,27 +96,35 @@ public class ViewLastOrderFragment extends Fragment implements com.android.volle
     public void onResponse(JSONObject response) {
         try {
 
-            String dateStr = response.getString("date_commande");
-            java.util.Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateStr);
+            if (response.has("id_commande")) {
+                String dateStr = response.getString("date_commande");
+                java.util.Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateStr);
 
-            this.order = new Order(
-                    response.getInt("id_commande"),
-                    date,
-                    new ArrayList<OrderLine>()
-            );
+                this.order = new Order(
+                        response.getInt("id_commande"),
+                        date,
+                        new ArrayList<OrderLine>()
+                );
 
-            JSONArray linesJson = response.getJSONArray("lines");
-            ArrayList<OrderLine> lines = new ArrayList<OrderLine>();
+                JSONArray linesJson = response.getJSONArray("lines");
+                ArrayList<OrderLine> lines = new ArrayList<OrderLine>();
 
-            for (int i = 0; i < linesJson.length(); i++) {
-                JSONObject orderLineObj = linesJson.getJSONObject(i);
-                OrderLine orderLine = new OrderLine(orderLineObj.getString("description"), orderLineObj.getString("taille"), orderLineObj.getInt("quantite"), orderLineObj.getDouble("tarif"));
-                lines.add(orderLine);
+                for (int i = 0; i < linesJson.length(); i++) {
+                    JSONObject orderLineObj = linesJson.getJSONObject(i);
+                    OrderLine orderLine = new OrderLine(orderLineObj.getString("description"), orderLineObj.getString("taille"), orderLineObj.getInt("quantite"), orderLineObj.getDouble("tarif"));
+                    lines.add(orderLine);
+                }
+
+                this.order.setLines(lines);
+                this.setOrderLinesAdapter();
+                this.updateTexts();
+                this.noOrderFoundTextView.setVisibility(View.INVISIBLE);
+                this.noOrderFoundWhiteBlankView.setVisibility(View.INVISIBLE);
+            } else {
+                this.noOrderFoundTextView.setVisibility(View.VISIBLE);
+                this.noOrderFoundWhiteBlankView.setVisibility(View.VISIBLE);
             }
 
-            this.order.setLines(lines);
-            this.setOrderLinesAdapter();
-            this.updateTexts();
         } catch (JSONException | ParseException e) {
             e.printStackTrace();
         }

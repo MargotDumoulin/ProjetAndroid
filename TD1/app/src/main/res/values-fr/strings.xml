@@ -99,4 +99,5 @@
     <string name="order_date">Passée le %1$s</string>
     <string name="order_number">Commande n°%d</string>
     <string name="last_order_made">Dernière commande passée</string>
+    <string name="no_orders">Aucune commande n\'a été trouvée.</string>
 </resources>
