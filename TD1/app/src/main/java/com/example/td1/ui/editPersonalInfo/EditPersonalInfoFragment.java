@@ -37,8 +37,8 @@ public class EditPersonalInfoFragment extends RegisterFragment {
     private TextInputLayout currentPasswordEditTextLayout;
     private TextInputLayout newPasswordEditTextLayout;
     private TextInputLayout passwordEditTextLayout;
-    protected EditText currentPasswordEditText;
-    protected EditText newPasswordEditText;
+    private EditText currentPasswordEditText;
+    private EditText newPasswordEditText;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -94,7 +94,7 @@ public class EditPersonalInfoFragment extends RegisterFragment {
         ConstraintLayout constraintLayout = this.root.findViewById(R.id.registerParentConstraintLayout);
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(constraintLayout);
-        constraintSet.connect(R.id.confirmPasswordEditTextLayout, ConstraintSet.TOP, R.id.newPasswordEditTextLayout, ConstraintSet.BOTTOM,0);
+        constraintSet.connect(R.id.confirmPasswordEditTextLayout, ConstraintSet.TOP, R.id.newPasswordEditTextLayout, ConstraintSet.BOTTOM, 0);
         constraintSet.applyTo(constraintLayout);
 
         if (!this.hasInfo) {
