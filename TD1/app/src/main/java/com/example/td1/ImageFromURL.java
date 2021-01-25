@@ -4,8 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Log;
+
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -13,9 +19,11 @@ import java.net.URL;
 public class ImageFromURL extends AsyncTask<String, Void, Object[]> {
 
     ActivityWaitingImage activity;
+    Context context;
 
-    public ImageFromURL(ActivityWaitingImage activity) {
+    public ImageFromURL(ActivityWaitingImage activity, Context context) {
         this.activity = activity;
+        this.context = context;
     }
 
     @Override
@@ -28,7 +36,7 @@ public class ImageFromURL extends AsyncTask<String, Void, Object[]> {
             img = BitmapFactory.decodeStream(in);
             in.close();
         } catch (Exception e) {
-            Log.e("Pas d'image", "penser à utiliser une image générique");
+            img = getBitmapFromVectorDrawable(this.context, R.drawable.ic_male_clothes);
         }
         return new Object[]{img, urlAndIndex[1]};
     }
@@ -36,5 +44,20 @@ public class ImageFromURL extends AsyncTask<String, Void, Object[]> {
     @Override
     protected void onPostExecute(Object[] result) {
         this.activity.getImage(result);
+    }
+
+    public static Bitmap getBitmapFromVectorDrawable(Context context, int drawableId) {
+        Drawable drawable = ContextCompat.getDrawable(context, drawableId);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            drawable = (DrawableCompat.wrap(drawable)).mutate();
+        }
+
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
+                drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+
+        return bitmap;
     }
 }

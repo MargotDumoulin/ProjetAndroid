@@ -36,10 +36,10 @@ public class CategoriesAdapter extends ArrayAdapter<Categorie> {
 
         ImageView img = convertView.findViewById(R.id.visualIlcImageView);
 
-        boolean imgNotFound = this.listImgCategories.size() < index;
+         boolean imgNotFound = this.listImgCategories.size() < index;
 
         if (imgNotFound) {
-            int id = getContext().getResources().getIdentifier("img", "drawable", getContext().getPackageName());
+            int id = R.drawable.ic_male_clothes;
             img.setImageResource(id);
         } else {
             img.setImageBitmap(this.listImgCategories.get(index));

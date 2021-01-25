@@ -66,6 +66,7 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
             Bitmap img = (Bitmap) results[0];
             this.listImgCategories.set(idx, img);
             this.categoriesAdapter.notifyDataSetChanged();
+            this.getViewByPosition(idx, this.lvCategories).findViewById(R.id.categoryProgressBar).setVisibility(View.GONE);
         }
     }
 
@@ -125,7 +126,7 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
         this.listImgCategories = new ArrayList<>();
         for (int i = 0; i < this.listCategories.size(); i++) {
             this.listImgCategories.add(null);
-            ImageFromURL loader = new ImageFromURL(this);
+            ImageFromURL loader = new ImageFromURL(this, getContext());
             loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listCategories.get(i).getImgSrc(), String.valueOf(i));
         }
     }
@@ -136,5 +137,18 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
 
         this.categoriesAdapter = new CategoriesAdapter(this.getContext(), this.listCategories, this.listImgCategories);
         this.lvCategories.setAdapter(this.categoriesAdapter);
+    }
+
+    // https://stackoverflow.com/questions/24811536/android-listview-get-item-view-by-position
+    public View getViewByPosition(int pos, ListView listView) {
+        final int firstListItemPosition = listView.getFirstVisiblePosition();
+        final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
+
+        if (pos < firstListItemPosition || pos > lastListItemPosition ) {
+            return listView.getAdapter().getView(pos, null, listView);
+        } else {
+            final int childIndex = pos - firstListItemPosition;
+            return listView.getChildAt(childIndex);
+        }
     }
 }

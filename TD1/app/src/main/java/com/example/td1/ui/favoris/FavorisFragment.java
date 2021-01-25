@@ -124,7 +124,7 @@ public class FavorisFragment extends VenteCatalogueFragment implements WaitingDa
 
                         for (int y = 0; y < this.listProduitToShow.size(); y++) {
                             this.listImgProduitToShow.add(null);
-                            ImageFromURL loader = new ImageFromURL(this);
+                            ImageFromURL loader = new ImageFromURL(this, getContext());
                             loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(y).getImgSrc(), String.valueOf(y));
                         }
 
