@@ -105,7 +105,7 @@ public class ViewLastOrderFragment extends Fragment implements com.android.volle
 
             for (int i = 0; i < linesJson.length(); i++) {
                 JSONObject orderLineObj = linesJson.getJSONObject(i);
-                OrderLine orderLine = new OrderLine(orderLineObj.getString("description"), orderLineObj.getString("size"), orderLineObj.getInt("quantite"), orderLineObj.getDouble("tarif"));
+                OrderLine orderLine = new OrderLine(orderLineObj.getString("description"), orderLineObj.getString("taille"), orderLineObj.getInt("quantite"), orderLineObj.getDouble("tarif"));
                 lines.add(orderLine);
             }
 
