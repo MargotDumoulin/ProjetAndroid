@@ -33,6 +33,9 @@
     <dimen name="legal_notices_margin_top">40dp</dimen>
     <dimen name="legal_notices_width_max">500dp</dimen>
 
+    <!-- last order sizes -->
+    <dimen name="order_column_description">150dp</dimen>
+
     <!-- home sizes -->
     <dimen name="home_text_size">20sp</dimen>
     <dimen name="home_margin_tv">8dp</dimen>
