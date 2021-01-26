@@ -3,6 +3,8 @@ package com.example.td1.ui.categories;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 
 import android.graphics.Bitmap;
@@ -17,6 +19,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.example.td1.ActivityLogin;
 import com.example.td1.ActivityWaitingImage;
 import com.example.td1.CategoriesAdapter;
 import com.example.td1.ImageFromURL;
@@ -40,6 +43,8 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
 
     private ArrayList<Categorie> listCategories;
     private ArrayList listImgCategories;
+
+    private FloatingActionButton basketValidationActionButton;
 
     private CategoriesAdapter categoriesAdapter;
 
@@ -76,6 +81,15 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
         String categories = this.getActivity().getIntent().getStringExtra("categories");
         if (categories.length() > 0) {
             try {
+                this.basketValidationActionButton = this.root.findViewById(R.id.basketValidationfloatingActionButton);
+                this.basketValidationActionButton.setOnClickListener(this::goToBasketValidation);
+
+                if ( ((ActivityLogin) this.getActivity()).isLoggedIn() ) {
+                    this.basketValidationActionButton.setVisibility(View.VISIBLE);
+                } else {
+                    this.basketValidationActionButton.setVisibility(View.INVISIBLE);
+                }
+
                 this.listCategories = new ArrayList<Categorie>();
                 JSONArray catArray = new JSONArray(categories);
 
@@ -90,6 +104,11 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
                 e.printStackTrace();
             }
         }
+    }
+
+    public void goToBasketValidation(View v) {
+        NavController navController = Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment);
+        navController.navigate(R.id.nav_gestion_panier);
     }
 
     @Override
