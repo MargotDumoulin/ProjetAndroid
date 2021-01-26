@@ -91,6 +91,15 @@
     <string name="wrong_current_password">Mot de passe actuel est incorrect.</string>
     <string name="customer_successfully_updated">Votre compte a été mis à jour.</string>
     <string name="legal_notices">Mentions légales</string>
+    <string name="my_information">Mes infos</string>
+    <string name="my_orders">Mes commandes</string>
+    <string name="categories">Categories</string>
+    <string name="menu_my_account">Mon compte</string>
+    <string name="order_total">Total de la commande : %.2f €</string>
+    <string name="order_date">Passée le %1$s</string>
+    <string name="order_number">Commande n°%d</string>
+    <string name="last_order_made">Dernière commande passée</string>
+    <string name="no_orders">Aucune commande n\'a été trouvée.</string>
     <string name="remove_from_favorites">Le produit a été retiré des favoris.</string>
     <string name="add_to_favorites">Le produit a été ajouté aux favoris.</string>
 </resources>
