@@ -2,7 +2,7 @@ package com.example.td1.modele;
 
 import java.io.Serializable;
 
-public class Taille {
+public class Taille implements Serializable {
 
     private int id;
     private String label;

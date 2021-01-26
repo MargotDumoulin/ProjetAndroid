@@ -74,7 +74,6 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
     protected Panier basket;
 
     protected int index;
-    protected int productTableLength;
     protected int idCateg;
     
     protected String clothingSize = "";
@@ -99,13 +98,12 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
 
         if (savedInstanceState != null) {
             this.listProduitToShow = (ArrayList<Produit>) savedInstanceState.getSerializable("listProduitToShow");
-            this.listImgProduitToShow = (ArrayList<Bitmap>) savedInstanceState.getSerializable("listImgProduitToShow");
+            this.loadImages();
 
             this.basket = ((ActiviteECommerce) this.getActivity()).getBasket();
 
             this.index = savedInstanceState.getInt("index");
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
-            this.productTableLength = savedInstanceState.getInt("productTableLength");
             this.idCateg = savedInstanceState.getInt("idCateg");
             this.clothingSize = savedInstanceState.getString("taille");
             this.alreadyHaveInfo = true;
@@ -208,9 +206,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
 
         outState.putInt("index", this.index);
         outState.putSerializable("listProduitToShow", this.listProduitToShow);
-        outState.putSerializable("listImgProduitToShow", this.listImgProduitToShow);
         outState.putSerializable("basket", this.basket);
-        outState.putInt("productTableLength", this.productTableLength);
         outState.putInt("idCateg", this.idCateg);
         outState.putString("taille", this.sizeSpinner.getSelectedItem().toString());
 
@@ -449,10 +445,16 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
                 this.pullImageView.setImageResource(id);
             } else {
                 this.listImgProduitToShow.set(idx, img);
-                if (idx == 0) {
-                    this.changeImageView(this.index);
-                }
+                this.changeImageView(this.index);
             }
+        }
+    }
+
+    public void loadImages() {
+        for (int y = 0; y < this.listProduitToShow.size(); y++) {
+            this.listImgProduitToShow.add(null);
+            ImageFromURL loader = new ImageFromURL(this);
+            loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(y).getImgSrc(), String.valueOf(y));
         }
     }
 
@@ -484,14 +486,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
                     this.enablePrevNextButtons(this.index);
 
                     if (i == response.length() - 1) {
-
-                        for (int y = 0; y < this.listProduitToShow.size(); y++) {
-                            this.listImgProduitToShow.add(null);
-                            ImageFromURL loader = new ImageFromURL(this);
-                            Log.e("getImage", String.valueOf("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(y).getImgSrc()));
-                            loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(y).getImgSrc(), String.valueOf(y));
-                        }
-
+                        this.loadImages();
                         ProductDAO.findAllSizesByCateg(this, this.idCateg);
                     }
                 }
