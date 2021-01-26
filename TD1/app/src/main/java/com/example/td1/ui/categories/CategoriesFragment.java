@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.example.td1.ActivityLogin;
 import com.example.td1.ActivityWaitingImage;
 import com.example.td1.CategoriesAdapter;
 import com.example.td1.ImageFromURL;
@@ -82,6 +83,12 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
             try {
                 this.basketValidationActionButton = this.root.findViewById(R.id.basketValidationfloatingActionButton);
                 this.basketValidationActionButton.setOnClickListener(this::goToBasketValidation);
+
+                if ( ((ActivityLogin) this.getActivity()).isLoggedIn() ) {
+                    this.basketValidationActionButton.setVisibility(View.VISIBLE);
+                } else {
+                    this.basketValidationActionButton.setVisibility(View.INVISIBLE);
+                }
 
                 this.listCategories = new ArrayList<Categorie>();
                 JSONArray catArray = new JSONArray(categories);
