@@ -43,7 +43,7 @@ public class Order implements Serializable {
     public double getTotal() {
         double total = 0;
         for (int i = 0; i < this.getLines().size(); i ++) {
-            total = total + this.getLines().get(i).getPrice();
+            total = total + ( this.getLines().get(i).getPrice() * this.getLines().get(i).getQuantity() );
         }
 
         return total;
