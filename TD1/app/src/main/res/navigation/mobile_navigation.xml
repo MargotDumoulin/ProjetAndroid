@@ -14,13 +14,19 @@
     <fragment
         android:id="@+id/nav_boutique"
         android:name="com.example.td1.ui.boutique.BoutiqueFragment"
-        android:label="Boutique"
+        android:label="@string/menu_shop"
         tools:layout="@layout/fragment_boutique" />
+
+    <fragment
+        android:id="@+id/nav_my_account"
+        android:name="com.example.td1.ui.myAccount.MyAccountFragment"
+        android:label="@string/menu_my_account"
+        tools:layout="@layout/fragment_my_account" />
 
     <fragment
         android:id="@+id/nav_map"
         android:name="com.example.td1.ui.findUs.FindUsFragment"
-        android:label="Map"
+        android:label="@string/menu_map"
         tools:layout="@layout/fragment_find_us" />
 
     <fragment
@@ -28,6 +34,7 @@
         android:name="com.example.td1.ui.monPanier.MonPanierFragment"
         android:label="@string/my_basket"
         tools:layout="@layout/fragment_mon_panier" />
+
     <fragment
         android:id="@+id/nav_mention_legales"
         android:name="com.example.td1.ui.legalNotices.LegalNoticesFragment"
@@ -38,8 +45,7 @@
         android:id="@+id/nav_edit_personal_info"
         android:name="com.example.td1.ui.editPersonalInfo.EditPersonalInfoFragment"
         android:label="@string/my_account"
-        tools:layout="@layout/fragment_register"
-        />
+        tools:layout="@layout/fragment_register" />
 
     <fragment
         android:id="@+id/nav_register"

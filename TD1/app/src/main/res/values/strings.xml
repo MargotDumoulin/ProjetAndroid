@@ -65,7 +65,7 @@
     <string name="city">City</string>
     <string name="country">Country</string>
     <string name="address">Address</string>
-    <string name="personal_info">Personal informations</string>
+    <string name="personal_info">Personal information</string>
     <string name="empty_field">You must fill the field: %1$s</string>
     <string name="field_is_not_number">The field %1$s must contain a number</string>
     <string name="must_field_password_fields">"You must fill all password related fields."</string>
@@ -82,7 +82,7 @@
     <string name="login">Login</string>
     <string name="logout">Logout</string>
     <string name="must_fill_all_fields">You must fill all fields</string>
-    <string name="incorrect_login_info">Wrong informations.</string>
+    <string name="incorrect_login_info">Wrong information.</string>
     <string name="welcome_name">Welcome  %1$s %2$s !</string>
     <string name="fullname">%1$s %2$s</string>
     <string name="welcome_not_logged_in">Welcome !</string>
@@ -91,4 +91,13 @@
     <string name="wrong_current_password">Current password is incorrect.</string>
     <string name="customer_successfully_updated">Your account has been updated.</string>
     <string name="legal_notices">Legal notices</string>
+    <string name="my_information">My info</string>
+    <string name="my_orders">My orders</string>
+    <string name="categories">Categories</string>
+    <string name="menu_my_account">My account</string>
+    <string name="order_total">Order\'s total : %.2f €</string>
+    <string name="order_date">Made the %1$s</string>
+    <string name="order_number">Order n°%d</string>
+    <string name="last_order_made">Last order made</string>
+    <string name="no_orders">No orders found.</string>
 </resources>

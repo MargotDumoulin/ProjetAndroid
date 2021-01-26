@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
             if (currentDestination != null && currentDestination.getId() != R.id.nav_my_account) {
                 if (this.isLoggedIn) {
                     if (currentDestination.getId() != R.id.nav_edit_personal_info) {
-                        navController.navigate(R.id.nav_edit_personal_info);
+                        navController.navigate(R.id.nav_my_account);
                     }
                 } else {
                     if (currentDestination.getId() != R.id.nav_login) {
