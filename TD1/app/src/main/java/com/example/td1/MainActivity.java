@@ -97,8 +97,8 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
         } else if (itemId == R.id.nav_logout) {
             this.logout();
             // clears nav history
-            navController.popBackStack(R.id.nav_home, true);
-            navController.navigate(R.id.nav_home);
+            navController.popBackStack(R.id.nav_boutique, true);
+            navController.navigate(R.id.nav_boutique);
 
             return true;
 
