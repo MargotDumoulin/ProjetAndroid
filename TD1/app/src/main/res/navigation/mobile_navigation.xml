@@ -38,8 +38,7 @@
         android:id="@+id/nav_edit_personal_info"
         android:name="com.example.td1.ui.editPersonalInfo.EditPersonalInfoFragment"
         android:label="@string/my_account"
-        tools:layout="@layout/fragment_register"
-        />
+        tools:layout="@layout/fragment_register" />
 
     <fragment
         android:id="@+id/nav_register"

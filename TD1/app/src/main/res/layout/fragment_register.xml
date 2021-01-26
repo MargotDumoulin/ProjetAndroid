@@ -30,9 +30,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
-            android:saveEnabled="true"
             android:ems="10"
             android:hint="@string/firstname"
+            android:saveEnabled="true"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titleSectionInfoTextView" />
 
@@ -41,10 +41,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:saveEnabled="true"
             android:layout_marginTop="10dp"
             android:ems="10"
             android:hint="@string/lastname"
+            android:saveEnabled="true"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/firstnameEditText" />
 
@@ -91,8 +91,8 @@
             android:layout_marginStart="20dp"
             android:ems="6"
             android:hint="@string/newPassword"
-            android:visibility="invisible"
             android:inputType="textPassword"
+            android:visibility="invisible"
             app:layout_constraintLeft_toRightOf="@id/passwordEditText"
             app:layout_constraintTop_toTopOf="@id/passwordEditText" />
 

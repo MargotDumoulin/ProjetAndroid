@@ -9,7 +9,7 @@
         android:id="@+id/categoriesFragment"
         android:name="com.example.td1.ui.categories.CategoriesFragment"
         android:label="fragment_categories"
-        tools:layout="@layout/fragment_categories" >
+        tools:layout="@layout/fragment_categories">
         <action
             android:id="@+id/action_nav_boutique_to_venteCatalogueFragment"
             app:destination="@id/venteCatalogueFragment" />
@@ -20,7 +20,6 @@
         android:name="com.example.td1.ui.venteCatalogue.VenteCatalogueFragment"
         android:label="Catalogue"
         tools:layout="@layout/vente_catalogue_fragment" />
-
 
     <fragment
         android:id="@+id/favorisFragment"
