@@ -1,8 +1,8 @@
-package com.example.td1.ui.boutique;
+package com.example.td1.ui.myAccount;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,29 +11,25 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.td1.ActivityLogin;
 import com.example.td1.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class BoutiqueFragment extends Fragment {
+public class MyAccountFragment extends Fragment {
 
-    private BottomNavigationView bnv;
+    protected BottomNavigationView bnv;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_boutique, container, false);
-        this.bnv = root.findViewById(R.id.bnv_boutique);
+        View root = inflater.inflate(R.layout.fragment_my_account, container, false);
+        this.bnv = root.findViewById(R.id.bnv_my_account);
         NavHostFragment navHostFragment =
-                (NavHostFragment) getChildFragmentManager().findFragmentById(R.id.nav_host_fragment_boutique);
-        NavigationUI.setupWithNavController(bnv, navHostFragment.getNavController());
-
+                (NavHostFragment) getChildFragmentManager().findFragmentById(R.id.nav_host_fragment_my_account);
+        NavigationUI.setupWithNavController(this.bnv, navHostFragment.getNavController());
 
         navHostFragment.getNavController().addOnDestinationChangedListener(this::onNavigationChanged);
-
         return root;
     }
 
@@ -42,17 +38,8 @@ public class BoutiqueFragment extends Fragment {
             this.bnv.getMenu().getItem(i).setEnabled(true);
         }
 
-        MenuItem fav = bnv.getMenu().findItem(R.id.favorisFragment);
-        if ( ((ActivityLogin) this.getActivity()).isLoggedIn() ) {
-            fav.setEnabled(true);
-        } else {
-            fav.setEnabled(false);
-        }
-
         MenuItem menuItem = this.bnv.getMenu().findItem(navDestination.getId());
-
-        if (menuItem != null) {
-            menuItem.setEnabled(false);
-        }
+        menuItem.setEnabled(false);
     }
+
 }
