@@ -52,8 +52,8 @@
     <string name="delete">Supp.</string>
     <string name="register">S\'inscrire</string>
     <string name="save">Enregistrer</string>
-    <string name="firstname">Nom</string>
-    <string name="lastname">Prénom</string>
+    <string name="firstname">Prénom</string>
+    <string name="lastname">Nom</string>
     <string name="id">Identifiant</string>
     <string name="currentPassword">Mot de passe actuel</string>
     <string name="newPassword">Nouveau mot de passe</string>

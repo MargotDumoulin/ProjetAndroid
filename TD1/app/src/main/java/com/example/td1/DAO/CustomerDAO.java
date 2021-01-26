@@ -72,7 +72,6 @@ public class CustomerDAO {
     }
 
     public static void getCustomerByIdentifier(Fragment fragment, String identifier) {
-        Log.e("TEST", "we call blib");
         RequestQueue queue = Volley.newRequestQueue(fragment.getContext());
         String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/clients/findByIdentifier.php?identifier=" + identifier;
 
