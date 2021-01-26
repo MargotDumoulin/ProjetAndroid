@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -23,6 +24,8 @@ import com.example.td1.OrderLinesAdapter;
 import com.example.td1.R;
 import com.example.td1.modele.Order;
 import com.example.td1.modele.OrderLine;
+import com.example.td1.ui.myAccount.MyAccountFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,7 +35,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class ViewLastOrderFragment extends Fragment implements com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener {
+public class ViewLastOrderFragment extends MyAccountFragment implements com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener {
 
     private View root;
 
@@ -57,6 +60,7 @@ public class ViewLastOrderFragment extends Fragment implements com.android.volle
         root = inflater.inflate(R.layout.fragment_last_order, container, false);
 
         this.order = null;
+
         OrderDAO.getOrder(this, ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
         return root;
     }

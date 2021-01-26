@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -20,14 +21,18 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BoutiqueFragment extends Fragment {
 
+    private BottomNavigationView bnv;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_boutique, container, false);
-        BottomNavigationView bnv = root.findViewById(R.id.bnv_boutique);
+        this.bnv = root.findViewById(R.id.bnv_boutique);
         NavHostFragment navHostFragment =
                 (NavHostFragment) getChildFragmentManager().findFragmentById(R.id.nav_host_fragment_boutique);
         NavigationUI.setupWithNavController(bnv, navHostFragment.getNavController());
         MenuItem fav = bnv.getMenu().findItem(R.id.favorisFragment);
+
+        navHostFragment.getNavController().addOnDestinationChangedListener(this::onNavigationChanged);
 
         if ( ((ActivityLogin) this.getActivity()).isLoggedIn() ) {
             fav.setEnabled(true);
@@ -36,5 +41,14 @@ public class BoutiqueFragment extends Fragment {
         }
 
         return root;
+    }
+
+    private void onNavigationChanged(NavController navController, NavDestination navDestination, Bundle bundle) {
+        for (int i = 0; i < this.bnv.getMenu().size(); i++) {
+            this.bnv.getMenu().getItem(i).setEnabled(true);
+        }
+
+        MenuItem menuItem = this.bnv.getMenu().findItem(navDestination.getId());
+        menuItem.setEnabled(false);
     }
 }
