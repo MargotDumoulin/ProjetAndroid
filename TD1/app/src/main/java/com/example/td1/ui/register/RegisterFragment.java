@@ -2,6 +2,7 @@ package com.example.td1.ui.register;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -43,8 +44,6 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
     protected EditText addrCityEditText;
     protected EditText addrCountryEditText;
     protected EditText addrNumberEditText;
-    protected EditText currentPasswordEditText;
-    protected EditText newPasswordEditText;
     protected Button registerButton;
     protected ArrayList<Triplet<String, String, String>> errors; // first = field's name, second = error type, third = error message
     protected ArrayList<Pair<EditText, String>> fields;// first = value, second = field's name
@@ -98,11 +97,6 @@ public class RegisterFragment extends Fragment implements com.android.volley.Res
 
         this.registerButton = this.root.findViewById(R.id.registerButton);
         this.registerButton.setOnClickListener(this::onClickRegister);
-
-        // Edit personal info only
-        this.currentPasswordEditText = this.root.findViewById(R.id.oldPasswordEditText);
-        this.newPasswordEditText = this.root.findViewById(R.id.newPasswordEditText);
-
     }
 
     public void onClickRegister(View v) {

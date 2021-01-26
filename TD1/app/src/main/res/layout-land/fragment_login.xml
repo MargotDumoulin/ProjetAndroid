@@ -13,7 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.300">
+        app:layout_constraintVertical_bias="0.170">
 
         <EditText
             android:id="@+id/identifierLoginEditText"
@@ -45,10 +45,10 @@
     <Button
         android:id="@+id/loginButton"
         android:layout_width="240dp"
-        android:layout_marginTop="@dimen/global_app_margin"
         android:layout_height="wrap_content"
         android:text="@string/login"
         android:backgroundTint="@color/black_from_palette"
+        android:layout_marginTop="@dimen/global_app_margin"
         app:layout_constraintBottom_toBottomOf="@+id/signInButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

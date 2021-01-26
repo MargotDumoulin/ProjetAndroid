@@ -45,6 +45,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
 
     protected Button prevBtn;
     protected Button nextBtn;
+    protected Button basketImageButton;
 
     protected TextView priceTextView;
     protected TextView descriptionTextView;
@@ -60,7 +61,6 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
     protected View whiteBackgroundView;
     protected View whiteBlankView;
 
-    protected ImageButton basketImageButton;
     protected ImageButton filledHeartImageButton;
     protected ImageButton outlinedHeartImageButton;
 
@@ -143,7 +143,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         this.nextBtn = this.root.findViewById(R.id.nextButton);
 
         // -- IMAGEBUTTONS --
-        this.basketImageButton = this.root.findViewById(R.id.cartImageButton);
+        this.basketImageButton = this.root.findViewById(R.id.cartButton);
         this.filledHeartImageButton = this.root.findViewById(R.id.filledHeartImageButton);
         this.outlinedHeartImageButton = this.root.findViewById(R.id.outlinedHeartImageButton);
 
@@ -176,8 +176,8 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         this.whiteBlankView = this.root.findViewById(R.id.whiteBlankView);
 
         // -- ADAPTER --
-        this.sizeSpinnerArrayAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, this.listSizesLabels);
-        this.sizeSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        this.sizeSpinnerArrayAdapter = new ArrayAdapter<String>(this.getContext(), R.layout.spinner_sizes, this.listSizesLabels);
+        this.sizeSpinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_sizes);
         this.sizeSpinner.setAdapter(this.sizeSpinnerArrayAdapter);
 
         if (this.isImageZoomed) {
