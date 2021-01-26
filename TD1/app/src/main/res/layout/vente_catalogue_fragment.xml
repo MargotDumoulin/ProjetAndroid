@@ -8,29 +8,32 @@
 
     <TextView
         android:id="@+id/priceTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
+        android:layout_width="100dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="10dp"
         android:text="@string/price_example"
         android:textColor="@color/black"
+        android:gravity="center"
         android:textSize="14sp"
-        app:layout_constraintBaseline_toBaselineOf="@id/sizeSpinner"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/sizeSpinner" />
+        app:layout_constraintTop_toBottomOf="@id/productImageView"
+        app:layout_constraintRight_toLeftOf="@id/sizeSpinner"
+        />
 
     <Spinner
         android:id="@+id/sizeSpinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_width="100dp"
+        android:layout_height="25dp"
         android:layout_marginTop="10dp"
         android:entries="@array/taille"
         android:theme="@style/spinner_style"
         android:visibility="invisible"
-        app:layout_constraintLeft_toRightOf="@id/priceTextView"
+        android:gravity="center"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/productImageView" />
+        app:layout_constraintTop_toBottomOf="@id/productImageView"
+        app:layout_constraintLeft_toRightOf="@id/priceTextView"
+        />
 
     <TextView
         android:id="@+id/titleTextView"
@@ -61,12 +64,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 
+    <ProgressBar
+        android:id="@+id/loadingImageView"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        app:layout_constraintLeft_toLeftOf="@id/productImageView"
+        app:layout_constraintRight_toRightOf="@id/productImageView"
+        app:layout_constraintTop_toTopOf="@id/productImageView"
+        app:layout_constraintBottom_toBottomOf="@id/productImageView"
+        />
+
     <ImageView
         android:id="@+id/productImageView"
         android:layout_width="@dimen/img_view_width"
         android:layout_height="@dimen/img_view_height"
         android:layout_marginTop="@dimen/global_app_margin"
         android:scaleType="fitCenter"
+        android:visibility="invisible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -76,7 +90,8 @@
         android:layout_width="@dimen/img_button_width"
         android:layout_height="@dimen/img_button_height"
         android:layout_marginTop="@dimen/img_button_margin_side"
-        android:layout_marginRight="@dimen/img_button_margin_side"
+        android:layout_marginEnd="@dimen/img_button_margin_side"
+        android:visibility="invisible"
         android:background="@android:color/transparent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -87,7 +102,8 @@
         android:layout_width="@dimen/img_button_width"
         android:layout_height="@dimen/img_button_height"
         android:layout_marginTop="@dimen/img_button_margin_side"
-        android:layout_marginRight="@dimen/img_button_margin_side"
+        android:layout_marginEnd="@dimen/img_button_margin_side"
+        android:visibility="invisible"
         android:background="@android:color/transparent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -100,6 +116,7 @@
         android:layout_margin="@dimen/button_margin"
         android:backgroundTint="@color/green_500"
         android:text="@string/add_to_cart"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -109,6 +126,7 @@
         android:layout_width="@dimen/button_width"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/button_margin"
+        android:visibility="invisible"
         android:text="@string/prev_symbol"
         android:theme="@style/button_style"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -120,6 +138,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/button_margin"
         android:text="@string/next_symbol"
+        android:visibility="invisible"
         android:theme="@style/button_style"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
@@ -176,13 +195,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:elevation="4dp" />
+        android:elevation="50dp" />
 
     <ProgressBar
         android:id="@+id/loading"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:translationZ="4dp"
+        android:translationZ="51dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

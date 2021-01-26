@@ -47,7 +47,7 @@
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintRight_toLeftOf="@id/filledHeartImageButton"
+            app:layout_constraintRight_toLeftOf="@id/nextButton"
             app:layout_constraintLeft_toLeftOf="@id/priceTextView"
             app:layout_constraintTop_toBottomOf="@id/priceTextView" />
 
@@ -65,6 +65,16 @@
             app:layout_constraintLeft_toLeftOf="@id/titleTextView"
             app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 
+        <ProgressBar
+            android:id="@+id/loadingImageView"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            app:layout_constraintLeft_toLeftOf="@id/productImageView"
+            app:layout_constraintRight_toRightOf="@id/productImageView"
+            app:layout_constraintTop_toTopOf="@id/productImageView"
+            app:layout_constraintBottom_toBottomOf="@id/productImageView"
+            />
+
         <ImageView
             android:id="@+id/productImageView"
             android:layout_width="@dimen/img_view_width"
@@ -81,6 +91,7 @@
             android:layout_height="@dimen/img_button_height"
             android:layout_marginTop="@dimen/img_button_margin_side"
             android:layout_marginEnd="@dimen/img_button_margin_side"
+            android:visibility="invisible"
             android:background="@android:color/transparent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -92,6 +103,7 @@
             android:layout_height="@dimen/img_button_height"
             android:layout_marginTop="@dimen/img_button_margin_side"
             android:layout_marginEnd="@dimen/img_button_margin_side"
+            android:visibility="invisible"
             android:background="@android:color/transparent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -104,6 +116,7 @@
             android:layout_margin="@dimen/button_margin"
             android:backgroundTint="@color/green_500"
             android:text="@string/add_to_cart"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/prevButton"
@@ -116,6 +129,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/button_margin"
             android:text="@string/prev_symbol"
+            android:visibility="invisible"
             android:theme="@style/button_style"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />
@@ -126,6 +140,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/button_margin"
             android:text="@string/next_symbol"
+            android:visibility="invisible"
             android:theme="@style/button_style"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent" />

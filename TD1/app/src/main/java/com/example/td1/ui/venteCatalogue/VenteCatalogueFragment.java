@@ -68,6 +68,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
 
     protected View progressBarView;
     protected ProgressBar progressBar;
+    protected ProgressBar progressBarImage;
 
     protected ImageButton filledHeartImageButton;
     protected ImageButton outlinedHeartImageButton;
@@ -181,6 +182,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         this.whiteBackgroundView = this.root.findViewById(R.id.blankView);
         this.whiteBlankView = this.root.findViewById(R.id.whiteBlankView);
 
+        this.progressBarImage = this.root.findViewById(R.id.loadingImageView);
         this.progressBarView = this.root.findViewById(R.id.loadingView);
         this.progressBar = this.root.findViewById(R.id.loading);
 
@@ -249,8 +251,18 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             this.listSizesLabels = new ArrayList<String>();
         }
         this.listSizesLabels.addAll(this.listProduitToShow.get(this.index).getSizesLabels());
-        this.sizeSpinner.setVisibility(View.VISIBLE);
         this.sizeSpinnerArrayAdapter.notifyDataSetChanged();
+
+        this.filledHeartImageButton.setVisibility(View.VISIBLE);
+        this.pullImageView.setVisibility(View.VISIBLE);
+        this.sizeSpinner.setVisibility(View.VISIBLE);
+        this.prevBtn.setVisibility(View.VISIBLE);
+        this.nextBtn.setVisibility(View.VISIBLE);
+        this.progressBarImage.setVisibility(View.INVISIBLE);
+
+        if (((ActivityLogin) this.getActivity()).isLoggedIn()) {
+            this.basketImageButton.setVisibility(View.VISIBLE);
+        }
 
         if (((ActivityLogin) this.getActivity()).isLoggedIn()) {
             if (this.listProduitToShow.get(index).getFavori()) {
@@ -481,7 +493,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             boolean imgNotFound = this.listImgProduitToShow.size() < index;
 
             if (imgNotFound) {
-                int id = getResources().getIdentifier("img", "drawable", getActivity().getPackageName());
+                int id = R.drawable.ic_male_clothes;
                 this.pullImageView.setImageResource(id);
             } else {
                 this.listImgProduitToShow.set(idx, img);
