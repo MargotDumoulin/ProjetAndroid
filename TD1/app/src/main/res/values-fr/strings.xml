@@ -100,4 +100,6 @@
     <string name="order_number">Commande n°%d</string>
     <string name="last_order_made">Dernière commande passée</string>
     <string name="no_orders">Aucune commande n\'a été trouvée.</string>
+    <string name="remove_from_favorites">Le produit a été retiré des favoris.</string>
+    <string name="add_to_favorites">Le produit a été ajouté aux favoris.</string>
 </resources>

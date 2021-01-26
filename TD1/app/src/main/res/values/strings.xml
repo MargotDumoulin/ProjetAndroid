@@ -100,4 +100,6 @@
     <string name="order_number">Order n°%d</string>
     <string name="last_order_made">Last order made</string>
     <string name="no_orders">No orders found.</string>
+    <string name="remove_from_favorites">Product removed from favorites.</string>
+    <string name="add_to_favorites">Product added to favorites.</string>
 </resources>
