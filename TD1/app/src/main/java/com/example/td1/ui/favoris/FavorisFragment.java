@@ -45,7 +45,7 @@ public class FavorisFragment extends VenteCatalogueFragment {
             this.listProduitToShow.add(productToAdd);
         }
 
-        if (savedInstanceState != null) {
+        if (savedInstanceState != null && !savedInstanceState.getBoolean("noProducts")) {
             this.listProduitToShow = (ArrayList<Produit>) savedInstanceState.getSerializable("listProduitToShow");
             this.loadImages();
 
