@@ -204,16 +204,21 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putInt("index", this.index);
-        outState.putSerializable("listProduitToShow", this.listProduitToShow);
-        outState.putSerializable("basket", this.basket);
-        outState.putInt("idCateg", this.idCateg);
-        outState.putString("taille", this.sizeSpinner.getSelectedItem().toString());
+        if (this.listProduitToShow != null && this.listProduitToShow.size() > 0) {
+                outState.putInt("index", this.index);
+                outState.putSerializable("listProduitToShow", this.listProduitToShow);
+                outState.putSerializable("basket", this.basket);
+                outState.putInt("idCateg", this.idCateg);
+                outState.putString("taille", this.sizeSpinner.getSelectedItem().toString());
+                outState.putBoolean("noProducts", false);
 
-        if (this.pullImageViewZoomed.getVisibility() == View.VISIBLE) {
-            outState.putBoolean("isImageZoomed", true);
+                if (this.pullImageViewZoomed.getVisibility() == View.VISIBLE) {
+                    outState.putBoolean("isImageZoomed", true);
+                } else {
+                    outState.putBoolean("isImageZoomed", false);
+                }
         } else {
-            outState.putBoolean("isImageZoomed", false);
+            outState.putBoolean("noProducts", true);
         }
     }
 
