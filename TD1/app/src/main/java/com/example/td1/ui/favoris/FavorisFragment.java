@@ -46,13 +46,12 @@ public class FavorisFragment extends VenteCatalogueFragment {
 
         if (savedInstanceState != null) {
             this.listProduitToShow = (ArrayList<Produit>) savedInstanceState.getSerializable("listProduitToShow");
-            this.listImgProduitToShow = (ArrayList<Bitmap>) savedInstanceState.getSerializable("listImgProduitToShow");
+            this.loadImages();
 
             this.basket = ((ActiviteECommerce) this.getActivity()).getBasket();
 
             this.index = savedInstanceState.getInt("index");
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
-            this.productTableLength = savedInstanceState.getInt("productTableLength");
             this.alreadyHaveInfo = true;
 
         } else {
