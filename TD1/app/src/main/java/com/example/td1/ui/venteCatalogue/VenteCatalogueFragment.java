@@ -445,9 +445,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
                 this.pullImageView.setImageResource(id);
             } else {
                 this.listImgProduitToShow.set(idx, img);
-                if (idx == 0) {
-                    this.changeImageView(this.index);
-                }
+                this.changeImageView(this.index);
             }
         }
     }
