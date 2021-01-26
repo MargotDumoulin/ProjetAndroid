@@ -10,19 +10,18 @@
         android:id="@+id/categoriesListView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/footerTextView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/footerTextView"
-        android:layout_width="match_parent"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/basketValidationfloatingActionButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/red_500"
-        android:text="@string/made_in_2021"
-        android:textColor="@color/white"
+        android:layout_margin="@dimen/global_app_margin"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/ic_shopping_basket_white_36dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

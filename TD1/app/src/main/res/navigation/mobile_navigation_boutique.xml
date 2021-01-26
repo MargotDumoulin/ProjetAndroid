@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/categoriesFragment"
         android:name="com.example.td1.ui.categories.CategoriesFragment"
-        android:label="fragment_categories"
+        android:label="@string/categories"
         tools:layout="@layout/fragment_categories">
         <action
             android:id="@+id/action_nav_boutique_to_venteCatalogueFragment"
@@ -18,13 +18,13 @@
     <fragment
         android:id="@+id/venteCatalogueFragment"
         android:name="com.example.td1.ui.venteCatalogue.VenteCatalogueFragment"
-        android:label="Catalogue"
+        android:label="@string/catalog_mode"
         tools:layout="@layout/vente_catalogue_fragment" />
 
     <fragment
         android:id="@+id/favorisFragment"
         android:name="com.example.td1.ui.favoris.FavorisFragment"
-        android:label="Favoris"
+        android:label="@string/favorite_mode"
         tools:layout="@layout/vente_catalogue_fragment" />
 
 </navigation>

@@ -66,8 +66,6 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
             this.basket = (Panier) savedInstanceState.getSerializable("basket");
             this.loggedInCustomer = (Client) savedInstanceState.getSerializable("customer");
             this.isLoggedIn = savedInstanceState.getBoolean("isLoggedIn");
-
-
         }
     }
 
@@ -97,23 +95,18 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
 
             return true;
         } else if (itemId == R.id.nav_logout) {
-            this.isLoggedIn = false;
-            this.changeMenu(this.menu);
-            this.removeInfoFromDrawer();
-            this.loggedInCustomer = null;
-
+            this.logout();
             // clears nav history
-            navController.popBackStack(R.id.nav_home, true);
-
-            navController.navigate(R.id.nav_home);
+            navController.popBackStack(R.id.nav_boutique, true);
+            navController.navigate(R.id.nav_boutique);
 
             return true;
 
-        }  else if (itemId == R.id.nav_my_account) {
+        } else if (itemId == R.id.nav_my_account) {
             if (currentDestination != null && currentDestination.getId() != R.id.nav_my_account) {
                 if (this.isLoggedIn) {
                     if (currentDestination.getId() != R.id.nav_edit_personal_info) {
-                        navController.navigate(R.id.nav_edit_personal_info);
+                        navController.navigate(R.id.nav_my_account);
                     }
                 } else {
                     if (currentDestination.getId() != R.id.nav_login) {
@@ -145,7 +138,6 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-
         this.changeMenu(menu);
         return true;
     }
@@ -167,7 +159,6 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
-
     }
 
     @Override
@@ -198,18 +189,16 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
 
     @Override
     public void logout() {
+        this.basket = new Panier(new ArrayList<Triplet<Produit, Taille, Integer>>());
         this.isLoggedIn = false;
         this.changeMenu(this.menu);
+        this.removeInfoFromDrawer();
+        this.loggedInCustomer = null;
     }
 
     @Override
     public void updateBasket(Panier basket) {
         this.basket = basket;
-    }
-
-    public Fragment getChildFragment() {
-        Fragment navHostFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        return navHostFragment == null ? null : navHostFragment.getChildFragmentManager().getFragments().get(0);
     }
 
     @Override

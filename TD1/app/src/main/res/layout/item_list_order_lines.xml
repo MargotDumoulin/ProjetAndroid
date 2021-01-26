@@ -4,24 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <TextView
         android:id="@+id/productTitleIlpTextView"
-        android:layout_width="@dimen/basket_column_description"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:text="@string/description"
-        android:textAlignment="textStart"
+        android:textAlignment="center"
         android:textSize="@dimen/basket_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/productQuantityIlpTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/productQuantityIlpTextView"
-        android:layout_width="@dimen/basket_column_quantity"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/quantity"
-        android:textAlignment="textStart"
+        android:textAlignment="center"
         android:textSize="@dimen/basket_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/productSizeIlpTextView"
@@ -30,48 +30,26 @@
 
     <TextView
         android:id="@+id/productPriceIlpTextView"
-        android:layout_width="@dimen/basket_column_size_price_action"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/price"
-        android:textAlignment="textStart"
+        android:textAlignment="center"
         android:textSize="@dimen/basket_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/editImageButton"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/productSizeIlpTextView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/productSizeIlpTextView"
-        android:layout_width="@dimen/basket_column_size_price_action"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/size"
-        android:textAlignment="textStart"
+        android:textAlignment="center"
         android:textSize="@dimen/basket_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/productPriceIlpTextView"
         app:layout_constraintStart_toEndOf="@+id/productQuantityIlpTextView"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/editImageButton"
-        android:layout_width="@dimen/basket_column_size_price_action"
-        android:layout_height="@dimen/img_button_height"
-        android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/deleteImageButton"
-        app:layout_constraintStart_toEndOf="@+id/productPriceIlpTextView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/baseline_create_black_18dp" />
-
-    <ImageButton
-        android:id="@+id/deleteImageButton"
-        android:layout_width="@dimen/basket_column_size_price_action"
-        android:layout_height="@dimen/img_button_height"
-        android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editImageButton"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/baseline_delete_black_18dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

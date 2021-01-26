@@ -5,10 +5,12 @@ import android.animation.AnimatorListenerAdapter;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -49,13 +51,12 @@ public class FavorisFragment extends VenteCatalogueFragment implements WaitingDa
 
         if (savedInstanceState != null) {
             this.listProduitToShow = (ArrayList<Produit>) savedInstanceState.getSerializable("listProduitToShow");
-            this.listImgProduitToShow = (ArrayList<Bitmap>) savedInstanceState.getSerializable("listImgProduitToShow");
+            this.loadImages();
 
             this.basket = ((ActiviteECommerce) this.getActivity()).getBasket();
 
             this.index = savedInstanceState.getInt("index");
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
-            this.productTableLength = savedInstanceState.getInt("productTableLength");
             this.alreadyHaveInfo = true;
 
 
@@ -76,9 +77,12 @@ public class FavorisFragment extends VenteCatalogueFragment implements WaitingDa
         this.outlinedHeartImageButton.setVisibility(View.VISIBLE);
 
         ProductDAO.unstarProduct(this, this.listProduitToShow.get(this.index).getId(), ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
+
         this.listProduitToShow.get(this.index).setFavori(false);
         this.listProduitToShow.remove(this.index);
         this.listImgProduitToShow.remove(this.index);
+
+        Toast.makeText(this.getContext(), getString(R.string.remove_from_favorites), Toast.LENGTH_LONG).show();
 
         if (this.listProduitToShow.isEmpty()) {
             this.whiteBlankView.setVisibility(View.VISIBLE);
@@ -110,7 +114,6 @@ public class FavorisFragment extends VenteCatalogueFragment implements WaitingDa
 
                     if (i == response.length() - 1) {
                         this.showPullInfo(this.index);
-
                         this.hideProgressBar();
                     }
 
@@ -121,7 +124,6 @@ public class FavorisFragment extends VenteCatalogueFragment implements WaitingDa
                     this.enablePrevNextButtons(this.index);
 
                     if (i == response.length() - 1) {
-
                         for (int y = 0; y < this.listProduitToShow.size(); y++) {
                             this.listImgProduitToShow.add(null);
                             ImageFromURL loader = new ImageFromURL(this, getContext());
@@ -134,9 +136,10 @@ public class FavorisFragment extends VenteCatalogueFragment implements WaitingDa
             }
 
             if (this.listImgProduitToShow.size() <= 0) {
-                this.hideProgressBar();
+                this.pullImageView.setVisibility(View.INVISIBLE);
                 this.whiteBlankView.setVisibility(View.VISIBLE);
                 this.noProductsTextView.setVisibility(View.VISIBLE);
+                this.hideProgressBar();
             }
 
         } catch (JSONException e) {

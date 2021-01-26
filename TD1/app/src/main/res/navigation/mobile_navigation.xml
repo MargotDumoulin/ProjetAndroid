@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_boutique">
 
     <fragment
         android:id="@+id/nav_home"
@@ -14,13 +14,19 @@
     <fragment
         android:id="@+id/nav_boutique"
         android:name="com.example.td1.ui.boutique.BoutiqueFragment"
-        android:label="Boutique"
+        android:label="@string/menu_shop"
         tools:layout="@layout/fragment_boutique" />
+
+    <fragment
+        android:id="@+id/nav_my_account"
+        android:name="com.example.td1.ui.myAccount.MyAccountFragment"
+        android:label="@string/menu_my_account"
+        tools:layout="@layout/fragment_my_account" />
 
     <fragment
         android:id="@+id/nav_map"
         android:name="com.example.td1.ui.findUs.FindUsFragment"
-        android:label="Map"
+        android:label="@string/menu_map"
         tools:layout="@layout/fragment_find_us" />
 
     <fragment
@@ -28,6 +34,7 @@
         android:name="com.example.td1.ui.monPanier.MonPanierFragment"
         android:label="@string/my_basket"
         tools:layout="@layout/fragment_mon_panier" />
+
     <fragment
         android:id="@+id/nav_mention_legales"
         android:name="com.example.td1.ui.legalNotices.LegalNoticesFragment"
@@ -51,6 +58,5 @@
         android:name="com.example.td1.ui.login.LoginFragment"
         android:label="@string/login"
         tools:layout="@layout/fragment_login" />
-
 
 </navigation>

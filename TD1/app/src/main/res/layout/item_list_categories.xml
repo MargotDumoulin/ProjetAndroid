@@ -18,9 +18,10 @@
         android:id="@+id/visualIlcImageView"
         android:layout_width="50dp"
         android:layout_height="70dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginLeft="@dimen/item_list_categories_margin"
+        android:layout_marginRight="@dimen/item_list_categories_margin"
         android:padding="5dp"
-        android:scaleType="centerInside"
+        android:scaleType="fitCenter"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,7 +29,7 @@
         android:id="@+id/titleIlcTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
+        android:layout_marginHorizontal="@dimen/item_list_categories_margin"
         android:text="@string/description"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/visualIlcImageView"

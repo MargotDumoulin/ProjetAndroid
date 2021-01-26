@@ -41,4 +41,18 @@ public class OrderDAO {
         // Add the request to the RequestQueue
         queue.add(jsonRequest);
     }
+
+    public static void getOrder(Fragment fragment, int customer) {
+
+        RequestQueue queue = Volley.newRequestQueue(fragment.getContext());
+        String url = "https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/PHP/commandes/findOrder.php?customer=" + customer;
+
+        // Request a string response from the provided URL.
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                (com.android.volley.Response.Listener<JSONObject>) fragment,
+                (Response.ErrorListener) fragment);
+
+        // Add the request to the RequestQueue
+        queue.add(jsonRequest);
+    }
 }

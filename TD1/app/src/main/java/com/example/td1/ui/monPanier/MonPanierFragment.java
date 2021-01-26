@@ -69,6 +69,7 @@ public class MonPanierFragment extends Fragment implements AdapterView.OnItemCli
         this.confirmOrderFloatingActionButton.setOnClickListener(this::onClickCreateOrder);
 
         this.setPanierAdapter();
+        this.changeFloatingButtonVisibility();
 
         return root;
     }
@@ -82,6 +83,15 @@ public class MonPanierFragment extends Fragment implements AdapterView.OnItemCli
         this.panierAdapter.notifyDataSetChanged();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void changeFloatingButtonVisibility() {
+        if (this.basket.getBasketTotal() == 0) {
+            this.confirmOrderFloatingActionButton.setVisibility(View.INVISIBLE);
+        } else {
+            this.confirmOrderFloatingActionButton.setVisibility(View.VISIBLE);
+        }
+    }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // do nothing :)
@@ -91,6 +101,7 @@ public class MonPanierFragment extends Fragment implements AdapterView.OnItemCli
     @Override
     public void changeBasketTotal() {
         this.basketTotalTextView.setText(String.format(getString(R.string.basket_total), this.basket.getBasketTotal()));
+        this.changeFloatingButtonVisibility();
     }
 
     public void onClickCreateOrder(View v) {

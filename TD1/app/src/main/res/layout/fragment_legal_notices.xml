@@ -43,19 +43,19 @@
                 android:layout_height="wrap_content"
                 android:justificationMode="inter_word"
                 android:textAlignment="center"
-                android:textSize="12sp"
+                android:textSize="@dimen/global_text_size"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_max="500dp" />
+                app:layout_constraintWidth_max="@dimen/legal_notices_width_max" />
 
             <TextView
                 android:id="@+id/titleEditAppLegalNoticesTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="@dimen/legal_notices_margin_top"
                 android:textAlignment="center"
-                android:textSize="18sp"
+                android:textSize="@dimen/legal_notices_title_size"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/beginningLegalNoticesTextView" />
@@ -64,22 +64,22 @@
                 android:id="@+id/contentEditAppLegalNoticesTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="@dimen/legal_notices_margin_top"
                 android:justificationMode="inter_word"
                 android:textAlignment="center"
-                android:textSize="12sp"
+                android:textSize="@dimen/global_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/titleEditAppLegalNoticesTextView"
-                app:layout_constraintWidth_max="500dp" />
+                app:layout_constraintWidth_max="@dimen/legal_notices_width_max" />
 
             <TextView
                 android:id="@+id/titleRespPublicationLegalNoticesTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="@dimen/legal_notices_margin_top"
                 android:textAlignment="center"
-                android:textSize="18sp"
+                android:textSize="@dimen/legal_notices_title_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/contentEditAppLegalNoticesTextView" />
@@ -88,22 +88,22 @@
                 android:id="@+id/contentRespPublicationLegalNoticesTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="@dimen/legal_notices_margin_top"
                 android:justificationMode="inter_word"
                 android:textAlignment="center"
-                android:textSize="12sp"
+                android:textSize="@dimen/global_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/titleRespPublicationLegalNoticesTextView"
-                app:layout_constraintWidth_max="500dp" />
+                app:layout_constraintWidth_max="@dimen/legal_notices_width_max" />
 
             <TextView
                 android:id="@+id/titleHostLegalNoticesTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="@dimen/legal_notices_margin_top"
                 android:textAlignment="center"
-                android:textSize="18sp"
+                android:textSize="@dimen/legal_notices_title_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/contentRespPublicationLegalNoticesTextView" />
@@ -112,22 +112,22 @@
                 android:id="@+id/contentHostLegalNoticesTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="@dimen/legal_notices_margin_top"
                 android:justificationMode="inter_word"
                 android:textAlignment="center"
-                android:textSize="12sp"
+                android:textSize="@dimen/global_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/titleHostLegalNoticesTextView"
-                app:layout_constraintWidth_max="500dp" />
+                app:layout_constraintWidth_max="@dimen/legal_notices_width_max" />
 
             <TextView
                 android:id="@+id/titleContactUsLegalNoticesTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="@dimen/legal_notices_margin_top"
                 android:textAlignment="center"
-                android:textSize="18sp"
+                android:textSize="@dimen/legal_notices_title_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/contentHostLegalNoticesTextView" />
@@ -136,22 +136,22 @@
                 android:id="@+id/contentContactUsLegalNoticesTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="@dimen/legal_notices_margin_top"
                 android:justificationMode="inter_word"
                 android:textAlignment="center"
-                android:textSize="12sp"
+                android:textSize="@dimen/global_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/titleContactUsLegalNoticesTextView"
-                app:layout_constraintWidth_max="500dp" />
+                app:layout_constraintWidth_max="@dimen/legal_notices_width_max" />
 
             <TextView
                 android:id="@+id/titleCNILLegalNoticesTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="@dimen/legal_notices_margin_top"
                 android:textAlignment="center"
-                android:textSize="18sp"
+                android:textSize="@dimen/legal_notices_title_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/contentContactUsLegalNoticesTextView" />
@@ -160,22 +160,22 @@
                 android:id="@+id/contentCNILLegalNoticesTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="@dimen/legal_notices_margin_top"
                 android:justificationMode="inter_word"
                 android:textAlignment="center"
-                android:textSize="12sp"
+                android:textSize="@dimen/global_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/titleCNILLegalNoticesTextView"
-                app:layout_constraintWidth_max="500dp" />
+                app:layout_constraintWidth_max="@dimen/legal_notices_width_max" />
 
             <TextView
                 android:id="@+id/titleDisputesLegalNoticesTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="@dimen/legal_notices_margin_top"
                 android:textAlignment="center"
-                android:textSize="18sp"
+                android:textSize="@dimen/legal_notices_title_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/contentCNILLegalNoticesTextView" />
@@ -184,22 +184,22 @@
                 android:id="@+id/contentDisputesLegalNotices"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="@dimen/legal_notices_margin_top"
                 android:justificationMode="inter_word"
                 android:textAlignment="center"
-                android:textSize="12sp"
+                android:textSize="@dimen/global_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/titleDisputesLegalNoticesTextView"
-                app:layout_constraintWidth_max="500dp" />
+                app:layout_constraintWidth_max="@dimen/legal_notices_width_max" />
 
             <TextView
                 android:id="@+id/titleIntPropLegalNoticesTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="@dimen/legal_notices_margin_top"
                 android:textAlignment="center"
-                android:textSize="18sp"
+                android:textSize="@dimen/legal_notices_title_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/contentDisputesLegalNotices" />
@@ -208,22 +208,22 @@
                 android:id="@+id/contentIntPropLegalNoticesTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="@dimen/legal_notices_margin_top"
                 android:justificationMode="inter_word"
                 android:textAlignment="center"
-                android:textSize="12sp"
+                android:textSize="@dimen/global_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/titleIntPropLegalNoticesTextView"
-                app:layout_constraintWidth_max="500dp" />
+                app:layout_constraintWidth_max="@dimen/legal_notices_width_max" />
 
             <TextView
                 android:id="@+id/titleServProvidedLegalNoticesTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="@dimen/legal_notices_margin_top"
                 android:textAlignment="center"
-                android:textSize="18sp"
+                android:textSize="@dimen/legal_notices_title_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/contentIntPropLegalNoticesTextView" />
@@ -232,14 +232,14 @@
                 android:id="@+id/contentServProvidedLegalNoticesTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="@dimen/legal_notices_margin_top"
                 android:justificationMode="inter_word"
                 android:textAlignment="center"
-                android:textSize="12sp"
+                android:textSize="@dimen/global_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/titleServProvidedLegalNoticesTextView"
-                app:layout_constraintWidth_max="500dp" />
+                app:layout_constraintWidth_max="@dimen/legal_notices_width_max" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

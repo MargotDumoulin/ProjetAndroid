@@ -6,6 +6,6 @@
         android:title="@string/catalog_mode" />
     <item
         android:id="@+id/favorisFragment"
-        android:icon="@drawable/baseline_favorite_border_black_18dp"
+        android:icon="@drawable/ic_favorite_border_24px"
         android:title="@string/favorite_mode" />
 </menu>

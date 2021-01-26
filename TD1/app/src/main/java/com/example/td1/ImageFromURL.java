@@ -14,16 +14,17 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
 import java.io.InputStream;
+import java.lang.ref.WeakReference;
 import java.net.URL;
 
 public class ImageFromURL extends AsyncTask<String, Void, Object[]> {
 
     ActivityWaitingImage activity;
-    Context context;
+    WeakReference<Context> weakContext;
 
     public ImageFromURL(ActivityWaitingImage activity, Context context) {
         this.activity = activity;
-        this.context = context;
+        this.weakContext = new WeakReference<>(context);
     }
 
     @Override
@@ -36,7 +37,8 @@ public class ImageFromURL extends AsyncTask<String, Void, Object[]> {
             img = BitmapFactory.decodeStream(in);
             in.close();
         } catch (Exception e) {
-            img = getBitmapFromVectorDrawable(this.context, R.drawable.ic_male_clothes);
+            Context context = weakContext.get();
+            img = getBitmapFromVectorDrawable(context, R.drawable.ic_male_clothes);
         }
         return new Object[]{img, urlAndIndex[1]};
     }

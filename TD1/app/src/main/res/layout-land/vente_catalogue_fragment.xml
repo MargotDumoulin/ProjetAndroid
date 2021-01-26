@@ -1,199 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/titleTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:fontFamily="cursive"
-        android:text="@string/title_example"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/prevButton"
-        android:layout_width="@dimen/button_width"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/button_margin"
-        android:text="@string/prev_symbol"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/nextButton"
-        android:layout_width="@dimen/button_width"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/button_margin"
-        android:text="@string/next_symbol"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/productImageView"
-        android:layout_width="@dimen/img_view_width"
-        android:layout_height="@dimen/img_view_height"
-        android:layout_margin="20dp"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/footerTextView"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/descriptionTextView"
-        app:layout_constraintTop_toBottomOf="@+id/prevButton"
-        app:srcCompat="@drawable/img" />
-
-    <Spinner
-        android:id="@+id/sizeSpinner"
-        android:layout_width="140dp"
-        android:layout_height="@dimen/spinner_height"
-        android:layout_marginLeft="@dimen/spinner_margin_left_landscape"
-        android:entries="@array/taille"
-        android:theme="@style/spinner_style"
-        app:layout_constraintBottom_toTopOf="@+id/footerTextView"
-        app:layout_constraintLeft_toRightOf="@+id/descriptionTextView"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nextButton" />
-
-
-    <ImageButton
-        android:id="@+id/outlinedHeartImageButton"
-        style="@style/img_button_heart_style"
-        android:layout_width="@dimen/img_button_width"
-        android:layout_height="@dimen/img_button_height"
-        android:layout_marginRight="@dimen/img_button_margin_side"
-        android:layout_marginBottom="@dimen/img_button_margin_bottom"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/cartImageButton"
-        app:srcCompat="@drawable/baseline_favorite_border_black_18dp" />
-
-    <ImageButton
-        android:id="@+id/filledHeartImageButton"
-        style="@style/img_button_heart_style"
-        android:layout_width="@dimen/img_button_width"
-        android:layout_height="@dimen/img_button_height"
-        android:layout_marginRight="@dimen/img_button_margin_side"
-        android:layout_marginBottom="@dimen/img_button_margin_bottom"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/cartImageButton"
-        app:srcCompat="@drawable/baseline_favorite_black_18dp" />
-
-    <ImageButton
-        android:id="@+id/cartImageButton"
-        android:layout_width="@dimen/img_button_width"
-        android:layout_height="@dimen/img_button_height"
-        android:layout_marginRight="@dimen/img_button_margin_side"
-        android:layout_marginBottom="@dimen/img_button_margin_bottom"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_add_shopping_cart_24" />
-
-    <TextView
-        android:id="@+id/descriptionTextView"
-        android:layout_width="190sp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/cadre"
-        android:maxLines="6"
-        android:padding="10dp"
-        android:text="@string/description_example"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/footerTextView"
-        app:layout_constraintLeft_toRightOf="@id/productImageView"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
-
-    <TextView
-        android:id="@+id/footerTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/red_500"
-        android:paddingLeft="20dp"
-        android:text="@string/footer"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <TextView
-        android:id="@+id/priceTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="@string/price_example"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@id/sizeSpinner"
-        app:layout_constraintLeft_toRightOf="@+id/descriptionTextView"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nextButton" />
-
-    <View
-        android:id="@+id/blankView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#000000"
-        android:elevation="3dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/whiteBlankView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#FFFFFF"
-        android:elevation="3dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/loadingView"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:elevation="4dp" />
+        tools:context=".ui.venteCatalogue.VenteCatalogueFragment">
 
-    <ProgressBar
-        android:id="@+id/loading"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:translationZ="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/priceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:paddingHorizontal="7dp"
+            android:text="@string/price_example"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toRightOf="@+id/productImageView"
+            app:layout_constraintTop_toTopOf="@id/productImageView" />
 
-    <TextView
-        android:id="@+id/noProductsTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="3dp"
-        android:text="@string/no_products"
-        app:layout_constraintBottom_toTopOf="@+id/footerTextView"
-        app:layout_constraintEnd_toEndOf="@+id/blankView"
-        app:layout_constraintStart_toStartOf="@+id/blankView"
-        app:layout_constraintTop_toTopOf="@+id/blankView" />
+        <Spinner
+            android:id="@+id/sizeSpinner"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:entries="@array/taille"
+            android:visibility="invisible"
+            android:theme="@style/spinner_style"
+            app:layout_constraintBaseline_toBaselineOf="@id/priceTextView"
+            app:layout_constraintLeft_toRightOf="@+id/priceTextView"
+             />
 
-    <ImageView
-        android:id="@+id/expandedImageView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:elevation="4dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/img" />
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:maxLines="2"
+            android:padding="7dp"
+            android:text="@string/title_example"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintRight_toLeftOf="@id/filledHeartImageButton"
+            app:layout_constraintLeft_toLeftOf="@id/priceTextView"
+            app:layout_constraintTop_toBottomOf="@id/priceTextView" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:maxLines="4"
+            android:padding="7dp"
+            android:text="@string/description_example"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintRight_toLeftOf="@id/nextButton"
+            app:layout_constraintLeft_toLeftOf="@id/titleTextView"
+            app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
+
+        <ImageView
+            android:id="@+id/productImageView"
+            android:layout_width="@dimen/img_view_width"
+            android:layout_height="@dimen/img_view_height"
+            android:layout_marginTop="20dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintLeft_toRightOf="@id/prevButton"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageButton
+            android:id="@+id/outlinedHeartImageButton"
+            android:layout_width="@dimen/img_button_width"
+            android:layout_height="@dimen/img_button_height"
+            android:layout_marginTop="@dimen/img_button_margin_side"
+            android:layout_marginEnd="@dimen/img_button_margin_side"
+            android:background="@android:color/transparent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_favorite_border_24px" />
+
+        <ImageButton
+            android:id="@+id/filledHeartImageButton"
+            android:layout_width="@dimen/img_button_width"
+            android:layout_height="@dimen/img_button_height"
+            android:layout_marginTop="@dimen/img_button_margin_side"
+            android:layout_marginEnd="@dimen/img_button_margin_side"
+            android:background="@android:color/transparent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_favorite_24px" />
+
+        <Button
+            android:id="@+id/cartButton"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/button_margin"
+            android:backgroundTint="@color/green_500"
+            android:text="@string/add_to_cart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/prevButton"
+            app:layout_constraintBottom_toBottomOf="@id/prevButton"
+             />
+
+        <Button
+            android:id="@+id/prevButton"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/button_margin"
+            android:text="@string/prev_symbol"
+            android:theme="@style/button_style"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <Button
+            android:id="@+id/nextButton"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/button_margin"
+            android:text="@string/next_symbol"
+            android:theme="@style/button_style"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <View
+            android:id="@+id/whiteBlankView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#FFFFFF"
+            android:elevation="3dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/noProductsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="3dp"
+            android:text="@string/no_products"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/blankView"
+            app:layout_constraintStart_toStartOf="@+id/blankView"
+            app:layout_constraintTop_toTopOf="@+id/blankView" />
+
+        <View
+            android:id="@+id/blankView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#000000"
+            android:elevation="3dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/expandedImageView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:elevation="4dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/img" />
+
+        <View
+            android:id="@+id/loadingView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:elevation="50dp" />
+
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:translationZ="51dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

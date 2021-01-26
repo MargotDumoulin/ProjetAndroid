@@ -50,6 +50,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
 
     protected Button prevBtn;
     protected Button nextBtn;
+    protected Button basketImageButton;
 
     protected TextView priceTextView;
     protected TextView descriptionTextView;
@@ -68,14 +69,11 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
     protected View progressBarView;
     protected ProgressBar progressBar;
 
-    protected ImageButton basketImageButton;
     protected ImageButton filledHeartImageButton;
     protected ImageButton outlinedHeartImageButton;
 
     protected Spinner sizeSpinner;
     protected ArrayAdapter<String> sizeSpinnerArrayAdapter;
-
-    protected static final int MAIN_VENTE = 0;
 
     protected ArrayList<Produit> listProduitToShow;
     protected ArrayList<Bitmap> listImgProduitToShow;
@@ -84,7 +82,6 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
     protected Panier basket;
 
     protected int index;
-    protected int productTableLength;
     protected int idCateg;
     
     protected String clothingSize = "";
@@ -111,13 +108,12 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
 
         if (savedInstanceState != null) {
             this.listProduitToShow = (ArrayList<Produit>) savedInstanceState.getSerializable("listProduitToShow");
-            this.listImgProduitToShow = (ArrayList<Bitmap>) savedInstanceState.getSerializable("listImgProduitToShow");
+            this.loadImages();
 
             this.basket = ((ActiviteECommerce) this.getActivity()).getBasket();
 
             this.index = savedInstanceState.getInt("index");
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
-            this.productTableLength = savedInstanceState.getInt("productTableLength");
             this.idCateg = savedInstanceState.getInt("idCateg");
             this.clothingSize = savedInstanceState.getString("taille");
             this.alreadyHaveInfo = true;
@@ -153,7 +149,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         this.nextBtn = this.root.findViewById(R.id.nextButton);
 
         // -- IMAGEBUTTONS --
-        this.basketImageButton = this.root.findViewById(R.id.cartImageButton);
+        this.basketImageButton = this.root.findViewById(R.id.cartButton);
         this.filledHeartImageButton = this.root.findViewById(R.id.filledHeartImageButton);
         this.outlinedHeartImageButton = this.root.findViewById(R.id.outlinedHeartImageButton);
 
@@ -189,8 +185,8 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         this.progressBar = this.root.findViewById(R.id.loading);
 
         // -- ADAPTER --
-        this.sizeSpinnerArrayAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, this.listSizesLabels);
-        this.sizeSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        this.sizeSpinnerArrayAdapter = new ArrayAdapter<String>(this.getContext(), R.layout.spinner_sizes, this.listSizesLabels);
+        this.sizeSpinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_sizes);
         this.sizeSpinner.setAdapter(this.sizeSpinnerArrayAdapter);
 
         if (this.isImageZoomed) {
@@ -225,11 +221,9 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
 
         outState.putInt("index", this.index);
         outState.putSerializable("listProduitToShow", this.listProduitToShow);
-        outState.putSerializable("listImgProduitToShow", this.listImgProduitToShow);
         outState.putSerializable("basket", this.basket);
-        outState.putInt("productTableLength", this.productTableLength);
         outState.putInt("idCateg", this.idCateg);
-        outState.putString("taille", this.sizeSpinner.getSelectedItem().toString()); // FIXME : On orientation change - toString()
+        outState.putString("taille", this.sizeSpinner.getSelectedItem().toString());
 
         if (this.pullImageViewZoomed.getVisibility() == View.VISIBLE) {
             outState.putBoolean("isImageZoomed", true);
@@ -250,8 +244,8 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             this.listSizesLabels = new ArrayList<String>();
         }
         this.listSizesLabels.addAll(this.listProduitToShow.get(this.index).getSizesLabels());
+        this.sizeSpinner.setVisibility(View.VISIBLE);
         this.sizeSpinnerArrayAdapter.notifyDataSetChanged();
-
 
         if (((ActivityLogin) this.getActivity()).isLoggedIn()) {
             if (this.listProduitToShow.get(index).getFavori()) {
@@ -424,6 +418,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
 
         ProductDAO.unstarProduct(this, this.listProduitToShow.get(this.index).getId(), ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
         this.listProduitToShow.get(this.index).setFavori(false);
+        Toast.makeText(this.getContext(), getString(R.string.remove_from_favorites), Toast.LENGTH_LONG).show();
     }
 
     public void onClickBtnHeartOutlined(View v) {
@@ -432,6 +427,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
 
         ProductDAO.starProduct(this, this.listProduitToShow.get(this.index).getId(), ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
         this.listProduitToShow.get(this.index).setFavori(true);
+        Toast.makeText(this.getContext(), getString(R.string.add_to_favorites), Toast.LENGTH_LONG).show();
     }
 
     public void onClickImage(View v) {
@@ -484,10 +480,16 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
                 this.pullImageView.setImageResource(id);
             } else {
                 this.listImgProduitToShow.set(idx, img);
-                if (idx == 0) {
-                    this.changeImageView(this.index);
-                }
+                this.changeImageView(this.index);
             }
+        }
+    }
+
+    public void loadImages() {
+        for (int y = 0; y < this.listProduitToShow.size(); y++) {
+            this.listImgProduitToShow.add(null);
+            ImageFromURL loader = new ImageFromURL(this, getContext());
+            loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(y).getImgSrc(), String.valueOf(y));
         }
     }
 
@@ -510,7 +512,6 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
 
                     if (i == response.length() - 1) {
                         this.showPullInfo(this.index);
-
                         this.hideProgressBar();
                     }
 
@@ -521,14 +522,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
                     this.enablePrevNextButtons(this.index);
 
                     if (i == response.length() - 1) {
-
-                        for (int y = 0; y < this.listProduitToShow.size(); y++) {
-                            this.listImgProduitToShow.add(null);
-                            ImageFromURL loader = new ImageFromURL(this, getContext());
-                            Log.e("getImage", String.valueOf("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(y).getImgSrc()));
-                            loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(y).getImgSrc(), String.valueOf(y));
-                        }
-
+                        this.loadImages();
                         ProductDAO.findAllSizesByCateg(this, this.idCateg);
                     }
                 }
