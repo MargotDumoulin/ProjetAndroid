@@ -30,15 +30,9 @@ public class BoutiqueFragment extends Fragment {
         NavHostFragment navHostFragment =
                 (NavHostFragment) getChildFragmentManager().findFragmentById(R.id.nav_host_fragment_boutique);
         NavigationUI.setupWithNavController(bnv, navHostFragment.getNavController());
-        MenuItem fav = bnv.getMenu().findItem(R.id.favorisFragment);
+
 
         navHostFragment.getNavController().addOnDestinationChangedListener(this::onNavigationChanged);
-
-        if ( ((ActivityLogin) this.getActivity()).isLoggedIn() ) {
-            fav.setEnabled(true);
-        } else {
-            fav.setEnabled(false);
-        }
 
         return root;
     }
@@ -48,7 +42,17 @@ public class BoutiqueFragment extends Fragment {
             this.bnv.getMenu().getItem(i).setEnabled(true);
         }
 
+        MenuItem fav = bnv.getMenu().findItem(R.id.favorisFragment);
+        if ( ((ActivityLogin) this.getActivity()).isLoggedIn() ) {
+            fav.setEnabled(true);
+        } else {
+            fav.setEnabled(false);
+        }
+
         MenuItem menuItem = this.bnv.getMenu().findItem(navDestination.getId());
-        menuItem.setEnabled(false);
+
+        if (menuItem != null) {
+            menuItem.setEnabled(false);
+        }
     }
 }
