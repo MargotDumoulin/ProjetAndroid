@@ -7,9 +7,9 @@
     android:tag="@string/register_tag">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/registerParentConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/registerParentConstraintLayout"
         android:paddingTop="10dp">
 
         <TextView
@@ -25,9 +25,9 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/firstnameEditTextLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/firstnameEditTextLayout"
             android:layout_marginTop="@dimen/register_margin_top"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -39,20 +39,19 @@
                 android:layout_height="wrap_content"
                 android:ems="@dimen/register_fields_size"
                 android:hint="@string/firstname"
-                android:maxLines="1"
                 android:inputType="text"
-                app:layout_constraintTop_toTopOf="parent"
+                android:maxLines="1"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                />
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lastnameEditTextLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/lastnameEditTextLayout"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/firstnameEditTextLayout">
@@ -63,19 +62,19 @@
                 android:layout_height="wrap_content"
                 android:ems="@dimen/register_fields_size"
                 android:hint="@string/lastname"
-                android:maxLines="1"
                 android:inputType="text"
-                app:layout_constraintTop_toTopOf="parent"
+                android:maxLines="1"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/idEditTextLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/idEditTextLayout"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lastnameEditTextLayout">
@@ -86,19 +85,19 @@
                 android:layout_height="wrap_content"
                 android:ems="@dimen/register_fields_size"
                 android:hint="@string/id"
-                android:maxLines="1"
                 android:inputType="text"
-                app:layout_constraintTop_toTopOf="parent"
+                android:maxLines="1"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordEditTextLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/passwordEditTextLayout"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/idEditTextLayout">
@@ -110,18 +109,18 @@
                 android:ems="@dimen/register_fields_size"
                 android:hint="@string/password"
                 android:inputType="textPassword"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/oldPasswordEditTextLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="invisible"
-            android:id="@+id/oldPasswordEditTextLayout"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/idEditTextLayout">
@@ -133,18 +132,18 @@
                 android:ems="@dimen/register_fields_size"
                 android:hint="@string/currentPassword"
                 android:inputType="textPassword"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/newPasswordEditTextLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="invisible"
-            android:id="@+id/newPasswordEditTextLayout"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/oldPasswordEditTextLayout">
@@ -156,17 +155,17 @@
                 android:ems="@dimen/register_fields_size"
                 android:hint="@string/newPassword"
                 android:inputType="textPassword"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/confirmPasswordEditTextLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/confirmPasswordEditTextLayout"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/passwordEditTextLayout">
@@ -178,10 +177,10 @@
                 android:ems="@dimen/register_fields_size"
                 android:hint="@string/confirm"
                 android:inputType="textPassword"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -200,45 +199,45 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/columnStreetLayout"
             android:layout_width="wrap_content"
-            android:layout_marginTop="@dimen/register_margin_top"
             android:layout_height="wrap_content"
-            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="@dimen/register_margin_top"
+            app:layout_constraintBottom_toTopOf="@+id/columnPostalCodeLayout"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleSectionAddressTextView"
-            app:layout_constraintBottom_toTopOf="@+id/columnPostalCodeLayout">
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleSectionAddressTextView">
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/numberEditTextLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/numberEditTextLayout"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <EditText
                     android:id="@+id/numberEditText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/register_small_column_size_margin_right"
                     android:ems="@dimen/register_small_column_size"
                     android:hint="@string/number"
                     android:inputType="number"
-                    android:layout_marginRight="@dimen/register_small_column_size_margin_right"
                     android:nextFocusDown="@id/streetEditText"
-                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/streetEditTextLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/streetEditTextLayout"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/numberEditTextLayout"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <EditText
                     android:id="@+id/streetEditText"
@@ -247,36 +246,36 @@
                     android:ems="@dimen/register_big_column_size"
                     android:gravity="start|top"
                     android:hint="@string/street"
-                    android:maxLines="1"
                     android:inputType="text"
+                    android:maxLines="1"
                     android:nextFocusDown="@id/postalCodeEditText"
-                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/columnPostalCodeLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/columnPostalCodeLayout"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/countryEditTextLayout"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/columnStreetLayout"
-            app:layout_constraintBottom_toTopOf="@+id/countryEditTextLayout">
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/columnStreetLayout">
 
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/postalCodeEditTextLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/postalCodeEditTextLayout"
-                app:layout_constraintRight_toLeftOf="@id/cityEditTextLayout"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintRight_toLeftOf="@id/cityEditTextLayout"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <EditText
                     android:id="@+id/postalCodeEditText"
@@ -287,21 +286,21 @@
                     android:hint="@string/postal_code"
                     android:inputType="number"
                     android:nextFocusDown="@id/cityEditText"
-                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cityEditTextLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/cityEditTextLayout"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/postalCodeEditTextLayout"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <EditText
                     android:id="@+id/cityEditText"
@@ -310,25 +309,25 @@
                     android:ems="@dimen/register_big_column_size"
                     android:gravity="start|top"
                     android:hint="@string/city"
-                    android:maxLines="1"
                     android:inputType="text"
-                    app:layout_constraintRight_toRightOf="parent"
+                    android:maxLines="1"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/countryEditTextLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/countryEditTextLayout"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/registerButton"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/columnPostalCodeLayout"
-            app:layout_constraintBottom_toTopOf="@+id/registerButton">
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/columnPostalCodeLayout">
 
             <EditText
                 android:id="@+id/countryEditText"
@@ -337,12 +336,12 @@
                 android:layout_marginTop="10dp"
                 android:ems="@dimen/register_fields_size"
                 android:hint="@string/country"
-                android:maxLines="1"
                 android:inputType="text"
-                app:layout_constraintRight_toRightOf="parent"
+                android:maxLines="1"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -350,13 +349,13 @@
             android:id="@+id/registerButton"
             android:layout_width="@dimen/register_width_btn"
             android:layout_height="wrap_content"
-            android:text="@string/register"
             android:layout_marginTop="@dimen/register_margin_top"
             android:layout_marginBottom="@dimen/register_margin_bottom"
             android:backgroundTint="@color/black_from_palette"
+            android:text="@string/register"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/countryEditTextLayout" />
 
         <Button
@@ -365,12 +364,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/register_margin_top"
             android:layout_marginBottom="@dimen/register_margin_bottom"
+            android:backgroundTint="@color/black_from_palette"
             android:text="@string/save"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:backgroundTint="@color/black_from_palette"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/countryEditTextLayout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

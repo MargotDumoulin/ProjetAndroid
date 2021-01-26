@@ -9,8 +9,7 @@
         android:id="@+id/editPersonalInfoFragment"
         android:name="com.example.td1.ui.editPersonalInfo.EditPersonalInfoFragment"
         android:label="@string/my_information"
-        tools:layout="@layout/fragment_register" >
-    </fragment>
+        tools:layout="@layout/fragment_register" />
 
     <fragment
         android:id="@+id/viewLastOrderFragment"

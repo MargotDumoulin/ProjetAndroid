@@ -12,14 +12,14 @@
         <item
             android:id="@+id/nav_boutique"
             android:icon="@drawable/ic_local_mall_24px"
-            android:title="@string/menu_shop"/>
+            android:title="@string/menu_shop" />
         <item
             android:id="@+id/nav_map"
             android:icon="@drawable/ic_room_24px"
-            android:title="@string/menu_map"/>
+            android:title="@string/menu_map" />
         <item
             android:id="@+id/nav_mention_legales"
             android:icon="@drawable/common_full_open_on_phone"
-            android:title="@string/legal_notices"/>
+            android:title="@string/legal_notices" />
     </group>
 </menu>
