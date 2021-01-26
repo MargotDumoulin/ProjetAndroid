@@ -89,7 +89,8 @@ public class LoginFragment extends Fragment implements com.android.volley.Respon
 
     public void redirectLoggedInCustomer() {
         NavController navController = Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment);
-        navController.navigate(R.id.nav_home);
+        navController.popBackStack(R.id.nav_boutique, true);
+        navController.navigate(R.id.nav_boutique);
     }
 
     @Override
