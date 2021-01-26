@@ -95,19 +95,14 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
 
             return true;
         } else if (itemId == R.id.nav_logout) {
-            this.isLoggedIn = false;
-            this.changeMenu(this.menu);
-            this.removeInfoFromDrawer();
-            this.loggedInCustomer = null;
-
+            this.logout();
             // clears nav history
             navController.popBackStack(R.id.nav_home, true);
-
             navController.navigate(R.id.nav_home);
 
             return true;
 
-        }  else if (itemId == R.id.nav_my_account) {
+        } else if (itemId == R.id.nav_my_account) {
             if (currentDestination != null && currentDestination.getId() != R.id.nav_my_account) {
                 if (this.isLoggedIn) {
                     if (currentDestination.getId() != R.id.nav_edit_personal_info) {
@@ -143,7 +138,6 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-
         this.changeMenu(menu);
         return true;
     }
@@ -196,8 +190,11 @@ public class MainActivity extends AppCompatActivity implements ActiviteECommerce
 
     @Override
     public void logout() {
+        this.basket = new Panier(new ArrayList<Triplet<Produit, Taille, Integer>>());
         this.isLoggedIn = false;
         this.changeMenu(this.menu);
+        this.removeInfoFromDrawer();
+        this.loggedInCustomer = null;
     }
 
     @Override

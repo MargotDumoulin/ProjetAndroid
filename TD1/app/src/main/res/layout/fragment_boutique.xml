@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
-        android:background="@color/red_700"
+        android:background="@color/black_from_palette"
         app:itemIconTint="@drawable/boutique_bnv_colors"
         app:itemTextColor="@drawable/boutique_bnv_colors"
         app:layout_constraintBottom_toBottomOf="parent"

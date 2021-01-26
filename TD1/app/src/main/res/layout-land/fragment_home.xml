@@ -25,9 +25,9 @@
 
     <ImageView
         android:id="@+id/homeImageView"
-        android:layout_width="300dp"
-        android:layout_height="250dp"
-        android:layout_marginTop="90dp"
+        android:layout_width="250dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/undraw_online_shopping"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
