@@ -462,17 +462,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
     public void onClickImageZoomed(View v) {
         unzoomImage();
     }
-
-    // ---- DIALOG ONCLICK ----
-    public void onClick(DialogInterface dialog, int which) {
-        if (which == -1) {
-            this.basket.removeAllArticles();
-            Toast.makeText(this.getContext(), getString(R.string.clear_basket), Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this.getContext(), getString(R.string.cancel_clear_basket), Toast.LENGTH_LONG).show();
-        }
-    }
-
+    
     // ---- SPINNER EVENTS ----
     public void checkSpinnerValue() {
         if (!this.clothingSize.equals("")) {
