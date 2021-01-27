@@ -8,7 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".ui.venteCatalogue.VenteCatalogueFragment">
 
         <TextView
@@ -81,6 +81,8 @@
             android:layout_height="@dimen/img_view_height"
             android:layout_marginTop="20dp"
             android:scaleType="fitCenter"
+            app:layout_constraintVertical_bias="0"
+            app:layout_constraintBottom_toTopOf="@id/prevButton"
             app:layout_constraintLeft_toRightOf="@id/prevButton"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -194,9 +196,14 @@
 
         <View
             android:id="@+id/loadingView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:background="@color/white"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:elevation="50dp" />
 
         <ProgressBar
