@@ -19,7 +19,7 @@ import com.example.td1.ActivityLogin;
 import com.example.td1.ActivityWaitingImage;
 import com.example.td1.CategoriesAdapter;
 import com.example.td1.ImageFromURL;
-import com.example.td1.ActiviteECommerce;
+import com.example.td1.ActivityECommerce;
 import com.example.td1.R;
 import com.example.td1.modele.Categorie;
 import com.example.td1.modele.Panier;
@@ -53,9 +53,9 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
         root = inflater.inflate(R.layout.fragment_categories, container, false);
 
         if (savedInstanceState != null) {
-            this.basket = ((ActiviteECommerce) this.getActivity()).getBasket();
+            this.basket = ((ActivityECommerce) this.getActivity()).getBasket();
         } else {
-            this.basket = ((ActiviteECommerce) this.getActivity()).getBasket();
+            this.basket = ((ActivityECommerce) this.getActivity()).getBasket();
         }
         return root;
     }
@@ -133,7 +133,7 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
 
         productsToAdd.getBasketContent().forEach(product -> {
             this.basket.addArticle(product.first, product.second, product.third);
-            ((ActiviteECommerce) this.getActivity()).updateBasket(this.basket);
+            ((ActivityECommerce) this.getActivity()).updateBasket(this.basket);
         });
     }
 

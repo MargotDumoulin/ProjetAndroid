@@ -11,7 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
-import com.example.td1.ActiviteECommerce;
+import com.example.td1.ActivityECommerce;
 import com.example.td1.ActivityLogin;
 import com.example.td1.DAO.ProductDAO;
 import com.example.td1.ImageFromURL;
@@ -49,7 +49,7 @@ public class FavorisFragment extends VenteCatalogueFragment implements WaitingDa
             this.listProduitToShow = (ArrayList<Produit>) savedInstanceState.getSerializable("listProduitToShow");
             this.loadImages();
 
-            this.basket = ((ActiviteECommerce) this.getActivity()).getBasket();
+            this.basket = ((ActivityECommerce) this.getActivity()).getBasket();
 
             this.index = savedInstanceState.getInt("index");
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
@@ -61,7 +61,7 @@ public class FavorisFragment extends VenteCatalogueFragment implements WaitingDa
             this.isImageZoomed = false;
             this.index = 0;
 
-            this.basket = ((ActiviteECommerce) this.getActivity()).getBasket();
+            this.basket = ((ActivityECommerce) this.getActivity()).getBasket();
 
             ProductDAO.findAllStarred(this, ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
         }

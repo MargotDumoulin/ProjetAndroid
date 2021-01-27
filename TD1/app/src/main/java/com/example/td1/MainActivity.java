@@ -26,7 +26,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements ActiviteECommerce, ActivityLogin {
+public class MainActivity extends AppCompatActivity implements ActivityECommerce, ActivityLogin {
 
     private AppBarConfiguration mAppBarConfiguration;
     private Client loggedInCustomer;

@@ -3,7 +3,6 @@ package com.example.td1.ui.venteCatalogue;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,7 +32,7 @@ import com.example.td1.ActivityLogin;
 import com.example.td1.ActivityWaitingImage;
 import com.example.td1.DAO.ProductDAO;
 import com.example.td1.ImageFromURL;
-import com.example.td1.ActiviteECommerce;
+import com.example.td1.ActivityECommerce;
 import com.example.td1.R;
 import com.example.td1.WaitingData;
 import com.example.td1.modele.Panier;
@@ -111,7 +110,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             this.listProduitToShow = (ArrayList<Produit>) savedInstanceState.getSerializable("listProduitToShow");
             this.loadImages();
 
-            this.basket = ((ActiviteECommerce) this.getActivity()).getBasket();
+            this.basket = ((ActivityECommerce) this.getActivity()).getBasket();
 
             this.index = savedInstanceState.getInt("index");
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
@@ -123,7 +122,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             this.isImageZoomed = false;
             this.index = 0;
 
-            this.basket = ((ActiviteECommerce) this.getActivity()).getBasket();
+            this.basket = ((ActivityECommerce) this.getActivity()).getBasket();
             this.idCateg = this.getArguments().getInt("id_categ", -1);
 
             if (this.idCateg != -1) {
@@ -426,7 +425,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
                 this.basket.addArticle(this.listProduitToShow.get(this.index), new Taille(this.getSpinnerSelectedSizeId(sizeSpinner.getSelectedItem().toString()), sizeSpinner.getSelectedItem().toString()), quantity);
             }
 
-            ((ActiviteECommerce) this.getActivity()).updateBasket(this.basket);
+            ((ActivityECommerce) this.getActivity()).updateBasket(this.basket);
             Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment).navigate(R.id.nav_gestion_panier);
             showToastAddProductToBasket();
         });
