@@ -74,5 +74,4 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/baseline_delete_black_18dp" />
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>

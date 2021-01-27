@@ -1,10 +1,14 @@
 package com.example.td1.ui.legalNotices;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import com.android.volley.VolleyError;
 import com.example.td1.DAO.LegalNoticesDAO;
 import com.example.td1.R;
+import com.example.td1.WaitingData;
 import com.example.td1.modele.Produit;
 
 import org.jetbrains.annotations.NotNull;
@@ -24,7 +29,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class LegalNoticesFragment extends Fragment implements com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener {
+public class LegalNoticesFragment extends Fragment implements WaitingData, com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener {
 
     private View root;
 
@@ -46,8 +51,12 @@ public class LegalNoticesFragment extends Fragment implements com.android.volley
     private TextView titleServProvidedTextView;
     private TextView contentServProvidedTextView;
 
+    private View progressBarView;
+    private ProgressBar progressBar;
+
     private String[] legalNoticesTab = null;
 
+    final int LOADING_TIME_OUT = 1000;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -81,14 +90,19 @@ public class LegalNoticesFragment extends Fragment implements com.android.volley
         titleServProvidedTextView = this.root.findViewById(R.id.titleServProvidedLegalNoticesTextView);
         contentServProvidedTextView = this.root.findViewById(R.id.contentServProvidedLegalNoticesTextView);
 
+        this.progressBarView = this.root.findViewById(R.id.loadingView);
+        this.progressBar = this.root.findViewById(R.id.loading);
+
         if (legalNoticesTab == null) {
             if (Locale.getDefault().getDisplayLanguage().equals("français")) {
-                LegalNoticesDAO.getLegalNoticesByLang(this, "fr");
+                new Handler().postDelayed(() -> LegalNoticesDAO.getLegalNoticesByLang(this, "fr"), LOADING_TIME_OUT);
             } else {
-                LegalNoticesDAO.getLegalNoticesByLang(this, "en");
+                new Handler().postDelayed(() -> LegalNoticesDAO.getLegalNoticesByLang(this, "en"), LOADING_TIME_OUT);
             }
         } else {
-            integrateValueIntoTextView();
+            this.integrateValueIntoTextView();
+            this.progressBar.setVisibility(View.GONE);
+            this.progressBarView.setVisibility(View.GONE);
         }
     }
 
@@ -118,7 +132,24 @@ public class LegalNoticesFragment extends Fragment implements com.android.volley
             titleServProvidedTextView.setText(this.legalNoticesTab[15]);
             contentServProvidedTextView.setText(this.legalNoticesTab[16]);
         }
+    }
 
+    public void hideProgressBar() {
+        this.progressBar.animate().alpha(0.0f).setDuration(250).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+
+        this.progressBarView.animate().alpha(0.0f).setDuration(400).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                progressBarView.setVisibility(View.GONE);
+            }
+        });
     }
 
     public static String[] cutout(String text, String sep) {
@@ -137,7 +168,8 @@ public class LegalNoticesFragment extends Fragment implements com.android.volley
         try {
             legalNotices = o.getString("mentions");
             this.legalNoticesTab = cutout(legalNotices, "###");
-            integrateValueIntoTextView();
+            this.integrateValueIntoTextView();
+            this.hideProgressBar();
         } catch (JSONException e) {
             e.printStackTrace();
         }

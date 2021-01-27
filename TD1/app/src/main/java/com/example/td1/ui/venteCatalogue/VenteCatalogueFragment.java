@@ -1,10 +1,13 @@
 package com.example.td1.ui.venteCatalogue;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +35,7 @@ import com.example.td1.DAO.ProductDAO;
 import com.example.td1.ImageFromURL;
 import com.example.td1.ActiviteECommerce;
 import com.example.td1.R;
+import com.example.td1.WaitingData;
 import com.example.td1.modele.Panier;
 import com.example.td1.modele.Produit;
 import com.example.td1.modele.Taille;
@@ -41,7 +46,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class VenteCatalogueFragment extends Fragment implements AdapterView.OnItemSelectedListener, ActivityWaitingImage, com.android.volley.Response.Listener<JSONArray>, com.android.volley.Response.ErrorListener {
+public class VenteCatalogueFragment extends Fragment implements AdapterView.OnItemSelectedListener, ActivityWaitingImage, WaitingData, com.android.volley.Response.Listener<JSONArray>, com.android.volley.Response.ErrorListener {
 
     protected Button prevBtn;
     protected Button nextBtn;
@@ -61,6 +66,10 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
     protected View whiteBackgroundView;
     protected View whiteBlankView;
 
+    protected View progressBarView;
+    protected ProgressBar progressBar;
+    protected ProgressBar progressBarImage;
+
     protected ImageButton filledHeartImageButton;
     protected ImageButton outlinedHeartImageButton;
 
@@ -79,6 +88,8 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
     protected String clothingSize = "";
     
     protected View root;
+
+    final int LOADING_TIME_OUT = 1000;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -118,10 +129,10 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             if (this.idCateg != -1) {
                 if (((ActivityLogin) this.getActivity()).isLoggedIn()) {
                     // get products + if they are starred or not
-                    ProductDAO.findAllByCateg(this, this.idCateg, ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
+                    new Handler().postDelayed(() -> ProductDAO.findAllByCateg(this, this.idCateg, ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId()), LOADING_TIME_OUT);
                 } else {
                     // only get products
-                    ProductDAO.findAllByCateg(this, this.idCateg, -1);
+                    new Handler().postDelayed(() -> ProductDAO.findAllByCateg(this, this.idCateg, -1), LOADING_TIME_OUT);
                 }
             } else {
                 // ???
@@ -171,6 +182,10 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         this.whiteBackgroundView = this.root.findViewById(R.id.blankView);
         this.whiteBlankView = this.root.findViewById(R.id.whiteBlankView);
 
+        this.progressBarImage = this.root.findViewById(R.id.loadingImageView);
+        this.progressBarView = this.root.findViewById(R.id.loadingView);
+        this.progressBar = this.root.findViewById(R.id.loading);
+
         // -- ADAPTER --
         this.sizeSpinnerArrayAdapter = new ArrayAdapter<String>(this.getContext(), R.layout.spinner_sizes, this.listSizesLabels);
         this.sizeSpinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_sizes);
@@ -180,7 +195,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             zoomImage();
         }
 
-        if (((ActivityLogin) this.getActivity()).isLoggedIn()) {
+        if (((ActivityLogin) this.getActivity()).isLoggedIn() && this.listProduitToShow.size() > 0) {
             this.basketImageButton.setVisibility(View.VISIBLE);
         } else {
             this.basketImageButton.setVisibility(View.INVISIBLE);
@@ -192,6 +207,8 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             this.showPullInfo(this.index);
             this.changeImageView(this.index);
             this.enablePrevNextButtons(this.index);
+            this.progressBarView.setVisibility(View.GONE);
+            this.progressBar.setVisibility(View.GONE);
         }
 
         this.whiteBlankView.setVisibility(View.INVISIBLE);
@@ -236,6 +253,14 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         this.listSizesLabels.addAll(this.listProduitToShow.get(this.index).getSizesLabels());
         this.sizeSpinnerArrayAdapter.notifyDataSetChanged();
 
+        pullImageView.setVisibility(View.VISIBLE);
+        sizeSpinner.setVisibility(View.VISIBLE);
+        prevBtn.setVisibility(View.VISIBLE);
+        nextBtn.setVisibility(View.VISIBLE);
+
+        if (((ActivityLogin) this.getActivity()).isLoggedIn()) {
+            this.basketImageButton.setVisibility(View.VISIBLE);
+        }
 
         if (((ActivityLogin) this.getActivity()).isLoggedIn()) {
             if (this.listProduitToShow.get(index).getFavori()) {
@@ -267,6 +292,24 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
                 Toast.makeText(this.getContext(), String.format(getString(R.string.add_article_basket), this.index), Toast.LENGTH_SHORT).show();
                 break;
         }
+    }
+
+    public void hideProgressBar() {
+        this.progressBar.animate().alpha(0.0f).setDuration(250).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+
+        this.progressBarView.animate().alpha(0.0f).setDuration(400).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                progressBarView.setVisibility(View.GONE);
+            }
+        });
     }
 
     public void changeImageView(int index) {
@@ -333,6 +376,11 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
     // --- CLICK EVENTS ----
     public void onClickBtnNext(View v) {
         this.index++;
+
+        if (this.listImgProduitToShow.get(this.index) == null) {
+            this.progressBarImage.setVisibility(View.VISIBLE);
+        }
+
         this.showPullInfo(this.index);
         this.changeImageView(this.index);
         this.enablePrevNextButtons(this.index);
@@ -341,6 +389,11 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
 
     public void onClickBtnPrev(View v) {
         this.index--;
+
+        if (this.listImgProduitToShow.get(this.index) == null) {
+            this.progressBarImage.setVisibility(View.VISIBLE);
+        }
+
         this.showPullInfo(this.index);
         this.changeImageView(this.index);
         this.enablePrevNextButtons(this.index);
@@ -445,14 +498,11 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             int idx = Integer.parseInt(results[1].toString());
             Bitmap img = (Bitmap) results[0];
 
-            boolean imgNotFound = this.listImgProduitToShow.size() < index;
+            this.listImgProduitToShow.set(idx, img);
+            this.changeImageView(this.index);
 
-            if (imgNotFound) {
-                int id = getResources().getIdentifier("img", "drawable", getActivity().getPackageName());
-                this.pullImageView.setImageResource(id);
-            } else {
-                this.listImgProduitToShow.set(idx, img);
-                this.changeImageView(this.index);
+            if (this.listImgProduitToShow.get(this.index) != null) {
+                this.progressBarImage.setVisibility(View.INVISIBLE);
             }
         }
     }
@@ -460,7 +510,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
     public void loadImages() {
         for (int y = 0; y < this.listProduitToShow.size(); y++) {
             this.listImgProduitToShow.add(null);
-            ImageFromURL loader = new ImageFromURL(this);
+            ImageFromURL loader = new ImageFromURL(this, getContext());
             loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(y).getImgSrc(), String.valueOf(y));
         }
     }
@@ -484,6 +534,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
 
                     if (i == response.length() - 1) {
                         this.showPullInfo(this.index);
+                        this.hideProgressBar();
                     }
 
                 } else {
@@ -498,8 +549,6 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
                     }
                 }
             }
-
-
 
         } catch (JSONException e) {
             e.printStackTrace();

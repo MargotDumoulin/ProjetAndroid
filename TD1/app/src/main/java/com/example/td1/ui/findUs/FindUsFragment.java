@@ -29,9 +29,6 @@ public class FindUsFragment extends Fragment implements OnMapReadyCallback, com.
     private GoogleMap mMap;
     private View root;
 
-    // For the "unknown fragment" error in XML
-    // https://stackoverflow.com/questions/23898992/android-studio-google-map-v2-fragment-rendering
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

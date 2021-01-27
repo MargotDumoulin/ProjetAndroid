@@ -1,8 +1,11 @@
 package com.example.td1.ui.favoris;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +20,7 @@ import com.example.td1.ActivityLogin;
 import com.example.td1.DAO.ProductDAO;
 import com.example.td1.ImageFromURL;
 import com.example.td1.R;
+import com.example.td1.WaitingData;
 import com.example.td1.modele.Produit;
 import com.example.td1.modele.Taille;
 import com.example.td1.ui.venteCatalogue.VenteCatalogueFragment;
@@ -27,7 +31,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class FavorisFragment extends VenteCatalogueFragment {
+public class FavorisFragment extends VenteCatalogueFragment implements WaitingData {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -54,6 +58,7 @@ public class FavorisFragment extends VenteCatalogueFragment {
             this.index = savedInstanceState.getInt("index");
             this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
             this.alreadyHaveInfo = true;
+
 
         } else {
             this.listProduitToShow = new ArrayList<Produit>();
@@ -82,6 +87,10 @@ public class FavorisFragment extends VenteCatalogueFragment {
         if (this.listProduitToShow.isEmpty()) {
             this.whiteBlankView.setVisibility(View.VISIBLE);
             this.noProductsTextView.setVisibility(View.VISIBLE);
+            this.pullImageView.setVisibility(View.INVISIBLE);
+            this.outlinedHeartImageButton.setVisibility(View.INVISIBLE);
+            this.sizeSpinner.setVisibility(View.INVISIBLE);
+            this.basketImageButton.setVisibility(View.INVISIBLE);
         } else {
             if (this.listProduitToShow.size() == 1 || this.index == 0) {
                 this.index = 0;
@@ -93,7 +102,6 @@ public class FavorisFragment extends VenteCatalogueFragment {
             this.enablePrevNextButtons(this.index);
             this.changeImageView(this.index);
         }
-
 
     }
 
@@ -110,6 +118,7 @@ public class FavorisFragment extends VenteCatalogueFragment {
 
                     if (i == response.length() - 1) {
                         this.showPullInfo(this.index);
+                        this.hideProgressBar();
                     }
 
                 } else {
@@ -119,10 +128,9 @@ public class FavorisFragment extends VenteCatalogueFragment {
                     this.enablePrevNextButtons(this.index);
 
                     if (i == response.length() - 1) {
-
                         for (int y = 0; y < this.listProduitToShow.size(); y++) {
                             this.listImgProduitToShow.add(null);
-                            ImageFromURL loader = new ImageFromURL(this);
+                            ImageFromURL loader = new ImageFromURL(this, getContext());
                             loader.execute("https://devweb.iutmetz.univ-lorraine.fr/~dumouli15u/DevMob/" + this.listProduitToShow.get(y).getImgSrc(), String.valueOf(y));
                         }
 
@@ -132,8 +140,10 @@ public class FavorisFragment extends VenteCatalogueFragment {
             }
 
             if (this.listImgProduitToShow.size() <= 0) {
+                this.pullImageView.setVisibility(View.INVISIBLE);
                 this.whiteBlankView.setVisibility(View.VISIBLE);
                 this.noProductsTextView.setVisibility(View.VISIBLE);
+                this.hideProgressBar();
             }
 
         } catch (JSONException e) {
