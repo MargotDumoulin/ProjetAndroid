@@ -253,12 +253,11 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         this.listSizesLabels.addAll(this.listProduitToShow.get(this.index).getSizesLabels());
         this.sizeSpinnerArrayAdapter.notifyDataSetChanged();
 
-        this.filledHeartImageButton.setVisibility(View.VISIBLE);
-        this.pullImageView.setVisibility(View.VISIBLE);
-        this.sizeSpinner.setVisibility(View.VISIBLE);
-        this.prevBtn.setVisibility(View.VISIBLE);
-        this.nextBtn.setVisibility(View.VISIBLE);
-        this.progressBarImage.setVisibility(View.INVISIBLE);
+        pullImageView.setVisibility(View.VISIBLE);
+        sizeSpinner.setVisibility(View.VISIBLE);
+        prevBtn.setVisibility(View.VISIBLE);
+        nextBtn.setVisibility(View.VISIBLE);
+//        progressBarImage.setVisibility(View.INVISIBLE);
 
         if (((ActivityLogin) this.getActivity()).isLoggedIn()) {
             this.basketImageButton.setVisibility(View.VISIBLE);
@@ -378,6 +377,11 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
     // --- CLICK EVENTS ----
     public void onClickBtnNext(View v) {
         this.index++;
+
+        if (this.listImgProduitToShow.get(this.index) == null) {
+            this.progressBarImage.setVisibility(View.VISIBLE);
+        }
+
         this.showPullInfo(this.index);
         this.changeImageView(this.index);
         this.enablePrevNextButtons(this.index);
@@ -386,6 +390,11 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
 
     public void onClickBtnPrev(View v) {
         this.index--;
+
+        if (this.listImgProduitToShow.get(this.index) == null) {
+            this.progressBarImage.setVisibility(View.VISIBLE);
+        }
+
         this.showPullInfo(this.index);
         this.changeImageView(this.index);
         this.enablePrevNextButtons(this.index);
@@ -490,15 +499,14 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             int idx = Integer.parseInt(results[1].toString());
             Bitmap img = (Bitmap) results[0];
 
-            boolean imgNotFound = this.listImgProduitToShow.size() < index;
+            this.listImgProduitToShow.set(idx, img);
+            this.changeImageView(this.index);
 
-            if (imgNotFound) {
-                int id = R.drawable.ic_male_clothes;
-                this.pullImageView.setImageResource(id);
-            } else {
-                this.listImgProduitToShow.set(idx, img);
-                this.changeImageView(this.index);
+            if (this.listImgProduitToShow.get(this.index) != null) {
+                this.progressBarImage.setVisibility(View.INVISIBLE);
             }
+
+            Log.e("listImg", this.listImgProduitToShow + "");
         }
     }
 
