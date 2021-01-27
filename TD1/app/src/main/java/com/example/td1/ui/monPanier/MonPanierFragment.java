@@ -4,9 +4,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,14 +16,12 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.VolleyError;
-import com.example.td1.ActiviteECommerce;
+import com.example.td1.ActivityECommerce;
 import com.example.td1.ActivityLogin;
-import com.example.td1.DAO.CustomerDAO;
 import com.example.td1.DAO.OrderDAO;
 import com.example.td1.PanierAdapter;
 import com.example.td1.R;
 import com.example.td1.BasketTotalInterface;
-import com.example.td1.modele.Client;
 import com.example.td1.modele.LigneCommande;
 import com.example.td1.modele.Panier;
 import com.example.td1.modele.Produit;
@@ -61,7 +56,7 @@ public class MonPanierFragment extends Fragment implements AdapterView.OnItemCli
         super.onCreate(savedInstanceState);
         root = inflater.inflate(R.layout.fragment_mon_panier, container, false);
 
-        this.basket = ((ActiviteECommerce) this.getActivity()).getBasket();
+        this.basket = ((ActivityECommerce) this.getActivity()).getBasket();
         this.basketTotalTextView = root.findViewById(R.id.totalTextView);
         this.basketTotalTextView.setText(String.format(getString(R.string.basket_total), this.basket.getBasketTotal()));
 

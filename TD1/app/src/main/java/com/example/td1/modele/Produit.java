@@ -1,7 +1,6 @@
 package com.example.td1.modele;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Produit extends Base implements Serializable {

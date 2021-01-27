@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -15,7 +14,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
 
 import com.android.volley.VolleyError;
 import com.example.td1.ActivityLogin;
@@ -25,7 +23,6 @@ import com.example.td1.R;
 import com.example.td1.modele.Order;
 import com.example.td1.modele.OrderLine;
 import com.example.td1.ui.myAccount.MyAccountFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;

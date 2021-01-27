@@ -2,7 +2,6 @@ package com.example.td1;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import com.example.td1.modele.Categorie;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class CategoriesAdapter extends ArrayAdapter<Categorie> {

@@ -19,14 +19,11 @@ import com.android.volley.VolleyError;
 import com.example.td1.DAO.LegalNoticesDAO;
 import com.example.td1.R;
 import com.example.td1.WaitingData;
-import com.example.td1.modele.Produit;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 public class LegalNoticesFragment extends Fragment implements WaitingData, com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener {

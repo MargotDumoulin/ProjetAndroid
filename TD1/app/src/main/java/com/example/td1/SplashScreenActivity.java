@@ -17,7 +17,7 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 
-public class SplashScreen extends AppCompatActivity implements Response.Listener<JSONArray>, Response.ErrorListener {
+public class SplashScreenActivity extends AppCompatActivity implements Response.Listener<JSONArray>, Response.ErrorListener {
 
     private ArrayList<Categorie> listCategories;
     final int SPLASH_TIME_OUT = 1000;
@@ -33,7 +33,7 @@ public class SplashScreen extends AppCompatActivity implements Response.Listener
 
     @Override
     public void onResponse(JSONArray response) {
-        Intent intent = new Intent(SplashScreen.this, MainActivity.class);
+        Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
         intent.putExtra("categories", response.toString());
         startActivity(intent);
     }
