@@ -462,7 +462,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
     public void onClickImageZoomed(View v) {
         unzoomImage();
     }
-    
+
     // ---- SPINNER EVENTS ----
     public void checkSpinnerValue() {
         if (!this.clothingSize.equals("")) {
