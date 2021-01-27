@@ -87,6 +87,10 @@ public class FavorisFragment extends VenteCatalogueFragment implements WaitingDa
         if (this.listProduitToShow.isEmpty()) {
             this.whiteBlankView.setVisibility(View.VISIBLE);
             this.noProductsTextView.setVisibility(View.VISIBLE);
+            this.pullImageView.setVisibility(View.INVISIBLE);
+            this.outlinedHeartImageButton.setVisibility(View.INVISIBLE);
+            this.sizeSpinner.setVisibility(View.INVISIBLE);
+            this.basketImageButton.setVisibility(View.INVISIBLE);
         } else {
             if (this.listProduitToShow.size() == 1 || this.index == 0) {
                 this.index = 0;

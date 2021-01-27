@@ -195,7 +195,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             zoomImage();
         }
 
-        if (((ActivityLogin) this.getActivity()).isLoggedIn()) {
+        if (((ActivityLogin) this.getActivity()).isLoggedIn() && this.listProduitToShow.size() > 0) {
             this.basketImageButton.setVisibility(View.VISIBLE);
         } else {
             this.basketImageButton.setVisibility(View.INVISIBLE);
@@ -257,7 +257,6 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
         sizeSpinner.setVisibility(View.VISIBLE);
         prevBtn.setVisibility(View.VISIBLE);
         nextBtn.setVisibility(View.VISIBLE);
-//        progressBarImage.setVisibility(View.INVISIBLE);
 
         if (((ActivityLogin) this.getActivity()).isLoggedIn()) {
             this.basketImageButton.setVisibility(View.VISIBLE);
@@ -505,8 +504,6 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             if (this.listImgProduitToShow.get(this.index) != null) {
                 this.progressBarImage.setVisibility(View.INVISIBLE);
             }
-
-            Log.e("listImg", this.listImgProduitToShow + "");
         }
     }
 

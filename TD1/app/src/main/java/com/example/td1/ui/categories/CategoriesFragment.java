@@ -158,7 +158,6 @@ public class CategoriesFragment extends Fragment implements AdapterView.OnItemCl
         this.lvCategories.setAdapter(this.categoriesAdapter);
     }
 
-    // https://stackoverflow.com/questions/24811536/android-listview-get-item-view-by-position
     public View getViewByPosition(int pos, ListView listView) {
         final int firstListItemPosition = listView.getFirstVisiblePosition();
         final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
