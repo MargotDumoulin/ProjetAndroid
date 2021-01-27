@@ -3,8 +3,6 @@ package com.example.td1.modele;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
-
 public class LigneCommande {
 
     private int idOrder;

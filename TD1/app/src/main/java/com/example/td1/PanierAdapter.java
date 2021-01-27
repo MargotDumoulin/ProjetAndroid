@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -133,12 +132,7 @@ public class PanierAdapter extends ArrayAdapter<Triplet<Produit, Taille, Integer
 
         alertDialog.setPositiveButton(android.R.string.yes, this::onClick);
 
-        alertDialog.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+        alertDialog.setNegativeButton(android.R.string.no, (dialog, which) -> dialog.cancel());
 
         alertDialog.show();
     }

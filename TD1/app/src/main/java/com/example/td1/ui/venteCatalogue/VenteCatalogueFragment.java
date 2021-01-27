@@ -135,7 +135,7 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
                     new Handler().postDelayed(() -> ProductDAO.findAllByCateg(this, this.idCateg, -1), LOADING_TIME_OUT);
                 }
             } else {
-                // ???
+                Toast.makeText(this.getContext(),getString(R.string.error_db), Toast.LENGTH_SHORT).show();
             }
         }
         return root;
