@@ -6,7 +6,6 @@ import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -128,10 +127,10 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             if (this.idCateg != -1) {
                 if (((ActivityLogin) this.getActivity()).isLoggedIn()) {
                     // get products + if they are starred or not
-                    new Handler().postDelayed(() -> ProductDAO.findAllByCateg(this, this.idCateg, ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId()), LOADING_TIME_OUT);
+                    ProductDAO.findAllByCateg(this, this.idCateg, ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
                 } else {
                     // only get products
-                    new Handler().postDelayed(() -> ProductDAO.findAllByCateg(this, this.idCateg, -1), LOADING_TIME_OUT);
+                    ProductDAO.findAllByCateg(this, this.idCateg, -1);
                 }
             } else {
                 Toast.makeText(this.getContext(),getString(R.string.error_db), Toast.LENGTH_SHORT).show();

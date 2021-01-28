@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 
@@ -68,7 +67,7 @@ public class ViewLastOrderFragment extends MyAccountFragment implements WaitingD
 
         this.order = null;
 
-        new Handler().postDelayed(() -> OrderDAO.getOrder(this, ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId()), LOADING_TIME_OUT);
+        OrderDAO.getOrder(this, ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
         return root;
     }
 

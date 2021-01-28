@@ -3,7 +3,6 @@ package com.example.td1.ui.legalNotices;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,9 +91,9 @@ public class LegalNoticesFragment extends Fragment implements WaitingData, com.a
 
         if (legalNoticesTab == null) {
             if (Locale.getDefault().getDisplayLanguage().equals("français")) {
-                new Handler().postDelayed(() -> LegalNoticesDAO.getLegalNoticesByLang(this, "fr"), LOADING_TIME_OUT);
+                LegalNoticesDAO.getLegalNoticesByLang(this, "fr");
             } else {
-                new Handler().postDelayed(() -> LegalNoticesDAO.getLegalNoticesByLang(this, "en"), LOADING_TIME_OUT);
+                LegalNoticesDAO.getLegalNoticesByLang(this, "en");
             }
         } else {
             this.integrateValueIntoTextView();
