@@ -105,7 +105,7 @@ public class MonPanierFragment extends Fragment implements AdapterView.OnItemCli
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Log.e("test", error + "là");
+        Log.e("Volley error", error.getMessage());
         Toast.makeText(this.getContext(), R.string.error_db, Toast.LENGTH_LONG).show();
     }
 

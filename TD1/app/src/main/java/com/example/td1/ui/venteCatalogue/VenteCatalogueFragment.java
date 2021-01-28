@@ -417,17 +417,27 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
 
             if (!input.matches("")) {
                 quantity = Integer.parseInt(input);
-            }
 
-            if (this.basket.isArticleAlreadyInBasket(this.listProduitToShow.get(this.index).getId())) {
-                this.basket.addArticleQuantity(this.listProduitToShow.get(this.index).getId(), quantity);
+                if (quantity <= 0) {
+                    Toast.makeText(this.getContext(), getString(R.string.must_enter_valid_quantity), Toast.LENGTH_SHORT).show();
+                } else {
+
+                    if (this.basket.isArticleAlreadyInBasket(this.listProduitToShow.get(this.index).getId())) {
+                        this.basket.addArticleQuantity(this.listProduitToShow.get(this.index).getId(), quantity);
+                    } else {
+                        this.basket.addArticle(this.listProduitToShow.get(this.index), new Taille(this.getSpinnerSelectedSizeId(sizeSpinner.getSelectedItem().toString()), sizeSpinner.getSelectedItem().toString()), quantity);
+                    }
+
+                    ((ActivityECommerce) this.getActivity()).updateBasket(this.basket);
+                    Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment).navigate(R.id.nav_gestion_panier);
+                    showToastAddProductToBasket();
+                }
+
             } else {
-                this.basket.addArticle(this.listProduitToShow.get(this.index), new Taille(this.getSpinnerSelectedSizeId(sizeSpinner.getSelectedItem().toString()), sizeSpinner.getSelectedItem().toString()), quantity);
+                Toast.makeText(this.getContext(), getString(R.string.must_enter_valid_quantity), Toast.LENGTH_SHORT).show();
             }
 
-            ((ActivityECommerce) this.getActivity()).updateBasket(this.basket);
-            Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment).navigate(R.id.nav_gestion_panier);
-            showToastAddProductToBasket();
+
         });
         // A null listener allows the button to dismiss the dialog and take no further action.
         builder.setNegativeButton(android.R.string.no, null);
