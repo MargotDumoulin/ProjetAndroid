@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.td1.modele.Produit;
 import com.example.td1.modele.Taille;
@@ -85,7 +86,19 @@ public class PanierAdapter extends ArrayAdapter<Triplet<Produit, Taille, Integer
 
     public void onClick(DialogInterface dialog, int which) {
         if (this.isInEditDialog) {
-            this.basket.get(this.index).third = Integer.parseInt(this.input.getText().toString());
+
+            if (!this.input.equals("")) {
+                int quantity = Integer.parseInt(this.input.getText().toString());
+
+                if (quantity <= 0) {
+                    Toast.makeText(this.getContext(), this.getContext().getString(R.string.must_enter_valid_quantity), Toast.LENGTH_SHORT).show();
+                } else {
+                    this.basket.get(this.index).third = Integer.parseInt(this.input.getText().toString());
+                }
+            } else {
+                Toast.makeText(this.getContext(), this.getContext().getString(R.string.must_enter_valid_quantity), Toast.LENGTH_SHORT).show();
+            }
+
         } else {
             this.basket.remove(this.index);
             this.notifyDataSetChanged();
