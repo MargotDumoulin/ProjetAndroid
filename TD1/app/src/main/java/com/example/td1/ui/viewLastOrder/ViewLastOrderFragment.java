@@ -1,7 +1,10 @@
 package com.example.td1.ui.viewLastOrder;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 
@@ -9,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +24,7 @@ import com.example.td1.ActivityLogin;
 import com.example.td1.DAO.OrderDAO;
 import com.example.td1.OrderLinesAdapter;
 import com.example.td1.R;
+import com.example.td1.WaitingData;
 import com.example.td1.modele.Order;
 import com.example.td1.modele.OrderLine;
 import com.example.td1.ui.myAccount.MyAccountFragment;
@@ -32,7 +37,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class ViewLastOrderFragment extends MyAccountFragment implements com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener {
+public class ViewLastOrderFragment extends MyAccountFragment implements WaitingData, com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener {
 
     private View root;
 
@@ -46,8 +51,13 @@ public class ViewLastOrderFragment extends MyAccountFragment implements com.andr
     private TextView noOrderFoundTextView;
 
     private View noOrderFoundWhiteBlankView;
+    private View progressBarView;
+
+    private ProgressBar progressBar;
 
     private ArrayAdapter<OrderLine> orderLinesAdapter;
+
+    final int LOADING_TIME_OUT = 500;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -58,7 +68,7 @@ public class ViewLastOrderFragment extends MyAccountFragment implements com.andr
 
         this.order = null;
 
-        OrderDAO.getOrder(this, ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
+        new Handler().postDelayed(() -> OrderDAO.getOrder(this, ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId()), LOADING_TIME_OUT);
         return root;
     }
 
@@ -71,6 +81,8 @@ public class ViewLastOrderFragment extends MyAccountFragment implements com.andr
         this.orderTotalTextView = this.root.findViewById(R.id.orderTotalTextView);
         this.noOrderFoundTextView = this.root.findViewById(R.id.noOrderFoundTextView);
         this.noOrderFoundWhiteBlankView = this.root.findViewById(R.id.noOrderFoundWhiteBlankView);
+        this.progressBarView = this.root.findViewById(R.id.loadingView);
+        this.progressBar = this.root.findViewById(R.id.loading);
     }
 
     public void setOrderLinesAdapter() {
@@ -85,6 +97,24 @@ public class ViewLastOrderFragment extends MyAccountFragment implements com.andr
         this.orderNumberTextView.setText(String.format(getString(R.string.order_number), this.order.getId()));
         this.orderDateTextView.setText(String.format(getString(R.string.order_date), dateStr));
         this.orderTotalTextView.setText(String.format(getString(R.string.order_total), this.order.getTotal()));
+    }
+
+    public void hideProgressBar() {
+        this.progressBar.animate().alpha(0.0f).setDuration(250).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+
+        this.progressBarView.animate().alpha(0.0f).setDuration(400).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                progressBarView.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
@@ -121,9 +151,11 @@ public class ViewLastOrderFragment extends MyAccountFragment implements com.andr
                 this.updateTexts();
                 this.noOrderFoundTextView.setVisibility(View.INVISIBLE);
                 this.noOrderFoundWhiteBlankView.setVisibility(View.INVISIBLE);
+                this.hideProgressBar();
             } else {
                 this.noOrderFoundTextView.setVisibility(View.VISIBLE);
                 this.noOrderFoundWhiteBlankView.setVisibility(View.VISIBLE);
+                this.hideProgressBar();
             }
 
         } catch (JSONException | ParseException e) {
