@@ -65,7 +65,15 @@ public class ViewLastOrderFragment extends MyAccountFragment implements WaitingD
 
         this.order = null;
 
-        OrderDAO.getOrder(this, ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
+        if (savedInstanceState != null) {
+            this.noOrderFound = savedInstanceState.getBoolean("noOrderFound");
+            if (!savedInstanceState.getBoolean("noOrder") && !this.noOrderFound) {
+                this.order = (Order) savedInstanceState.getSerializable("order");
+            }
+        } else  {
+            OrderDAO.getOrder(this, ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
+        }
+
         return root;
     }
 
