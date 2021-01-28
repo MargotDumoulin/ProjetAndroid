@@ -54,6 +54,8 @@ public class ViewLastOrderFragment extends MyAccountFragment implements WaitingD
 
     private ProgressBar progressBar;
 
+    private boolean noOrderFound = false;
+
     private ArrayAdapter<OrderLine> orderLinesAdapter;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -74,6 +76,7 @@ public class ViewLastOrderFragment extends MyAccountFragment implements WaitingD
             OrderDAO.getOrder(this, ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
         }
 
+        
         return root;
     }
 
@@ -88,6 +91,31 @@ public class ViewLastOrderFragment extends MyAccountFragment implements WaitingD
         this.noOrderFoundWhiteBlankView = this.root.findViewById(R.id.noOrderFoundWhiteBlankView);
         this.progressBarView = this.root.findViewById(R.id.loadingView);
         this.progressBar = this.root.findViewById(R.id.loading);
+
+        if (this.order != null) {
+            this.setOrderLinesAdapter();
+            this.updateTexts();
+            this.noOrderFoundTextView.setVisibility(View.INVISIBLE);
+            this.noOrderFoundWhiteBlankView.setVisibility(View.INVISIBLE);
+            this.hideProgressBar();
+        }
+
+        if (this.noOrderFound) {
+            this.progressBar.setVisibility(View.INVISIBLE);
+            this.progressBarView.setVisibility(View.INVISIBLE);
+            this.showNoProductsFound();
+        }
+    }
+
+    // ------ ROTATION ---------------------------------
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (this.order != null) {
+            outState.putSerializable("order", this.order);
+        } else {
+            outState.putBoolean("noOrder", true); // maybe the user flipped the screen while it's charging, so it has no order YET but maybe will have one when it's done charging
+            outState.putBoolean("noOrderFound", this.noOrderFound); // test if we DO certainly know that no order was found after searching into the db :)
+        }
     }
 
     public void setOrderLinesAdapter() {
@@ -120,6 +148,12 @@ public class ViewLastOrderFragment extends MyAccountFragment implements WaitingD
                 progressBarView.setVisibility(View.GONE);
             }
         });
+    }
+
+    public void showNoProductsFound() {
+        this.noOrderFound = true;
+        this.noOrderFoundTextView.setVisibility(View.VISIBLE);
+        this.noOrderFoundWhiteBlankView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -158,8 +192,7 @@ public class ViewLastOrderFragment extends MyAccountFragment implements WaitingD
                 this.noOrderFoundWhiteBlankView.setVisibility(View.INVISIBLE);
                 this.hideProgressBar();
             } else {
-                this.noOrderFoundTextView.setVisibility(View.VISIBLE);
-                this.noOrderFoundWhiteBlankView.setVisibility(View.VISIBLE);
+               this.showNoProductsFound();
                 this.hideProgressBar();
             }
 
