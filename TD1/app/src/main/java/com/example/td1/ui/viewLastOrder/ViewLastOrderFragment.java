@@ -101,6 +101,8 @@ public class ViewLastOrderFragment extends MyAccountFragment implements WaitingD
         }
 
         if (this.noOrderFound) {
+            this.progressBar.setVisibility(View.INVISIBLE);
+            this.progressBarView.setVisibility(View.INVISIBLE);
             this.showNoProductsFound();
         }
     }
@@ -152,7 +154,6 @@ public class ViewLastOrderFragment extends MyAccountFragment implements WaitingD
         this.noOrderFound = true;
         this.noOrderFoundTextView.setVisibility(View.VISIBLE);
         this.noOrderFoundWhiteBlankView.setVisibility(View.VISIBLE);
-        this.hideProgressBar();
     }
 
     @Override
@@ -192,6 +193,7 @@ public class ViewLastOrderFragment extends MyAccountFragment implements WaitingD
                 this.hideProgressBar();
             } else {
                this.showNoProductsFound();
+                this.hideProgressBar();
             }
 
         } catch (JSONException | ParseException e) {
