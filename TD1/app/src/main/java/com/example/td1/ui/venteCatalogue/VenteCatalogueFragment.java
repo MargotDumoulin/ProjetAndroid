@@ -87,8 +87,6 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
     
     protected View root;
 
-    final int LOADING_TIME_OUT = 1000;
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

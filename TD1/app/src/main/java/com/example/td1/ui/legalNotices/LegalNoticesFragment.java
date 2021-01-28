@@ -52,8 +52,6 @@ public class LegalNoticesFragment extends Fragment implements WaitingData, com.a
 
     private String[] legalNoticesTab = null;
 
-    final int LOADING_TIME_OUT = 1000;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

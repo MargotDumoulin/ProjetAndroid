@@ -56,8 +56,6 @@ public class ViewLastOrderFragment extends MyAccountFragment implements WaitingD
 
     private ArrayAdapter<OrderLine> orderLinesAdapter;
 
-    final int LOADING_TIME_OUT = 500;
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
