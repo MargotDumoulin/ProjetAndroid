@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import com.android.volley.VolleyError;
+import com.example.td1.ActivityECommerce;
 import com.example.td1.ActivityLogin;
 import com.example.td1.DAO.OrderDAO;
 import com.example.td1.OrderLinesAdapter;
@@ -26,6 +27,7 @@ import com.example.td1.R;
 import com.example.td1.WaitingData;
 import com.example.td1.modele.Order;
 import com.example.td1.modele.OrderLine;
+import com.example.td1.modele.Produit;
 import com.example.td1.ui.myAccount.MyAccountFragment;
 
 import org.json.JSONArray;
@@ -54,6 +56,8 @@ public class ViewLastOrderFragment extends MyAccountFragment implements WaitingD
 
     private ProgressBar progressBar;
 
+    private boolean noOrderFound = false;
+
     private ArrayAdapter<OrderLine> orderLinesAdapter;
 
     final int LOADING_TIME_OUT = 500;
@@ -67,7 +71,16 @@ public class ViewLastOrderFragment extends MyAccountFragment implements WaitingD
 
         this.order = null;
 
-        OrderDAO.getOrder(this, ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
+        if (savedInstanceState != null) {
+            if (!savedInstanceState.getBoolean("noOrder") && !savedInstanceState.getBoolean("noOrderFound")) {
+                this.order = (Order) savedInstanceState.getSerializable("order");
+            }
+        } else  {
+            Log.e("CONDITION", "on est là");
+            OrderDAO.getOrder(this, ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
+        }
+
+        
         return root;
     }
 
@@ -82,6 +95,28 @@ public class ViewLastOrderFragment extends MyAccountFragment implements WaitingD
         this.noOrderFoundWhiteBlankView = this.root.findViewById(R.id.noOrderFoundWhiteBlankView);
         this.progressBarView = this.root.findViewById(R.id.loadingView);
         this.progressBar = this.root.findViewById(R.id.loading);
+
+        if (this.order != null) {
+            this.setOrderLinesAdapter();
+            this.updateTexts();
+            this.noOrderFoundTextView.setVisibility(View.INVISIBLE);
+            this.noOrderFoundWhiteBlankView.setVisibility(View.INVISIBLE);
+            this.hideProgressBar();
+        }
+    }
+
+    // ------ ROTATION ---------------------------------
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (this.order != null) {
+            outState.putSerializable("order", this.order);
+        } else {
+            Log.e("CONDITION", "on passe par là");
+            outState.putBoolean("noOrder", true); // maybe the user flipped the screen while it's charging, so it has no order YET but maybe will have one when it's done charging
+            outState.putBoolean("noOrderFound", this.noOrderFound); // test if we DO certainly know that no order was found after searching into the db :)
+        }
     }
 
     public void setOrderLinesAdapter() {
@@ -152,6 +187,7 @@ public class ViewLastOrderFragment extends MyAccountFragment implements WaitingD
                 this.noOrderFoundWhiteBlankView.setVisibility(View.INVISIBLE);
                 this.hideProgressBar();
             } else {
+                this.noOrderFound = true;
                 this.noOrderFoundTextView.setVisibility(View.VISIBLE);
                 this.noOrderFoundWhiteBlankView.setVisibility(View.VISIBLE);
                 this.hideProgressBar();
