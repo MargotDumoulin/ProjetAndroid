@@ -226,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements ActivityECommerce
 
         Fragment navHostFragment = fm.findFragmentById(R.id.nav_host_fragment);
         //if you added fragment via layout xml
-        Log.e("test", ""+ getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment).getChildFragmentManager().findFragmentById(R.id.nav_boutique));
+        Log.e("test", ""+ getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment).getChildFragmentManager().getFragments().get(1));
         VenteCatalogueFragment fragment = (VenteCatalogueFragment) navHostFragment.getChildFragmentManager().getFragments().get(0).getChildFragmentManager().getFragments().get(0).getChildFragmentManager().findFragmentById(R.id.venteCatalogueFragment);
         fragment.onQuantityGiven(selectedValue);
     }
