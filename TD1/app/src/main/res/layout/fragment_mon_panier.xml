@@ -11,6 +11,7 @@
         android:id="@+id/panierHeaderDescriptionTextView"
         android:layout_width="@dimen/basket_column_description"
         android:layout_height="wrap_content"
+        android:paddingStart="10dp"
         android:text="@string/description"
         app:layout_constraintBottom_toTopOf="@id/separatorTopLine"
         app:layout_constraintStart_toStartOf="parent" />
