@@ -29,6 +29,9 @@ import java.util.ArrayList;
 
 public class FavorisFragment extends VenteCatalogueFragment implements WaitingData {
 
+    private boolean noFavoritesFound;
+    private boolean noFavoritesAnymore;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -45,16 +48,21 @@ public class FavorisFragment extends VenteCatalogueFragment implements WaitingDa
             this.listProduitToShow.add(productToAdd);
         }
 
-        if (savedInstanceState != null && !savedInstanceState.getBoolean("noProducts")) {
-            this.listProduitToShow = (ArrayList<Produit>) savedInstanceState.getSerializable("listProduitToShow");
-            this.loadImages();
+        if (savedInstanceState != null) {
 
-            this.basket = ((ActivityECommerce) this.getActivity()).getBasket();
+            this.noFavoritesFound = savedInstanceState.getBoolean("noFavoritesFound");
+            this.noFavoritesAnymore = savedInstanceState.getBoolean("noFavoritesAnymore");
 
-            this.index = savedInstanceState.getInt("index");
-            this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
-            this.alreadyHaveInfo = true;
+            if (!savedInstanceState.getBoolean("noProducts") && !this.noFavoritesFound && !this.noFavoritesAnymore) {
+                this.listProduitToShow = (ArrayList<Produit>) savedInstanceState.getSerializable("listProduitToShow");
+                this.loadImages();
 
+                this.basket = ((ActivityECommerce) this.getActivity()).getBasket();
+
+                this.index = savedInstanceState.getInt("index");
+                this.isImageZoomed = savedInstanceState.getBoolean("isImageZoomed");
+                this.alreadyHaveInfo = true;
+            }
 
         } else {
             this.listProduitToShow = new ArrayList<Produit>();
@@ -66,6 +74,25 @@ public class FavorisFragment extends VenteCatalogueFragment implements WaitingDa
             ProductDAO.findAllStarred(this, ((ActivityLogin) this.getActivity()).getLoggedInCustomer().getId());
         }
         return root;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (this.noFavoritesFound || this.noFavoritesAnymore) {
+            this.progressBar.setVisibility(View.INVISIBLE);
+            this.progressBarView.setVisibility(View.INVISIBLE);
+            this.showNoFavoritesFound();
+        }
+     }
+
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putBoolean("noFavoritesAnymore", this.noFavoritesAnymore); // removed all favorites when already launched :)
+        outState.putBoolean("noFavoritesFound", this.noFavoritesFound); // no favorites found in db at launch
+
     }
 
     public void onClickBtnHeartFilled(View v) {
@@ -81,12 +108,15 @@ public class FavorisFragment extends VenteCatalogueFragment implements WaitingDa
         Toast.makeText(this.getContext(), getString(R.string.remove_from_favorites), Toast.LENGTH_LONG).show();
 
         if (this.listProduitToShow.isEmpty()) {
+
             this.whiteBlankView.setVisibility(View.VISIBLE);
             this.noProductsTextView.setVisibility(View.VISIBLE);
             this.pullImageView.setVisibility(View.INVISIBLE);
             this.outlinedHeartImageButton.setVisibility(View.INVISIBLE);
             this.sizeSpinner.setVisibility(View.INVISIBLE);
             this.basketImageButton.setVisibility(View.INVISIBLE);
+            this.noFavoritesAnymore = true;
+
         } else {
             if (this.listProduitToShow.size() == 1 || this.index == 0) {
                 this.index = 0;
@@ -100,6 +130,13 @@ public class FavorisFragment extends VenteCatalogueFragment implements WaitingDa
         }
 
     }
+
+    public void showNoFavoritesFound() {
+        this.pullImageView.setVisibility(View.INVISIBLE);
+        this.whiteBlankView.setVisibility(View.VISIBLE);
+        this.noProductsTextView.setVisibility(View.VISIBLE);
+    }
+
 
     @Override
     public void onResponse(JSONArray response) {
@@ -136,10 +173,11 @@ public class FavorisFragment extends VenteCatalogueFragment implements WaitingDa
             }
 
             if (this.listImgProduitToShow.size() <= 0) {
-                this.pullImageView.setVisibility(View.INVISIBLE);
-                this.whiteBlankView.setVisibility(View.VISIBLE);
-                this.noProductsTextView.setVisibility(View.VISIBLE);
+
+                this.noFavoritesFound = true;
+                this.showNoFavoritesFound();
                 this.hideProgressBar();
+
             }
 
         } catch (JSONException e) {
