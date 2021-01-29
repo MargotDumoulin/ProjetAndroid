@@ -157,13 +157,13 @@
                 android:id="@+id/ordersListView"
                 android:layout_width="match_parent"
                 android:nestedScrollingEnabled="true"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginBottom="@dimen/global_app_margin"
                 app:layout_constraintBottom_toTopOf="@id/orderTotalTextView"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/orderColumnsLayout" />
-            
+
             <TextView
                 android:id="@+id/orderTotalTextView"
                 android:layout_width="wrap_content"
