@@ -27,7 +27,7 @@ public class OrderLinesAdapter extends ArrayAdapter<OrderLine> {
         }
 
         TextView tvDescription = convertView.findViewById(R.id.productTitleIlpTextView);
-        tvDescription.setText(this.orderLines.get(index).getProductDescription());
+        tvDescription.setText(this.orderLines.get(index).getProductTitle());
 
         TextView tvPrice = convertView.findViewById(R.id.productPriceIlpTextView);
         tvPrice.setText(String.valueOf(this.orderLines.get(index).getPrice()));
