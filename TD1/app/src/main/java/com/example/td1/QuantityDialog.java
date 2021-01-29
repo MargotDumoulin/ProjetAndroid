@@ -14,14 +14,13 @@ import androidx.fragment.app.DialogFragment;
 public class QuantityDialog extends DialogFragment implements DialogInterface.OnClickListener {
 
     private EditText editQuantity;
+    private String dialogCaller;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanState) {
         View view = getActivity().getLayoutInflater().inflate(R.layout.item_quantity, null);
         this.editQuantity = view.findViewById(R.id.editTextItemQuantity);
 
-
-        // Build dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
         builder.setTitle(getString(R.string.quantity));
 
@@ -37,7 +36,10 @@ public class QuantityDialog extends DialogFragment implements DialogInterface.On
         String value = editQuantity.getText().toString();
         MainActivity callingActivity = (MainActivity) this.getActivity();
         dialog.dismiss();
-        callingActivity.onUserSelectValue(value);
+        callingActivity.onUserSelectValue(value, this.dialogCaller);
+    }
 
+    public void setUpDialogCaller(String dialogCaller) {
+        this.dialogCaller = dialogCaller;
     }
 }

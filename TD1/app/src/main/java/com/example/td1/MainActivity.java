@@ -13,6 +13,7 @@ import com.example.td1.modele.Client;
 import com.example.td1.modele.Panier;
 import com.example.td1.modele.Produit;
 import com.example.td1.modele.Taille;
+import com.example.td1.ui.monPanier.MonPanierFragment;
 import com.example.td1.ui.venteCatalogue.VenteCatalogueFragment;
 import com.example.td1.utils.Triplet;
 import com.google.android.material.navigation.NavigationView;
@@ -220,16 +221,25 @@ public class MainActivity extends AppCompatActivity implements ActivityECommerce
         this.accountNameTextView.setText(getString(R.string.nav_header_title));
     }
 
-    public void onUserSelectValue(String selectedValue) {
-        Log.e("Quantityy", selectedValue);
+    public void onUserSelectValue(String selectedValue, String dialogCaller) {
         FragmentManager fm = getSupportFragmentManager();
 
         Fragment navHost = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        Fragment boutique = navHost.getChildFragmentManager().getFragments().get(0);
-        Fragment navHostBoutique = boutique.getChildFragmentManager().getFragments().get(0);
-        VenteCatalogueFragment venteCatalogue = (VenteCatalogueFragment) navHostBoutique.getChildFragmentManager().getFragments().get(0);
 
-        Log.e("VCFragment", venteCatalogue + "");
-        venteCatalogue.onQuantityGiven(selectedValue);
+        switch (dialogCaller) {
+            case "VenteCatalogueFragment": {
+                Fragment boutique = navHost.getChildFragmentManager().getFragments().get(0);
+                Fragment navHostBoutique = boutique.getChildFragmentManager().getFragments().get(0);
+                VenteCatalogueFragment venteCatalogue = (VenteCatalogueFragment) navHostBoutique.getChildFragmentManager().getFragments().get(0);
+                venteCatalogue.onQuantityGiven(selectedValue);
+                break;
+            }
+            case "MonPanierFragment": {
+                MonPanierFragment monPanier = (MonPanierFragment) navHost.getChildFragmentManager().getFragments().get(0);
+                monPanier.onQuantityGiven(selectedValue);
+                break;
+            }
+        }
+
     }
 }
