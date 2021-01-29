@@ -23,6 +23,7 @@ public class PanierAdapter extends ArrayAdapter<Triplet<Produit, Taille, Integer
 
     private ArrayList<Triplet<Produit, Taille, Integer>> basket;
     private int index;
+    private int indexToEditOrDelete;
     private EditText input;
     private boolean isInEditDialog;
     private BasketTotalInterface responder;
@@ -54,32 +55,37 @@ public class PanierAdapter extends ArrayAdapter<Triplet<Produit, Taille, Integer
         tvQuantity.setText(String.valueOf(this.basket.get(index).third));
 
         ImageButton editImageButton = convertView.findViewById(R.id.editImageButton);
-        editImageButton.setTag(2);
+        editImageButton.setTag(this.index + "a");
         editImageButton.setOnClickListener(this::onClick);
 
         ImageButton deleteImageButton = convertView.findViewById(R.id.deleteImageButton);
-        deleteImageButton.setTag(3);
+        deleteImageButton.setTag(this.index + "b");
         deleteImageButton.setOnClickListener(this::onClick);
 
         return convertView;
     }
 
-    public void handleEditClick(int index) {
+    public void handleEditClick() {
         this.isInEditDialog = true;
         this.createEditDialog();
     }
 
-    public void handleDeleteClick(int index) {
+    public void handleDeleteClick() {
         this.isInEditDialog = false;
         this.createDeleteDialog();
     }
 
     public void onClick(View v) {
-        int tag = (int) v.getTag();
-        if (tag == 2) {
-            this.handleEditClick(this.index);
+        String tag = (String) v.getTag();
+        String lastCharacter = tag.substring(tag.length() - 1);
+        String tagWithoutLastCharacter = tag.substring(0, tag.length() - 1);
+        int tagNumber = Integer.parseInt(tagWithoutLastCharacter);
+
+        this.indexToEditOrDelete = tagNumber;
+        if (lastCharacter.equals("a")) {
+            this.handleEditClick();
         } else {
-            this.handleDeleteClick(this.index);
+            this.handleDeleteClick();
         }
     }
 
@@ -91,7 +97,7 @@ public class PanierAdapter extends ArrayAdapter<Triplet<Produit, Taille, Integer
             if (quantity <= 0) {
                 Toast.makeText(this.getContext(), this.getContext().getString(R.string.must_enter_valid_quantity), Toast.LENGTH_SHORT).show();
             } else {
-                this.basket.get(this.index).third = quantity;
+                this.basket.get(this.indexToEditOrDelete).third = quantity;
             }
         } else {
             Toast.makeText(this.getContext(), this.getContext().getString(R.string.must_enter_valid_quantity), Toast.LENGTH_SHORT).show();
@@ -102,7 +108,7 @@ public class PanierAdapter extends ArrayAdapter<Triplet<Produit, Taille, Integer
     }
 
     public void deleteItemFromBasket() {
-        this.basket.remove(this.index);
+        this.basket.remove(this.indexToEditOrDelete);
         this.notifyDataSetChanged();
         this.responder.changeBasketTotal();
     }
