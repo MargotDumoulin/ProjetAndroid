@@ -35,7 +35,6 @@ public class QuantityDialog extends DialogFragment implements DialogInterface.On
     @Override
     public void onClick(DialogInterface dialog, int position) {
         String value = editQuantity.getText().toString();
-        Log.e("Quantityy", value);
         MainActivity callingActivity = (MainActivity) this.getActivity();
         callingActivity.onUserSelectValue(value);
         dialog.dismiss();

@@ -224,10 +224,12 @@ public class MainActivity extends AppCompatActivity implements ActivityECommerce
         Log.e("Quantityy", selectedValue);
         FragmentManager fm = getSupportFragmentManager();
 
-        Fragment navHostFragment = fm.findFragmentById(R.id.nav_host_fragment);
-        //if you added fragment via layout xml
-        Log.e("test", ""+ getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment).getChildFragmentManager().getFragments().get(1));
-        VenteCatalogueFragment fragment = (VenteCatalogueFragment) navHostFragment.getChildFragmentManager().getFragments().get(0).getChildFragmentManager().getFragments().get(0).getChildFragmentManager().findFragmentById(R.id.venteCatalogueFragment);
-        fragment.onQuantityGiven(selectedValue);
+        Fragment navHost = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        Fragment boutique = navHost.getChildFragmentManager().getFragments().get(0);
+        Fragment navHostBoutique = boutique.getChildFragmentManager().getFragments().get(0);
+        VenteCatalogueFragment venteCatalogue = (VenteCatalogueFragment) navHostBoutique.getChildFragmentManager().getFragments().get(0);
+
+        Log.e("VCFragment", venteCatalogue + "");
+        venteCatalogue.onQuantityGiven(selectedValue);
     }
 }
