@@ -34,7 +34,7 @@
     <dimen name="legal_notices_width_max">500dp</dimen>
 
     <!-- last order sizes -->
-    <dimen name="order_column_description">150dp</dimen>
+    <dimen name="order_column_title">140dp</dimen>
     <dimen name="order_text_size">16sp</dimen>
 
     <!-- home sizes -->

@@ -91,7 +91,7 @@
 
             <TextView
                 android:id="@+id/productTitleIlpTextView"
-                android:layout_width="160dp"
+                android:layout_width="@dimen/order_column_title"
                 android:layout_height="wrap_content"
                 android:text="@string/title"
                 android:paddingStart="10dp"
