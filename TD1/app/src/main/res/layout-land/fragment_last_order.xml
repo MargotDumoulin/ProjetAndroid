@@ -23,7 +23,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/last_order_made"
-                android:textSize="@dimen/legal_notices_title_size"
+                android:textSize="@dimen/order_text_size"
                 android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -74,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/order_number"
-                android:textSize="@dimen/legal_notices_title_size"
+                android:textSize="@dimen/order_text_size"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/lastOrderTextView" />
@@ -157,6 +157,7 @@
                 android:id="@+id/ordersListView"
                 android:layout_width="match_parent"
                 android:nestedScrollingEnabled="true"
+                app:layout_constraintHeight_min="60dp"
                 android:layout_height="0dp"
                 android:layout_marginBottom="@dimen/global_app_margin"
                 app:layout_constraintBottom_toTopOf="@id/orderTotalTextView"
@@ -175,5 +176,5 @@
                 app:layout_constraintLeft_toLeftOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
