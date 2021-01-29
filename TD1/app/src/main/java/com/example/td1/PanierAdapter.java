@@ -92,13 +92,20 @@ public class PanierAdapter extends ArrayAdapter<Triplet<Produit, Taille, Integer
     public void editQuantity(String quantityGiven) {
         if (!quantityGiven.equals("")) {
 
-            int quantity = Integer.parseInt(quantityGiven);
+            try {
 
-            if (quantity <= 0) {
+                int quantity = Integer.parseInt(quantityGiven);
+
+                if (quantity <= 0) {
+                    Toast.makeText(this.getContext(), this.getContext().getString(R.string.must_enter_valid_quantity), Toast.LENGTH_SHORT).show();
+                } else {
+                    this.basket.get(this.indexToEditOrDelete).third = quantity;
+                }
+
+            } catch (Exception e) {
                 Toast.makeText(this.getContext(), this.getContext().getString(R.string.must_enter_valid_quantity), Toast.LENGTH_SHORT).show();
-            } else {
-                this.basket.get(this.indexToEditOrDelete).third = quantity;
             }
+
         } else {
             Toast.makeText(this.getContext(), this.getContext().getString(R.string.must_enter_valid_quantity), Toast.LENGTH_SHORT).show();
         }

@@ -407,22 +407,28 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
 
     public void onQuantityGiven(String input) {
         if (!input.matches("")) {
-            int quantity = Integer.parseInt(input);
+            try {
 
-            if (quantity <= 0) {
-                Toast.makeText(this.getContext(), getString(R.string.must_enter_valid_quantity), Toast.LENGTH_SHORT).show();
-            } else {
-                int sizeId = this.getSpinnerSelectedSizeId(sizeSpinner.getSelectedItem().toString());
+                int quantity = Integer.parseInt(input);
 
-                if ( this.basket.isArticleAlreadyInBasket(this.listProduitToShow.get(this.index).getId(), sizeId) ) {
-                    this.basket.addArticleQuantity(this.listProduitToShow.get(this.index).getId(), quantity);
+                if (quantity <= 0) {
+                    Toast.makeText(this.getContext(), getString(R.string.must_enter_valid_quantity), Toast.LENGTH_SHORT).show();
                 } else {
-                    this.basket.addArticle(this.listProduitToShow.get(this.index), new Taille(sizeId, sizeSpinner.getSelectedItem().toString()), quantity);
+                    int sizeId = this.getSpinnerSelectedSizeId(sizeSpinner.getSelectedItem().toString());
+
+                    if ( this.basket.isArticleAlreadyInBasket(this.listProduitToShow.get(this.index).getId(), sizeId) ) {
+                        this.basket.addArticleQuantity(this.listProduitToShow.get(this.index).getId(), quantity);
+                    } else {
+                        this.basket.addArticle(this.listProduitToShow.get(this.index), new Taille(sizeId, sizeSpinner.getSelectedItem().toString()), quantity);
+                    }
+
+                    ((ActivityECommerce) this.getActivity()).updateBasket(this.basket);
+                    Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment).navigate(R.id.nav_gestion_panier);
+                    showToastAddProductToBasket();
                 }
 
-                ((ActivityECommerce) this.getActivity()).updateBasket(this.basket);
-                Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment).navigate(R.id.nav_gestion_panier);
-                showToastAddProductToBasket();
+            } catch (Exception e) {
+                Toast.makeText(this.getContext(), getString(R.string.must_enter_valid_quantity), Toast.LENGTH_SHORT).show();
             }
 
         } else {
