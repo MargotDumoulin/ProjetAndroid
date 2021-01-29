@@ -4,24 +4,24 @@ import java.io.Serializable;
 
 public class OrderLine implements Serializable {
 
-    private String productDescription;
+    private String productTitle;
     private String size;
     private int quantity;
     private double price;
 
-    public OrderLine(String productDescription, String size, int quantity, double price) {
+    public OrderLine(String productTitle, String size, int quantity, double price) {
         this.price = price;
-        this.productDescription = productDescription;
+        this.productTitle = productTitle;
         this.size = size;
         this.quantity = quantity;
     }
 
-    public String getProductDescription() {
-        return productDescription;
+    public String getProductTitle() {
+        return productTitle;
     }
 
-    public void setProductDescription(String productDescription) {
-        this.productDescription = productDescription;
+    public void setProductTitle(String productTitle) {
+        this.productTitle = productTitle;
     }
 
     public String getSize() {

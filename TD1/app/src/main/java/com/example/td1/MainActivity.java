@@ -1,7 +1,9 @@
 package com.example.td1;
 
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,13 +13,18 @@ import com.example.td1.modele.Client;
 import com.example.td1.modele.Panier;
 import com.example.td1.modele.Produit;
 import com.example.td1.modele.Taille;
+import com.example.td1.ui.monPanier.MonPanierFragment;
+import com.example.td1.ui.venteCatalogue.VenteCatalogueFragment;
 import com.example.td1.utils.Triplet;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -212,5 +219,31 @@ public class MainActivity extends AppCompatActivity implements ActivityECommerce
     public void removeInfoFromDrawer() {
         this.accountIdentifierTextView.setText(getString(R.string.nav_header_subtitle));
         this.accountNameTextView.setText(getString(R.string.nav_header_title));
+    }
+
+    public void onUserSelectValue(String selectedValue, String dialogCaller) {
+        Fragment navHost = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+
+        switch (dialogCaller) {
+            case "VenteCatalogueFragment": {
+                Fragment boutique = navHost.getChildFragmentManager().getFragments().get(0);
+                Fragment navHostBoutique = boutique.getChildFragmentManager().getFragments().get(0);
+                VenteCatalogueFragment venteCatalogue = (VenteCatalogueFragment) navHostBoutique.getChildFragmentManager().getFragments().get(0);
+                venteCatalogue.onQuantityGiven(selectedValue);
+                break;
+            }
+            case "MonPanierFragment": {
+                MonPanierFragment monPanier = (MonPanierFragment) navHost.getChildFragmentManager().getFragments().get(0);
+                monPanier.onQuantityGiven(selectedValue);
+                break;
+            }
+        }
+
+    }
+
+    public void onUserDeleteItemFromBasket() {
+        Fragment navHost = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        MonPanierFragment monPanier = (MonPanierFragment) navHost.getChildFragmentManager().getFragments().get(0);
+        monPanier.onDeleteItemFromBasket();
     }
 }

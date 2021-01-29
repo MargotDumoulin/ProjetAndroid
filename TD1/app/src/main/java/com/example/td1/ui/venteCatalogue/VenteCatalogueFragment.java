@@ -3,6 +3,7 @@ package com.example.td1.ui.venteCatalogue;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import com.example.td1.ActivityWaitingImage;
 import com.example.td1.DAO.ProductDAO;
 import com.example.td1.ImageFromURL;
 import com.example.td1.ActivityECommerce;
+import com.example.td1.QuantityDialog;
 import com.example.td1.R;
 import com.example.td1.WaitingData;
 import com.example.td1.modele.Panier;
@@ -398,50 +400,35 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void onClickBtnBasket(View v) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
-        LayoutInflater inflater = this.getLayoutInflater();
-        View view = inflater.inflate(R.layout.item_quantity, null);
-        final EditText text = view.findViewById(R.id.editTextItemQuantity);
-
-        builder.setTitle(getString(R.string.quantity));
-        builder.setView(view);
-
-        // Specifying a listener allows you to take an action before dismissing the dialog.
-        // The dialog is automatically dismissed when a dialog button is clicked.
-        builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-            final String input = text.getText().toString();
-            int quantity = 1; // default quantity is 1 :)
-
-            if (!input.matches("")) {
-                quantity = Integer.parseInt(input);
-
-                if (quantity <= 0) {
-                    Toast.makeText(this.getContext(), getString(R.string.must_enter_valid_quantity), Toast.LENGTH_SHORT).show();
-                } else {
-
-                    if (this.basket.isArticleAlreadyInBasket(this.listProduitToShow.get(this.index).getId())) {
-                        this.basket.addArticleQuantity(this.listProduitToShow.get(this.index).getId(), quantity);
-                    } else {
-                        this.basket.addArticle(this.listProduitToShow.get(this.index), new Taille(this.getSpinnerSelectedSizeId(sizeSpinner.getSelectedItem().toString()), sizeSpinner.getSelectedItem().toString()), quantity);
-                    }
-
-                    ((ActivityECommerce) this.getActivity()).updateBasket(this.basket);
-                    Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment).navigate(R.id.nav_gestion_panier);
-                    showToastAddProductToBasket();
-                }
-
-            } else {
-                Toast.makeText(this.getContext(), getString(R.string.must_enter_valid_quantity), Toast.LENGTH_SHORT).show();
-            }
-
-
-        });
-        // A null listener allows the button to dismiss the dialog and take no further action.
-        builder.setNegativeButton(android.R.string.no, null);
-        builder.show();
-
+        QuantityDialog quantityDialog = new QuantityDialog();
+        quantityDialog.setUpDialogCaller("VenteCatalogueFragment");
+        quantityDialog.show(this.getActivity().getSupportFragmentManager(), getString(R.string.quantity));
     }
 
+    public void onQuantityGiven(String input) {
+        if (!input.matches("")) {
+            int quantity = Integer.parseInt(input);
+
+            if (quantity <= 0) {
+                Toast.makeText(this.getContext(), getString(R.string.must_enter_valid_quantity), Toast.LENGTH_SHORT).show();
+            } else {
+                int sizeId = this.getSpinnerSelectedSizeId(sizeSpinner.getSelectedItem().toString());
+
+                if ( this.basket.isArticleAlreadyInBasket(this.listProduitToShow.get(this.index).getId(), sizeId) ) {
+                    this.basket.addArticleQuantity(this.listProduitToShow.get(this.index).getId(), quantity);
+                } else {
+                    this.basket.addArticle(this.listProduitToShow.get(this.index), new Taille(sizeId, sizeSpinner.getSelectedItem().toString()), quantity);
+                }
+
+                ((ActivityECommerce) this.getActivity()).updateBasket(this.basket);
+                Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment).navigate(R.id.nav_gestion_panier);
+                showToastAddProductToBasket();
+            }
+
+        } else {
+            Toast.makeText(this.getContext(), getString(R.string.must_enter_valid_quantity), Toast.LENGTH_SHORT).show();
+        }
+    }
 
     public void onClickBtnHeartFilled(View v) {
         this.filledHeartImageButton.setVisibility(View.INVISIBLE);

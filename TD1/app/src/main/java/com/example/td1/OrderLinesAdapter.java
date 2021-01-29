@@ -22,13 +22,12 @@ public class OrderLinesAdapter extends ArrayAdapter<OrderLine> {
     }
 
     public View getView(int index, View convertView, ViewGroup parent) {
-        Log.e("TEST", "on rentre dans getView");
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_list_order_lines, parent, false);
         }
 
         TextView tvDescription = convertView.findViewById(R.id.productTitleIlpTextView);
-        tvDescription.setText(this.orderLines.get(index).getProductDescription());
+        tvDescription.setText(this.orderLines.get(index).getProductTitle());
 
         TextView tvPrice = convertView.findViewById(R.id.productPriceIlpTextView);
         tvPrice.setText(String.valueOf(this.orderLines.get(index).getPrice()));

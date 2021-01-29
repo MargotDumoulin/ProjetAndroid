@@ -11,6 +11,7 @@
         android:id="@+id/panierHeaderDescriptionTextView"
         android:layout_width="@dimen/basket_column_description"
         android:layout_height="wrap_content"
+        android:paddingStart="10dp"
         android:text="@string/description"
         app:layout_constraintBottom_toTopOf="@id/separatorTopLine"
         app:layout_constraintStart_toStartOf="parent" />
@@ -73,18 +74,10 @@
         android:id="@+id/panierListView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/separatorBottomLine"
+        android:layout_marginBottom="@dimen/global_app_margin"
+        app:layout_constraintBottom_toTopOf="@+id/totalTextView"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/separatorTopLine" />
-
-    <View
-        android:id="@+id/separatorBottomLine"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#c0c0c0"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
         android:id="@+id/totalTextView"

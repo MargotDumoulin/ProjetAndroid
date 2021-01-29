@@ -146,4 +146,12 @@ public class MonPanierFragment extends Fragment implements AdapterView.OnItemCli
         this.changeBasketTotal();
         this.panierAdapter.notifyDataSetChanged();
     }
+
+    public void onQuantityGiven(String quantity) {
+        this.panierAdapter.editQuantity(quantity);
+    }
+
+    public void onDeleteItemFromBasket() {
+        this.panierAdapter.deleteItemFromBasket();
+    }
 }

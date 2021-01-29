@@ -215,6 +215,8 @@ public class EditPersonalInfoFragment extends RegisterFragment {
 
                 ((ActivityLogin) this.getActivity()).updateLoggedInCustomer(updatedCustomer);
                 ((ActivityLogin) this.getActivity()).updateDrawerWithCustomerInfo(updatedCustomer);
+                this.customer = ((ActivityLogin) this.getActivity()).getLoggedInCustomer();
+                this.customerPassword = this.customer.getPassword();
 
                 Toast.makeText(this.getContext(), getString(R.string.customer_successfully_updated), Toast.LENGTH_LONG).show();
             }
