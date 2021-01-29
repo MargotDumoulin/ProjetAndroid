@@ -412,11 +412,12 @@ public class VenteCatalogueFragment extends Fragment implements AdapterView.OnIt
             if (quantity <= 0) {
                 Toast.makeText(this.getContext(), getString(R.string.must_enter_valid_quantity), Toast.LENGTH_SHORT).show();
             } else {
+                int sizeId = this.getSpinnerSelectedSizeId(sizeSpinner.getSelectedItem().toString());
 
-                if (this.basket.isArticleAlreadyInBasket(this.listProduitToShow.get(this.index).getId())) {
+                if ( this.basket.isArticleAlreadyInBasket(this.listProduitToShow.get(this.index).getId(), sizeId) ) {
                     this.basket.addArticleQuantity(this.listProduitToShow.get(this.index).getId(), quantity);
                 } else {
-                    this.basket.addArticle(this.listProduitToShow.get(this.index), new Taille(this.getSpinnerSelectedSizeId(sizeSpinner.getSelectedItem().toString()), sizeSpinner.getSelectedItem().toString()), quantity);
+                    this.basket.addArticle(this.listProduitToShow.get(this.index), new Taille(sizeId, sizeSpinner.getSelectedItem().toString()), quantity);
                 }
 
                 ((ActivityECommerce) this.getActivity()).updateBasket(this.basket);
