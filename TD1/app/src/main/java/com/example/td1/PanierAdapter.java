@@ -1,17 +1,12 @@
 package com.example.td1;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,12 +66,12 @@ public class PanierAdapter extends ArrayAdapter<Triplet<Produit, Taille, Integer
 
     public void handleEditClick(int index) {
         this.isInEditDialog = true;
-        this.createEditDialog(index);
+        this.createEditDialog();
     }
 
     public void handleDeleteClick(int index) {
         this.isInEditDialog = false;
-        this.createDeleteDialog(index);
+        this.createDeleteDialog();
     }
 
     public void onClick(View v) {
@@ -86,33 +81,9 @@ public class PanierAdapter extends ArrayAdapter<Triplet<Produit, Taille, Integer
         } else {
             this.handleDeleteClick(this.index);
         }
-
-    }
-
-    public void onClick(DialogInterface dialog, int which) {
-        if (this.isInEditDialog) {
-
-            if (!this.input.equals("")) {
-                int quantity = Integer.parseInt(this.input.getText().toString());
-
-                if (quantity <= 0) {
-                    Toast.makeText(this.getContext(), this.getContext().getString(R.string.must_enter_valid_quantity), Toast.LENGTH_SHORT).show();
-                } else {
-                    this.basket.get(this.index).third = Integer.parseInt(this.input.getText().toString());
-                }
-            } else {
-                Toast.makeText(this.getContext(), this.getContext().getString(R.string.must_enter_valid_quantity), Toast.LENGTH_SHORT).show();
-            }
-
-        } else {
-            this.basket.remove(this.index);
-            this.notifyDataSetChanged();
-        }
-        this.responder.changeBasketTotal();
     }
 
     public void editQuantity(String quantityGiven) {
-        Log.e("QUANTITY", "" + quantityGiven);
         if (!quantityGiven.equals("")) {
 
             int quantity = Integer.parseInt(quantityGiven);
@@ -127,24 +98,23 @@ public class PanierAdapter extends ArrayAdapter<Triplet<Produit, Taille, Integer
         }
 
         this.responder.changeBasketTotal();
+        this.notifyDataSetChanged();
     }
 
-    public void createEditDialog(int index) {
+    public void deleteItemFromBasket() {
+        this.basket.remove(this.index);
+        this.notifyDataSetChanged();
+        this.responder.changeBasketTotal();
+    }
+
+    public void createEditDialog() {
         QuantityDialog quantityDialog = new QuantityDialog();
         quantityDialog.setUpDialogCaller("MonPanierFragment");
         quantityDialog.show(this.fm, this.getContext().getString(R.string.quantity));
     }
-    
-    public void createDeleteDialog(int index) {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(
-                getContext());
 
-        alertDialog.setTitle(R.string.delete_article_from_basket);
-
-        alertDialog.setPositiveButton(android.R.string.yes, this::onClick);
-
-        alertDialog.setNegativeButton(android.R.string.no, (dialog, which) -> dialog.cancel());
-
-        alertDialog.show();
+    public void createDeleteDialog() {
+        DeleteItemDialog deleteItemDialog = new DeleteItemDialog();
+        deleteItemDialog.show(this.fm, this.getContext().getString(R.string.delete_article_from_basket));
     }
 }

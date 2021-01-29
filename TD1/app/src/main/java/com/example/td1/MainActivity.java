@@ -222,8 +222,6 @@ public class MainActivity extends AppCompatActivity implements ActivityECommerce
     }
 
     public void onUserSelectValue(String selectedValue, String dialogCaller) {
-        FragmentManager fm = getSupportFragmentManager();
-
         Fragment navHost = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
 
         switch (dialogCaller) {
@@ -241,5 +239,11 @@ public class MainActivity extends AppCompatActivity implements ActivityECommerce
             }
         }
 
+    }
+
+    public void onUserDeleteItemFromBasket() {
+        Fragment navHost = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        MonPanierFragment monPanier = (MonPanierFragment) navHost.getChildFragmentManager().getFragments().get(0);
+        monPanier.onDeleteItemFromBasket();
     }
 }

@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -28,6 +27,10 @@ public class QuantityDialog extends DialogFragment implements DialogInterface.On
         builder.setNegativeButton(R.string.confirm_no, (DialogInterface.OnClickListener) this);
         builder.setView(view);
 
+        if (savedInstanState != null) {
+            this.dialogCaller = savedInstanState.getString("dialogCaller");
+        }
+
         return builder.create();
     }
 
@@ -41,5 +44,12 @@ public class QuantityDialog extends DialogFragment implements DialogInterface.On
 
     public void setUpDialogCaller(String dialogCaller) {
         this.dialogCaller = dialogCaller;
+    }
+
+    // ------ ROTATION ---------------------------------
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+            outState.putString("dialogCaller", this.dialogCaller);
     }
 }
