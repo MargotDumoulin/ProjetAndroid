@@ -22,7 +22,6 @@ public class OrderLinesAdapter extends ArrayAdapter<OrderLine> {
     }
 
     public View getView(int index, View convertView, ViewGroup parent) {
-        Log.e("TEST", "on rentre dans getView");
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_list_order_lines, parent, false);
         }
