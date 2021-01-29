@@ -1,6 +1,7 @@
 package com.example.td1;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,11 +30,12 @@ public class PanierAdapter extends ArrayAdapter<Triplet<Produit, Taille, Integer
     private BasketTotalInterface responder;
     private FragmentManager fm;
 
-    public PanierAdapter(Context context, ArrayList<Triplet<Produit, Taille, Integer>> basket, BasketTotalInterface responder) {
+    public PanierAdapter(Context context, ArrayList<Triplet<Produit, Taille, Integer>> basket, BasketTotalInterface responder, int indexToEditOrDelete) {
         super(context, 0, basket);
         this.basket = basket;
         this.responder = responder;
         this.fm = ((MainActivity) context).getSupportFragmentManager();
+        this.indexToEditOrDelete = indexToEditOrDelete;
     }
 
     public View getView(int index, View convertView, ViewGroup parent) {
@@ -82,6 +84,7 @@ public class PanierAdapter extends ArrayAdapter<Triplet<Produit, Taille, Integer
         int tagNumber = Integer.parseInt(tagWithoutLastCharacter);
 
         this.indexToEditOrDelete = tagNumber;
+        this.responder.persistIndexToEditOrDelete(this.indexToEditOrDelete);
         if (lastCharacter.equals("a")) {
             this.handleEditClick();
         } else {
@@ -109,6 +112,7 @@ public class PanierAdapter extends ArrayAdapter<Triplet<Produit, Taille, Integer
         } else {
             Toast.makeText(this.getContext(), this.getContext().getString(R.string.must_enter_valid_quantity), Toast.LENGTH_SHORT).show();
         }
+
 
         this.responder.changeBasketTotal();
         this.notifyDataSetChanged();

@@ -48,6 +48,8 @@ public class MonPanierFragment extends Fragment implements AdapterView.OnItemCli
 
     private Panier basket;
 
+    private int indexToEditOrDelete = 1;
+
     private int orderId = -1;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -63,17 +65,28 @@ public class MonPanierFragment extends Fragment implements AdapterView.OnItemCli
         this.confirmOrderFloatingActionButton = this.root.findViewById(R.id.confirmOrderfloatingActionButton);
         this.confirmOrderFloatingActionButton.setOnClickListener(this::onClickCreateOrder);
 
+        if (savedInstanceState != null) {
+            this.indexToEditOrDelete = savedInstanceState.getInt("indexToEditOrDelete");
+        }
+
         this.setPanierAdapter();
         this.changeFloatingButtonVisibility();
 
         return root;
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putInt("indexToEditOrDelete", this.indexToEditOrDelete);
+    }
+
     public void setPanierAdapter() {
         this.lvPanier = this.root.findViewById(R.id.panierListView);
         this.lvPanier.setOnItemClickListener(this);
 
-        this.panierAdapter = new PanierAdapter(this.getContext(), this.basket.getBasketContent(), this);
+        this.panierAdapter = new PanierAdapter(this.getContext(), this.basket.getBasketContent(), this, this.indexToEditOrDelete);
         this.lvPanier.setAdapter(this.panierAdapter);
         this.panierAdapter.notifyDataSetChanged();
     }
@@ -97,6 +110,11 @@ public class MonPanierFragment extends Fragment implements AdapterView.OnItemCli
     public void changeBasketTotal() {
         this.basketTotalTextView.setText(String.format(getString(R.string.basket_total), this.basket.getBasketTotal()));
         this.changeFloatingButtonVisibility();
+    }
+
+    @Override
+    public void persistIndexToEditOrDelete(int index) {
+        this.indexToEditOrDelete = index;
     }
 
     public void onClickCreateOrder(View v) {
