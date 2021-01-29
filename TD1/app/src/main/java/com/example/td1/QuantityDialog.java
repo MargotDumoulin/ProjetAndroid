@@ -23,8 +23,8 @@ public class QuantityDialog extends DialogFragment implements DialogInterface.On
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
         builder.setTitle(getString(R.string.quantity));
 
-        builder.setPositiveButton(R.string.confirm_yes, (DialogInterface.OnClickListener) this);
-        builder.setNegativeButton(R.string.confirm_no, (DialogInterface.OnClickListener) this);
+        builder.setPositiveButton(R.string.confirm, (DialogInterface.OnClickListener) this);
+        builder.setNegativeButton(R.string.cancel, (DialogInterface.OnClickListener) this);
         builder.setView(view);
 
         if (savedInstanState != null) {
