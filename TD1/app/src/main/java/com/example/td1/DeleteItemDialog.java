@@ -20,7 +20,7 @@ public class DeleteItemDialog extends DialogFragment implements DialogInterface.
         builder.setTitle(getString(R.string.delete_article_from_basket));
 
         builder.setPositiveButton(R.string.confirm_yes, (DialogInterface.OnClickListener) this);
-        builder.setNegativeButton(R.string.confirm_no, (DialogInterface.OnClickListener) this);
+        builder.setNegativeButton(R.string.confirm_no, null);
 
         return builder.create();
     }
